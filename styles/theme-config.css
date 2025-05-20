@@ -1,0 +1,77 @@
+:root {
+    /* Color Palette */
+    --color-primary-dark: #023E8C;
+    --color-primary-light: #379AD8;
+    --color-background: #F8F9FA;
+    --color-surface: #FFFFFF;
+    --color-surface-dark: #212529;
+    --color-surface-mid: #495057;
+    --color-muted: #ADB5BD;
+    --color-border: #CED4DA;
+    --color-border-light: #DEE2E6;
+    --color-error: #BC271B;
+    --color-success: #0C6600;
+    --color-success-light: #EDFFEB80;
+    --color-warning: #6EB8FE;
+    --color-overlay: #FFFFFFB2;
+    --color-text-dark: #1C1B1F;
+    --color-text-muted: #E2E2E2;
+    --color-blue-deep: #010061;
+    --color-blue-mid: #0C3B66;
+    --color-blue-accent: #55A2EB;
+    --color-blue-light: #B9DDFF;
+    --color-background-secondary: #EBF5FF;
+    --color-surface-alt: #343A40;
+  
+    /* Gradients */
+    --gradient-primary: linear-gradient(109.09deg, #023E8C 6.19%, #379AD8 117.18%);
+    --gradient-horizontal: linear-gradient(90deg, #023E8C 0%, #379AD8 100%);
+  
+    /* Fonts */
+    --font-primary: 'Montserrat', sans-serif;
+    --font-display: 'Ultra System', sans-serif;
+  
+    /* Typography Sizes */
+    --text-base: 16px;
+    --text-sm: 14px;
+    --text-lg: 18px;
+    --text-xl: 28px;
+    --text-display-lg: 60px;
+    --text-display-md: 40px;
+  
+    /* Line Heights */
+    --line-base: 140%;
+    --line-display-lg: 72px;
+    --line-display-md: 48px;
+  
+    /* Font Weights */
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 700;
+  }
+  
+  body {
+    margin: 0;
+    font-family: var(--font-primary);
+    font-size: var(--text-base);
+    background-color: var(--color-background);
+    color: var(--color-text-dark);
+    line-height: var(--line-base);
+  }
+  
+  /* Utility example */
+  .button-primary {
+    background: var(--gradient-primary);
+    color: #fff;
+    font-weight: var(--font-weight-bold);
+    border: none;
+    border-radius: 4px;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  .button-primary:hover {
+    background: var(--gradient-horizontal);
+  }
+  

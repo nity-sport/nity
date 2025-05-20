@@ -1,0 +1,126 @@
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px 54px;
+  background: var(--color-surface);
+  border-bottom: none;
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-size: var(--text-display-md);
+  color: var(--color-primary-dark);
+}
+
+.nav {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.iconButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--color-surface);
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}
+
+.nav a,
+.navLink {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 140%;
+  letter-spacing: 0;
+  text-align: center;
+  vertical-align: middle;
+  color: var(--color-surface-mid);
+  text-decoration: none;
+  padding: 8px 12px;
+  transition: color 0.2s ease;
+}
+
+.navLink:hover,
+.nav a:hover {
+  color: var(--color-surface-dark);
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.signup {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 39px;
+  width: 128px;
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--text-base);
+  cursor: pointer;
+}
+
+.signupIcon {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  top: -1px;
+}
+
+.signup:hover {
+  background: var(--gradient-horizontal);
+}
+
+@media (max-width: 1024px) {
+  .nav {
+    gap: 1rem;
+  }
+  .actions {
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .nav,
+  .actions {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .nav a {
+    margin-right: 1rem;
+  }
+
+  .signup {
+    font-size: 14px;
+    padding: 0.5rem 0.75rem;
+  }
+}
