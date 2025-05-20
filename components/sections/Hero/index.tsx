@@ -1,9 +1,11 @@
 // components/sections/Hero.tsx
 import styles from "./Hero.module.css";
 import Image from "next/image";
+import HeroSearchBar from "./HeroSearchBar";
 
 export default function Hero() {
     return (
+        <>
         <section className={styles.hero}>
             <video
                 className={styles.videoBackground}
@@ -13,28 +15,13 @@ export default function Hero() {
                 muted
                 playsInline
             ></video>
-
+            <div className={styles.overlay}></div>
             <div className={styles.content}>
                 <h1 className={styles.title}>YOUR SPORTRAVEL</h1>
-                <button className={styles.videoBtn}>
-                    <Image
-                        src="/assets/watchthevideo.png"
-                        alt="Watch"
-                        width={28}
-                        height={28}
-                    />
-                    <span className={styles.videoLabel}>WATCH THE VIDEO</span>
-                </button>
-                <form className={styles.form}>
-                    <select><option>Sport</option></select>
-                    <select><option>Date</option></select>
-                    <select><option>Age</option></select>
-                    <select><option>Category</option></select>
-                    <button type="submit" className={styles.submitBtn}>
-                        <Image src="/assets/icons/arrow-right.svg" alt="Go" width={16} height={16} />
-                    </button>
-                </form>
+                {/* outros elementos opcionais */}
             </div>
         </section>
+        <HeroSearchBar />
+        </>
     );
 }
