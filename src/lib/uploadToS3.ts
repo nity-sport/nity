@@ -17,7 +17,7 @@ export async function uploadToS3({
   const region = process.env.AWS_S3_REGION;
 
   if (!bucket || !region) {
-    throw new Error("S3 config missing: Bucket or Region not set in .env");
+    throw new Error("❌ S3 config missing: Bucket or Region not set");
   }
 
   const fileKey = `${uuid()}-${originalName}`;
@@ -27,17 +27,20 @@ export async function uploadToS3({
     Key: fileKey,
     Body: buffer,
     ContentType: mimeType,
-  
   });
 
   try {
     const response = await s3.send(command);
-    console.log("✅ S3 Upload success:", response);
+    console.log(`✅ Upload concluído com sucesso: ${fileKey}`);
+    
+    return `https://${bucket}.s3.${region}.amazonaws.com/${fileKey}`;
+  } catch (err: any) {
+    console.error("❌ Erro ao enviar para o S3:", {
+      code: err.Code,
+      message: err.message,
+      requestId: err?.$metadata?.requestId,
+    });
 
-    const publicUrl = `https://${bucket}.s3.${region}.amazonaws.com/${fileKey}`;
-    return publicUrl;
-  } catch (err) {
-    console.error("❌ Erro ao enviar para S3:", err);
     throw new Error("Erro no upload para o S3");
   }
 }
