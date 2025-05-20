@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
-import { CoachType } from "@/types/coach";
+import { CoachType } from "../types/coach";
 
 type CoachDocument = CoachType & Document;
 type CoachModel = Model<CoachDocument>;
