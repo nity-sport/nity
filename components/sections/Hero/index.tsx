@@ -20,8 +20,8 @@ export default function Hero() {
                 <h1 className={styles.title}>YOUR SPORTRAVEL</h1>
                 {/* outros elementos opcionais */}
             </div>
-        </section>
         <HeroSearchBar />
+        </section>
         </>
     );
 }
