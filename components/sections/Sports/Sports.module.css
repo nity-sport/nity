@@ -1,0 +1,177 @@
+/* components/sections/Sports.module.css */
+.sportsSection {
+  width: 100%;
+  height: 557px;
+  background: #0C3B66;
+  padding: 52px 0;
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1380px;
+  margin: 42px auto 0 auto;
+}
+
+.headerTitle {
+  font-family: var(--font-display, 'Ultra System');
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: #fff;
+  letter-spacing: 3px;
+  flex: 1.2;
+  text-align: left;
+  min-width: 210px;
+}
+
+.headerDescription {
+  color: #fff;
+  font-size: 1.07rem;
+  opacity: 0.92;
+  max-width: 480px;
+  text-align: right;
+  flex: 1;
+  line-height: 1.36;
+}
+
+.carousel {
+  width: 100%;
+  max-width: 1560px;
+  margin: 0 auto;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;      /* <-- aqui bloqueia vertical! */
+  scroll-behavior: smooth;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0 24px 0 24px;   /* tira o padding vertical extra */
+  justify-content: flex-start;
+  gap: 32px;
+  align-items: center;     /* <-- centraliza verticalmente */
+  height: 100%;            /* pega toda a altura do container pai */
+  min-height: 199px;       /* garante que caiba o card */
+}
+
+
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.active {
+  cursor: grabbing !important;
+}
+
+.sportCard {
+  background: #0C3B66;
+  border-radius: 16px;
+  width: 214px;
+  min-width: 214px;
+  /* height: 199px;   <-- REMOVA esta linha! */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 8px 12px 8px;
+  justify-content: flex-start;
+  gap: 16px;
+  box-shadow: none;
+  transition: box-shadow 0.13s, transform 0.13s;
+}
+
+.sportCard:hover, .sportCard:focus-within {
+  box-shadow: 0 4px 24px rgba(100,180,255,0.09);
+  transform: translateY(-8px) scale(1.04);
+  z-index: 2;
+}
+
+.iconBox {
+  background: transparent;
+  width: 132px;
+  height: 132px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.sportTitle {
+  color: #fff;
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: 1.11rem;
+  margin-bottom: 2px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.centersLabel {
+  font-size: 0.96rem;
+  color: #D0DEED;
+  font-weight: 400;
+  font-family: var(--font-primary);
+  text-align: center;
+  margin-top: 1px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.16s;
+}
+
+.sportCard:hover .centersLabel,
+.sportCard:focus-within .centersLabel,
+.centersLabel:hover,
+.centersLabel:focus {
+  color: #93E7FF;
+  text-decoration: underline;
+}
+
+.sportCard:hover .centersLabel, .sportCard:focus-within .centersLabel, .centersLabel:hover, .centersLabel:focus {
+  color: #93E7FF;
+}
+
+@media (max-width: 950px) {
+  .headerRow { flex-direction: column; gap: 16px; text-align: left; }
+  .headerDescription { text-align: left; }
+  .carousel {
+    gap: 14px;
+    padding: 10px 8px 18px 8px;
+    height: 145px;
+    min-height: 145px;
+  }
+  .sportCard {
+    width: 120px;
+    min-width: 120px;
+    height: 140px;
+    gap: 8px;
+    padding: 10px 0 8px 0;
+  }
+  .iconBox {
+    width: 58px;
+    height: 58px;
+  }
+}
+@media (max-width: 650px) {
+  .headerTitle { font-size: 1.15rem; }
+  .carousel {
+    gap: 6px;
+    padding: 4px 2px 8px 2px;
+    height: 110px;
+    min-height: 110px;
+  }
+  .sportCard {
+    width: 45vw;      /* Cada card ocupa quase metade */
+    min-width: 45vw;
+    max-width: 170px; /* Limita para não crescer demais */
+    height: 102px;
+    gap: 4px;
+    padding: 6px 0 2px 0;
+  }
+  .iconBox {
+    width: 32px;
+    height: 32px;
+  }
+  .headerDescription { font-size: 0.91rem; }
+}
