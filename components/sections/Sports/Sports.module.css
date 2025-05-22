@@ -131,47 +131,79 @@
 .sportCard:hover .centersLabel, .sportCard:focus-within .centersLabel, .centersLabel:hover, .centersLabel:focus {
   color: #93E7FF;
 }
-
 @media (max-width: 950px) {
-  .headerRow { flex-direction: column; gap: 16px; text-align: left; }
-  .headerDescription { text-align: left; }
+  .headerRow {
+    flex-direction: column;
+    gap: 18px;
+    text-align: left;
+    padding: 0 16px;
+    margin: 0 auto 14px auto;
+    align-items: flex-start;
+  }
+  .headerDescription {
+    text-align: left;
+    font-size: 1rem;
+    max-width: 99%;
+  }
   .carousel {
-    gap: 14px;
-    padding: 10px 8px 18px 8px;
-    height: 145px;
-    min-height: 145px;
+    gap: 16px;
+    padding: 12px 8px 14px 8px;
+    min-height: 120px;
   }
   .sportCard {
-    width: 120px;
-    min-width: 120px;
-    height: 140px;
+    width: 145px;
+    min-width: 145px;
+    height: 148px;
     gap: 8px;
     padding: 10px 0 8px 0;
   }
   .iconBox {
-    width: 58px;
-    height: 58px;
+    width: 66px;
+    height: 66px;
   }
 }
+
 @media (max-width: 650px) {
-  .headerTitle { font-size: 1.15rem; }
+  .sportsSection {
+    min-height: 280px;
+    padding: 28px 0 10px 0;
+    height: auto;
+  }
+  .headerRow {
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+    margin: 0 auto 6px auto;
+    padding: 0 7px;
+    align-items: flex-start;
+  }
+  .headerTitle {
+    font-size: 1.2rem;
+    margin-bottom: 2px;
+    min-width: unset;
+  }
+  .headerDescription {
+    font-size: 0.95rem;
+    max-width: 99%;
+    text-align: left;
+    opacity: 0.92;
+    line-height: 1.18;
+  }
   .carousel {
-    gap: 6px;
-    padding: 4px 2px 8px 2px;
-    height: 110px;
-    min-height: 110px;
+    gap: 10px;
+    padding: 5px 2vw 10px 2vw;
+    min-height: 120px;
   }
   .sportCard {
-    width: 45vw;      /* Cada card ocupa quase metade */
-    min-width: 45vw;
-    max-width: 170px; /* Limita para não crescer demais */
-    height: 102px;
+    width: 48vw;
+    min-width: 48vw;
+    max-width: 170px;
+    height: 118px;
     gap: 4px;
-    padding: 6px 0 2px 0;
+    padding: 5px 0 2px 0;
   }
   .iconBox {
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
   }
-  .headerDescription { font-size: 0.91rem; }
 }
