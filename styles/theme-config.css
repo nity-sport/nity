@@ -18,6 +18,7 @@
     --color-text-muted: #E2E2E2;
     --color-blue-deep: #010061;
     --color-blue-mid: #0C3B66;
+    --color-blue: #3582cb;
     --color-blue-accent: #55A2EB;
     --color-blue-light: #B9DDFF;
     --color-background-secondary: #EBF5FF;
@@ -48,6 +49,48 @@
     --font-weight-regular: 400;
     --font-weight-medium: 500;
     --font-weight-bold: 700;
+    
+    /* Breakpoints */
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-xxl: 3rem;
+    
+    /* Container widths */
+    --container-sm: 540px;
+    --container-md: 720px;
+    --container-lg: 960px;
+    --container-xl: 1140px;
+  }
+  
+  /* Responsive Typography */
+  @media (max-width: 768px) {
+    :root {
+      --text-display-lg: 42px;
+      --text-display-md: 32px;
+      --text-xl: 22px;
+      --line-display-lg: 50px;
+      --line-display-md: 38px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    :root {
+      --text-display-lg: 32px;
+      --text-display-md: 24px;
+      --text-xl: 20px;
+      --text-lg: 16px;
+      --line-display-lg: 40px;
+      --line-display-md: 32px;
+    }
   }
   
   body {

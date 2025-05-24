@@ -1,10 +1,10 @@
 .footer {
     position: relative;
     background: var(--color-text-muted);
-    height: 848px;
+    min-height: 450px;
     width: 100%;
     overflow: hidden;
-    padding: 99px 0 0 0;
+    padding: 80px 0 120px 0;
   }
   
   .footerContent {
@@ -21,7 +21,8 @@
   
   .footerLeft {
     flex: 1.5;
-    min-width: 636px;
+    max-width: 636px;
+    min-width: auto;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -146,66 +147,86 @@
       flex-direction: column;
       align-items: stretch;
       gap: 40px;
-      padding: 0 16px;
+      padding: 0 24px;
     }
     .footerLeft {
       align-items: flex-start;
-      margin-bottom: 10px;
+      margin-bottom: 30px;
     }
     .footerLinks {
-      justify-content: flex-start;
-      gap: 38px;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
     }
     .footerRight {
       align-items: flex-start;
-      margin-top: 18px;
+      margin-top: 30px;
     }
     .footerBgLogo {
-      height: 370px;
+      height: 200px;
       width: 100%;
+      bottom: 0;
     }
   }
   
   @media (max-width: 800px) {
+    .footer {
+      padding: 60px 0 100px 0;
+    }
     .footerQuestion {
-      font-size: 26px;
+      font-size: 32px;
+      line-height: 38px;
       text-align: left;
+    }
+    .footerLinks div {
+      min-width: 45%;
+      margin-bottom: 20px;
     }
     .footerBgLogo {
       height: 100px;
-    }
-    .footerLinks {
-      flex-direction: column;
-      gap: 22px;
     }
   }
   
   @media (max-width: 520px) {
     .footer {
-      padding: 32px 0 0 0;
+      padding: 40px 0 80px 0;
     }
     .footerContent {
-      padding: 0 6px;
-      gap: 24px;
+      padding: 0 16px;
+      gap: 30px;
     }
     .footerLeft {
-      min-width: unset;
+      width: 100%;
       font-size: 18px;
-      gap: 8px;
-    }
-    .footerLinks {
-      flex-direction: column;
       gap: 16px;
     }
+    .footerQuestion {
+      font-size: 24px;
+      line-height: 30px;
+    }
+    .footerLinks {
+      width: 100%;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .footerLinks div {
+      width: 100%;
+      min-width: 100%;
+    }
     .footerLinks strong {
-      font-size: 15px;
+      font-size: 16px;
+      margin-bottom: 12px;
     }
     .footerLinks li {
-      font-size: 13px;
+      font-size: 14px;
+      margin-bottom: 8px;
     }
     .footerRight {
-      align-items: flex-start;
-      min-width: 140px;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: row;
+      min-width: 100%;
       gap: 12px;
     }
     .footerBgLogo {
