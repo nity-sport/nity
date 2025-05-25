@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { FcGoogle } from 'react-icons/fc';
+import { FaApple } from 'react-icons/fa';
 import styles from './Auth.module.css';
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
-    password: '',
-    confirmPassword: ''
+    password: ''
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -23,10 +25,6 @@ export default function SignUp() {
   };
 
   const validateForm = () => {
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      return false;
-    }
     if (formData.password.length < 6) {
       setError('Password must be at least 6 characters long');
       return false;
@@ -36,7 +34,7 @@ export default function SignUp() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -47,11 +45,9 @@ export default function SignUp() {
     try {
       const response = await fetch('/api/auth/register', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: formData.name,
+          name: `${formData.firstName} ${formData.lastName}`,
           email: formData.email,
           password: formData.password
         }),
@@ -66,7 +62,7 @@ export default function SignUp() {
       } else {
         setError(data.message || 'Registration failed');
       }
-    } catch (error) {
+    } catch {
       setError('Network error. Please try again.');
     } finally {
       setLoading(false);
@@ -74,40 +70,78 @@ export default function SignUp() {
   };
 
   return (
-    <div className={styles.authContainer}>
-      <div className={styles.authCard}>
+    <div className={styles.container}>
+      <div className={styles.leftImage}>
+        <img src="/assets/auth-bg.svg" alt="Background" className={styles.bgImage} />
+      </div>
+
+      <div className={styles.rightForm}>
+
+
         <div className={styles.authHeader}>
-          <img src="/assets/nity-logo.png" alt="Nity Logo" className={styles.logo} />
-          <h1 className={styles.title}>Create your account</h1>
-          <p className={styles.subtitle}>Join Nity to connect with sports coaches</p>
+          <h1 className={styles.title}>CREATE AN ACCOUNT</h1>
+          <p className={styles.subtitle}>
+            Already have an account?{' '}
+            <Link href="/Auth/signin" className={styles.link}>
+              Log in
+            </Link>
+          </p>
         </div>
 
-        <form onSubmit={handleSubmit} className={styles.form}>
-          {error && (
-            <div className={styles.errorMessage}>
-              {error}
-            </div>
-          )}
 
-          <div className={styles.formGroup}>
-            <label htmlFor="name" className={styles.label}>
-              Full Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className={styles.input}
-              required
-              placeholder="Enter your full name"
-            />
+        <div className={styles.socialButtons}>
+          <button className={styles.socialButton}>
+            <span><img src="/assets/google-icon.svg" alt="Google Icon" style={{ width: '20px', height: '20px' }} /></span> Sign in with Google
+          </button>
+          <button className={styles.socialButton}>
+            <span><img src="/assets/apple-icon.svg" alt="Apple Icon" style={{ width: '20px', height: '20px' }} /></span> Sign in with Apple
+          </button>
+        </div>
+
+        <div className={styles.separator}>
+          <span>or</span>
+        </div>
+
+        {error && <div className={styles.errorMessage}>{error}</div>}
+
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <div className={styles.formRow}>
+            <div className={styles.formGroup}>
+              <label htmlFor="firstName" className={styles.label}>
+                First Name
+              </label>
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                className={styles.input}
+                required
+                placeholder="Your first name"
+              />
+            </div>
+
+            <div className={styles.formGroup}>
+              <label htmlFor="lastName" className={styles.label}>
+                Last Name
+              </label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                className={styles.input}
+                required
+                placeholder="Your last name"
+              />
+            </div>
           </div>
 
           <div className={styles.formGroup}>
             <label htmlFor="email" className={styles.label}>
-              Email address
+              E-mail
             </label>
             <input
               type="email"
@@ -117,7 +151,7 @@ export default function SignUp() {
               onChange={handleChange}
               className={styles.input}
               required
-              placeholder="Enter your email"
+              placeholder="Enter your E-mail"
             />
           </div>
 
@@ -133,24 +167,15 @@ export default function SignUp() {
               onChange={handleChange}
               className={styles.input}
               required
-              placeholder="Create a password"
+              placeholder="Enter your Password"
             />
           </div>
 
-          <div className={styles.formGroup}>
-            <label htmlFor="confirmPassword" className={styles.label}>
-              Confirm Password
+          <div className={styles.terms}>
+            <input type="checkbox" id="terms" required />
+            <label htmlFor="terms">
+              I agree to all Term, Privacy Policy and Fees
             </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className={styles.input}
-              required
-              placeholder="Confirm your password"
-            />
           </div>
 
           <button
@@ -158,18 +183,9 @@ export default function SignUp() {
             disabled={loading}
             className={styles.submitButton}
           >
-            {loading ? 'Creating account...' : 'Create Account'}
+            {loading ? 'Creating account...' : 'Create account →'}
           </button>
         </form>
-
-        <div className={styles.authFooter}>
-          <p>
-            Already have an account?{' '}
-            <Link href="/Auth/signin" className={styles.link}>
-              Sign in
-            </Link>
-          </p>
-        </div>
       </div>
     </div>
   );
