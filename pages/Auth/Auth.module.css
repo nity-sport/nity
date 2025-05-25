@@ -48,6 +48,7 @@
   display: flex;
   justify-content: center;
   color: var(--color-text-dark);
+  height: 48px;
 
 }
 
