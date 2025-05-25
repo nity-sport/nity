@@ -30,7 +30,7 @@ export default function AboutSection() {
       </div>
       <div className={styles.overlayText3}>
       <span className={styles.outline}>SOLVE </span>
-        <span className={styles.outline}>TO SOLVE </span>
+        <span className={styles.outline}>TO SOLVE</span>
         <span className={styles.outline}>TO SOLVE </span>
         <span className={styles.solid}>TO SOLVE </span>
         <span className={styles.outline}>TO SOLVE </span>
