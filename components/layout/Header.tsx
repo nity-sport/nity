@@ -22,10 +22,10 @@ export default function Header() {
         <button className={styles.iconButton} aria-label="Language switch">
           <Image src="/assets/translate.png" alt="Language" width={24} height={24} />
         </button>
-        <button className={styles.iconButton} aria-label="Login">
+        <Link href="/Auth/signin" className={styles.iconButton} aria-label="Login">
           <Image src="/assets/account_circle.png" alt="Login" width={24} height={24} />
-        </button>
-        <button className={styles.signup}>
+        </Link>
+        <Link href="/Auth/signup" className={styles.signup}>
           Sign up
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +43,7 @@ export default function Header() {
               d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
             />
           </svg>
-        </button>
+        </Link>
       </div>
 
       <button className={styles.menuToggle} onClick={() => setMenuOpen(!menuOpen)}>
@@ -71,10 +71,10 @@ export default function Header() {
           <button className={styles.iconButton} aria-label="Language switch">
             <Image src="/assets/translate.png" alt="Language" width={24} height={24} />
           </button>
-          <button className={styles.iconButton} aria-label="Login">
+          <Link href="/Auth/signin" className={styles.iconButton} aria-label="Login">
             <Image src="/assets/account_circle.png" alt="Login" width={24} height={24} />
-          </button>
-          <button className={styles.signup}>
+          </Link>
+          <Link href="/Auth/signup" className={styles.signup}>
             Sign up
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -92,7 +92,7 @@ export default function Header() {
                 d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
               />
             </svg>
-          </button>
+          </Link>
         </div>
       )}
     </header>
