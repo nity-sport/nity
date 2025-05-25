@@ -57,7 +57,8 @@ export default function SignIn() {
       <div className={styles.rightForm}>
         
       <div className={styles.authHeader}>
-        <h1 className={styles.title}>NICE TO SEE YOU AGAIN</h1>
+        <h1 className={styles.title}>NICE TO SEE</h1>
+        <h1 className={styles.title}>YOU AGAIN</h1>
         <p className={styles.subtitle}>PLEASE LOGIN INTO YOUR NITY ACCOUNT</p>
         </div>
         <div className={styles.socialButtons}>
