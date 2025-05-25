@@ -79,7 +79,8 @@ export default function SignUp() {
 
 
         <div className={styles.authHeader}>
-          <h1 className={styles.title}>CREATE AN ACCOUNT</h1>
+          <h1 className={styles.title}>CREATE</h1>
+          <h1 className={styles.title}>AN ACCOUNT</h1>
           <p className={styles.subtitle}>
             Already have an account?{' '}
             <Link href="/Auth/signin" className={styles.link}>
