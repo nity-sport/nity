@@ -4,8 +4,7 @@ import { AuthContextType, AuthState, AuthAction, User } from '../types/auth';
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const authReducer = (state: AuthState, action: AuthAction): AuthState => {
-  console.log('[AuthReducer] Ação recebida:', action.type, 'Payload:', action.payload);
-  console.log('[AuthReducer] Estado ANTERIOR:', state);
+
   let newState: AuthState;
   switch (action.type) {
     case 'SET_LOADING':
