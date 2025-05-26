@@ -4,23 +4,34 @@ import { AuthContextType, AuthState, AuthAction, User } from '../types/auth';
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const authReducer = (state: AuthState, action: AuthAction): AuthState => {
+  console.log('[AuthReducer] Ação recebida:', action.type, 'Payload:', action.payload);
+  console.log('[AuthReducer] Estado ANTERIOR:', state);
+  let newState: AuthState;
   switch (action.type) {
     case 'SET_LOADING':
-      return { ...state, isLoading: action.payload };
+      newState = { ...state, isLoading: action.payload };
+      break;
     case 'SET_USER':
-      return { ...state, user: action.payload, isLoading: false };
+      newState = { ...state, user: action.payload, isLoading: false };
+      break;
     case 'LOGIN_SUCCESS':
-      return { ...state, user: action.payload, isLoading: false };
+      newState = { ...state, user: action.payload, isLoading: false };
+      break;
     case 'LOGOUT':
-      return { ...state, user: null, isLoading: false };
+      newState = { ...state, user: null, isLoading: false };
+      break;
     case 'UPDATE_PROFILE':
-      return {
+      newState = {
         ...state,
         user: state.user ? { ...state.user, ...action.payload } : null,
       };
+      break;
     default:
-      return state;
+      newState = state;
   }
+  console.log('[AuthReducer] Estado NOVO:', newState);
+  console.log('[AuthReducer] Usuário autenticado após reducer:', !!newState.user);
+  return newState;
 };
 
 interface AuthProviderProps {
@@ -34,34 +45,39 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   });
 
   useEffect(() => {
-    checkAuthStatus();
-  }, []);
-
+    const checkInitialAuth = async () => {
+      console.log('[Auth] Iniciando checkAuthStatus...');
+      await checkAuthStatus();
+      // O console.log do estado atualizado é melhor no reducer ou no valor do provider
+    };
+    checkInitialAuth();
+  }, []); // Removido checkAuthStatus da dependência para evitar loop se ele próprio mudar estado
+  
   const checkAuthStatus = async () => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
-      
+      console.log('[Auth] checkAuthStatus - Verificando token...');
       const token = localStorage.getItem('auth_token');
       if (!token) {
+        console.log('[Auth] checkAuthStatus - Nenhum token encontrado.');
         dispatch({ type: 'SET_USER', payload: null });
         return;
       }
-
-      const response = await fetch('/api/auth/me', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
+  
+      console.log('[Auth] checkAuthStatus - Token encontrado, validando...');
+      const response = await fetch('/api/auth/me', { /* ... */ });
+  
       if (response.ok) {
         const user = await response.json();
+        console.log('[Auth] checkAuthStatus - Usuário validado:', user);
         dispatch({ type: 'LOGIN_SUCCESS', payload: user });
       } else {
+        console.log('[Auth] checkAuthStatus - Falha ao validar token, limpando.');
         localStorage.removeItem('auth_token');
         dispatch({ type: 'SET_USER', payload: null });
       }
     } catch (error) {
-      console.error('Auth check failed:', error);
+      console.error('[Auth] checkAuthStatus - Erro:', error);
       dispatch({ type: 'SET_USER', payload: null });
     }
   };

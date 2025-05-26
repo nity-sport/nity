@@ -2,16 +2,16 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { Eye, EyeOff } from 'lucide-react';
-import { FcGoogle } from 'react-icons/fc';
-import { FaApple } from 'react-icons/fa';
 import styles from './Auth.module.css';
+import { useAuth } from '../../src/contexts/AuthContext';
 
 export default function SignIn() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false); // O useAuth já tem isLoading
   const [error, setError] = useState('');
   const router = useRouter();
+  const { login, isLoading: authLoading, loginWithGoogle, loginWithFacebook } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -20,31 +20,47 @@ export default function SignIn() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     setError('');
-
+  
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        router.push('/');
-      } else {
-        setError(data.message || 'Login failed');
+      await login(formData.email, formData.password);
+      router.push('/');
+    } catch (err: any) {
+      console.log('Erro recebido do login:', err);
+      console.log('Mensagem de erro:', err.message); // Confirmado como "Login failed"
+  
+      let displayMessage = 'Login failed. Please try again.';
+  
+      if (err && err.message) {
+        const lowerCaseMessage = err.message.toLowerCase();
+  
+        // Ajuste a condição para verificar a mensagem que você está recebendo
+        if (lowerCaseMessage === 'login failed') { // <--- MUDANÇA AQUI
+          displayMessage = 'Invalid email or password. Please check your details and try again.';
+        } else if (lowerCaseMessage.includes('email and password are required')) {
+          displayMessage = 'Please fill in your email and password.';
+        }
+        // Adicione mais 'else if' para outras mensagens de erro específicas, se houver.
+        else {
+          displayMessage = 'Unable to log in. Try again later';
+          // O console.error("Login API error:", err.message) não é mais necessário aqui
+          // pois você já logou err.message acima.
+        }
       }
-    } catch {
-      setError('Network error. Please try again.');
-    } finally {
-      setLoading(false);
+      setError(displayMessage);
     }
   };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      await loginWithGoogle();
+      // O backend e o AuthProvider cuidarão do redirecionamento e estado
+    } catch (err: any) {
+      setError(err.message || 'Google Sign-In failed.');
+    }
+  };
+
+  // Adicione uma função similar para handleFacebookSignIn se necessário
 
   const toggleShowPassword = () => setShowPassword(prev => !prev);
 
@@ -62,10 +78,11 @@ export default function SignIn() {
         <p className={styles.subtitle}>PLEASE LOGIN INTO YOUR NITY ACCOUNT</p>
         </div>
         <div className={styles.socialButtons}>
-          <button className={styles.socialButton}>
+          {/* Atualize para usar as funções do useAuth se disponíveis */}
+          <button className={styles.socialButton} onClick={handleGoogleSignIn} disabled={authLoading}>
             <span><img src="/assets/google-icon.svg" alt="Google Icon" style={{ width: '20px', height: '20px' }} /></span> Sign in with Google
           </button>
-          <button className={styles.socialButton}>
+          <button className={styles.socialButton} /* onClick={handleFacebookSignIn} */ disabled={authLoading}>
             <span><img src="/assets/apple-icon.svg" alt="Apple Icon" style={{ width: '20px', height: '20px' }} /></span> Sign in with Apple
           </button>
         </div>
@@ -77,6 +94,7 @@ export default function SignIn() {
         {error && <div className={styles.errorMessage}>{error}</div>}
 
         <form onSubmit={handleSubmit} className={styles.form}>
+          {/* ... (campos de email e senha como antes) ... */}
           <label htmlFor="email" className={styles.label}>
             E-mail
           </label>
@@ -89,6 +107,7 @@ export default function SignIn() {
             className={styles.input}
             required
             placeholder="Enter your E-mail"
+            disabled={authLoading}
           />
 
           <label htmlFor="password" className={styles.label}>
@@ -104,12 +123,14 @@ export default function SignIn() {
               className={styles.input}
               required
               placeholder="Enter your Password"
+              disabled={authLoading}
             />
             <button
               type="button"
               onClick={toggleShowPassword}
               className={styles.eyeButton}
               aria-label="Toggle password visibility"
+              disabled={authLoading}
             >
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
@@ -117,10 +138,10 @@ export default function SignIn() {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={authLoading} // Usar o isLoading do contexto
             className={styles.submitButton}
           >
-            {loading ? 'Logging in...' : 'Login →'}
+            {authLoading ? 'Logging in...' : 'Login →'}
           </button>
         </form>
 

@@ -177,3 +177,12 @@
 .terms input {
   margin-right: 0.5rem;
 }
+
+.errorMessage {
+  background-color: var(--color-muted);
+  color: var(--color-error);
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
