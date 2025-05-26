@@ -1,0 +1,36 @@
+/* nity.zip/pages/settings/Settings.module.css */
+.container {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 2rem auto;
+    background-color: var(--color-surface);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .title {
+    font-family: var(--font-display);
+    color: var(--color-primary-dark);
+    font-size: var(--text-display-md);
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+  
+  .userInfo {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--color-surface-mid);
+  }
+  
+  .section {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border-light);
+  }
+  
+  .sectionTitle {
+    font-family: var(--font-primary);
+    font-size: var(--text-xl);
+    color: var(--color-text-dark);
+    margin-bottom: 1.5rem;
+  }

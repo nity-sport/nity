@@ -1,9 +1,11 @@
 // src/models/SportCenter.ts
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Model } from "mongoose";
 import { SportCenterType } from "../types/sportcenter";
 
+type SportCenterDocument = SportCenterType & Document;
+type SportCenterModel = Model<SportCenterDocument>;
 
-const SportCenterSchema = new Schema<SportCenterType & Document>({
+const SportCenterSchema = new Schema<SportCenterDocument>({
   name: { type: String, required: true },
   mainPhoto: String,
   profilePhoto: String,
@@ -37,5 +39,5 @@ const SportCenterSchema = new Schema<SportCenterType & Document>({
   yearOfFoundation: String,
 });
 
-export default mongoose.models.SportCenter ||
-  mongoose.model<SportCenterType & Document>("SportCenter", SportCenterSchema);
+export default (mongoose.models.SportCenter as SportCenterModel) ||
+  mongoose.model<SportCenterDocument>("SportCenter", SportCenterSchema);
