@@ -1,0 +1,115 @@
+/* src/components/sections/TrainingCentersSection/TrainingCentersSection.module.css */
+.trainingCentersSection {
+    width: 100%;
+    max-width: 1412px;
+    margin: 60px auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary-dark);
+    text-transform: uppercase;
+  }
+  
+  .navigation {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .navButton {
+    background: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-surface-mid);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all 0.2s ease;
+  }
+  
+  .navButton:hover:not(:disabled) {
+    background-color: var(--color-primary-light);
+    color: var(--color-surface);
+    border-color: var(--color-primary-light);
+  }
+  
+  .navButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .pagination {
+    font-family: var(--font-primary);
+    font-size: var(--text-sm);
+    color: var(--color-surface-mid);
+    min-width: 50px;
+    text-align: center;
+  }
+  
+  .carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    gap: 22px;
+    padding-bottom: 20px;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .carousel::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .carousel.active {
+    cursor: grabbing;
+  }
+  
+  .cardWrapper {
+    flex: 0 0 auto;
+  }
+  
+  
+  /* Responsive */
+  @media (max-width: 1440px) {
+    .trainingCentersSection {
+      max-width: 1200px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .trainingCentersSection {
+       margin: 40px auto;
+    }
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+    }
+    .title {
+      font-size: 22px;
+    }
+    .carousel {
+      gap: 16px;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }

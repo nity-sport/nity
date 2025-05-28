@@ -29,4 +29,5 @@ export interface SportCenterType {
   sport: string[];
   sportcenterBio?: string;
   yearOfFoundation?: string;
+  hosterSince?: string;
 }
