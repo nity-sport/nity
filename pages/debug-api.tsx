@@ -1,9 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '../components/layout/Layout';
 
 const DebugApiPage: React.FC = () => {
   const [response, setResponse] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const [envInfo, setEnvInfo] = useState<any>(null);
+
+  useEffect(() => {
+    // Set environment info only on client side
+    setEnvInfo({
+      hasToken: !!localStorage.getItem('auth_token'),
+      tokenLength: localStorage.getItem('auth_token')?.length,
+      currentUrl: window.location.href
+    });
+  }, []);
 
   const testUsersApi = async () => {
     setLoading(true);
@@ -106,11 +116,7 @@ const DebugApiPage: React.FC = () => {
         <div style={{ marginTop: '2rem' }}>
           <h2>Environment Info:</h2>
           <pre style={{ background: '#f0f0f0', padding: '1rem', borderRadius: '4px' }}>
-            {JSON.stringify({
-              hasToken: !!localStorage.getItem('auth_token'),
-              tokenLength: localStorage.getItem('auth_token')?.length,
-              currentUrl: window.location.href
-            }, null, 2)}
+            {envInfo ? JSON.stringify(envInfo, null, 2) : 'Loading...'}
           </pre>
         </div>
       </div>

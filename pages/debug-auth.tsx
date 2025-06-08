@@ -8,19 +8,22 @@ const DebugAuthPage: React.FC = () => {
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('auth_token');
-    setToken(storedToken);
-    
-    if (storedToken) {
-      // Test API call
-      fetch('/api/auth/me', {
-        headers: {
-          'Authorization': `Bearer ${storedToken}`
-        }
-      })
-      .then(res => res.json())
-      .then(data => setApiResponse(data))
-      .catch(err => setApiResponse({ error: err.message }));
+    // Only run on client side
+    if (typeof window !== 'undefined') {
+      const storedToken = localStorage.getItem('auth_token');
+      setToken(storedToken);
+      
+      if (storedToken) {
+        // Test API call
+        fetch('/api/auth/me', {
+          headers: {
+            'Authorization': `Bearer ${storedToken}`
+          }
+        })
+        .then(res => res.json())
+        .then(data => setApiResponse(data))
+        .catch(err => setApiResponse({ error: err.message }));
+      }
     }
   }, []);
 
@@ -55,8 +58,10 @@ const DebugAuthPage: React.FC = () => {
         <h2>Actions:</h2>
         <button 
           onClick={() => {
-            localStorage.removeItem('auth_token');
-            window.location.reload();
+            if (typeof window !== 'undefined') {
+              localStorage.removeItem('auth_token');
+              window.location.reload();
+            }
           }}
           style={{ margin: '0.5rem', padding: '0.5rem 1rem' }}
         >
