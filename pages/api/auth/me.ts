@@ -32,6 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       name: user.name,
       avatar: user.avatar,
       provider: user.provider,
+      role: user.role,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     };

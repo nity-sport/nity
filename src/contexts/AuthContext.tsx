@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import { AuthContextType, AuthState, AuthAction, User } from '../types/auth';
+import { AuthContextType, AuthState, AuthAction, User, UserRole } from '../types/auth';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -187,6 +187,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const hasRole = (role: UserRole): boolean => {
+    return state.user?.role === role;
+  };
+
+  const hasAnyRole = (roles: UserRole[]): boolean => {
+    return state.user ? roles.includes(state.user.role) : false;
+  };
+
+  const isSuperuser = hasRole(UserRole.SUPERUSER);
+  const isMarketing = hasRole(UserRole.MARKETING);
+  const isOwner = hasRole(UserRole.OWNER);
+
+  const canManageUsers = isSuperuser;
+  const canCreateExperiences = hasAnyRole([UserRole.SUPERUSER, UserRole.MARKETING]);
+  const canManageSportCenters = hasAnyRole([UserRole.SUPERUSER, UserRole.OWNER]);
+
   const value: AuthContextType = {
     user: state.user,
     isLoading: state.isLoading,
@@ -197,6 +213,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     register,
     logout,
     updateProfile,
+    hasRole,
+    hasAnyRole,
+    isSuperuser,
+    isMarketing,
+    isOwner,
+    canManageUsers,
+    canCreateExperiences,
+    canManageSportCenters,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

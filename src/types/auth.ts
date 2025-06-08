@@ -1,9 +1,18 @@
+export enum UserRole {
+  SUPERUSER = 'SUPERUSER',
+  MARKETING = 'MARKETING',
+  OWNER = 'OWNER',
+  USER = 'USER',
+  ATHLETE = 'ATHLETE'
+}
+
 export interface User {
   id: string;
   email: string;
   name: string;
   avatar?: string;
   provider: 'google' | 'facebook' | 'email';
+  role: UserRole;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -18,6 +27,14 @@ export interface AuthContextType {
   register: (email: string, password: string, name: string) => Promise<void>;
   logout: () => Promise<void>;
   updateProfile: (data: Partial<User>) => Promise<void>;
+  hasRole: (role: UserRole) => boolean;
+  hasAnyRole: (roles: UserRole[]) => boolean;
+  isSuperuser: boolean;
+  isMarketing: boolean;
+  isOwner: boolean;
+  canManageUsers: boolean;
+  canCreateExperiences: boolean;
+  canManageSportCenters: boolean;
 }
 
 export interface AuthState {

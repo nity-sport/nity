@@ -1,4 +1,5 @@
 import AboutSection from "../components/sections/AboutSection";
+import ExperiencesSection from "../components/sections/ExperiencesSection/ExperienceSection";
 import Hero from "../components/sections/Hero";
 import PartnerSection from "../components/sections/Partner";
 import Sports from "../components/sections/Sports/SportSection";
@@ -11,6 +12,7 @@ export default function HomePage() {
       <Hero />
       <TrainingCentersSection />
       <Sports />
+      <ExperiencesSection />
       <AboutSection />
       <PartnerSection />
 

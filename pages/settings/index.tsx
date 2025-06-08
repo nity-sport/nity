@@ -4,6 +4,7 @@ import SportCenterForm from '../../components/forms/SportCenterForm/SportCenterF
 import { useAuth } from '../../src/contexts/AuthContext';
 import styles from './Settings.module.css';
 import Link from 'next/link';
+import ExperienceForm from '../../components/forms/ExperienceForm/ExperienceForm';
 
 export default function SettingsPage() {
   const { user, isAuthenticated, isLoading } = useAuth();
@@ -29,6 +30,7 @@ export default function SettingsPage() {
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Cadastrar Novo Sport Center</h2>
         <SportCenterForm />
+        <ExperienceForm />
       </section>
       
       {/* Outras seções de configuração podem ser adicionadas aqui */}

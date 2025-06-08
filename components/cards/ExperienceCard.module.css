@@ -1,0 +1,93 @@
+/* components/cards/ExperienceCard/ExperienceCard.module.css */
+.card {
+    background-color: var(--color-surface);
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    width: 280px; /* Largura do card, ajuste conforme necessário */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+  }
+  
+  .imageContainer {
+    position: relative;
+    width: 100%;
+    height: 180px; /* Altura da imagem, ajuste conforme necessário */
+  }
+  
+  .image {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+  
+  .durationBadge {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: var(--text-sm, 12px);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .content {
+    padding: 16px;
+  }
+  
+  .title {
+    font-size: var(--text-lg, 18px);
+    font-weight: var(--font-weight-bold, 700);
+    color: var(--color-text-dark);
+    margin-bottom: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .infoRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  
+  .icon {
+    color: var(--color-surface-mid);
+    flex-shrink: 0;
+  }
+  
+  .location,
+  .category {
+    font-size: var(--text-sm, 14px);
+    color: var(--color-surface-mid);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+  }
+  
+  .category {
+    color: var(--color-primary-dark); /* Destaque para a categoria/tag */
+    font-weight: var(--font-weight-medium);
+  }
+  
+  /* Estilo para avaliação, se você adicionar no futuro
+  .rating {
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary-dark); // Ou uma cor de estrela
+    margin-top: 8px;
+  }
+  */

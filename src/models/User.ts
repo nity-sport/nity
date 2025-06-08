@@ -1,5 +1,13 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
+export enum UserRole {
+  SUPERUSER = 'SUPERUSER',
+  MARKETING = 'MARKETING',
+  OWNER = 'OWNER',
+  USER = 'USER',
+  ATHLETE = 'ATHLETE'
+}
+
 export interface IUser extends Document {
   email: string;
   password?: string;
@@ -8,6 +16,7 @@ export interface IUser extends Document {
   provider: 'google' | 'facebook' | 'email';
   providerId?: string;
   isVerified: boolean;
+  role: UserRole;
   resetPasswordToken?: string;
   resetPasswordExpires?: Date;
   createdAt: Date;
@@ -53,6 +62,12 @@ const UserSchema: Schema = new Schema(
       type: Boolean,
       default: false,
     },
+    role: {
+      type: String,
+      enum: Object.values(UserRole),
+      default: UserRole.USER,
+      required: true,
+    },
     resetPasswordToken: String,
     resetPasswordExpires: Date,
   },
@@ -63,6 +78,7 @@ const UserSchema: Schema = new Schema(
 
 UserSchema.index({ email: 1 });
 UserSchema.index({ providerId: 1, provider: 1 });
+UserSchema.index({ role: 1 });
 
 const User: IUserModel = (mongoose.models.User as IUserModel) || mongoose.model<IUser, IUserModel>('User', UserSchema);
 export default User;
