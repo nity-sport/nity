@@ -64,7 +64,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
   
       console.log('[Auth] checkAuthStatus - Token encontrado, validando...');
-      const response = await fetch('/api/auth/me', { /* ... */ });
+      const response = await fetch('/api/auth/me', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
   
       if (response.ok) {
         const user = await response.json();
