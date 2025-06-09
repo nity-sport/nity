@@ -5,7 +5,7 @@ import Link from 'next/link';
 import styles from './settings/Settings.module.css';
 
 const ProfilePage: React.FC = () => {
-  const { user, isAuthenticated, isSuperuser } = useAuth();
+  const { user, isAuthenticated, isSuperuser, canCreateExperiences } = useAuth();
 
   if (!isAuthenticated) {
     return (
@@ -63,6 +63,12 @@ const ProfilePage: React.FC = () => {
           {isSuperuser && (
             <Link href="/admin/users" className={styles.button}>
               Administrar Usuários
+            </Link>
+          )}
+          
+          {canCreateExperiences && (
+            <Link href="/admin/experiences" className={styles.button}>
+              Gerenciar Experiências
             </Link>
           )}
         </div>

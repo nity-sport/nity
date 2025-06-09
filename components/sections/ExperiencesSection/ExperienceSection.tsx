@@ -30,8 +30,9 @@ const ExperiencesSection: React.FC<ExperiencesSectionProps> = ({ title = "Experi
           throw new Error('Falha ao buscar experiências');
         }
         const data = await response.json();
-        if (data.success) {
-          let fetchedExperiences = data.data as ExperienceType[];
+        // A API retorna { experiences: [...], pagination: {...} }
+        if (data.experiences) {
+          let fetchedExperiences = data.experiences as ExperienceType[];
           if (filter) {
             fetchedExperiences = fetchedExperiences.filter(exp => exp.category === filter);
           }

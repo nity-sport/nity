@@ -27,6 +27,7 @@ export interface ExperienceType {
   location: ExperienceLocation;
   duration?: string; // Ex: "2 horas", "1 dia"
   price: number;
+  availableQuantity: number;
   currency: string;
   availableDates: string[]; // Para o formulário, trataremos como strings ISO, depois convertemos para Date
   isFeatured?: boolean;

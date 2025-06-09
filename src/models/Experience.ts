@@ -5,9 +5,23 @@ export interface IExperience extends Document {
   title: string;
   description: string;
   coverImage: string;
-  category: string;
+  gallery: string[];
+  category: 'tour' | 'event';
+  tags: string[];
+  location: {
+    name: string;
+    address: string;
+    coordinates: {
+      lat: number;
+      lng: number;
+    };
+  };
+  duration: string;
   price: number;
+  availableQuantity: number;
+  currency: string;
   visibility: 'public' | 'private' | 'draft';
+  isFeatured: boolean;
   owner: {
     userId: string;
     name: string;
@@ -25,9 +39,23 @@ const ExperienceSchema = new Schema<ExperienceDocument>({
   title: { type: String, required: true },
   description: { type: String, required: true },
   coverImage: { type: String, required: true },
-  category: { type: String, required: true },
-  price: { type: Number, required: true },
+  gallery: [{ type: String }],
+  category: { type: String, enum: ['tour', 'event'], required: true },
+  tags: [{ type: String }],
+  location: {
+    name: { type: String, required: true },
+    address: { type: String, required: true },
+    coordinates: {
+      lat: { type: Number, required: true },
+      lng: { type: Number, required: true }
+    }
+  },
+  duration: { type: String },
+  price: { type: Number, required: true, min: 0 },
+  availableQuantity: { type: Number, required: true, min: 0, default: 1 },
+  currency: { type: String, default: 'BRL' },
   visibility: { type: String, enum: ['public', 'private', 'draft'], default: 'public' },
+  isFeatured: { type: Boolean, default: false },
   owner: {
     userId: { type: String, required: true },
     name: { type: String, required: true },

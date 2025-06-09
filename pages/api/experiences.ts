@@ -8,9 +8,23 @@ interface ExperienceInput {
   title: string;
   description: string;
   coverImage: string;
-  category: string;
+  gallery?: string[];
+  category: 'tour' | 'event';
+  tags?: string[];
+  location: {
+    name: string;
+    address: string;
+    coordinates: {
+      lat: number;
+      lng: number;
+    };
+  };
+  duration?: string;
   price: number;
+  availableQuantity: number;
+  currency?: string;
   visibility: 'public' | 'private' | 'draft';
+  isFeatured?: boolean;
   availableDates: string[];
 }
 
@@ -23,19 +37,79 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   switch (req.method) {
     case 'GET':
       try {
-        // Filtra para mostrar apenas 'public' se não houver usuário logado ou
-        // se o usuário logado não for o dono.
-        // Se o usuário estiver logado e quiser ver as suas próprias (incluindo draft/private),
-        // precisaria de um parâmetro extra, ex: /api/experiences?mine=true
-        // Por agora, vamos retornar todas as publicas para todos, e logados podem ver as suas.
-        // Ou, podemos simplesmente retornar todas e o frontend filtra se necessário.
-        // Para um componente genérico, retornar todas as publicas é mais seguro.
-        // Se for para uma área de "Minhas Experiências", o filtro por owner.userId seria aqui.
+        // Extract query parameters
+        const { page = '1', limit = '12', search, visibility } = req.query;
+        const pageNum = parseInt(page as string);
+        const limitNum = parseInt(limit as string);
+        const skip = (pageNum - 1) * limitNum;
 
-        // Simples: Retorna todas as experiências públicas
-        // Futuramente, pode-se adicionar paginação, filtros por categoria, etc.
-        const experiences = await ExperienceModel.find({ visibility: 'public' }).sort({ createdAt: -1 });
-        res.status(200).json({ success: true, data: experiences });
+        // Build query based on user permissions and filters
+        let query: any = {};
+
+        // If user is authenticated and has permissions, they can see all their experiences
+        // Otherwise, only show public experiences
+        if (decodedToken?.userId) {
+          // Authenticated users can see their own experiences with any visibility
+          // Plus all public experiences from others
+          if (visibility && visibility !== 'all') {
+            query = {
+              $or: [
+                { 'owner.userId': decodedToken.userId, visibility: visibility },
+                { 'owner.userId': { $ne: decodedToken.userId }, visibility: 'public' }
+              ]
+            };
+          } else {
+            query = {
+              $or: [
+                { 'owner.userId': decodedToken.userId },
+                { 'owner.userId': { $ne: decodedToken.userId }, visibility: 'public' }
+              ]
+            };
+          }
+        } else {
+          // Non-authenticated users only see public experiences
+          query.visibility = 'public';
+        }
+
+        // Add search filter if provided
+        if (search) {
+          query.$and = query.$and || [];
+          query.$and.push({
+            $or: [
+              { title: { $regex: search, $options: 'i' } },
+              { description: { $regex: search, $options: 'i' } },
+              { category: { $regex: search, $options: 'i' } },
+              { 'location.name': { $regex: search, $options: 'i' } },
+              { 'location.address': { $regex: search, $options: 'i' } },
+              { tags: { $in: [new RegExp(search as string, 'i')] } }
+            ]
+          });
+        }
+
+        // Get total count for pagination
+        const total = await ExperienceModel.countDocuments(query);
+        const totalPages = Math.ceil(total / limitNum);
+
+        // Fetch experiences with pagination
+        const experiences = await ExperienceModel.find(query)
+          .sort({ createdAt: -1 })
+          .skip(skip)
+          .limit(limitNum);
+
+        // Build pagination info
+        const pagination = {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages,
+          hasNextPage: pageNum < totalPages,
+          hasPrevPage: pageNum > 1
+        };
+
+        res.status(200).json({ 
+          experiences,
+          pagination
+        });
       } catch (error: any) {
         console.error("Erro ao buscar Experiences:", error);
         res.status(400).json({ success: false, error: error.message || 'Erro no servidor ao buscar experiências' });
@@ -65,8 +139,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           availableDates: experienceData.availableDates.map(dateStr => new Date(dateStr)),
         };
 
-        if (!fullExperienceData.title || !fullExperienceData.description || !fullExperienceData.coverImage || !fullExperienceData.category || fullExperienceData.price === undefined) {
-          return res.status(400).json({ success: false, error: 'Campos obrigatórios faltando.' });
+        if (!fullExperienceData.title || !fullExperienceData.description || !fullExperienceData.coverImage || 
+            !fullExperienceData.category || fullExperienceData.price === undefined || 
+            !fullExperienceData.location?.name || !fullExperienceData.location?.address ||
+            fullExperienceData.location?.coordinates?.lat === undefined || fullExperienceData.location?.coordinates?.lng === undefined) {
+          return res.status(400).json({ success: false, error: 'Campos obrigatórios faltando: título, descrição, imagem de capa, categoria, preço e localização completa.' });
         }
 
         const newExperience = new ExperienceModel(fullExperienceData);

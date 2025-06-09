@@ -8,7 +8,7 @@ import { useAuth } from "../../src/contexts/AuthContext";
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const { user, isAuthenticated, logout, isSuperuser } = useAuth();
+  const { user, isAuthenticated, logout, isSuperuser, canCreateExperiences } = useAuth();
 
   useEffect(() => {
     console.log('🔐 Authentication Status:', {
@@ -88,6 +88,11 @@ export default function Header() {
                 {isSuperuser && (
                   <Link href="/admin/users" className={styles.dropdownItem}>
                     Admin Users
+                  </Link>
+                )}
+                {canCreateExperiences && (
+                  <Link href="/admin/experiences" className={styles.dropdownItem}>
+                    Admin Experiences
                   </Link>
                 )}
                 <button 
@@ -186,6 +191,11 @@ export default function Header() {
                   {isSuperuser && (
                     <Link href="/admin/users" className={styles.dropdownItem}>
                       Admin Users
+                    </Link>
+                  )}
+                  {canCreateExperiences && (
+                    <Link href="/admin/experiences" className={styles.dropdownItem}>
+                      Admin Experiences
                     </Link>
                   )}
                   <button 

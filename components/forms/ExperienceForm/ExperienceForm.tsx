@@ -1,4 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { ExperienceType, ExperienceLocation, ExperienceLocationCoordinates } from '../../../src/types/experience'; // Ajuste o caminho se necessário
 import { useAuth } from '../../../src/contexts/AuthContext';
 import styles from './ExperienceForm.module.css'; // Criaremos este arquivo
@@ -25,6 +27,7 @@ const initialFormState: Omit<ExperienceType, '_id' | 'owner' | 'createdAt' | 'up
   location: { ...initialLocationState },
   duration: '',
   price: 0,
+  availableQuantity: 1,
   currency: 'BRL',
   availableDates: [],
   isFeatured: false,
@@ -32,10 +35,49 @@ const initialFormState: Omit<ExperienceType, '_id' | 'owner' | 'createdAt' | 'up
 };
 
 
-export default function ExperienceForm() {
+interface ExperienceFormProps {
+  initialData?: any;
+  onSubmit?: (data: any) => void;
+  onCancel?: () => void;
+}
+
+export default function ExperienceForm({ initialData, onSubmit, onCancel }: ExperienceFormProps) {
   const { user, isLoading: authLoading } = useAuth();
+  
+  // Função para mesclar corretamente os dados iniciais
+  const getInitialFormData = () => {
+    if (!initialData) {
+      return JSON.parse(JSON.stringify(initialFormState));
+    }
+    
+    // Para duplicação, limpa apenas alguns campos específicos e mantém o resto
+    const result = {
+      ...JSON.parse(JSON.stringify(initialFormState)), // Base limpa
+      ...initialData, // Sobrescreve com dados iniciais
+      _id: undefined,
+      owner: undefined,
+      createdAt: undefined,
+      updatedAt: undefined,
+      title: initialData.title ? `${initialData.title} (Cópia)` : initialData.title,
+      availableDates: [], // Reset dates for duplication
+      visibility: 'draft', // Start as draft
+      isFeatured: false, // Remove featured status
+      // Garante que location sempre existe
+      location: initialData.location ? {
+        name: initialData.location.name || '',
+        address: initialData.location.address || '',
+        coordinates: {
+          lat: initialData.location.coordinates?.lat || 0,
+          lng: initialData.location.coordinates?.lng || 0
+        }
+      } : { ...initialLocationState }
+    };
+    
+    return result;
+  };
+  
   const [formData, setFormData] = useState<Omit<ExperienceType, '_id' | 'owner' | 'createdAt' | 'updatedAt'>>(
-    JSON.parse(JSON.stringify(initialFormState))
+    getInitialFormData()
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -43,6 +85,11 @@ export default function ExperienceForm() {
 
   const [coverImageFile, setCoverImageFile] = useState<File | null>(null);
   const [galleryFiles, setGalleryFiles] = useState<FileList | null>(null);
+  const [selectedDates, setSelectedDates] = useState<Date[]>(
+    initialData?.availableDates ? 
+      initialData.availableDates.map((date: any) => new Date(date)).filter((date: Date) => !isNaN(date.getTime())) : 
+      []
+  );
 
   const handleSingleFileChange = (setter: React.Dispatch<React.SetStateAction<File | null>>) => (e: ChangeEvent<HTMLInputElement>) => {
     setter(e.target.files && e.target.files[0] ? e.target.files[0] : null);
@@ -92,12 +139,21 @@ export default function ExperienceForm() {
         ...prev,
         location: {
           ...prev.location,
-          coordinates: { ...prev.location.coordinates, [coordField]: parseFloat(value) || 0 }
+          coordinates: { 
+            ...prev.location?.coordinates,
+            [coordField]: parseFloat(value) || 0 
+          }
         }
       }));
     } else if (name.startsWith("location.")) {
       const locationField = name.split(".")[1] as keyof Omit<ExperienceLocation, 'coordinates'>;
-      setFormData(prev => ({ ...prev, location: { ...prev.location, [locationField]: value } }));
+      setFormData(prev => ({ 
+        ...prev, 
+        location: { 
+          ...prev.location,
+          [locationField]: value 
+        } 
+      }));
     } else if (type === 'checkbox') {
       setFormData(prev => ({ ...prev, [name]: (e.target as HTMLInputElement).checked }));
     } else if (type === 'number') {
@@ -107,13 +163,33 @@ export default function ExperienceForm() {
     }
   };
 
-  const handleArrayStringChange = (fieldName: 'tags' | 'availableDates', rawValue: string) => {
+  const handleArrayStringChange = (fieldName: 'tags', rawValue: string) => {
     if (rawValue.trim() === '') {
       setFormData(prev => ({ ...prev, [fieldName]: [] }));
       return;
     }
     const newArray = rawValue.split(',').map(item => item.trim());
     setFormData(prev => ({ ...prev, [fieldName]: newArray.filter(item => item !== '') }));
+  };
+
+  const handleDateChange = (date: Date | null) => {
+    if (date && !selectedDates.some(selectedDate => selectedDate.getTime() === date.getTime())) {
+      const newDates = [...selectedDates, date].sort((a, b) => a.getTime() - b.getTime());
+      setSelectedDates(newDates);
+      setFormData(prev => ({ 
+        ...prev, 
+        availableDates: newDates.map(d => d.toISOString().split('T')[0])
+      }));
+    }
+  };
+
+  const removeDate = (dateToRemove: Date) => {
+    const newDates = selectedDates.filter(date => date.getTime() !== dateToRemove.getTime());
+    setSelectedDates(newDates);
+    setFormData(prev => ({ 
+      ...prev, 
+      availableDates: newDates.map(d => d.toISOString().split('T')[0])
+    }));
   };
   
   const resetFormStates = () => {
@@ -140,8 +216,8 @@ export default function ExperienceForm() {
       
       const galleryUrls = await uploadMultipleFiles(galleryFiles);
 
-      // Convert string dates to Date objects
-      const finalAvailableDates = formData.availableDates.map(dateStr => new Date(dateStr).toISOString());
+      // Use selected dates from DatePicker
+      const finalAvailableDates = selectedDates.map(date => date.toISOString());
       // Ensure tags are clean
       const cleanedTags = formData.tags?.filter(tag => tag && tag.trim() !== '') || [];
 
@@ -158,18 +234,24 @@ export default function ExperienceForm() {
         },
       };
       
-      const token = localStorage.getItem('auth_token');
-      const response = await fetch('/api/experiences', { // Novo endpoint
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify(finalExperienceData),
-      });
-      const responseData = await response.json();
-      if (!response.ok) {
-        throw new Error(responseData.error || responseData.message || 'Falha ao criar Experience');
+      if (onSubmit) {
+        // Modo administração - usa callback
+        onSubmit(finalExperienceData);
+      } else {
+        // Modo standalone - faz requisição direta
+        const token = localStorage.getItem('auth_token');
+        const response = await fetch('/api/experiences', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          body: JSON.stringify(finalExperienceData),
+        });
+        const responseData = await response.json();
+        if (!response.ok) {
+          throw new Error(responseData.error || responseData.message || 'Falha ao criar Experience');
+        }
+        setSuccess('Experience cadastrada com sucesso!');
+        resetFormStates();
       }
-      setSuccess('Experience cadastrada com sucesso!');
-      resetFormStates();
     } catch (err: any) {
       console.error("Erro ao submeter formulário de Experience:", err);
       setError(err.message || 'Ocorreu um erro.');
@@ -213,15 +295,47 @@ export default function ExperienceForm() {
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="price">Preço *</label>
-          <input type="number" name="price" value={formData.price} onChange={handleChange} required step="0.01" />
+          <input type="number" name="price" value={formData.price} onChange={handleChange} required step="0.01" min="0" />
+        </div>
+        <div className={styles.formGroup}>
+          <label htmlFor="availableQuantity">Quantidade Disponível *</label>
+          <input type="number" name="availableQuantity" value={formData.availableQuantity} onChange={handleChange} required min="1" />
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="currency">Moeda</label>
           <input type="text" name="currency" value={formData.currency} onChange={handleChange} />
         </div>
-         <div className={styles.formGroup}>
-          <label htmlFor="availableDates">Datas Disponíveis (YYYY-MM-DD, separadas por vírgula)</label>
-          <input type="text" name="availableDates" value={formData.availableDates.join(', ')} onChange={(e) => handleArrayStringChange('availableDates', e.target.value)} />
+        <div className={styles.formGroup}>
+          <label htmlFor="availableDates">Datas Disponíveis</label>
+          <DatePicker
+            selected={null}
+            onChange={handleDateChange}
+            minDate={new Date()}
+            placeholderText="Selecione uma data para adicionar"
+            dateFormat="dd/MM/yyyy"
+            className={styles.datePicker}
+          />
+          <small>Clique em uma data para adicioná-la à lista de datas disponíveis</small>
+          
+          {selectedDates.length > 0 && (
+            <div className={styles.selectedDates}>
+              <h4>Datas Selecionadas:</h4>
+              <div className={styles.datesList}>
+                {selectedDates.map((date, index) => (
+                  <div key={index} className={styles.dateItem}>
+                    <span>{date.toLocaleDateString('pt-BR')}</span>
+                    <button
+                      type="button"
+                      onClick={() => removeDate(date)}
+                      className={styles.removeDateButton}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
         <div className={styles.formGroup}>
           <label>
@@ -243,19 +357,19 @@ export default function ExperienceForm() {
         <legend>Localização da Experiência *</legend>
         <div className={styles.formGroup}>
           <label htmlFor="location.name">Nome do Local *</label>
-          <input type="text" name="location.name" value={formData.location.name} onChange={handleChange} required />
+          <input type="text" name="location.name" value={formData.location?.name || ''} onChange={handleChange} required />
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="location.address">Endereço Completo *</label>
-          <input type="text" name="location.address" value={formData.location.address} onChange={handleChange} required />
+          <input type="text" name="location.address" value={formData.location?.address || ''} onChange={handleChange} required />
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="location.coordinates.lat">Latitude *</label>
-          <input type="number" name="location.coordinates.lat" value={formData.location.coordinates.lat} onChange={handleChange} required step="any" />
+          <input type="number" name="location.coordinates.lat" value={formData.location?.coordinates?.lat || 0} onChange={handleChange} required step="any" />
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="location.coordinates.lng">Longitude *</label>
-          <input type="number" name="location.coordinates.lng" value={formData.location.coordinates.lng} onChange={handleChange} required step="any" />
+          <input type="number" name="location.coordinates.lng" value={formData.location?.coordinates?.lng || 0} onChange={handleChange} required step="any" />
         </div>
       </fieldset>
 
@@ -279,9 +393,16 @@ export default function ExperienceForm() {
         </div>
       </fieldset>
 
-      <button type="submit" disabled={loading || authLoading} className={styles.submitButton}>
-        {loading ? 'Cadastrando Experiência...' : 'Cadastrar Experiência'}
-      </button>
+      <div className={styles.formActions}>
+        {onCancel && (
+          <button type="button" onClick={onCancel} className={styles.cancelButton}>
+            Cancelar
+          </button>
+        )}
+        <button type="submit" disabled={loading || authLoading} className={styles.submitButton}>
+          {loading ? 'Salvando...' : (initialData ? 'Atualizar Experiência' : 'Cadastrar Experiência')}
+        </button>
+      </div>
     </form>
   );
 }

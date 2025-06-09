@@ -63,6 +63,14 @@
     min-height: 100px;
     resize: vertical;
   }
+
+  .formGroup small {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: var(--color-surface-mid);
+    font-style: italic;
+  }
   
   .formGroup input[type="checkbox"] {
     margin-right: 0.5rem;
@@ -101,6 +109,13 @@
     border: 1px solid var(--color-success);
   }
   
+  .formActions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 2rem;
+  }
+  
   .submitButton {
     padding: 0.75rem 1.5rem;
     background: var(--gradient-primary);
@@ -113,6 +128,23 @@
     transition: opacity 0.2s ease;
   }
   
+  .cancelButton {
+    padding: 0.75rem 1.5rem;
+    background: var(--color-surface);
+    color: var(--color-text-dark);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .cancelButton:hover {
+    background: var(--color-background);
+    border-color: var(--color-primary-light);
+  }
+  
   .submitButton:disabled {
     opacity: 0.6;
     cursor: not-allowed;
@@ -120,4 +152,66 @@
   
   .submitButton:hover:not(:disabled) {
     opacity: 0.9;
+  }
+  
+  /* DatePicker styles */
+  .datePicker {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: var(--font-primary);
+    box-sizing: border-box;
+  }
+  
+  .selectedDates {
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--color-border-light);
+    border-radius: 4px;
+    background: var(--color-background);
+  }
+  
+  .selectedDates h4 {
+    margin: 0 0 0.75rem 0;
+    font-size: 0.9rem;
+    color: var(--color-surface-dark);
+  }
+  
+  .datesList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .dateItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.75rem;
+    background: var(--color-primary-light);
+    color: white;
+    border-radius: 16px;
+    font-size: 0.875rem;
+  }
+  
+  .removeDateButton {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+  }
+  
+  .removeDateButton:hover {
+    background: rgba(255, 255, 255, 0.2);
   }
