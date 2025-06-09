@@ -20,6 +20,9 @@ export const authenticate = async (
 ) => {
   try {
     console.log('[Auth Middleware] Starting authentication...');
+    console.log('[Auth Middleware] Method:', req.method);
+    console.log('[Auth Middleware] URL:', req.url);
+    
     const token = req.headers.authorization?.replace('Bearer ', '');
     
     if (!token) {
@@ -37,7 +40,9 @@ export const authenticate = async (
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any;
     console.log('[Auth Middleware] Token decoded successfully, userId:', decoded.userId);
     
+    console.log('[Auth Middleware] Connecting to database for user lookup...');
     await dbConnect();
+    console.log('[Auth Middleware] Looking up user...');
     const user = await User.findById(decoded.userId).select('-password');
     
     if (!user) {
@@ -62,6 +67,11 @@ export const authenticate = async (
     next();
   } catch (error) {
     console.error('[Auth Middleware] Authentication failed:', error);
+    console.error('[Auth Middleware] Error details:', {
+      name: error instanceof Error ? error.name : 'Unknown',
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : 'No stack'
+    });
     return res.status(401).json({ message: 'Invalid token', error: error instanceof Error ? error.message : 'Unknown error' });
   }
 };
