@@ -37,6 +37,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       updatedAt: user.updatedAt,
     };
 
+    console.log('[API /auth/me] User found:', {
+      id: userResponse.id,
+      email: userResponse.email,
+      role: userResponse.role,
+      roleType: typeof userResponse.role
+    });
+
     res.status(200).json(userResponse);
   } catch (error) {
     console.error('Auth check error:', error);

@@ -1,12 +1,5 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
-
-export enum UserRole {
-  SUPERUSER = 'SUPERUSER',
-  MARKETING = 'MARKETING',
-  OWNER = 'OWNER',
-  USER = 'USER',
-  ATHLETE = 'ATHLETE'
-}
+import { UserRole } from '../types/auth';
 
 export interface IUser extends Document {
   email: string;

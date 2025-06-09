@@ -4,40 +4,42 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 9999;
   padding: 1rem;
 }
 
 .modal {
-  background: var(--color-white);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--box-shadow-lg);
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   max-width: 600px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
+  position: relative;
+  z-index: 10000;
 }
 
 .header {
   padding: 1.5rem;
-  border-bottom: 1px solid var(--color-gray-200);
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .title {
   margin: 0 0 0.5rem 0;
-  font-size: var(--font-size-xl);
+  font-size: 1.25rem;
   font-weight: 700;
-  color: var(--color-gray-900);
+  color: #111827;
 }
 
 .subtitle {
   margin: 0;
-  font-size: var(--font-size-base);
-  color: var(--color-gray-600);
+  font-size: 1rem;
+  color: #6b7280;
 }
 
 .form {
@@ -47,8 +49,8 @@
 .currentRole {
   margin-bottom: 1.5rem;
   padding: 1rem;
-  background: var(--color-gray-50);
-  border-radius: var(--border-radius-md);
+  background: #f9fafb;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -56,13 +58,13 @@
 
 .label {
   font-weight: 600;
-  color: var(--color-gray-700);
-  font-size: var(--font-size-sm);
+  color: #374151;
+  font-size: 0.875rem;
 }
 
 .currentRoleValue {
   font-weight: 500;
-  color: var(--color-primary-600);
+  color: #2563eb;
 }
 
 .roleOptions {
@@ -74,26 +76,26 @@
   align-items: flex-start;
   gap: 0.75rem;
   padding: 1rem;
-  border: 1px solid var(--color-gray-200);
-  border-radius: var(--border-radius-md);
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
   margin-bottom: 0.75rem;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .roleOption:hover {
-  border-color: var(--color-primary-300);
-  background: var(--color-primary-50);
+  border-color: #93c5fd;
+  background: #eff6ff;
 }
 
 .roleOption:has(.radioInput:checked) {
-  border-color: var(--color-primary-500);
-  background: var(--color-primary-100);
+  border-color: #3b82f6;
+  background: #dbeafe;
 }
 
 .radioInput {
   margin-top: 0.125rem;
-  accent-color: var(--color-primary-600);
+  accent-color: #2563eb;
 }
 
 .roleContent {
@@ -102,13 +104,13 @@
 
 .roleName {
   font-weight: 600;
-  color: var(--color-gray-900);
+  color: #111827;
   margin-bottom: 0.25rem;
 }
 
 .roleDescription {
-  font-size: var(--font-size-sm);
-  color: var(--color-gray-600);
+  font-size: 0.875rem;
+  color: #6b7280;
   line-height: 1.4;
 }
 
@@ -117,44 +119,44 @@
   gap: 1rem;
   justify-content: flex-end;
   padding-top: 1rem;
-  border-top: 1px solid var(--color-gray-200);
+  border-top: 1px solid #e5e7eb;
 }
 
 .cancelButton {
   padding: 0.75rem 1.5rem;
-  background: var(--color-white);
-  color: var(--color-gray-700);
-  border: 1px solid var(--color-gray-300);
-  border-radius: var(--border-radius-md);
-  font-size: var(--font-size-base);
+  background: #ffffff;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .cancelButton:hover:not(:disabled) {
-  background: var(--color-gray-50);
-  border-color: var(--color-gray-400);
+  background: #f9fafb;
+  border-color: #9ca3af;
 }
 
 .submitButton {
   padding: 0.75rem 1.5rem;
-  background: var(--color-primary-600);
-  color: var(--color-white);
+  background: #2563eb;
+  color: #ffffff;
   border: none;
-  border-radius: var(--border-radius-md);
-  font-size: var(--font-size-base);
+  border-radius: 8px;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .submitButton:hover:not(:disabled) {
-  background: var(--color-primary-700);
+  background: #1d4ed8;
 }
 
 .submitButton:disabled {
-  background: var(--color-gray-400);
+  background: #9ca3af;
   cursor: not-allowed;
 }
 

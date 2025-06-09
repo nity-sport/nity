@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
-import User, { UserRole } from '../models/User';
+import User from '../models/User';
+import { UserRole } from '../types/auth';
 import dbConnect from './dbConnect';
 
 export interface AuthenticatedRequest extends NextApiRequest {
@@ -110,15 +111,30 @@ export const createApiHandler = (
   return async (req: AuthenticatedRequest, res: NextApiResponse) => {
     let middlewareIndex = 0;
 
-    const runMiddleware = () => {
+    const runMiddleware = async (): Promise<void> => {
       if (middlewareIndex >= middlewares.length) {
-        return handler(req, res);
+        return await handler(req, res);
       }
 
       const middleware = middlewares[middlewareIndex++];
-      return middleware(req, res, runMiddleware);
+      return new Promise<void>((resolve, reject) => {
+        try {
+          middleware(req, res, () => {
+            runMiddleware().then(resolve).catch(reject);
+          });
+        } catch (error) {
+          reject(error);
+        }
+      });
     };
 
-    return runMiddleware();
+    try {
+      await runMiddleware();
+    } catch (error) {
+      console.error('Middleware or handler error:', error);
+      if (!res.headersSent) {
+        res.status(500).json({ message: 'Internal server error' });
+      }
+    }
   };
 };

@@ -14,7 +14,11 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
       newState = { ...state, user: action.payload, isLoading: false };
       break;
     case 'LOGIN_SUCCESS':
+      console.log('[AuthReducer] LOGIN_SUCCESS - payload recebido:', action.payload);
+      console.log('[AuthReducer] LOGIN_SUCCESS - role no payload:', action.payload?.role);
       newState = { ...state, user: action.payload, isLoading: false };
+      console.log('[AuthReducer] LOGIN_SUCCESS - novo estado user:', newState.user);
+      console.log('[AuthReducer] LOGIN_SUCCESS - role no novo estado:', newState.user?.role);
       break;
     case 'LOGOUT':
       newState = { ...state, user: null, isLoading: false };
@@ -73,6 +77,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       if (response.ok) {
         const user = await response.json();
         console.log('[Auth] checkAuthStatus - Usuário validado:', user);
+        console.log('[Auth] checkAuthStatus - Role específico:', user.role);
+        console.log('[Auth] checkAuthStatus - Todas as propriedades:', Object.keys(user));
         dispatch({ type: 'LOGIN_SUCCESS', payload: user });
       } else {
         console.log('[Auth] checkAuthStatus - Falha ao validar token, limpando.');
@@ -192,6 +198,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const hasRole = (role: UserRole): boolean => {
+    console.log('[Auth] hasRole - state.user:', state.user);
+    console.log('[Auth] hasRole - state.user?.role:', state.user?.role);
+    console.log('[Auth] hasRole - target role:', role);
+    console.log('[Auth] hasRole - comparison result:', state.user?.role === role);
     return state.user?.role === role;
   };
 
@@ -199,13 +209,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return state.user ? roles.includes(state.user.role) : false;
   };
 
-  const isSuperuser = hasRole(UserRole.SUPERUSER);
-  const isMarketing = hasRole(UserRole.MARKETING);
-  const isOwner = hasRole(UserRole.OWNER);
+  const isSuperuser = state.user?.role === UserRole.SUPERUSER;
+  console.log('[Auth] isSuperuser calculation:');
+  console.log('  - state.user:', state.user);
+  console.log('  - state.user?.role:', state.user?.role);
+  console.log('  - UserRole.SUPERUSER:', UserRole.SUPERUSER);
+  console.log('  - Comparison result:', state.user?.role === UserRole.SUPERUSER);
+  console.log('  - Final isSuperuser value:', isSuperuser);
+  const isMarketing = state.user?.role === UserRole.MARKETING;
+  const isOwner = state.user?.role === UserRole.OWNER;
 
   const canManageUsers = isSuperuser;
-  const canCreateExperiences = hasAnyRole([UserRole.SUPERUSER, UserRole.MARKETING]);
-  const canManageSportCenters = hasAnyRole([UserRole.SUPERUSER, UserRole.OWNER]);
+  const canCreateExperiences = state.user ? [UserRole.SUPERUSER, UserRole.MARKETING].includes(state.user.role) : false;
+  const canManageSportCenters = state.user ? [UserRole.SUPERUSER, UserRole.OWNER].includes(state.user.role) : false;
 
   const value: AuthContextType = {
     user: state.user,

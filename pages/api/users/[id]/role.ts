@@ -1,6 +1,7 @@
 import { NextApiResponse } from 'next';
 import mongoose from 'mongoose';
-import User, { UserRole } from '../../../../src/models/User';
+import User from '../../../../src/models/User';
+import { UserRole } from '../../../../src/types/auth';
 import dbConnect from '../../../../src/lib/dbConnect';
 import { 
   AuthenticatedRequest, 

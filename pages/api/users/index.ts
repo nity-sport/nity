@@ -1,6 +1,7 @@
 import { NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
-import User, { UserRole } from '../../../src/models/User';
+import User from '../../../src/models/User';
+import { UserRole } from '../../../src/types/auth';
 import dbConnect from '../../../src/lib/dbConnect';
 import { 
   AuthenticatedRequest, 
@@ -42,11 +43,23 @@ const handleGetUsers = async (req: AuthenticatedRequest, res: NextApiResponse) =
 
     const skip = (Number(page) - 1) * Number(limit);
     
-    const users = await User.find(filter)
+    const usersFromDb = await User.find(filter)
       .select('-password -resetPasswordToken -resetPasswordExpires')
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(Number(limit));
+
+    const users = usersFromDb.map(user => ({
+      id: user._id.toString(),
+      email: user.email,
+      name: user.name,
+      role: user.role,
+      avatar: user.avatar,
+      provider: user.provider,
+      isVerified: user.isVerified,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt
+    }));
 
     const total = await User.countDocuments(filter);
     const totalPages = Math.ceil(total / Number(limit));

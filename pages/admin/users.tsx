@@ -3,7 +3,6 @@ import { useAuth } from '../../src/contexts/AuthContext';
 import { UserRole } from '../../src/types/auth';
 import UserForm from '../../components/forms/UserForm/UserForm';
 import RoleChangeForm from '../../components/forms/RoleChangeForm/RoleChangeForm';
-import Layout from '../../components/layout/Layout';
 import styles from './users.module.css';
 
 interface User {
@@ -30,7 +29,7 @@ interface UsersResponse {
 }
 
 const UsersAdminPage: React.FC = () => {
-  const { user, isSuperuser } = useAuth();
+  const { user, isSuperuser, isLoading: authLoading } = useAuth();
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState<UsersResponse['pagination'] | null>(null);
@@ -43,13 +42,26 @@ const UsersAdminPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    console.log('[Admin Users] useEffect triggered');
+    console.log('[Admin Users] useEffect - isSuperuser:', isSuperuser);
+    console.log('[Admin Users] useEffect - user:', user);
+    console.log('[Admin Users] useEffect - user?.role:', user?.role);
+    console.log('[Admin Users] useEffect - UserRole.SUPERUSER:', UserRole.SUPERUSER);
+    console.log('[Admin Users] useEffect - comparison:', user?.role === UserRole.SUPERUSER);
+    console.log('[Admin Users] useEffect - typeof user?.role:', typeof user?.role);
+    console.log('[Admin Users] useEffect - typeof UserRole.SUPERUSER:', typeof UserRole.SUPERUSER);
+    
     if (!isSuperuser) {
+      console.log('[Admin Users] Access denied - not superuser');
+      console.log('[Admin Users] Access denied - isSuperuser value:', isSuperuser);
+      console.log('[Admin Users] Access denied - user role:', user?.role);
       setError('Acesso negado. Apenas super usuários podem acessar esta página.');
       setLoading(false);
       return;
     }
+    console.log('[Admin Users] Access granted - fetching users');
     fetchUsers();
-  }, [currentPage, searchTerm, roleFilter, isSuperuser]);
+  }, [currentPage, searchTerm, roleFilter, isSuperuser, user]);
 
   const fetchUsers = async () => {
     try {
@@ -182,21 +194,26 @@ const UsersAdminPage: React.FC = () => {
     return `${styles.badge} ${roleClasses[role]}`;
   };
 
-  if (!isSuperuser && !loading) {
+  if (authLoading) {
     return (
-      <Layout>
-        <div className={styles.container}>
-          <div className={styles.errorMessage}>
-            <h1>Acesso Negado</h1>
-            <p>Apenas super usuários podem acessar esta página.</p>
-          </div>
+      <div className={styles.container}>
+        <div className={styles.loading}>Verificando permissões...</div>
+      </div>
+    );
+  }
+
+  if (!isSuperuser) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.errorMessage}>
+          <h1>Acesso Negado</h1>
+          <p>Apenas super usuários podem acessar esta página.</p>
         </div>
-      </Layout>
+      </div>
     );
   }
 
   return (
-    <Layout>
       <div className={styles.container}>
         <div className={styles.header}>
           <h1 className={styles.title}>Administração de Usuários</h1>
@@ -280,14 +297,14 @@ const UsersAdminPage: React.FC = () => {
                       className={styles.roleButton}
                       disabled={userItem.id === user?.id}
                     >
-                      Alterar Perfil
+                      Alterar
                     </button>
                     <button
                       onClick={() => handleDeleteUser(userItem.id)}
                       className={styles.deleteButton}
                       disabled={userItem.id === user?.id}
                     >
-                      Deletar
+                      Excluir
                     </button>
                   </div>
                 </div>
@@ -351,7 +368,6 @@ const UsersAdminPage: React.FC = () => {
           />
         )}
       </div>
-    </Layout>
   );
 };
 
