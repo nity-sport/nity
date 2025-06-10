@@ -8,7 +8,7 @@ import { useAuth } from "../../src/contexts/AuthContext";
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const { user, isAuthenticated, logout, isSuperuser, canCreateExperiences } = useAuth();
+  const { user, isAuthenticated, logout, isSuperuser, canCreateExperiences, canManageSportCenters, canManageFacilities, isOwner } = useAuth();
 
   useEffect(() => {
     console.log('🔐 Authentication Status:', {
@@ -85,6 +85,11 @@ export default function Header() {
                 <Link href="/settings" className={styles.dropdownItem}>
                   Settings
                 </Link>
+                {isOwner && (
+                  <Link href="/owner/dashboard" className={styles.dropdownItem}>
+                    Dashboard Owner
+                  </Link>
+                )}
                 {isSuperuser && (
                   <Link href="/admin/users" className={styles.dropdownItem}>
                     Admin Users
@@ -93,6 +98,16 @@ export default function Header() {
                 {canCreateExperiences && (
                   <Link href="/admin/experiences" className={styles.dropdownItem}>
                     Admin Experiences
+                  </Link>
+                )}
+                {canManageSportCenters && (
+                  <Link href="/admin/sportcenters" className={styles.dropdownItem}>
+                    Admin SportCenters
+                  </Link>
+                )}
+                {canManageFacilities && (
+                  <Link href="/admin/facilities" className={styles.dropdownItem}>
+                    Admin Facilities
                   </Link>
                 )}
                 <button 
@@ -188,6 +203,11 @@ export default function Header() {
                   <Link href="/settings" className={styles.dropdownItem}>
                     Settings
                   </Link>
+                  {isOwner && (
+                    <Link href="/owner/dashboard" className={styles.dropdownItem}>
+                      Dashboard Owner
+                    </Link>
+                  )}
                   {isSuperuser && (
                     <Link href="/admin/users" className={styles.dropdownItem}>
                       Admin Users
@@ -196,6 +216,16 @@ export default function Header() {
                   {canCreateExperiences && (
                     <Link href="/admin/experiences" className={styles.dropdownItem}>
                       Admin Experiences
+                    </Link>
+                  )}
+                  {canManageSportCenters && (
+                    <Link href="/admin/sportcenters" className={styles.dropdownItem}>
+                      Admin SportCenters
+                    </Link>
+                  )}
+                  {canManageFacilities && (
+                    <Link href="/admin/facilities" className={styles.dropdownItem}>
+                      Admin Facilities
                     </Link>
                   )}
                   <button 

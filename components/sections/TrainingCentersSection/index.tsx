@@ -23,21 +23,26 @@ export default function TrainingCentersSection() {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch('/api/sportcenter');
+        const response = await fetch('/api/sportcenter?public=true');
+        
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
+        
         const data = await response.json();
-        if (Array.isArray(data)) {
+        
+        if (data.sportCenters && Array.isArray(data.sportCenters)) {
+          setCenters(data.sportCenters as (SportCenterType & { _id: string })[]);
+        } else if (Array.isArray(data)) {
           setCenters(data as (SportCenterType & { _id: string })[]);
         } else {
           console.warn("Formato de dados inesperado da API:", data);
-          setCenters([]); // Define como array vazio para evitar erros de map
+          setCenters([]);
         }
       } catch (e: any) {
-        console.error("Falha ao buscar centros de treinamento:", e);
+        console.error("[TrainingCentersSection] Falha ao buscar centros de treinamento:", e);
         setError(e.message || "Erro ao carregar dados.");
-        setCenters([]); // Define como array vazio em caso de erro
+        setCenters([]);
       } finally {
         setLoading(false);
       }

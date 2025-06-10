@@ -5,6 +5,8 @@ import { LocationType } from '../../../src/types/location';
 import { CoachType } from '../../../src/types/coach';
 import { FacilityType } from '../../../src/types/facility';
 import { useAuth } from '../../../src/contexts/AuthContext';
+import FacilitySelector from '../FacilitySelector/FacilitySelector';
+import CoachSelector from '../CoachSelector/CoachSelector';
 import styles from './SportCenterForm.module.css';
 
 
@@ -42,10 +44,20 @@ const initialFormState: Omit<SportCenterType, 'owner' | 'ownerMail' | '_id'> = {
   yearOfFoundation: '',
 };
 
-export default function SportCenterForm() {
+interface SportCenterFormProps {
+  initialData?: Partial<SportCenterType>;
+  mode?: 'create' | 'edit';
+  onSuccess?: () => void;
+}
+
+export default function SportCenterForm({ 
+  initialData, 
+  mode = 'create',
+  onSuccess 
+}: SportCenterFormProps = {}) {
   const { user, isLoading: authLoading } = useAuth(); //
   const [formData, setFormData] = useState<Omit<SportCenterType, 'owner' | 'ownerMail' | '_id'>>(
-    JSON.parse(JSON.stringify(initialFormState)) 
+    initialData ? { ...initialFormState, ...initialData } : JSON.parse(JSON.stringify(initialFormState)) 
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -59,6 +71,73 @@ export default function SportCenterForm() {
   const [dormitoryPhotosFiles, setDormitoryPhotosFiles] = useState<FileList | null>(null);
   const [coachesJson, setCoachesJson] = useState<string>('[]');
   const [facilitiesJson, setFacilitiesJson] = useState<string>('[]');
+  const [selectedFacilityIds, setSelectedFacilityIds] = useState<string[]>([]);
+  const [selectedCoachIds, setSelectedCoachIds] = useState<string[]>([]);
+
+  // Carregar facilities e coaches pré-selecionados no modo de edição
+  React.useEffect(() => {
+    if (mode === 'edit' && initialData) {
+      // Carregar facilities existentes
+      if (initialData.facilities) {
+        const loadExistingFacilities = async () => {
+          try {
+            const response = await fetch('/api/facilities');
+            if (response.ok) {
+              const data = await response.json();
+              const allFacilities = data.facilities || [];
+              
+              // Encontrar IDs das facilities que correspondem às existentes
+              const facilityIds: string[] = [];
+              initialData.facilities?.forEach(existingFacility => {
+                const matchingFacility = allFacilities.find((facility: any) => 
+                  facility.name === existingFacility.name
+                );
+                if (matchingFacility) {
+                  facilityIds.push(matchingFacility._id);
+                }
+              });
+              
+              setSelectedFacilityIds(facilityIds);
+            }
+          } catch (error) {
+            console.warn('Erro ao carregar facilities existentes:', error);
+          }
+        };
+        
+        loadExistingFacilities();
+      }
+
+      // Carregar coaches existentes
+      if (initialData.coaches) {
+        const loadExistingCoaches = async () => {
+          try {
+            const response = await fetch('/api/coach?public=true&limit=100');
+            if (response.ok) {
+              const data = await response.json();
+              const allCoaches = data.coaches || [];
+              
+              // Encontrar IDs dos coaches que correspondem aos existentes
+              const coachIds: string[] = [];
+              initialData.coaches?.forEach(existingCoach => {
+                const matchingCoach = allCoaches.find((coach: any) => 
+                  coach.name === existingCoach.name
+                );
+                if (matchingCoach) {
+                  coachIds.push(matchingCoach._id);
+                }
+              });
+              
+              setSelectedCoachIds(coachIds);
+            }
+          } catch (error) {
+            console.warn('Erro ao carregar coaches existentes:', error);
+          }
+        };
+        
+        loadExistingCoaches();
+      }
+    }
+  }, [mode, initialData]);
 
   const handleSingleFileChange = (setter: React.Dispatch<React.SetStateAction<File | null>>) => (e: ChangeEvent<HTMLInputElement>) => {
     setter(e.target.files && e.target.files[0] ? e.target.files[0] : null);
@@ -138,6 +217,8 @@ export default function SportCenterForm() {
     setDormitoryPhotosFiles(null);
     setCoachesJson('[]');
     setFacilitiesJson('[]');
+    setSelectedFacilityIds([]);
+    setSelectedCoachIds([]);
   }
 
   const handleSubmit = async (e: FormEvent) => {
@@ -158,20 +239,49 @@ export default function SportCenterForm() {
       const photosUrls = await uploadMultipleFiles(photosFiles);
       const dormitoryPhotosUrls = await uploadMultipleFiles(dormitoryPhotosFiles);
 
+      // Buscar coaches selecionados pelos IDs
       let parsedCoaches: CoachType[] = [];
-      try {
-        parsedCoaches = JSON.parse(coachesJson);
-        if (!Array.isArray(parsedCoaches)) throw new Error("Coaches JSON não é um array.");
-      } catch (jsonError: any) {
-        throw new Error(`Erro ao parsear JSON de Coaches: ${jsonError.message}`);
+      if (selectedCoachIds.length > 0) {
+        try {
+          const coachesResponse = await fetch('/api/coach?public=true&limit=100');
+          if (coachesResponse.ok) {
+            const coachesData = await coachesResponse.json();
+            const allCoaches = coachesData.coaches || [];
+            parsedCoaches = allCoaches.filter((coach: any) => 
+              selectedCoachIds.includes(coach._id)
+            ).map((coach: any) => ({
+              name: coach.name,
+              age: coach.age,
+              miniBio: coach.miniBio,
+              achievements: coach.achievements,
+              profileImage: coach.profileImage
+            }));
+          }
+        } catch (coachesError: any) {
+          console.warn('Erro ao buscar coaches:', coachesError);
+          // Em caso de erro, continua sem coaches
+        }
       }
 
+      // Buscar facilities selecionadas pelos IDs
       let parsedFacilities: FacilityType[] = [];
-      try {
-        parsedFacilities = JSON.parse(facilitiesJson);
-        if (!Array.isArray(parsedFacilities)) throw new Error("Facilities JSON não é um array.");
-      } catch (jsonError: any) {
-        throw new Error(`Erro ao parsear JSON de Facilities: ${jsonError.message}`);
+      if (selectedFacilityIds.length > 0) {
+        try {
+          const facilitiesResponse = await fetch('/api/facilities');
+          if (facilitiesResponse.ok) {
+            const facilitiesData = await facilitiesResponse.json();
+            const allFacilities = facilitiesData.facilities || [];
+            parsedFacilities = allFacilities.filter((facility: any) => 
+              selectedFacilityIds.includes(facility._id)
+            ).map((facility: any) => ({
+              name: facility.name,
+              icon: facility.icon
+            }));
+          }
+        } catch (facilitiesError: any) {
+          console.warn('Erro ao buscar facilities:', facilitiesError);
+          // Em caso de erro, continua sem facilities
+        }
       }
 
       // --- MODIFICAÇÃO AQUI: Limpeza dos arrays de string antes de enviar ---
@@ -200,17 +310,27 @@ export default function SportCenterForm() {
       };
       
       const token = localStorage.getItem('auth_token');
-      const response = await fetch('/api/sportcenter', { //
-        method: 'POST',
+      const url = mode === 'edit' && (initialData as any)?._id 
+        ? `/api/sportcenter/${(initialData as any)._id}` 
+        : '/api/sportcenter';
+      const method = mode === 'edit' ? 'PUT' : 'POST';
+      
+      const response = await fetch(url, {
+        method,
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(finalSportCenterData),
       });
       const responseData = await response.json();
       if (!response.ok) {
-        throw new Error(responseData.error || responseData.message || 'Falha ao criar SportCenter');
+        throw new Error(responseData.error || responseData.message || `Falha ao ${mode === 'edit' ? 'atualizar' : 'criar'} SportCenter`);
       }
-      setSuccess('SportCenter cadastrado com sucesso!');
-      resetFormStates();
+      setSuccess(`SportCenter ${mode === 'edit' ? 'atualizado' : 'cadastrado'} com sucesso!`);
+      if (mode === 'create') {
+        resetFormStates();
+      }
+      if (onSuccess) {
+        onSuccess();
+      }
     } catch (err: any) {
       console.error("Erro ao submeter formulário:", err);
       setError(err.message || 'Ocorreu um erro.');
@@ -357,27 +477,30 @@ export default function SportCenterForm() {
       </fieldset>
 
       <fieldset className={styles.fieldset}>
-        <legend>Coaches (Formato JSON Array)</legend>
-        <div className={styles.formGroup}>
-          <label htmlFor="coachesJson">
-            Array de Coaches. Ex: {JSON.stringify([{ name: "Coach Name", age: 30, miniBio: "Experienced" , profileImage: "url_imagem_coach.jpg"}], null, 2)}
-          </label>
-          <textarea name="coachesJson" value={coachesJson} onChange={(e) => setCoachesJson(e.target.value)} rows={5} placeholder='Cole ou digite o JSON aqui...' />
-        </div>
+        <legend>Coaches</legend>
+        <CoachSelector
+          selectedCoaches={selectedCoachIds}
+          onSelectionChange={setSelectedCoachIds}
+          label="Selecione os coaches disponíveis"
+          multiple={true}
+        />
       </fieldset>
       
       <fieldset className={styles.fieldset}>
-        <legend>Facilities (Formato JSON Array)</legend>
-        <div className={styles.formGroup}>
-          <label htmlFor="facilitiesJson">
-            Array de Facilities. Ex: {JSON.stringify([{ name: "Piscina Olímpica", icon: "pool_icon_url.svg" }], null, 2)}
-          </label>
-          <textarea name="facilitiesJson" value={facilitiesJson} onChange={(e) => setFacilitiesJson(e.target.value)} rows={5} placeholder='Cole ou digite o JSON aqui...'/>
-        </div>
+        <legend>Facilities</legend>
+        <FacilitySelector
+          selectedFacilities={selectedFacilityIds}
+          onSelectionChange={setSelectedFacilityIds}
+          label="Selecione as facilities disponíveis"
+          multiple={true}
+        />
       </fieldset>
 
       <button type="submit" disabled={loading || authLoading} className={styles.submitButton}>
-        {loading ? 'Cadastrando...' : 'Cadastrar Sport Center'}
+        {loading 
+          ? (mode === 'edit' ? 'Atualizando...' : 'Cadastrando...') 
+          : (mode === 'edit' ? 'Atualizar Sport Center' : 'Cadastrar Sport Center')
+        }
       </button>
     </form>
   );

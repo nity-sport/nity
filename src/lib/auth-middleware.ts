@@ -114,6 +114,46 @@ export const requireAuthenticated = authorize([
   UserRole.ATHLETE
 ]);
 
+// Helper function that returns authenticated user or null
+export const authenticateToken = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+): Promise<{ id: string; email: string; name: string; role: UserRole } | null> => {
+  try {
+    const token = req.headers.authorization?.replace('Bearer ', '');
+    
+    if (!token) {
+      res.status(401).json({ message: 'No token provided' });
+      return null;
+    }
+
+    if (!process.env.JWT_SECRET) {
+      res.status(500).json({ message: 'Server configuration error' });
+      return null;
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any;
+    
+    await dbConnect();
+    const user = await User.findById(decoded.userId).select('-password');
+    
+    if (!user) {
+      res.status(401).json({ message: 'Invalid token' });
+      return null;
+    }
+
+    return {
+      id: user._id.toString(),
+      email: user.email,
+      name: user.name,
+      role: user.role,
+    };
+  } catch (error) {
+    res.status(401).json({ message: 'Invalid token' });
+    return null;
+  }
+};
+
 export const createApiHandler = (
   handler: (req: AuthenticatedRequest, res: NextApiResponse) => Promise<void>,
   middlewares: Array<(req: AuthenticatedRequest, res: NextApiResponse, next: () => void) => void> = []

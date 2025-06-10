@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../../src/lib/dbConnect";
 import SportCenter from "../../../src/models/SportCenter";
+import User from "../../../src/models/User";
 import { getTokenFromHeader, verifyToken } from "../../../src/lib/auth";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -36,9 +37,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const sportCenter = await SportCenter.findById(id);
         if (!sportCenter) return res.status(404).json({ message: "SportCenter não encontrado" });
 
-        // Verifica se o usuário logado é o proprietário
-        if (sportCenter.owner.toString() !== decodedUser.userId) {
-          return res.status(403).json({ message: "Proibido: Você não é o proprietário deste SportCenter" });
+        // Busca informações do usuário para verificar role
+        const user = await User.findById(decodedUser.userId);
+        if (!user) {
+          return res.status(401).json({ message: "Usuário não encontrado" });
+        }
+
+        // Verifica se o usuário logado é o proprietário OU é um SUPERUSER
+        const isOwner = sportCenter.owner.toString() === decodedUser.userId;
+        const isSuperuser = user.role === 'SUPERUSER';
+        
+        if (!isOwner && !isSuperuser) {
+          return res.status(403).json({ message: "Proibido: Você não é o proprietário deste SportCenter nem tem permissão de administrador" });
         }
 
         const updatedSportCenter = await SportCenter.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
@@ -62,8 +72,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const sportCenter = await SportCenter.findById(id);
         if (!sportCenter) return res.status(404).json({ message: "SportCenter não encontrado" });
 
-        if (sportCenter.owner.toString() !== decodedUser.userId) {
-          return res.status(403).json({ message: "Proibido: Você não é o proprietário" });
+        // Busca informações do usuário para verificar role
+        const user = await User.findById(decodedUser.userId);
+        if (!user) {
+          return res.status(401).json({ message: "Usuário não encontrado" });
+        }
+
+        // Verifica se o usuário logado é o proprietário OU é um SUPERUSER
+        const isOwner = sportCenter.owner.toString() === decodedUser.userId;
+        const isSuperuser = user.role === 'SUPERUSER';
+        
+        if (!isOwner && !isSuperuser) {
+          return res.status(403).json({ message: "Proibido: Você não é o proprietário deste SportCenter nem tem permissão de administrador" });
         }
 
         await SportCenter.findByIdAndDelete(id);

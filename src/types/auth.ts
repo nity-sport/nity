@@ -35,6 +35,8 @@ export interface AuthContextType {
   canManageUsers: boolean;
   canCreateExperiences: boolean;
   canManageSportCenters: boolean;
+  canManageFacilities: boolean;
+  canManageCoaches: boolean;
 }
 
 export interface AuthState {

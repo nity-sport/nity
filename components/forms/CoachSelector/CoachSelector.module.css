@@ -1,0 +1,275 @@
+.container {
+  margin-bottom: 1.5rem;
+}
+
+.label {
+  display: block;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gray-700);
+  font-size: var(--text-sm);
+  margin-bottom: 0.75rem;
+}
+
+.loading,
+.error {
+  padding: 1rem;
+  text-align: center;
+  border-radius: 6px;
+  font-size: var(--text-sm);
+}
+
+.loading {
+  background: var(--color-gray-50);
+  color: var(--color-gray-600);
+}
+
+.error {
+  background: var(--color-red-50);
+  color: var(--color-red-600);
+  border: 1px solid var(--color-red-200);
+}
+
+.coachesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.coachCard {
+  background: var(--color-white);
+  border: 2px solid var(--color-gray-200);
+  border-radius: 12px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  min-height: 120px;
+}
+
+.coachCard:hover {
+  border-color: var(--color-primary-light);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.coachCard.selected {
+  border-color: var(--color-primary-light);
+  background: var(--color-primary-50, #f0f9ff);
+  box-shadow: 0 0 0 1px var(--color-primary-light);
+}
+
+.coachContent {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  width: 100%;
+  position: relative;
+  min-height: 80px;
+}
+
+.imageContainer {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.coachImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid var(--color-gray-200);
+}
+
+.defaultAvatar {
+  width: 100%;
+  height: 100%;
+  background: var(--color-gray-100);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gray-500);
+  border: 2px solid var(--color-gray-200);
+}
+
+.avatarIcon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.coachInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0; /* Allow text truncation */
+}
+
+.coachName {
+  font-size: var(--text-base);
+  color: var(--color-gray-900);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.2;
+}
+
+.selected .coachName {
+  color: var(--color-primary-dark);
+}
+
+.coachAge {
+  font-size: var(--text-xs);
+  color: var(--color-gray-500);
+  font-weight: var(--font-weight-medium);
+}
+
+.coachBio {
+  font-size: var(--text-xs);
+  color: var(--color-gray-600);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.selectionIndicator {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: var(--color-white);
+  border-radius: 50%;
+  padding: 0.125rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.checkbox,
+.radio {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid var(--color-gray-300);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.checkbox {
+  border-radius: 3px;
+}
+
+.radio {
+  border-radius: 50%;
+}
+
+.checkbox.checked,
+.radio.checked {
+  background: var(--color-primary-light);
+  border-color: var(--color-primary-light);
+}
+
+.checkIcon {
+  width: 0.75rem;
+  height: 0.75rem;
+  color: var(--color-white);
+}
+
+.radioDot {
+  width: 0.5rem;
+  height: 0.5rem;
+  background: var(--color-white);
+  border-radius: 50%;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 3rem 1rem;
+  background: var(--color-gray-50);
+  border-radius: 12px;
+  border: 1px dashed var(--color-gray-300);
+}
+
+.emptyState p {
+  margin: 0 0 0.5rem 0;
+  color: var(--color-gray-600);
+  font-size: var(--text-sm);
+}
+
+.emptyState p:last-child {
+  margin-bottom: 0;
+  font-size: var(--text-xs);
+  color: var(--color-gray-500);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .coachesGrid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .coachCard {
+    padding: 0.75rem;
+    min-height: 100px;
+  }
+  
+  .coachContent {
+    gap: 0.75rem;
+  }
+  
+  .imageContainer {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .coachName {
+    font-size: var(--text-sm);
+  }
+  
+  .coachAge,
+  .coachBio {
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .coachCard {
+    padding: 0.5rem;
+    min-height: 80px;
+  }
+  
+  .imageContainer {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .avatarIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  
+  .selectionIndicator {
+    top: 0.25rem;
+    right: 0.25rem;
+  }
+  
+  .checkbox,
+  .radio {
+    width: 1rem;
+    height: 1rem;
+  }
+  
+  .checkIcon {
+    width: 0.625rem;
+    height: 0.625rem;
+  }
+  
+  .radioDot {
+    width: 0.375rem;
+    height: 0.375rem;
+  }
+}

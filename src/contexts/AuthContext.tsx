@@ -222,6 +222,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const canManageUsers = isSuperuser;
   const canCreateExperiences = state.user ? [UserRole.SUPERUSER, UserRole.MARKETING].includes(state.user.role) : false;
   const canManageSportCenters = state.user ? [UserRole.SUPERUSER, UserRole.OWNER].includes(state.user.role) : false;
+  const canManageFacilities = isSuperuser;
+  const canManageCoaches = isSuperuser;
 
   const value: AuthContextType = {
     user: state.user,
@@ -241,6 +243,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     canManageUsers,
     canCreateExperiences,
     canManageSportCenters,
+    canManageFacilities,
+    canManageCoaches,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
