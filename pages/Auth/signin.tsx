@@ -4,10 +4,12 @@ import Link from 'next/link';
 import { Eye, EyeOff } from 'lucide-react';
 import styles from './Auth.module.css';
 import { useAuth } from '../../src/contexts/AuthContext';
+import ForgotPasswordModal from '../../components/auth/ForgotPasswordModal';
 
 export default function SignIn() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
+  const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
   // const [loading, setLoading] = useState(false); // O useAuth já tem isLoading
   const [error, setError] = useState('');
   const router = useRouter();
@@ -136,6 +138,23 @@ export default function SignIn() {
             </button>
           </div>
 
+          <div style={{ textAlign: 'right', marginBottom: '1rem' }}>
+            <button
+              type="button"
+              onClick={() => setShowForgotPasswordModal(true)}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: '#4da6ff',
+                cursor: 'pointer',
+                fontSize: '0.9rem',
+                textDecoration: 'underline'
+              }}
+            >
+              Forgot your password?
+            </button>
+          </div>
+
           <button
             type="submit"
             disabled={authLoading} // Usar o isLoading do contexto
@@ -152,6 +171,11 @@ export default function SignIn() {
           </Link>
         </p>
       </div>
+
+      <ForgotPasswordModal
+        isOpen={showForgotPasswordModal}
+        onClose={() => setShowForgotPasswordModal(false)}
+      />
     </div>
   );
 }
