@@ -48,9 +48,29 @@ const handleChangeRole = async (req: AuthenticatedRequest, res: NextApiResponse)
       return res.status(400).json({ message: 'Cannot change your own role' });
     }
 
+    // Se estávamos rebaixando um Scout para outro role, verificar indicações
+    if (user.role === UserRole.SCOUT && role !== UserRole.SCOUT && user.affiliateCode) {
+      const referralCount = await User.countDocuments({ referredBy: user.affiliateCode });
+      
+      if (referralCount > 0) {
+        return res.status(400).json({ 
+          message: `Cannot demote Scout: has ${referralCount} active referrals. Consider transferring referrals first.`,
+          referralCount 
+        });
+      }
+    }
+
+    // Preparar update data
+    const updateData: any = { role };
+    
+    // Se rebaixando de Scout, remover código de afiliação
+    if (user.role === UserRole.SCOUT && role !== UserRole.SCOUT) {
+      updateData.affiliateCode = undefined;
+    }
+
     const updatedUser = await User.findByIdAndUpdate(
       id,
-      { role },
+      updateData,
       { new: true, runValidators: true }
     ).select('-password -resetPasswordToken -resetPasswordExpires');
 

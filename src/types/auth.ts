@@ -2,6 +2,7 @@ export enum UserRole {
   SUPERUSER = 'SUPERUSER',
   MARKETING = 'MARKETING',
   OWNER = 'OWNER',
+  SCOUT = 'SCOUT',
   USER = 'USER',
   ATHLETE = 'ATHLETE'
 }
@@ -13,6 +14,8 @@ export interface User {
   avatar?: string;
   provider: 'google' | 'facebook' | 'email';
   role: UserRole;
+  affiliateCode?: string;
+  referredBy?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -24,7 +27,7 @@ export interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   loginWithGoogle: () => Promise<void>;
   loginWithFacebook: () => Promise<void>;
-  register: (email: string, password: string, name: string) => Promise<void>;
+  register: (email: string, password: string, name: string, referralCode?: string) => Promise<void>;
   logout: () => Promise<void>;
   updateProfile: (data: Partial<User>) => Promise<void>;
   hasRole: (role: UserRole) => boolean;
@@ -32,6 +35,7 @@ export interface AuthContextType {
   isSuperuser: boolean;
   isMarketing: boolean;
   isOwner: boolean;
+  isScout: boolean;
   canManageUsers: boolean;
   canCreateExperiences: boolean;
   canManageSportCenters: boolean;

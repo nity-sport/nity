@@ -1,5 +1,6 @@
 import styles from './PartnerSection.module.css';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function PartnerSection() {
   const arrows = [
@@ -51,7 +52,9 @@ export default function PartnerSection() {
           <p className={styles.partnerDesc}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
           </p>
-          <button className={styles.partnerBtn}>Be a Scout &rarr;</button>
+          <Link href="/register-scout">
+            <button className={styles.partnerBtn}>Be a Scout &rarr;</button>
+          </Link>
         </div>
       </div>
       {/* Imagem */}

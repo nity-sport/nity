@@ -10,6 +10,9 @@ export interface IUser extends Document {
   providerId?: string;
   isVerified: boolean;
   role: UserRole;
+  teams: mongoose.Types.ObjectId[];
+  affiliateCode?: string;
+  referredBy?: string;
   resetPasswordToken?: string;
   resetPasswordExpires?: Date;
   createdAt: Date;
@@ -61,6 +64,22 @@ const UserSchema: Schema = new Schema(
       default: UserRole.USER,
       required: true,
     },
+    teams: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Team',
+    }],
+    affiliateCode: {
+      type: String,
+      unique: true,
+      sparse: true,
+      trim: true,
+      uppercase: true,
+    },
+    referredBy: {
+      type: String,
+      trim: true,
+      uppercase: true,
+    },
     resetPasswordToken: String,
     resetPasswordExpires: Date,
   },
@@ -72,6 +91,9 @@ const UserSchema: Schema = new Schema(
 UserSchema.index({ email: 1 });
 UserSchema.index({ providerId: 1, provider: 1 });
 UserSchema.index({ role: 1 });
+UserSchema.index({ teams: 1 });
+UserSchema.index({ affiliateCode: 1 });
+UserSchema.index({ referredBy: 1 });
 
 const User: IUserModel = (mongoose.models.User as IUserModel) || mongoose.model<IUser, IUserModel>('User', UserSchema);
 export default User;

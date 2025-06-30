@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
 import User from '../models/User';
+import Team from '../models/Team';
 import { UserRole } from '../types/auth';
 import dbConnect from './dbConnect';
 
@@ -110,6 +111,7 @@ export const requireAuthenticated = authorize([
   UserRole.SUPERUSER,
   UserRole.MARKETING,
   UserRole.OWNER,
+  UserRole.SCOUT,
   UserRole.USER,
   UserRole.ATHLETE
 ]);
@@ -185,6 +187,102 @@ export const createApiHandler = (
       if (!res.headersSent) {
         res.status(500).json({ message: 'Internal server error' });
       }
+    }
+  };
+};
+
+// Scout permission helpers
+export const isScout = async (userId: string): Promise<boolean> => {
+  try {
+    await dbConnect();
+    const user = await User.findById(userId).select('role');
+    return user && user.role === UserRole.SCOUT;
+  } catch (error) {
+    console.error('Error checking scout status:', error);
+    return false;
+  }
+};
+
+export const requireScout = async (
+  req: AuthenticatedRequest,
+  res: NextApiResponse,
+  next: () => void
+) => {
+  if (!req.user) {
+    return res.status(401).json({ message: 'Not authenticated' });
+  }
+
+  const userIsScout = await isScout(req.user.id);
+  if (!userIsScout) {
+    return res.status(403).json({ 
+      message: 'Access denied. Only Scout users can perform this action.' 
+    });
+  }
+
+  next();
+};
+
+export const requireTeamScout = (teamIdParam: string = 'id') => {
+  return async (req: AuthenticatedRequest, res: NextApiResponse, next: () => void) => {
+    if (!req.user) {
+      return res.status(401).json({ message: 'Not authenticated' });
+    }
+
+    const teamId = req.query[teamIdParam] as string;
+    if (!teamId) {
+      return res.status(400).json({ message: 'Team ID is required' });
+    }
+
+    try {
+      await dbConnect();
+      const team = await Team.findById(teamId);
+      if (!team) {
+        return res.status(404).json({ message: 'Team not found' });
+      }
+
+      if (team.scoutId.toString() !== req.user.id) {
+        return res.status(403).json({ 
+          message: 'Access denied. Only the team scout can perform this action.' 
+        });
+      }
+
+      next();
+    } catch (error) {
+      console.error('Error checking team scout permission:', error);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+  };
+};
+
+export const requireCouponCreator = (couponIdParam: string = 'id') => {
+  return async (req: AuthenticatedRequest, res: NextApiResponse, next: () => void) => {
+    if (!req.user) {
+      return res.status(401).json({ message: 'Not authenticated' });
+    }
+
+    const couponId = req.query[couponIdParam] as string;
+    if (!couponId) {
+      return res.status(400).json({ message: 'Coupon ID is required' });
+    }
+
+    try {
+      await dbConnect();
+      const Coupon = (await import('../models/Coupon')).default;
+      const coupon = await Coupon.findById(couponId);
+      if (!coupon) {
+        return res.status(404).json({ message: 'Coupon not found' });
+      }
+
+      if (coupon.createdBy.toString() !== req.user.id) {
+        return res.status(403).json({ 
+          message: 'Access denied. Only the coupon creator can perform this action.' 
+        });
+      }
+
+      next();
+    } catch (error) {
+      console.error('Error checking coupon creator permission:', error);
+      return res.status(500).json({ message: 'Internal server error' });
     }
   };
 };

@@ -8,7 +8,7 @@ import { useAuth } from "../../src/contexts/AuthContext";
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const { user, isAuthenticated, logout, isSuperuser, canCreateExperiences, canManageSportCenters, canManageFacilities, isOwner } = useAuth();
+  const { user, isAuthenticated, logout, isSuperuser, canCreateExperiences, canManageSportCenters, canManageFacilities, isOwner, isScout } = useAuth();
 
   useEffect(() => {
     console.log('🔐 Authentication Status:', {
@@ -85,6 +85,11 @@ export default function Header() {
                 <Link href="/settings" className={styles.dropdownItem}>
                   Settings
                 </Link>
+                {isScout && (
+                  <Link href="/scout/dashboard" className={styles.dropdownItem}>
+                    Scout Dashboard
+                  </Link>
+                )}
                 {isOwner && (
                   <Link href="/owner/dashboard" className={styles.dropdownItem}>
                     Dashboard Owner
@@ -203,6 +208,11 @@ export default function Header() {
                   <Link href="/settings" className={styles.dropdownItem}>
                     Settings
                   </Link>
+                  {isScout && (
+                    <Link href="/scout/dashboard" className={styles.dropdownItem}>
+                      Scout Dashboard
+                    </Link>
+                  )}
                   {isOwner && (
                     <Link href="/owner/dashboard" className={styles.dropdownItem}>
                       Dashboard Owner

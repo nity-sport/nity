@@ -77,6 +77,8 @@ const handleGetUsers = async (req: AuthenticatedRequest, res: NextApiResponse) =
       avatar: user.avatar,
       provider: user.provider,
       isVerified: user.isVerified,
+      affiliateCode: user.affiliateCode,
+      referredBy: user.referredBy,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt
     }));

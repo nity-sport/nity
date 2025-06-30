@@ -136,7 +136,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-  const register = async (email: string, password: string, name: string) => {
+  const register = async (email: string, password: string, name: string, referralCode?: string) => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
       
@@ -145,7 +145,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password, name }),
+        body: JSON.stringify({ email, password, name, referralCode }),
       });
 
       if (!response.ok) {
@@ -218,6 +218,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   console.log('  - Final isSuperuser value:', isSuperuser);
   const isMarketing = state.user?.role === UserRole.MARKETING;
   const isOwner = state.user?.role === UserRole.OWNER;
+  const isScout = state.user?.role === UserRole.SCOUT;
 
   const canManageUsers = isSuperuser;
   const canCreateExperiences = state.user ? [UserRole.SUPERUSER, UserRole.MARKETING].includes(state.user.role) : false;
@@ -240,6 +241,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     isSuperuser,
     isMarketing,
     isOwner,
+    isScout,
     canManageUsers,
     canCreateExperiences,
     canManageSportCenters,

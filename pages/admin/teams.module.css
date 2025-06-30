@@ -1,0 +1,480 @@
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  margin-top: 100px;
+  padding: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-gray-900);
+  margin: 0;
+}
+
+.createButton {
+  padding: 0.75rem 1.5rem;
+  background: var(--color-primary-light);
+  color: var(--color-surface);
+  border: none;
+  border-radius: 8px;
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.createButton:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-1px);
+}
+
+.loading {
+  text-align: center;
+  padding: 3rem;
+  font-size: var(--text-lg);
+  color: var(--color-gray-600);
+}
+
+.errorMessage {
+  text-align: center;
+  padding: 3rem;
+  color: var(--color-error);
+  background: var(--color-error-light);
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.teamsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.teamCard {
+  background: var(--color-surface);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.teamCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.teamHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.teamName {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--color-gray-900);
+  margin: 0;
+}
+
+.teamActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.addMemberButton {
+  padding: 0.5rem 1rem;
+  background: var(--color-success);
+  color: var(--color-surface);
+  border: none;
+  border-radius: 6px;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.addMemberButton:hover {
+  background: var(--color-success-dark);
+}
+
+.deleteButton {
+  padding: 0.5rem 1rem;
+  background: var(--color-error);
+  color: var(--color-surface);
+  border: none;
+  border-radius: 6px;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.deleteButton:hover {
+  background: var(--color-error-dark);
+}
+
+.scoutInfo {
+  background: var(--color-gray-50);
+  padding: 0.75rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: var(--text-sm);
+  color: var(--color-gray-700);
+}
+
+.membersSection {
+  margin-bottom: 1rem;
+}
+
+.membersHeader {
+  margin-bottom: 0.5rem;
+  font-size: var(--text-sm);
+  color: var(--color-gray-700);
+}
+
+.membersList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.memberItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background: var(--color-gray-50);
+  border-radius: 6px;
+}
+
+.memberInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.memberAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.memberName {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gray-900);
+}
+
+.memberEmail {
+  font-size: var(--text-xs);
+  color: var(--color-gray-600);
+}
+
+.removeMemberButton {
+  padding: 0.25rem 0.5rem;
+  background: var(--color-warning);
+  color: var(--color-surface);
+  border: none;
+  border-radius: 4px;
+  font-size: var(--text-xs);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.removeMemberButton:hover {
+  background: var(--color-warning-dark);
+}
+
+.emptyMembers {
+  text-align: center;
+  padding: 1rem;
+  color: var(--color-gray-500);
+  font-style: italic;
+  font-size: var(--text-sm);
+}
+
+.teamDates {
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-gray-200);
+  color: var(--color-gray-500);
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.paginationButton {
+  padding: 0.5rem 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.paginationButton:hover:not(:disabled) {
+  background: var(--color-gray-50);
+  border-color: var(--color-primary-light);
+}
+
+.paginationButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.paginationInfo {
+  font-size: var(--text-sm);
+  color: var(--color-gray-600);
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: var(--color-surface);
+  border-radius: 12px;
+  padding: 1.5rem;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.modalHeader h2 {
+  margin: 0;
+  font-size: var(--text-xl);
+  color: var(--color-gray-900);
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--color-gray-500);
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton:hover {
+  color: var(--color-gray-700);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gray-700);
+}
+
+.input {
+  padding: 0.75rem;
+  border: 1px solid var(--color-gray-300);
+  border-radius: 6px;
+  font-size: var(--text-base);
+  transition: border-color 0.2s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-primary-light);
+}
+
+.formActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.cancelButton {
+  padding: 0.75rem 1.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: var(--text-base);
+  transition: all 0.2s ease;
+}
+
+.cancelButton:hover {
+  background: var(--color-gray-50);
+}
+
+.submitButton {
+  padding: 0.75rem 1.5rem;
+  background: var(--color-primary-light);
+  color: var(--color-surface);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-medium);
+  transition: background 0.2s ease;
+}
+
+.submitButton:hover {
+  background: var(--color-primary-dark);
+}
+
+.userSearch {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.searchInput {
+  padding: 0.75rem;
+  border: 1px solid var(--color-gray-300);
+  border-radius: 6px;
+  font-size: var(--text-base);
+  transition: border-color 0.2s ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--color-primary-light);
+}
+
+.searchResults {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid var(--color-gray-300);
+  border-radius: 6px;
+  background: var(--color-surface);
+}
+
+.userResult {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+.userResult:last-child {
+  border-bottom: none;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.userAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userName {
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gray-900);
+}
+
+.userEmail {
+  font-size: var(--text-sm);
+  color: var(--color-gray-600);
+}
+
+.addButton {
+  padding: 0.5rem 1rem;
+  background: var(--color-success);
+  color: var(--color-surface);
+  border: none;
+  border-radius: 6px;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.addButton:hover:not(:disabled) {
+  background: var(--color-success-dark);
+}
+
+.addButton:disabled {
+  background: var(--color-gray-400);
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+    margin-top: 80px;
+  }
+  
+  .teamsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .teamHeader {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  
+  .teamActions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .modal {
+    width: 95%;
+    max-height: 90vh;
+  }
+}

@@ -1,0 +1,506 @@
+.container {
+  min-height: 100vh;
+  background-color: var(--background-color);
+  padding: 20px;
+  padding-top: 100px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.header h1 {
+  color: var(--text-color);
+  margin: 0;
+  font-size: 2rem;
+}
+
+.backButton {
+  background: var(--secondary-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.backButton:hover {
+  background: var(--secondary-hover);
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 30px;
+  height: calc(100vh - 200px);
+}
+
+.sidebar {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.sidebarHeader h2 {
+  margin: 0;
+  color: var(--text-color);
+  font-size: 1.2rem;
+}
+
+.createButton {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.createButton:hover {
+  background: var(--primary-hover);
+}
+
+.teamsList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.teamItem {
+  padding: 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.teamItem:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.teamItem.active {
+  border-color: var(--primary-color);
+  background: var(--primary-light);
+}
+
+.teamItem h3 {
+  margin: 0 0 5px 0;
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.teamItem p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.teamItemActions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.editButton, .deleteButton {
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.2s;
+}
+
+.editButton {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.editButton:hover {
+  background: var(--secondary-hover);
+}
+
+.deleteButton {
+  background: var(--danger-color);
+  color: white;
+}
+
+.deleteButton:hover {
+  background: var(--danger-hover);
+}
+
+.main {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.teamDetails {
+  height: 100%;
+}
+
+.teamHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.teamHeader h2 {
+  margin: 0;
+  color: var(--text-color);
+  font-size: 1.5rem;
+}
+
+.addMemberButton {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.addMemberButton:hover {
+  background: var(--primary-hover);
+}
+
+.membersSection h3 {
+  color: var(--text-color);
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+}
+
+.membersList {
+  display: grid;
+  gap: 15px;
+}
+
+.memberCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  transition: border-color 0.2s;
+}
+
+.memberCard:hover {
+  border-color: var(--primary-color);
+}
+
+.memberInfo h4 {
+  margin: 0 0 5px 0;
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.memberInfo p {
+  margin: 0 0 8px 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.memberRole {
+  background: var(--secondary-light);
+  color: var(--secondary-color);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.removeMemberButton {
+  background: var(--danger-color);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.2s;
+}
+
+.removeMemberButton:hover {
+  background: var(--danger-hover);
+}
+
+.emptyState, .emptyMembers, .noTeamSelected {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-muted);
+}
+
+.emptyState p, .emptyMembers p, .noTeamSelected p {
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  min-width: 400px;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modalContent h3 {
+  margin: 0 0 20px 0;
+  color: var(--text-color);
+  font-size: 1.3rem;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.formGroup input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.formGroup input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.formButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.formButtons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.formButtons button[type="button"] {
+  background: #f5f5f5;
+  color: var(--text-color);
+}
+
+.formButtons button[type="button"]:hover {
+  background: #e5e5e5;
+}
+
+.formButtons button[type="submit"] {
+  background: var(--primary-color);
+  color: white;
+}
+
+.formButtons button[type="submit"]:hover {
+  background: var(--primary-hover);
+}
+
+.formButtons button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.memberSearch {
+  margin-bottom: 20px;
+}
+
+.searchResults {
+  margin-top: 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.searchResults h4 {
+  margin: 0;
+  padding: 15px;
+  background: #f9f9f9;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.searchResultItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.searchResultItem:last-child {
+  border-bottom: none;
+}
+
+.userInfo h5 {
+  margin: 0 0 4px 0;
+  color: var(--text-color);
+  font-size: 0.95rem;
+}
+
+.userInfo p {
+  margin: 0 0 6px 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.userRole {
+  background: var(--secondary-light);
+  color: var(--secondary-color);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.searchResultItem button {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.2s;
+}
+
+.searchResultItem button:hover {
+  background: var(--primary-hover);
+}
+
+.searchResultItem button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+.error {
+  background: var(--danger-light);
+  color: var(--danger-color);
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid var(--danger-color);
+}
+
+@media (max-width: 1024px) {
+  .content {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .sidebar {
+    height: auto;
+    max-height: 400px;
+  }
+
+  .main {
+    height: auto;
+    min-height: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .modalContent {
+    margin: 20px;
+    min-width: auto;
+    width: calc(100% - 40px);
+  }
+
+  .formButtons {
+    flex-direction: column;
+  }
+
+  .teamItemActions {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .memberCard {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+}

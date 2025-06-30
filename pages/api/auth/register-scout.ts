@@ -2,6 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import dbConnect from '../../../src/lib/dbConnect';
 import User from '../../../src/models/User';
 import { hashPassword, generateToken } from '../../../src/lib/auth';
+import { UserRole } from '../../../src/types/auth';
+import { generateAffiliateCode } from '../../../src/lib/affiliateCode';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
@@ -11,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     await dbConnect();
 
-    const { email, password, name, referralCode, teamId } = req.body;
+    const { email, password, name } = req.body;
 
     if (!email || !password || !name) {
       return res.status(400).json({ message: 'Missing required fields' });
@@ -26,53 +28,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    // Validate referral code if provided
-    let referralValid = false;
-    let scoutUser = null;
-    let targetTeam = null;
-    
-    if (referralCode) {
-      const referralCodeUpper = referralCode.trim().toUpperCase();
-      scoutUser = await User.findOne({ affiliateCode: referralCodeUpper });
-      if (!scoutUser) {
-        return res.status(400).json({ message: 'Invalid referral code' });
-      }
-      referralValid = true;
-      
-      // If teamId is provided, validate it belongs to the scout
-      if (teamId) {
-        const Team = require('../../../src/models/Team').default;
-        targetTeam = await Team.findOne({ _id: teamId, scoutId: scoutUser._id });
-        if (!targetTeam) {
-          return res.status(400).json({ message: 'Invalid team or team does not belong to scout' });
-        }
-      }
-    }
-
     const hashedPassword = await hashPassword(password);
+    const affiliateCode = generateAffiliateCode();
 
     const user = new User({
       email: email.toLowerCase(),
       password: hashedPassword,
       name,
       provider: 'email',
-      ...(referralValid && { referredBy: referralCode.trim().toUpperCase() }),
+      role: UserRole.SCOUT,
+      affiliateCode,
     });
 
     await user.save();
-
-    // If user was invited to a team, add them to the team
-    if (targetTeam) {
-      const Team = require('../../../src/models/Team').default;
-      await Team.findByIdAndUpdate(targetTeam._id, {
-        $addToSet: { memberIds: user._id }
-      });
-      
-      // Also add team to user's teams array
-      await User.findByIdAndUpdate(user._id, {
-        $addToSet: { teams: targetTeam._id }
-      });
-    }
 
     const token = generateToken(user._id.toString());
 
@@ -90,12 +58,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     };
 
     res.status(201).json({
-      message: 'User created successfully',
+      message: 'Scout registered successfully',
       user: userResponse,
       token,
     });
   } catch (error) {
-    console.error('Registration error:', error);
+    console.error('Scout registration error:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 }

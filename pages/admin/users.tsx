@@ -12,6 +12,8 @@ interface User {
   role: UserRole;
   avatar?: string;
   provider: string;
+  affiliateCode?: string;
+  referredBy?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -149,6 +151,30 @@ const UsersAdminPage: React.FC = () => {
   const handleRoleChange = async (userId: string, newRole: UserRole) => {
     try {
       const token = localStorage.getItem('auth_token');
+      
+      // Se estamos promovendo para Scout, usar a API específica
+      if (newRole === UserRole.SCOUT) {
+        const response = await fetch(`/api/users/${userId}/promote-scout`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.message);
+        }
+
+        const data = await response.json();
+        setShowRoleChangeForm(false);
+        setSelectedUser(null);
+        fetchUsers();
+        alert(`Usuário promovido para Scout com sucesso! Código de afiliação: ${data.affiliateCode}`);
+        return;
+      }
+
+      // Para outros roles, usar a API padrão
       const response = await fetch(`/api/users/${userId}/role`, {
         method: 'PATCH',
         headers: {
@@ -172,11 +198,13 @@ const UsersAdminPage: React.FC = () => {
     }
   };
 
+
   const getRoleDisplayName = (role: UserRole): string => {
     const roleNames = {
       [UserRole.SUPERUSER]: 'Super Usuário',
       [UserRole.MARKETING]: 'Marketing',
       [UserRole.OWNER]: 'Proprietário',
+      [UserRole.SCOUT]: 'Scout',
       [UserRole.USER]: 'Usuário',
       [UserRole.ATHLETE]: 'Atleta'
     };
@@ -188,6 +216,7 @@ const UsersAdminPage: React.FC = () => {
       [UserRole.SUPERUSER]: styles.badgeSuperuser,
       [UserRole.MARKETING]: styles.badgeMarketing,
       [UserRole.OWNER]: styles.badgeOwner,
+      [UserRole.SCOUT]: styles.badgeScout,
       [UserRole.USER]: styles.badgeUser,
       [UserRole.ATHLETE]: styles.badgeAthlete
     };
@@ -284,6 +313,11 @@ const UsersAdminPage: React.FC = () => {
                   <div>
                     <span className={getRoleBadgeClass(userItem.role)}>
                       {getRoleDisplayName(userItem.role)}
+                      {userItem.role === UserRole.SCOUT && userItem.affiliateCode && (
+                        <small className={styles.affiliateCodeInBadge}>
+                          {userItem.affiliateCode}
+                        </small>
+                      )}
                     </span>
                   </div>
                   <div>{userItem.provider}</div>

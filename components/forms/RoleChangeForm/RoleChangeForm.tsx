@@ -27,7 +27,8 @@ const RoleChangeForm: React.FC<RoleChangeFormProps> = ({
       [UserRole.MARKETING]: 'Marketing',
       [UserRole.OWNER]: 'Proprietário',
       [UserRole.USER]: 'Usuário',
-      [UserRole.ATHLETE]: 'Atleta'
+      [UserRole.ATHLETE]: 'Atleta',
+      [UserRole.SCOUT]: 'Scout'
     };
     return roleNames[role];
   };
@@ -38,7 +39,8 @@ const RoleChangeForm: React.FC<RoleChangeFormProps> = ({
       [UserRole.MARKETING]: 'Pode criar e gerenciar experiências e anúncios',
       [UserRole.OWNER]: 'Pode criar e gerenciar sport centers',
       [UserRole.USER]: 'Pode visualizar conteúdo e se inscrever em experiências',
-      [UserRole.ATHLETE]: 'Pode se inscrever em experiências e visualizar sport centers'
+      [UserRole.ATHLETE]: 'Pode se inscrever em experiências e visualizar sport centers',
+      [UserRole.SCOUT]: 'Pode criar e gerenciar times'
     };
     return descriptions[role];
   };
