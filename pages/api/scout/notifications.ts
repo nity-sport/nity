@@ -66,20 +66,24 @@ async function getScoutNotifications(scoutId: string): Promise<Notification[]> {
 
     for (const team of scoutTeams) {
       if (team.memberIds && team.memberIds.length > 0) {
-        for (const member of team.memberIds) {
-          // Check if member joined recently
-          if (member.createdAt > thirtyDaysAgo) {
-            notifications.push({
-              id: `new_member_${team._id}_${member._id}`,
-              type: 'new_member',
-              message: `${member.name} joined your team "${team.name}"`,
-              teamId: team._id.toString(),
-              teamName: team.name,
-              memberName: member.name,
-              memberEmail: member.email,
-              timestamp: member.createdAt,
-              read: false // In a real app, you'd track this in a separate collection
-            });
+        for (const memberId of team.memberIds) {
+          // Type guard to check if member is populated
+          if (typeof memberId === 'object' && memberId !== null && 'createdAt' in memberId) {
+            const member = memberId as any; // Cast to any to access populated fields
+            // Check if member joined recently
+            if (member.createdAt > thirtyDaysAgo) {
+              notifications.push({
+                id: `new_member_${team._id}_${member._id}`,
+                type: 'new_member',
+                message: `${member.name} joined your team "${team.name}"`,
+                teamId: team._id.toString(),
+                teamName: team.name,
+                memberName: member.name,
+                memberEmail: member.email,
+                timestamp: member.createdAt,
+                read: false // In a real app, you'd track this in a separate collection
+              });
+            }
           }
         }
       }
