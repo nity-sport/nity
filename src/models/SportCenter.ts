@@ -10,7 +10,19 @@ const SportCenterSchema = new Schema<SportCenterDocument>({
   mainPhoto: String,
   profilePhoto: String,
   photos: [String],
-  category: [String],
+  categories: [{
+    id: String,
+    name: String,
+    ageRange: [Number],
+    gender: {
+      type: String,
+      enum: ['Masculino', 'Feminino', 'Misto']
+    },
+    schedule: {
+      days: [String],
+      times: [String]
+    }
+  }],
   achievements: [String],
   badge: String,
   coaches: [{ type: Schema.Types.Mixed }], 

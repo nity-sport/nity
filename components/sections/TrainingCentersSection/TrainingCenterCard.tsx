@@ -9,7 +9,7 @@ interface TrainingCenterCardProps {
 }
 
 export default function TrainingCenterCard({ center }: TrainingCenterCardProps) {
-  const displayCategory = center.category?.join(', ') || center.yearOfFoundation || 'N/A';
+  const displayCategory = center.categories?.join(', ') || center.yearOfFoundation || 'N/A';
   const displaySports = center.sport?.join(', ') || 'N/A';
 
   return (

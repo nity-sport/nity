@@ -30,6 +30,7 @@ export interface AuthContextType {
   register: (email: string, password: string, name: string, referralCode?: string) => Promise<void>;
   logout: () => Promise<void>;
   updateProfile: (data: Partial<User>) => Promise<void>;
+  checkAuthStatus: () => Promise<void>;
   hasRole: (role: UserRole) => boolean;
   hasAnyRole: (roles: UserRole[]) => boolean;
   isSuperuser: boolean;

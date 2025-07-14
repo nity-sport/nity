@@ -1,0 +1,3021 @@
+.stepContainer {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+/* Step 1 - Name Input */
+.inputWrapper {
+  width: 688px;
+  margin: 0 auto;
+}
+
+.nameInput {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-bottom: 2px solid #e5e7eb;
+  background: transparent;
+  font-size: 1.25rem;
+  font-weight: 500;
+  text-align: center;
+  color: #374151;
+  letter-spacing: 0.5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.nameInput::placeholder {
+  opacity: 0.2;
+  font-family: 'Ultra System', 'Inter', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 28px;
+  line-height: 48px;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #000000;
+}
+
+.nameInput:focus {
+  border-bottom-color: #2563eb;
+}
+
+.inputError {
+  border-bottom-color: #ef4444 !important;
+}
+
+.inputValid {
+  border-bottom-color: #10b981 !important;
+}
+
+.errorMessage {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  text-align: center;
+  font-family: var(--font-primary);
+}
+
+.characterCount {
+  font-size: 0.75rem;
+  color: #6b7280;
+  text-align: right;
+  margin-top: 0.25rem;
+  font-family: var(--font-primary);
+}
+
+/* Host photo area error styling */
+.hostPhotoArea.inputError {
+  border: 2px solid #ef4444 !important;
+  border-radius: 8px;
+}
+
+/* Text input and textarea error styling */
+.textInput.inputError,
+.textareaInput.inputError,
+.hostNameInput.inputError,
+.hostBioInput.inputError {
+  border-color: #ef4444 !important;
+}
+
+/* Photo upload slot error styling */
+.firstSlot.inputError {
+  border: 2px solid #ef4444 !important;
+  border-radius: 8px;
+}
+
+/* Step 2 - Basic Data Form */
+.basicDataForm {
+  width: 688px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fieldLabel {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 140%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  color: var(--color-surface-dark);
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.selectInput,
+.textInput {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #CED4DA;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #374151;
+  background: white;
+  transition: border-color 0.2s ease;
+  height: 48px;
+  box-sizing: border-box;
+}
+
+.selectInput:focus,
+.textInput:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.textareaInput {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #CED4DA;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #374151;
+  background: white;
+  resize: vertical;
+  min-height: 120px;
+  transition: border-color 0.2s ease;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.textareaInput:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.textareaInput::placeholder {
+  color: #9ca3af;
+}
+
+/* Logo Upload Area */
+.logoUploadContainer {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.logoUploadInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.uploadButton {
+  width: 120px;
+  height: 24px;
+  opacity: 1;
+  border-radius: 6px;
+  border: 1px solid var(--color-border-light);
+  gap: 4px;
+  padding: 8px;
+  background: #F8F9FA;
+  color: #374151;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+
+.logoUploadArea {
+  width: 68px;
+  height: 68px;
+  border: 2px solid #CED4DA;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.logoUploadArea:hover {
+  border-color: #55A2EB;
+  background: #f8f9fa;
+}
+
+.fileInput {
+  display: none;
+}
+
+.logoUploadLabel {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.logoUploadButton {
+  font-size: 24px;
+  font-weight: 300;
+  color: #6B7280;
+  cursor: pointer;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+}
+
+.logoPreview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.logoUploadHint {
+  font-size: 12px;
+  color: #6B7280;
+  margin-top: 0.5rem;
+  text-align: left;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .basicDataForm {
+    width: 100%;
+    max-width: 688px;
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+  
+  .logoUploadArea {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .logoUploadContainer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .nameInput {
+    font-size: 1.125rem;
+  }
+  
+  .fileUploadArea {
+    padding: 1.5rem;
+  }
+  
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .basicDataForm {
+    max-width: 100%;
+    gap: 1.25rem;
+  }
+  
+  .nameInput {
+    font-size: 1rem;
+    padding: 0.875rem;
+  }
+  
+  .fileUploadArea {
+    padding: 1.25rem;
+  }
+}
+
+/* Sports Grid */
+.sportsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 181.82px);
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+  margin: 0 auto 2rem auto;
+}
+
+.sportCard {
+  width: 181.82px;
+  height: 59.61px;
+  opacity: 1;
+  border-radius: 6.27px;
+  border: 0;
+  gap: 11.91px;
+  padding: 8.18px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #E9ECEF;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
+.sportCard.selected {
+  background: var(--color-blue-accent);
+  color: white;
+}
+
+.sportIconContainer {
+  width: 43.25px;
+  height: 43.25px;
+  opacity: 1;
+  border-radius: 6.27px;
+  gap: 6.27px;
+  padding: 6.27px;
+  background: var(--color-blue-mid);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.sportIcon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+}
+
+.sportName {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 140%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  color: var(--color-blue-mid);
+  margin-left: 8px;
+}
+
+.sportCard.selected .sportName {
+  color: white;
+}
+
+.addSportCard {
+  width: 181.82px;
+  height: 59.61px;
+  opacity: 1;
+  border-radius: 6.27px;
+  border: 0;
+  gap: 11.91px;
+  padding: 8.18px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #E9ECEF;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+
+.addSportIcon {
+  font-size: 20px;
+  color: var(--color-blue-mid);
+  font-weight: 300;
+}
+
+.addSportText {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 140%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  color: var(--color-blue-mid);
+  margin-left: 8px;
+}
+
+.successMessage {
+  background: var(--success-color-light);
+  border: 1px solid var(--success-color);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.successMessage p {
+  margin: 0;
+  color: var(--success-color);
+  font-size: 0.875rem;
+}
+
+/* Facilities Grid */
+.facilitiesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.facilityCard {
+  padding: 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: white;
+}
+
+.facilityCard:hover {
+  border-color: var(--accent-color);
+}
+
+.facilityCard.selected {
+  border-color: var(--accent-color);
+  background: var(--accent-color);
+  color: white;
+}
+
+.facilityName {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.addFacilityCard {
+  padding: 1rem;
+  border: 2px dashed var(--border-color);
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--background-light);
+}
+
+.addFacilityCard:hover {
+  border-color: var(--accent-color);
+}
+
+.addFacilityText {
+  font-size: 0.875rem;
+  color: var(--accent-color);
+}
+
+/* Photo Grid */
+.photoSection {
+  margin-top: 2rem;
+}
+
+.photoSection h3 {
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.dragHint {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.photoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.photoList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.photoItem {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid var(--border-color);
+  cursor: move;
+}
+
+.photoItem.dragging {
+  opacity: 0.5;
+}
+
+.photoImage {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.mainBadge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: var(--accent-color);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.photoActions {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.setMainButton {
+  background: white;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.deleteButton {
+  background: var(--error-color);
+  border: none;
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Achievements List */
+.achievementsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.achievementItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: white;
+}
+
+.achievementContent {
+  flex: 1;
+}
+
+.achievementName {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin: 0 0 0.25rem 0;
+}
+
+.achievementYear {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.addButton {
+  background: var(--accent-color);
+  border: none;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.addButton:hover {
+  background: var(--accent-color-dark);
+}
+
+/* Categories List */
+.categoriesList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.categoryItem {
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: white;
+}
+
+.categoryHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.categoryName {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.categoryDetails {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.categoryAge,
+.categoryGender,
+.categorySchedule {
+  padding: 0.25rem 0.5rem;
+  background: var(--background-light);
+  border-radius: 4px;
+}
+
+/* Age Selector */
+.ageSelector {
+  margin-bottom: 1rem;
+}
+
+.ageGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+  gap: 8px;
+}
+
+.ageOption {
+  padding: 0.5rem;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: 0px;
+  color: #374151;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ageOption:hover {
+  border-color: var(--color-blue-accent);
+}
+
+.ageOption.selected {
+  border-color: var(--color-blue-accent);
+  background: var(--color-blue-accent);
+  color: white;
+  font-weight: 500;
+}
+
+/* Schedule Section */
+.scheduleSection {
+  margin-bottom: 1rem;
+}
+
+.dayGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.dayOption {
+  padding: 0.5rem;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: 0px;
+  color: #374151;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dayOption:hover {
+  border-color: var(--color-blue-accent);
+}
+
+.dayOption.selected {
+  border-color: var(--color-blue-accent);
+  background: var(--color-blue-accent);
+  color: white;
+  font-weight: 500;
+}
+
+.timeRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* Accommodation Details */
+.accommodationDetails {
+  margin-top: 2rem;
+}
+
+.accommodationDetails h3 {
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.facilitiesSection {
+  margin-top: 2rem;
+}
+
+/* Pricing Section */
+.priceSection {
+  text-align: center;
+}
+
+.priceInput {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.currency,
+.period {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.priceNote {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+/* Terms Section */
+.termsSection {
+  text-align: center;
+  padding: 2rem;
+}
+
+.termsContent {
+  width: 100%;
+  max-width: 688px;
+  height: 300px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  background: white;
+  text-align: left;
+  overflow-y: auto;
+  margin-bottom: 1.5rem;
+  box-sizing: border-box;
+}
+
+.termsContent h3 {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text-dark);
+  margin: 0 0 0.5rem 0;
+}
+
+.termsContent p {
+  font-family: var(--font-primary);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+  margin: 0 0 1rem 0;
+}
+
+.termsContent h3:not(:first-child) {
+  margin-top: 1.5rem;
+}
+
+/* Success Content */
+.successContent {
+  text-align: center;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.successIcon {
+  width: 80px;
+  height: 80px;
+  background: #10B981;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.successIcon svg {
+  width: 48px;
+  height: 48px;
+}
+
+.successTitle {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 400;
+  color: var(--color-text-dark);
+  margin: 0;
+  max-width: 600px;
+  line-height: 1.2;
+  letter-spacing: 0.5px;
+}
+
+.successSubtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+.dashboardButton {
+  background: #4DA6FF;
+  border: none;
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  min-width: 150px;
+}
+
+.dashboardButton:hover {
+  background: #3B91E5;
+}
+
+/* Modal Styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: white;
+  width: 508px;
+  height: 770.77px;
+  border-radius: 40px;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+
+.modalTitle {
+  max-width: 468px;
+  width: 100%;
+  height: 55px;
+  opacity: 1;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-style: normal;
+  font-size: 28px;
+  line-height: 35px;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #000000;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalInputWrapper {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.modalInput {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-bottom: 2px solid #e5e7eb;
+  background: transparent;
+  font-size: 1.25rem;
+  font-weight: 500;
+  text-align: center;
+  color: #374151;
+  letter-spacing: 0.5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.modalInput::placeholder {
+  opacity: 0.2;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-style: normal;
+  font-size: 28px;
+  line-height: 48px;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #000000;
+}
+
+.modalInput:focus {
+  border-bottom-color: #2563eb;
+}
+
+.addButton {
+  width: 156px;
+  height: 39px;
+  opacity: 1;
+  border-radius: 6px;
+  padding: 10px 22px;
+  gap: 10px;
+  background: var(--color-blue-accent);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+
+.modalCloseButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #6B7280;
+  padding: 0.5rem;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.modalCloseButton:hover {
+  background: #F3F4F6;
+  color: #374151;
+}
+
+.editNote {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+/* Step 4 - Host Profile */
+.stepTitle {
+  font-family: 'Ultra System', sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 35px;
+  text-align: center;
+  color: #000000;
+  margin-bottom: 2rem;
+}
+
+.hostContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 800px;
+  margin: 69px auto 0 auto;
+}
+
+.hostPhotoSection {
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hostPhotoLabel {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #374151;
+  text-align: left;
+}
+
+.hostPhotoUpload {
+  position: relative;
+}
+
+.hostPhotoArea {
+  
+  width: 211px;
+  height: 247px;
+  border-radius: 10px;
+  background: var(--Neutral-100, #F8F9FA);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  border: none;
+}
+
+.hostPhotoArea:hover {
+  background: #F0F4F8;
+}
+
+.hostPhotoPlaceholder {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+}
+
+.hostPhotoContainer {
+  position: relative;
+  margin-top: 25px;
+  margin-bottom: 1rem;
+}
+
+.hostPhotoIcon {
+  width: 129px;
+  height: 129px;
+  min-width: 129px;
+  min-height: 129px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 72px;
+  font-weight: 300;
+  color: #D1D5DB;
+  font-family: 'Ultra System', sans-serif;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.hostPhotoAdd {
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 24px;
+  font-weight: 300;
+  color: #9CA3AF;
+  background: white;
+  border: 2px solid #E5E7EB;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.hostPhotoPreview {
+  width: 129px;
+  height: 129px;
+  min-width: 129px;
+  min-height: 129px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.hostInfoSection {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  min-width: 300px;
+}
+
+.hostNameSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.hostBioSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.hostBioContainer {
+  width: 439px;
+  height: 247px;
+  border-radius: 10px;
+  border: 1px solid #E5E7EB;
+  background: white;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-sizing: border-box;
+}
+
+.hostNameLabel {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  color: #6B7280;
+  text-align: center;
+}
+
+.hostBioLabel {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #374151;
+  text-align: left;
+}
+
+.hostNameInput {
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  border-bottom: 1px solid #E5E7EB;
+  background: transparent;
+  font-size: 14px;
+  color: #374151;
+  outline: none;
+  transition: border-color 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  min-height: 20px;
+}
+
+.hostNameInput:focus {
+  border-bottom-color: #3B82F6;
+}
+
+.hostNameInput::placeholder {
+  color: #9CA3AF;
+  opacity: 0.7;
+}
+
+.hostBioInput {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-bottom: 1px solid #E5E7EB;
+  background: transparent;
+  font-size: 16px;
+  color: #374151;
+  outline: none;
+  transition: border-color 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+  resize: none;
+  flex: 1;
+  min-height: 0;
+}
+
+.hostBioInput:focus {
+  border-bottom-color: #3B82F6;
+}
+
+.hostBioInput::placeholder {
+  color: #9CA3AF;
+  opacity: 0.7;
+}
+
+/* Step 5 - Photos */
+.photosTitle {
+  font-family: 'Ultra System', sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 35px;
+  text-align: center;
+  color: #000000;
+  margin-bottom: 3rem;
+}
+
+.photosSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.photosLabel {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #374151;
+  text-align: left;
+  align-self: flex-start;
+}
+
+.photosGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 189px);
+  grid-template-rows: 189px;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+
+/* Step 10 - Accommodation Sub-steps */
+.subStepContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  min-height: 400px;
+  padding: 2rem 0;
+}
+
+.subStepNavigation {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.backButton {
+  background: #FFFFFF;
+  border: 2px solid #E5E7EB;
+  color: #6B7280;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 120px;
+}
+
+.backButton:hover {
+  border-color: #D1D5DB;
+  background: #F9FAFB;
+}
+
+.continueButton {
+  background: var(--color-primary);
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 120px;
+}
+
+.continueButton:hover {
+  background: var(--color-primary-hover, #2563eb);
+}
+
+.finishButton {
+  background: var(--color-success, #10B981);
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 120px;
+}
+
+.finishButton:hover {
+  background: var(--color-success-hover, #059669);
+}
+
+.facilityCardSelected {
+  background: var(--color-primary, #3B82F6) !important;
+  color: white !important;
+  border-color: var(--color-primary, #3B82F6) !important;
+}
+
+/* Step 10A - Dormitory Question */
+.dormitoryQuestionContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.dormitoryOptionsWrapper {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.dormitoryOption {
+  width: 200px;
+  height: 60px;
+  border-radius: 12px;
+  border: 2px solid #E5E7EB;
+  background: #FFFFFF;
+  color: #374151;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dormitoryOption:hover {
+  border-color: #D1D5DB;
+  background: #F9FAFB;
+}
+
+.dormitoryOptionSelected {
+  background: #3B82F6 !important;
+  border-color: #3B82F6 !important;
+  color: white !important;
+}
+
+.dormitoryOptionSelected:hover {
+  background: #2563EB !important;
+  border-color: #2563EB !important;
+}
+
+/* Step 10B - Daily Rate */
+.dailyRateContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.priceInputWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  position: relative;
+  width: 770px;
+  max-width: 100%;
+}
+
+.currencySymbol {
+  font-family: 'Ultra System', sans-serif;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 48px;
+  letter-spacing: 0px;
+  color: #D1D5DB;
+  margin-right: 8px;
+}
+
+.priceInputField {
+  font-family: 'Ultra System', sans-serif;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 48px;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #000000;
+  border: none;
+  border-bottom: 2px solid #D1D5DB;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  flex: 1;
+  padding: 8px 0;
+  margin: 0;
+  transition: border-color 0.2s ease;
+}
+
+.priceInputField::placeholder {
+  color: #ADB5BD;
+  opacity: 1;
+}
+
+.priceInputField:focus {
+  border-bottom-color: #3B82F6;
+}
+
+.priceInputField::-webkit-outer-spin-button,
+.priceInputField::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.priceInputField[type=number] {
+  -moz-appearance: textfield;
+}
+
+.periodLabel {
+  font-family: 'Ultra System', sans-serif;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 48px;
+  letter-spacing: 0px;
+  color: #D1D5DB;
+  margin-left: 8px;
+}
+
+.priceNote {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: 0px;
+  color: #ADB5BD;
+  text-align: center;
+  margin: 0;
+  max-width: 500px;
+}
+
+/* Step 12 - Create Account */
+.createAccountContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 1rem 0;
+  margin-top: 1rem;
+}
+
+
+.socialButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  width: 100%;
+}
+
+.socialButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 12px 16px;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  background: white;
+  color: #374151;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex: 1;
+  min-width: 0;
+}
+
+.socialButton:hover {
+  border-color: #D1D5DB;
+  background: #F9FAFB;
+}
+
+.socialIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.separator {
+  position: relative;
+  text-align: center;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.separator::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #E5E7EB;
+  z-index: 1;
+}
+
+.separator span {
+  background: white;
+  padding: 0 1rem;
+  color: #6B7280;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  position: relative;
+  z-index: 2;
+}
+
+.errorMessage {
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  color: #B91C1C;
+  padding: 12px 16px;
+  border-radius: 8px;
+  width: 100%;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+}
+
+.accountForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.formRow {
+  display: flex;
+  gap: 1rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.accountLabel {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.accountInput {
+  padding: 12px 16px;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  color: #374151;
+  background: white;
+  transition: border-color 0.2s ease;
+}
+
+.accountInput:focus {
+  outline: none;
+  border-color: #3B82F6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.accountInput::placeholder {
+  color: #9CA3AF;
+}
+
+
+
+.photoSlot {
+  width: 189px;
+  height: 189px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.firstSlot {
+  background: var(--Neutral-100, #F8F9FA);
+  border: 2px dashed #E5E7EB;
+}
+
+.firstSlot:hover {
+  border-color: #3B82F6;
+  background: #EFF6FF;
+}
+
+.emptySlot {
+  background: transparent;
+  border: 2px dashed #E5E7EB;
+}
+
+.emptySlot:hover {
+  border-color: #3B82F6;
+}
+
+.photoImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photoUploadButton {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.uploadIcon {
+  font-size: 48px;
+  font-weight: 300;
+  color: #9CA3AF;
+  transition: color 0.2s ease;
+}
+
+.firstSlotIcon {
+  font-weight: bold;
+  color: #000000;
+}
+
+.secondSlotIcon {
+  font-weight: 300;
+  color: #9CA3AF;
+}
+
+.photoUploadButton:hover .uploadIcon {
+  color: #3B82F6;
+}
+
+.photoContainer {
+  position: relative;
+  cursor: move;
+}
+
+.photoContainer:hover .photoActions {
+  opacity: 1;
+}
+
+.dragging {
+  opacity: 0.5;
+  transform: scale(0.95);
+}
+
+.photoActions {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  align-items: flex-start;
+}
+
+.setMainButton {
+  background: #3B82F6;
+  border: none;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  opacity: 0.8;
+  height: auto;
+  line-height: 1;
+  display: inline-block;
+}
+
+.setMainButton:hover {
+  opacity: 1;
+}
+
+.deleteButton {
+  background: #EF4444;
+  border: none;
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deleteButton:hover {
+  background: #DC2626;
+}
+
+.mainBadge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: #3B82F6;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Delete Modal */
+.deleteModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.deleteModalContent {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  position: relative;
+  text-align: center;
+}
+
+.deleteModalCloseButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #6B7280;
+  padding: 0.5rem;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deleteModalCloseButton:hover {
+  background: #F3F4F6;
+}
+
+.deleteModalIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deleteModalIconCircle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #FEF2F2;
+  border: 2px solid #FECACA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #DC2626;
+}
+
+.deleteModalTitle {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: #374151;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.deleteModalActions {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.deleteModalCancelButton {
+  background: white;
+  border: 1px solid #E5E7EB;
+  color: #374151;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.deleteModalCancelButton:hover {
+  background: #F3F4F6;
+  border-color: #D1D5DB;
+}
+
+.deleteModalConfirmButton {
+  background: #DC2626;
+  border: none;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.deleteModalConfirmButton:hover {
+  background: #B91C1C;
+}
+
+/* Step 6 - Achievements */
+.achievementsTitle {
+  font-family: 'Ultra System', sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 35px;
+  text-align: center;
+  color: #000000;
+  margin-bottom: 4rem;
+}
+
+.achievementsSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.addAchievementButton {
+  width: 100%;
+  max-width: 400px;
+  height: 60px;
+  background: #F8F9FA;
+  border: 2px dashed #E5E7EB;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.addAchievementButton:hover {
+  border-color: #3B82F6;
+  background: #EFF6FF;
+}
+
+.addAchievementIcon {
+  font-size: 24px;
+  font-weight: 300;
+  color: #3B82F6;
+}
+
+.addAchievementText {
+  font-size: 16px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.noAchievementsContainer {
+  width: 100%;
+  max-width: 400px;
+  background: #CCE7FF;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.noAchievementsLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.noAchievementsCheckbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #3B82F6;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.noAchievementsText {
+  font-size: 16px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.achievementsNote {
+  font-size: 14px;
+  color: #6B7280;
+  text-align: center;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.achievementsList {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.achievementItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background: #F8F9FA;
+  border-radius: 8px;
+  border: 1px solid #E5E7EB;
+}
+
+.achievementContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.achievementName {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #374151;
+}
+
+.achievementYear {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: #6B7280;
+}
+
+.achievementActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.editAchievementButton,
+.deleteAchievementButton {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.editAchievementButton:hover {
+  background: #E5E7EB;
+}
+
+.deleteAchievementButton:hover {
+  background: #FEE2E2;
+}
+
+/* Achievement Modals */
+.achievementModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.achievementModalContent {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  position: relative;
+  text-align: center;
+}
+
+.achievementModalCloseButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #6B7280;
+  padding: 0.5rem;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.achievementModalCloseButton:hover {
+  background: #F3F4F6;
+}
+
+.achievementModalIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.achievementModalIconCircle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #EFF6FF;
+  border: 2px solid #BFDBFE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.achievementModalForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.achievementModalField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
+}
+
+.achievementModalLabel {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #374151;
+}
+
+.achievementModalInput {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #374151;
+  outline: none;
+  transition: border-color 0.2s ease;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+
+.achievementModalInput:focus {
+  border-color: #3B82F6;
+}
+
+.achievementModalInput::placeholder {
+  color: #9CA3AF;
+}
+
+.achievementModalAddButton {
+  background: #3B82F6;
+  border: none;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.achievementModalAddButton:hover {
+  background: #2563EB;
+}
+
+.achievementModalTitle {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: #374151;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.achievementModalActions {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.achievementModalCancelButton {
+  background: white;
+  border: 1px solid #E5E7EB;
+  color: #374151;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.achievementModalCancelButton:hover {
+  background: #F3F4F6;
+  border-color: #D1D5DB;
+}
+
+.achievementModalConfirmButton {
+  background: #DC2626;
+  border: none;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.achievementModalConfirmButton:hover {
+  background: #B91C1C;
+}
+
+/* Step 8 - Location Form */
+.locationTitle {
+  font-family: 'Ultra System', sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 35px;
+  text-align: center;
+  color: #000000;
+  margin-bottom: 2rem;
+  letter-spacing: 0px;
+}
+
+.locationForm {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.locationRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.locationRowSingle {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+}
+
+/* Step 9 - Categories */
+.categoriesTitle {
+  font-family: 'Ultra System', sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 35px;
+  text-align: center;
+  color: #000000;
+  margin-bottom: 4rem;
+  letter-spacing: 0px;
+}
+
+.categoriesContainer {
+  width: 100%;
+  margin: 0 auto;
+  overflow-x: auto;
+}
+
+.categoriesGrid {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  align-items: stretch;
+  justify-content: center;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+}
+
+.categoryCard {
+  background: white;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  padding: 1.5rem;
+  position: relative;
+  min-height: 200px;
+  min-width: 250px;
+  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.categoryCard:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.categoryCard {
+  cursor: pointer;
+}
+
+.categoryCardSelected {
+  border-color: var(--color-blue-accent);
+  background: #EFF6FF;
+}
+
+.categoryCardHeader {
+  margin-bottom: 1rem;
+}
+
+.categoryCardName {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: #374151;
+  margin: 0 0 0.5rem 0;
+}
+
+.categoryCardAge {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: #6B7280;
+}
+
+.categoryDeleteButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #9CA3AF;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.categoryDeleteButton:hover {
+  background: #FEE2E2;
+  color: #DC2626;
+}
+
+.categoryEditButton {
+  position: absolute;
+  top: 1rem;
+  right: 3rem;
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: var(--color-blue-accent);
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.categoryEditButton:hover {
+  background: #EFF6FF;
+  color: var(--color-blue-mid);
+}
+
+.categoryCardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+}
+
+.categoryGenderIcons {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.genderIcon {
+  font-size: 20px;
+  color: #D1D5DB;
+  transition: color 0.2s ease;
+}
+
+.genderIconActive {
+  color: #374151;
+  font-weight: bold;
+}
+
+.categoryScheduleInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.categoryScheduleRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.categoryScheduleIcon {
+  font-size: 14px;
+  color: #6B7280;
+}
+
+.categoryScheduleText {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  color: #6B7280;
+  font-weight: 500;
+}
+
+.addCategoryCard {
+  border: 2px dashed #E5E7EB;
+  border-radius: 10px;
+  padding: 1.5rem;
+  min-height: 200px;
+  min-width: 250px;
+  max-width: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #F9FAFB;
+  flex-shrink: 0;
+}
+
+.addCategoryCard:hover {
+  border-color: #3B82F6;
+  background: #EFF6FF;
+}
+
+.addCategoryContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.addCategoryIcon {
+  font-size: 32px;
+  color: #3B82F6;
+  font-weight: 300;
+}
+
+.addCategoryText {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #374151;
+}
+
+/* Modal Styles for Categories */
+.modalLabel {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #374151;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.modalForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  justify-content: space-evenly;
+}
+
+.modalForm .inputGroup {
+  margin-bottom: 0;
+}
+
+.genderSelector {
+  width: 100%;
+}
+
+.genderGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.genderOption {
+  padding: 0.75rem;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 140%;
+  letter-spacing: 0px;
+  color: #374151;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.genderOption:hover {
+  border-color: var(--color-blue-accent);
+}
+
+.genderOption.selected {
+  border-color: var(--color-blue-accent);
+  background: var(--color-blue-accent);
+  color: white;
+  font-weight: 500;
+}
+
+.scheduleSelector {
+  width: 100%;
+}
+
+.timeInputs {
+  margin-top: 12px;
+}
+
+.timeInputGroup {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.timeX {
+  font-size: 18px;
+  font-weight: 500;
+  color: #374151;
+  margin: 0 0.5rem;
+}
+
+.timeDisplayWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 12px 16px;
+  border: 1px solid #CED4DA;
+  border-radius: 8px;
+  background: white;
+  min-width: 80px;
+}
+
+.timeDisplay {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  color: #374151;
+}
+
+.timeDisplayButton {
+  background: none;
+  border: none;
+  color: #9CA3AF;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.modalAddButton {
+  width: 288px;
+  height: 31px;
+  background: var(--color-blue-accent);
+  border: none;
+  border-radius: 6px;
+  gap: 10px;
+  padding: 10px 22px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 140%;
+  letter-spacing: 0px;
+  text-align: center;
+  color: white;
+}
+
+.modalAddButton:hover {
+  background: var(--color-blue-mid);
+}
+
+.modalButtonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.modalClearButton {
+  width: 31px;
+  height: 31px;
+  background: #F3F4F6;
+  border: 1px solid #E5E7EB;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #6B7280;
+}
+
+.modalClearButton:hover {
+  background: #FEE2E2;
+  border-color: #DC2626;
+  color: #DC2626;
+}
+
+.addTimeButton {
+  width: 36px;
+  height: 36px;
+  background: var(--color-blue-accent);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 18px;
+  font-weight: 300;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.addTimeButton:hover {
+  background: var(--color-blue-mid);
+}
+
+
+.timeChip {
+  min-width: 85px;
+  width: auto;
+  height: 36px;
+  border-radius: 6px;
+  padding: 6px 9px;
+  border: 1px solid #E5E7EB;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  color: #374151;
+  flex-shrink: 0;
+}
+
+.timeText {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 500;
+  color: #374151;
+  white-space: nowrap;
+  text-align: center;
+  min-width: 0;
+}
+
+.removeTimeButton {
+  background: none;
+  border: none;
+  color: #9CA3AF;
+  cursor: pointer;
+  font-size: 14px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.removeTimeButton:hover {
+  background: #FEE2E2;
+  color: #DC2626;
+}
+
+/* Delete Category Modal */
+.deleteModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.deleteModalContent {
+  background: white;
+  width: 400px;
+  border-radius: 20px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.deleteModalCloseButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #9CA3AF;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.deleteModalCloseButton:hover {
+  background: #F3F4F6;
+  color: #374151;
+}
+
+.deleteModalIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deleteModalIconCircle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #FEF2F2;
+  border: 3px solid #FECACA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: bold;
+  color: #DC2626;
+}
+
+.deleteModalTitle {
+  font-family: 'Ultra System', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
+  text-align: center;
+  color: #000000;
+  margin: 0;
+  max-width: 300px;
+  letter-spacing: 0px;
+}
+
+.deleteModalActions {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  justify-content: center;
+}
+
+.deleteModalCancelButton {
+  background: white;
+  border: 1px solid #E5E7EB;
+  color: #374151;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  min-width: 120px;
+}
+
+.deleteModalCancelButton:hover {
+  background: #F3F4F6;
+  border-color: #D1D5DB;
+}
+
+.deleteModalConfirmButton {
+  background: #DC2626;
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  min-width: 120px;
+}
+
+.deleteModalConfirmButton:hover {
+  background: #B91C1C;
+}
+
+@media (max-width: 768px) {
+  .stepContainer {
+    padding: 1rem;
+  }
+  
+  .locationForm {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+  
+  .locationRow {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .locationRowSingle {
+    max-width: 100%;
+  }
+  
+  .categoriesGrid {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .genderGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .timeInputGroup {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .timeX {
+    text-align: center;
+    margin: 0.5rem 0;
+  }
+  
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+  
+  .modalContent {
+    width: 90vw;
+    max-width: 400px;
+    height: auto;
+    max-height: 85vh;
+    border-radius: 20px;
+    padding: 30px;
+    gap: 20px;
+  }
+  
+  .modalForm {
+    gap: 20px;
+  }
+  
+  .timeChip {
+    min-width: 80px;
+  }
+  
+  .timeInputGroup {
+    gap: 8px;
+  }
+  
+  .deleteModalContent {
+    width: 90vw;
+    max-width: 350px;
+    padding: 30px;
+    gap: 20px;
+  }
+  
+  .deleteModalTitle {
+    font-size: 16px;
+  }
+  
+  .deleteModalIconCircle {
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+  }
+  
+  .deleteModalActions {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .sportsGrid {
+    grid-template-columns: repeat(2, 181.82px);
+    gap: 0.75rem;
+    justify-content: center;
+  }
+  
+  .facilitiesGrid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+  
+  .photoGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .photosGrid {
+    grid-template-columns: repeat(6, 120px);
+    grid-template-rows: 120px;
+    gap: 0.5rem;
+    overflow-x: auto;
+  }
+  
+  .photoSlot {
+    width: 120px;
+    height: 120px;
+    border-radius: 10px;
+  }
+  
+  .ageGrid {
+    grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+  }
+  
+  .dayGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .timeRow {
+    grid-template-columns: 1fr;
+  }
+  
+  .modalContent {
+    margin: 1rem;
+    width: calc(100% - 2rem);
+  }
+  
+  .modalActions {
+    flex-direction: column;
+  }
+  
+  .hostContainer {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+  }
+  
+  .hostInfoSection {
+    min-width: unset;
+    width: 100%;
+  }
+  
+  .achievementsSection {
+    padding: 0 1rem;
+  }
+  
+  .addAchievementButton {
+    max-width: 100%;
+  }
+  
+  .noAchievementsContainer {
+    max-width: 100%;
+  }
+}

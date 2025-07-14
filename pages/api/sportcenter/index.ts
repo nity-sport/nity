@@ -69,7 +69,7 @@ export default async function handler(
             { name: { $regex: search, $options: 'i' } },
             { sportcenterBio: { $regex: search, $options: 'i' } },
             { sport: { $in: [new RegExp(search as string, 'i')] } },
-            { category: { $in: [new RegExp(search as string, 'i')] } },
+            { categories: { $in: [new RegExp(search as string, 'i')] } },
             { 'location.city': { $regex: search, $options: 'i' } },
             { 'location.state': { $regex: search, $options: 'i' } },
             { 'location.country': { $regex: search, $options: 'i' } }

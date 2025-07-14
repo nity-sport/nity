@@ -9,7 +9,7 @@ interface SportCenter {
   sportcenterBio?: string;
   mainPhoto?: string;
   profilePhoto?: string;
-  category: string[];
+  categories: string[];
   sport: string[];
   location: {
     city?: string;

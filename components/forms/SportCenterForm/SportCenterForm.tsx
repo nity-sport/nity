@@ -24,7 +24,7 @@ const initialFormState: Omit<SportCenterType, 'owner' | 'ownerMail' | '_id'> = {
   mainPhoto: '',
   profilePhoto: '',
   photos: [],
-  category: [],
+  categories: [],
   achievements: [],
   badge: '',
   coaches: [],
@@ -194,7 +194,7 @@ export default function SportCenterForm({
   };
 
   // --- MODIFICAÇÃO AQUI ---
-  const handleArrayStringChange = (fieldName: keyof Pick<SportCenterType, 'category' | 'sport' | 'achievements'>, rawValue: string) => {
+  const handleArrayStringChange = (fieldName: keyof Pick<SportCenterType, 'categories' | 'sport' | 'achievements'>, rawValue: string) => {
     if (rawValue.trim() === '') {
         setFormData(prev => ({ ...prev, [fieldName]: [] }));
         return;
@@ -203,7 +203,7 @@ export default function SportCenterForm({
     // Ex: "item1,,item2" se tornará ["item1", "", "item2"] no estado.
     // O input value={formData[fieldName].join(', ')} irá refletir isso como "item1, , item2"
     const newArray = rawValue.split(',').map(item => item.trim());
-    setFormData(prev => ({ ...prev, [fieldName]: newArray as string[] })); // Cast para string[]
+    setFormData(prev => ({ ...prev, [fieldName]: newArray as any })); // Use any to handle both string[] and CategoryType[]
   };
   // --- FIM DA MODIFICAÇÃO ---
 
@@ -285,7 +285,31 @@ export default function SportCenterForm({
       }
 
       // --- MODIFICAÇÃO AQUI: Limpeza dos arrays de string antes de enviar ---
-      const cleanedCategories = formData.category.filter(item => item && item.trim() !== '');
+      // For the simple form, we'll create basic CategoryType objects from strings
+      const cleanedCategoryStrings = (formData.categories as any[]).filter(item => {
+        if (typeof item === 'string') {
+          return item && item.trim() !== '';
+        }
+        return item && item.name && item.name.trim() !== '';
+      });
+      
+      const cleanedCategories = cleanedCategoryStrings.map(item => {
+        if (typeof item === 'string') {
+          // Convert string to basic CategoryType
+          return {
+            id: `category-${Date.now()}-${Math.random()}`,
+            name: item.trim(),
+            ageRange: [],
+            gender: 'Misto' as const,
+            schedule: {
+              days: [],
+              times: []
+            }
+          };
+        }
+        return item; // Already a CategoryType
+      });
+      
       const cleanedSports = formData.sport.filter(item => item && item.trim() !== '');
       const cleanedAchievements = formData.achievements.filter(item => item && item.trim() !== '');
       // --- FIM DA MODIFICAÇÃO ---
@@ -296,7 +320,7 @@ export default function SportCenterForm({
         profilePhoto: profilePhotoUrl,
         photos: photosUrls,
         // --- MODIFICAÇÃO AQUI ---
-        category: cleanedCategories,
+        categories: cleanedCategories,
         sport: cleanedSports,
         achievements: cleanedAchievements,
         // --- FIM DA MODIFICAÇÃO ---
@@ -358,9 +382,9 @@ export default function SportCenterForm({
           <textarea name="sportcenterBio" value={formData.sportcenterBio || ''} onChange={handleChange} />
         </div>
         <div className={styles.formGroup}>
-          <label htmlFor="category">Categorias (separadas por vírgula)</label>
+          <label htmlFor="categories">Categorias (separadas por vírgula)</label>
           {/* Corrigido o tipo de fieldName para a função específica */}
-          <input type="text" name="category" value={Array.isArray(formData.category) ? formData.category.join(', ') : ''} onChange={(e) => handleArrayStringChange('category', e.target.value)} />
+          <input type="text" name="categories" value={Array.isArray(formData.categories) ? formData.categories.map(cat => typeof cat === 'string' ? cat : cat.name).join(', ') : ''} onChange={(e) => handleArrayStringChange('categories', e.target.value)} />
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="sport">Esportes Principais (separados por vírgula) *</label>

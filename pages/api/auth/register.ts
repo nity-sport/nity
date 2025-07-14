@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     await dbConnect();
 
-    const { email, password, name, referralCode, teamId } = req.body;
+    const { email, password, name, referralCode, teamId, role } = req.body;
 
     if (!email || !password || !name) {
       return res.status(400).json({ message: 'Missing required fields' });
@@ -56,6 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       password: hashedPassword,
       name,
       provider: 'email',
+      ...(role && { role }),
       ...(referralValid && { referredBy: referralCode.trim().toUpperCase() }),
     });
 

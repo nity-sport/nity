@@ -1,0 +1,270 @@
+/* Full page container */
+.fullContainer {
+  background: var(--color-surface-dark);
+  padding: 0;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* Top header with logo */
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 4rem;
+  background: white;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+}
+
+.nityLogo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.percentageIndicator {
+  font-size: 1.25rem;
+  color: #666;
+  font-weight: 500;
+}
+
+/* Main form container */
+.formCard {
+  width: 100%;
+  height: calc(100vh - 80px);
+  background: white;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  margin-top: 80px;
+  position: relative;
+  z-index: 10;
+}
+
+/* Form header */
+.formHeader {
+  text-align: center;
+  padding-top: calc(150px - 80px);
+  padding-bottom: 27px;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.formSubtitle {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 120%;
+  letter-spacing: 0.4px;
+  text-align: center;
+  vertical-align: middle;
+  text-transform: uppercase;
+  color: var(--color-blue-mid);
+  margin-bottom: 1rem;
+  display: block;
+  opacity: 1;
+  width: 352px;
+  height: 22px;
+  margin-left: auto;
+  margin-right: auto;
+  white-space: nowrap;
+  overflow: visible;
+}
+
+.formTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-display-md);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-surface-dark);
+  margin: 0;
+  letter-spacing: 0px;
+  line-height: var(--line-display-md);
+  text-align: center;
+  width: 688px;
+  height: 48px;
+  opacity: 1;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: visible;
+}
+
+/* Form content area */
+.formContent {
+  flex: 1;
+  padding: 60px 2rem 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 200px;
+}
+
+/* Bottom navigation area */
+.bottomNavigation {
+  padding: 2rem;
+  background: white;
+  margin-bottom: 33px;
+}
+
+.progressSection {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.progressBarContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.timer {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+  opacity: 0.7;
+}
+
+.clockIcon {
+  margin-right: 0.5rem;
+  font-size: 1rem;
+}
+
+.timeLeft {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--color-blue-mid);
+}
+
+.timeLabel {
+  font-size: 0.875rem;
+  color: var(--color-blue-mid);
+  font-weight: 400;
+}
+
+.progressBar {
+  width: 100%;
+  height: 6px;
+  background: white;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #2563eb);
+  transition: width 0.3s ease;
+  border-radius: 3px;
+}
+
+/* Buttons */
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.cancelButton {
+  background: white;
+  border: 1px solid var(--color-blue-accent);
+  color: var(--color-blue-accent);
+  width: 147px;
+  height: 31px;
+  opacity: 1;
+  border-radius: 6px;
+  border-width: 1px;
+  padding: 10px 22px;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cancelButton:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+  color: #374151;
+}
+
+.continueButton {
+  background: var(--color-blue-accent);
+  border: none;
+  color: white;
+  width: 147px;
+  height: 31px;
+  opacity: 1;
+  border-radius: 6px;
+  padding: 10px 22px;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.continueButton:hover:not(:disabled) {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
+}
+
+.continueButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .formCard {
+    height: 100vh;
+  }
+  
+  .formHeader {
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+  }
+  
+  .formContent {
+    padding: 2rem 1.5rem;
+  }
+  
+  .bottomNavigation {
+    padding: 1.5rem;
+  }
+  
+  .buttonContainer {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .cancelButton,
+  .continueButton {
+    width: 100%;
+    padding: 1rem 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .formCard {
+    height: 100vh;
+  }
+}

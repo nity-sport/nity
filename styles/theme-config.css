@@ -30,7 +30,7 @@
   
     /* Fonts */
     --font-primary: 'Montserrat', sans-serif;
-    --font-display: 'Ultra System', sans-serif;
+    --font-display: 'Ultra System', 'Inter', sans-serif;
   
     /* Typography Sizes */
     --text-base: 16px;

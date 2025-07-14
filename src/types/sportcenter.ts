@@ -2,6 +2,17 @@ import { CoachType } from "./coach";
 import { FacilityType } from "./facility";
 import { LocationType } from "./location";
 
+export interface CategoryType {
+  id: string;
+  name: string;
+  ageRange: number[];
+  gender: 'Masculino' | 'Feminino' | 'Misto';
+  schedule: {
+    days: string[];
+    times: string[];
+  };
+}
+
 
 
 export interface SportCenterType {
@@ -9,7 +20,7 @@ export interface SportCenterType {
   mainPhoto?: string;
   profilePhoto?: string;
   photos?: string[];
-  category: string[];
+  categories: CategoryType[];
   achievements?: string[];
   badge?: string;
   coaches?: CoachType[];
@@ -17,6 +28,7 @@ export interface SportCenterType {
   dormitoryCosts?: number;
   dormitoryMainPhoto?: string;
   dormitoryPhotos?: string[];
+  dormitoryFacilities?: string[];
   experienceCost?: number;
   extraSport?: string;
   facilities?: FacilityType[];
