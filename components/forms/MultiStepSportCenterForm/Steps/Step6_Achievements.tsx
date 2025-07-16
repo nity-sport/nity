@@ -118,7 +118,6 @@ export function Step6_Achievements() {
   return (
     <div className={styles.stepContainer}>
       {error && <div className={styles.errorMessage}>{error}</div>}
-      <h2 className={styles.achievementsTitle}>Quais as conquistas do seu centro?</h2>
       
       <div className={styles.achievementsSection}>
         {/* Lista de conquistas */}

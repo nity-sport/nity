@@ -15,6 +15,10 @@ export function Step7_Facilities() {
   const [newFacilityName, setNewFacilityName] = useState('');
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [error, setError] = useState('');
+  const [currentPage, setCurrentPage] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  const itemsPerPage = 8; // 8 facilities + 1 add button = 9 total items for 3x3 grid
 
   const validateFacilities = (facilities: string[]): string => {
     if (!facilities || facilities.length === 0) {
@@ -41,6 +45,16 @@ export function Step7_Facilities() {
 
   useEffect(() => {
     fetchFacilities();
+    
+    // Check if mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   // Validate on mount and when facilities change
@@ -71,8 +85,7 @@ export function Step7_Facilities() {
         const dbFacilities = result.facilities;
         const customFacilities = state.customFacilities?.map((facility, index) => ({
           _id: `custom-${index}`,
-          name: facility,
-          icon: '/assets/facilities/svg/star_shine.svg'
+          name: facility
         })) || [];
         
         setAvailableFacilities([...dbFacilities, ...customFacilities]);
@@ -146,71 +159,65 @@ export function Step7_Facilities() {
     updateValidation(newFacilities);
   };
 
-  const handleSuggestFacility = async () => {
+  const handleSuggestFacility = () => {
     if (newFacilityName.trim()) {
-      try {
-        const response = await fetch('/api/facilities', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ name: newFacilityName.trim() })
-        });
-        
-        const result = await response.json();
-        
-        if (result._id) {
-          // Adicionar a nova facility à lista com ícone da estrela
-          const newFacility = {
-            ...result,
-            icon: '/assets/facilities/svg/star_shine.svg'
-          };
-          setAvailableFacilities(prev => [...prev, newFacility]);
-          setNewFacilityName('');
-          setShowSuggestModal(false);
-          setShowSuccessMessage(true);
-          setTimeout(() => setShowSuccessMessage(false), 3000);
-        } else {
-          // Se a facility já existe ou erro, adiciona localmente
-          if (result.error === 'Facility com este nome já existe') {
-            dispatch({ type: 'ADD_CUSTOM_FACILITY', payload: newFacilityName.trim() });
-            setAvailableFacilities(prev => [...prev, { 
-              _id: `custom-${Date.now()}`, 
-              name: newFacilityName.trim(),
-              icon: '/assets/facilities/svg/star_shine.svg'
-            }]);
-            setNewFacilityName('');
-            setShowSuggestModal(false);
-            setShowSuccessMessage(true);
-            setTimeout(() => setShowSuccessMessage(false), 3000);
-          } else {
-            alert(result.error || 'Erro ao adicionar facility');
-          }
-        }
-      } catch (error) {
-        console.error('Error suggesting facility:', error);
-        // Fallback para adicionar localmente
-        dispatch({ type: 'ADD_CUSTOM_FACILITY', payload: newFacilityName.trim() });
-        setAvailableFacilities(prev => [...prev, { 
-          _id: `custom-${Date.now()}`, 
-          name: newFacilityName.trim(),
-          icon: '/assets/facilities/svg/star_shine.svg'
-        }]);
-        setNewFacilityName('');
-        setShowSuggestModal(false);
-        setShowSuccessMessage(true);
-        setTimeout(() => setShowSuccessMessage(false), 3000);
-      }
+      // Adicionar facility localmente
+      dispatch({ type: 'ADD_CUSTOM_FACILITY', payload: newFacilityName.trim() });
+      setAvailableFacilities(prev => [...prev, { 
+        _id: `custom-${Date.now()}`, 
+        name: newFacilityName.trim()
+      }]);
+      setNewFacilityName('');
+      setShowSuggestModal(false);
+      setShowSuccessMessage(true);
+      setTimeout(() => setShowSuccessMessage(false), 3000);
     }
   };
 
   const selectedFacilities = state.formData.facilities || [];
 
+  // Pagination logic
+  const getPaginatedFacilities = () => {
+    if (isMobile) {
+      return availableFacilities;
+    }
+    
+    const startIndex = currentPage * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return availableFacilities.slice(startIndex, endIndex);
+  };
+
+  const getTotalPages = () => {
+    if (isMobile) return 1;
+    return Math.ceil(availableFacilities.length / itemsPerPage);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < getTotalPages() - 1) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
     <div className={styles.stepContainer}>
       {error && <div className={styles.errorMessage}>{error}</div>}
-      <div className={styles.sportsGrid}>
-        {availableFacilities.map(facility => (
+      
+      {!isMobile && getTotalPages() > 1 && (
+        <div className={styles.paginationTop}>
+          <span className={styles.pageInfo}>
+            Página {currentPage + 1} de {getTotalPages()}
+          </span>
+        </div>
+      )}
+      
+      <div className={styles.facilitiesGrid}>
+        {getPaginatedFacilities().map(facility => (
           <div
             key={facility._id}
             className={`${styles.sportCard} ${
@@ -218,15 +225,9 @@ export function Step7_Facilities() {
             }`}
             onClick={() => handleFacilityToggle(facility._id, facility.name)}
           >
-            {facility.icon && (
-              <div className={styles.sportIconContainer}>
-                <img 
-                  src={facility.icon} 
-                  alt={facility.name} 
-                  className={styles.sportIcon}
-                />
-              </div>
-            )}
+            <div className={styles.sportIconContainer}>
+              <span className={styles.starIcon}>★</span>
+            </div>
             <span className={styles.sportName}>{facility.name}</span>
           </div>
         ))}
@@ -239,6 +240,38 @@ export function Step7_Facilities() {
           <span className={styles.addSportText}>Add a facility</span>
         </div>
       </div>
+
+      {!isMobile && getTotalPages() > 1 && (
+        <div className={styles.paginationControls}>
+          <button 
+            className={`${styles.paginationButton} ${currentPage === 0 ? styles.disabled : ''}`}
+            onClick={handlePrevPage}
+            disabled={currentPage === 0}
+          >
+            ← Anterior
+          </button>
+          
+          <div className={styles.pageIndicators}>
+            {Array.from({ length: getTotalPages() }, (_, i) => (
+              <button
+                key={i}
+                className={`${styles.pageIndicator} ${i === currentPage ? styles.active : ''}`}
+                onClick={() => setCurrentPage(i)}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
+          
+          <button 
+            className={`${styles.paginationButton} ${currentPage === getTotalPages() - 1 ? styles.disabled : ''}`}
+            onClick={handleNextPage}
+            disabled={currentPage === getTotalPages() - 1}
+          >
+            Próximo →
+          </button>
+        </div>
+      )}
 
       {showSuccessMessage && (
         <div className={styles.successMessage}>

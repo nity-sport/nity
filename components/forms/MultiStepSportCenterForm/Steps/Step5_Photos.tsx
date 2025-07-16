@@ -15,6 +15,9 @@ export function Step5_Photos() {
   const [draggedItem, setDraggedItem] = useState<string | null>(null);
   const [showDeleteModal, setShowDeleteModal] = useState<string | null>(null);
   const [error, setError] = useState('');
+  const [touchStartPos, setTouchStartPos] = useState<{ x: number; y: number } | null>(null);
+  const [touchDragItem, setTouchDragItem] = useState<string | null>(null);
+  const [touchOffset, setTouchOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
   const validatePhotos = (photoList: PhotoItem[]): string => {
     if (!photoList || photoList.length === 0) {
@@ -125,6 +128,111 @@ export function Step5_Photos() {
     setDraggedItem(null);
   };
 
+  // Touch event handlers for mobile drag and drop
+  const handleTouchStart = (e: React.TouchEvent, photoId: string) => {
+    const touch = e.touches[0];
+    setTouchStartPos({ x: touch.clientX, y: touch.clientY });
+    setTouchDragItem(photoId);
+    setDraggedItem(photoId);
+    
+    // Add visual feedback immediately
+    const element = e.currentTarget as HTMLElement;
+    element.style.zIndex = '1000';
+    element.style.transition = 'none';
+    
+    console.log('Touch started on photo:', photoId);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!touchDragItem || !touchStartPos) return;
+    
+    const touch = e.touches[0];
+    const newOffset = {
+      x: touch.clientX - touchStartPos.x,
+      y: touch.clientY - touchStartPos.y
+    };
+    
+    setTouchOffset(newOffset);
+    
+    console.log('Touch moving:', newOffset);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!touchDragItem) return;
+    
+    console.log('Touch ended for:', touchDragItem);
+    
+    // Find the element under the touch point
+    const touch = e.changedTouches[0];
+    
+    // Temporarily hide the dragged element to get element below
+    const draggedElement = e.currentTarget as HTMLElement;
+    const originalDisplay = draggedElement.style.display;
+    draggedElement.style.display = 'none';
+    
+    const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+    
+    // Restore the dragged element
+    draggedElement.style.display = originalDisplay;
+    
+    console.log('Element below:', elementBelow);
+    
+    if (elementBelow) {
+      // Find the photo slot that was touched
+      const photoSlot = elementBelow.closest('[data-slot-index]') as HTMLElement;
+      console.log('Photo slot found:', photoSlot);
+      
+      if (photoSlot) {
+        const targetIndex = parseInt(photoSlot.getAttribute('data-slot-index') || '0');
+        console.log('Target index:', targetIndex);
+        
+        if (targetIndex > 0) { // Can't drop on position 0 (upload slot)
+          const draggedIndex = photos.findIndex(p => p.id === touchDragItem);
+          const actualTargetIndex = targetIndex - 1; // Adjust for upload slot
+          
+          console.log('Dragged index:', draggedIndex, 'Target index:', actualTargetIndex);
+          
+          if (draggedIndex !== -1 && draggedIndex !== actualTargetIndex) {
+            const newPhotos = [...photos];
+            const draggedPhoto = newPhotos[draggedIndex];
+            
+            newPhotos.splice(draggedIndex, 1);
+            newPhotos.splice(actualTargetIndex, 0, draggedPhoto);
+            
+            console.log('✅ Reordering photos:', newPhotos.map(p => p.id));
+            
+            setPhotos(newPhotos);
+            dispatch({
+              type: 'UPDATE_FORM_DATA',
+              payload: {
+                photos: newPhotos.map(p => p.file)
+              }
+            });
+          } else {
+            console.log('❌ Same position or invalid indices');
+          }
+        } else {
+          console.log('❌ Cannot drop on upload slot');
+        }
+      } else {
+        console.log('❌ No photo slot found');
+      }
+    } else {
+      console.log('❌ No element below touch point');
+    }
+    
+    // Reset visual state
+    const element = e.currentTarget as HTMLElement;
+    element.style.zIndex = '';
+    element.style.transition = '';
+    
+    // Reset touch state
+    setTouchDragItem(null);
+    setDraggedItem(null);
+    setTouchStartPos(null);
+    setTouchOffset({ x: 0, y: 0 });
+  };
+
   const handleDeletePhoto = (photoId: string) => {
     const updatedPhotos = photos.filter(p => p.id !== photoId);
     setPhotos(updatedPhotos);
@@ -193,14 +301,40 @@ export function Step5_Photos() {
       const photo = photos[i - 1]; // Adjust index for photos array
       
       if (photo) {
+        const isDragging = draggedItem === photo.id;
+        const dragStyle = isDragging && touchDragItem === photo.id ? {
+          transform: `translate(${touchOffset.x}px, ${touchOffset.y}px)`,
+          zIndex: 1000
+        } : {};
+        
         slots.push(
           <div
             key={photo.id}
-            className={`${styles.photoSlot} ${styles.photoContainer} ${draggedItem === photo.id ? styles.dragging : ''}`}
+            className={`${styles.photoSlot} ${styles.photoContainer} ${isDragging ? styles.dragging : ''}`}
+            style={dragStyle}
+            data-slot-index={i}
             draggable
             onDragStart={(e) => handleDragStart(e, photo.id)}
             onDragOver={handleDragOver}
             onDrop={(e) => handleDrop(e, i)}
+            onTouchStart={(e) => {
+              // Only handle touch if not touching action buttons
+              const target = e.target as HTMLElement;
+              if (!target.closest(`.${styles.photoActions}`) && !target.closest('button')) {
+                e.preventDefault();
+                handleTouchStart(e, photo.id);
+              }
+            }}
+            onTouchMove={(e) => {
+              if (touchDragItem === photo.id) {
+                handleTouchMove(e);
+              }
+            }}
+            onTouchEnd={(e) => {
+              if (touchDragItem === photo.id) {
+                handleTouchEnd(e);
+              }
+            }}
           >
             <img src={photo.url} alt="Centro esportivo" className={styles.photoImage} />
             {photo.isMain && (
@@ -229,6 +363,7 @@ export function Step5_Photos() {
           <div
             key={`empty-${i}`}
             className={`${styles.photoSlot} ${styles.emptySlot}`}
+            data-slot-index={i}
             onDragOver={handleDragOver}
             onDrop={(e) => handleDrop(e, i)}
           >

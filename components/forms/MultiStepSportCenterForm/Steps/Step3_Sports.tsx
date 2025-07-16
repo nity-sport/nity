@@ -275,8 +275,9 @@ export function Step3_Sports() {
             <button 
               className={styles.addButton}
               onClick={handleSuggestSport}
+              disabled={!newSportName.trim()}
             >
-              <span className={styles.addButtonText}>Adicionar +</span>
+              Adicionar +
             </button>
           </div>
         </div>

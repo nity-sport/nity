@@ -126,8 +126,6 @@ export function Step8_Location() {
 
   return (
     <div className={styles.stepContainer}>
-      <h2 className={styles.locationTitle}>QUAL SUA LOCALIZAÇÃO?</h2>
-      
       <div className={styles.locationForm}>
         <div className={styles.locationRow}>
           <FormInput

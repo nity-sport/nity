@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useMultiStepForm } from '../MultiStepFormProvider';
 import styles from './Steps.module.css';
 
 export function Step11_Pricing() {
   const { state, dispatch } = useMultiStepForm();
+
+  // Validation - mark as valid always (pricing can be empty)
+  useEffect(() => {
+    console.log('🔧 Step11_Pricing: Setting validation for stepIndex 13 to TRUE');
+    dispatch({
+      type: 'SET_STEP_VALID',
+      payload: { stepIndex: 13, isValid: true }
+    });
+  }, []);
 
   const formatCurrency = (value: string): string => {
     // Remove all non-numeric characters except comma

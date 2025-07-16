@@ -7,6 +7,7 @@ export function Step10B_DailyRate() {
 
   const updateValidation = () => {
     // Daily rate is optional - always valid
+    console.log('🔧 Step10B_DailyRate: Setting validation for stepIndex 10 to TRUE');
     dispatch({
       type: 'SET_STEP_VALID',
       payload: { stepIndex: 10, isValid: true }
@@ -49,6 +50,11 @@ export function Step10B_DailyRate() {
   useEffect(() => {
     updateValidation();
   }, []);
+
+  // Also validate when dormitoryCosts changes
+  useEffect(() => {
+    updateValidation();
+  }, [state.formData.dormitoryCosts]);
 
   return (
     <div className={styles.stepContainer}>

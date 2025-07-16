@@ -62,6 +62,9 @@ export function StepNavigation({ onCancel, onSubmit, children }: StepNavigationP
                   console.log('🆔 Current step ID:', state.steps[state.currentStep]?.id);
                   console.log('✅ Can proceed:', canProceed);
                   console.log('🏁 Is last step:', isLastStep);
+                  console.log('📊 Valid steps:', state.validSteps);
+                  console.log('🔍 Current step valid:', state.validSteps[state.currentStep]);
+                  console.log('🎯 Step is optional:', state.steps[state.currentStep]?.isOptional);
                   
                   // Check if we're on the Terms step (Step16 - index 15)
                   const currentStepId = state.steps[state.currentStep]?.id;

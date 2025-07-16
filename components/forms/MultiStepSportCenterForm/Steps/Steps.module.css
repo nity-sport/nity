@@ -1,21 +1,103 @@
 .stepContainer {
-  padding: 0;
-  margin: 0;
+  padding: 1rem;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   min-height: 200px;
+  width: 100%;
+  max-width: 1200px;
+  box-sizing: border-box;
+  text-align: center;
+  overflow: visible;
+}
+
+@media (min-width: 769px) {
+  .stepContainer {
+    margin-bottom: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .stepContainer {
+    padding: 0.25rem 1rem;
+    min-height: 150px;
+    max-height: 70vh;
+    justify-content: flex-start;
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .stepContainer {
+    padding: 0.25rem 0.75rem;
+    min-height: 120px;
+  }
+}
+
+@media (max-width: 390px) {
+  .stepContainer {
+    padding: 0.25rem;
+  }
+}
+
+/* Common title styles */
+.stepTitle {
+  font-family: 'Ultra System', sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 35px;
+  text-align: center;
+  color: #000000;
+  margin-bottom: 1rem;
+  letter-spacing: 0px;
+  padding: 0 1rem;
+  max-width: 100%;
+  word-wrap: break-word;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .stepTitle {
+    font-size: 22px;
+    line-height: 28px;
+    margin-bottom: 1.5rem;
+    padding: 0 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stepTitle {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 1.25rem;
+    padding: 0 0.25rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .stepTitle {
+    font-size: 16px;
+    line-height: 22px;
+    margin-bottom: 1rem;
+  }
 }
 
 /* Step 1 - Name Input */
 .inputWrapper {
-  width: 688px;
+  width: 100%;
+  max-width: 600px;
   margin: 0 auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .nameInput {
   width: 100%;
+  max-width: 600px;
   padding: 1rem;
   border: none;
   border-bottom: 2px solid #e5e7eb;
@@ -27,6 +109,7 @@
   letter-spacing: 0.5px;
   outline: none;
   transition: border-color 0.3s ease;
+  margin: 0 auto;
 }
 
 .nameInput::placeholder {
@@ -39,6 +122,39 @@
   letter-spacing: 0px;
   text-align: center;
   color: #000000;
+}
+
+@media (max-width: 768px) {
+  .inputWrapper {
+    padding: 0 0.75rem;
+  }
+  
+  .nameInput {
+    font-size: 1.125rem;
+    padding: 0.875rem;
+  }
+  
+  .nameInput::placeholder {
+    font-size: 24px;
+    line-height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .inputWrapper {
+    padding: 0 0.5rem;
+  }
+  
+  .nameInput {
+    font-size: 1rem;
+    padding: 0.75rem;
+    max-width: 100%;
+  }
+  
+  .nameInput::placeholder {
+    font-size: 20px;
+    line-height: 32px;
+  }
 }
 
 .nameInput:focus {
@@ -59,14 +175,42 @@
   margin-top: 0.5rem;
   text-align: center;
   font-family: var(--font-primary);
+  width: 100%;
+  max-width: 600px;
+}
+
+@media (max-width: 768px) {
+  .errorMessage {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .errorMessage {
+    font-size: 0.75rem;
+  }
 }
 
 .characterCount {
   font-size: 0.75rem;
   color: #6b7280;
-  text-align: right;
+  text-align: center;
   margin-top: 0.25rem;
   font-family: var(--font-primary);
+  width: 100%;
+  max-width: 600px;
+}
+
+@media (max-width: 768px) {
+  .characterCount {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .characterCount {
+    font-size: 0.65rem;
+  }
 }
 
 /* Host photo area error styling */
@@ -91,11 +235,32 @@
 
 /* Step 2 - Basic Data Form */
 .basicDataForm {
-  width: 688px;
+  width: 100%;
+  max-width: 688px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  padding: 0;
+}
+
+@media (max-width: 768px) {
+  .basicDataForm {
+    gap: 1.5rem;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .basicDataForm {
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .basicDataForm {
+    gap: 1rem;
+  }
 }
 
 .formField {
@@ -261,81 +426,82 @@
   text-align: left;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .basicDataForm {
-    width: 100%;
-    max-width: 688px;
-    gap: 1.5rem;
-    padding: 0 1rem;
-  }
-  
-  .logoUploadArea {
-    width: 60px;
-    height: 60px;
-  }
-  
-  .logoUploadContainer {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .nameInput {
-    font-size: 1.125rem;
-  }
-  
-  .fileUploadArea {
-    padding: 1.5rem;
-  }
-  
-  .formRow {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .basicDataForm {
-    max-width: 100%;
-    gap: 1.25rem;
-  }
-  
-  .nameInput {
-    font-size: 1rem;
-    padding: 0.875rem;
-  }
-  
-  .fileUploadArea {
-    padding: 1.25rem;
-  }
-}
+/* Additional responsive styles are defined inline with each component above */
 
 /* Sports Grid */
 .sportsGrid {
   display: grid;
-  grid-template-columns: repeat(3, 181.82px);
-  gap: 1rem;
-  margin-bottom: 2rem;
-  justify-content: center;
-  margin: 0 auto 2rem auto;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 16px;
+  background: transparent;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .sportsGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 350px;
+    overflow-y: scroll;
+  }
+  
+  .sportsGrid::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .sportsGrid::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 4px;
+  }
+
+  .sportsGrid::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+  }
+
+  .sportsGrid::-webkit-scrollbar-thumb:hover {
+    background: #999;
+  }
+  
+  .sportCard {
+    height: 56px;
+  }
+  
+  .addSportCard {
+    height: 56px;
+  }
 }
 
 .sportCard {
-  width: 181.82px;
-  height: 59.61px;
-  opacity: 1;
-  border-radius: 6.27px;
-  border: 0;
-  gap: 11.91px;
-  padding: 8.18px;
-  text-align: left;
+  width: 100%;
+  height: 80px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  padding: 12px;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  gap: 12px;
   cursor: pointer;
   transition: all 0.2s;
-  background: #E9ECEF;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  box-sizing: border-box;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.sportCard:hover {
+  background: #e9ecef;
+  border-color: #007bff;
+}
+
+.sportCard.selected {
+  background: #007bff;
+  border-color: #007bff;
+  color: white;
 }
 
 .sportCard.selected {
@@ -381,22 +547,26 @@
 }
 
 .addSportCard {
-  width: 181.82px;
-  height: 59.61px;
-  opacity: 1;
-  border-radius: 6.27px;
-  border: 0;
-  gap: 11.91px;
-  padding: 8.18px;
-  text-align: left;
-  cursor: pointer;
-  transition: all 0.2s;
-  background: #E9ECEF;
+  width: 100%;
+  height: 80px;
+  border-radius: 8px;
+  border: 2px dashed #007bff;
+  padding: 12px;
+  background: #f8f9fa;
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  margin: 0;
+  color: #007bff;
+}
+
+.addSportCard:hover {
+  background: #e3f2fd;
+  border-color: #0056b3;
 }
 
 
@@ -419,36 +589,188 @@
 }
 
 .successMessage {
-  background: var(--success-color-light);
-  border: 1px solid var(--success-color);
-  border-radius: 8px;
-  padding: 1rem;
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 12px;
+  padding: 16px;
   text-align: center;
-  margin-top: 1rem;
+  margin: 16px auto;
+  max-width: 400px;
+  animation: slideIn 0.3s ease;
 }
 
 .successMessage p {
   margin: 0;
-  color: var(--success-color);
-  font-size: 0.875rem;
+  color: #155724;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Facilities Grid */
 .facilitiesGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-bottom: 2rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 16px;
+  background: transparent;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .facilitiesGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 350px;
+    overflow-y: scroll;
+  }
+  
+  .facilitiesGrid::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .facilitiesGrid::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 4px;
+  }
+
+  .facilitiesGrid::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+  }
+
+  .facilitiesGrid::-webkit-scrollbar-thumb:hover {
+    background: #999;
+  }
+}
+
+/* Pagination Styles */
+.paginationTop {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+  margin-top: -20px;
+}
+
+.pageInfo {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.paginationControls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  margin-bottom: 80px;
+}
+
+.paginationButton {
+  padding: 8px 16px;
+  border: 1px solid #007bff;
+  background: white;
+  color: #007bff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.paginationButton:hover:not(.disabled) {
+  background: #007bff;
+  color: white;
+}
+
+.paginationButton.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: #ccc;
+  color: #ccc;
+}
+
+.pageIndicators {
+  display: flex;
+  gap: 8px;
+}
+
+.pageIndicator {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.pageIndicator:hover {
+  border-color: #007bff;
+  color: #007bff;
+}
+
+.pageIndicator.active {
+  background: #007bff;
+  border-color: #007bff;
+  color: white;
+}
+
+.starIcon {
+  font-size: 20px;
+  color: #ffd700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .facilityCard {
-  padding: 1rem;
-  border: 2px solid var(--border-color);
+  width: 100%;
+  height: 56px;
   border-radius: 8px;
-  text-align: center;
+  border: 1px solid #ddd;
+  padding: 12px;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   transition: all 0.2s;
-  background: white;
+  flex-shrink: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.facilityCard:hover {
+  background: #e9ecef;
+  border-color: #007bff;
+}
+
+.facilityCard.selected {
+  background: #007bff;
+  border-color: #007bff;
+  color: white;
 }
 
 .facilityCard:hover {
@@ -467,13 +789,26 @@
 }
 
 .addFacilityCard {
-  padding: 1rem;
-  border: 2px dashed var(--border-color);
+  width: 100%;
+  height: 56px;
   border-radius: 8px;
-  text-align: center;
+  border: 2px dashed #007bff;
+  padding: 12px;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   transition: all 0.2s;
-  background: var(--background-light);
+  flex-shrink: 0;
+  margin: 0;
+  text-align: center;
+  color: #007bff;
+}
+
+.addFacilityCard:hover {
+  background: #e3f2fd;
+  border-color: #0056b3;
 }
 
 .addFacilityCard:hover {
@@ -901,94 +1236,92 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .modalContent {
   background: white;
-  width: 508px;
-  height: 770.77px;
-  border-radius: 40px;
-  padding: 60px;
+  width: 100%;
+  max-width: 500px;
+  min-height: 400px;
+  border-radius: 24px;
+  padding: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
-  overflow: hidden;
   box-sizing: border-box;
-  justify-content: space-between;
+  gap: 30px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
 
 .modalTitle {
-  max-width: 468px;
   width: 100%;
-  height: 55px;
-  opacity: 1;
-  font-family: var(--font-display);
+  font-family: 'Ultra System', sans-serif;
   font-weight: 400;
-  font-style: normal;
-  font-size: 28px;
-  line-height: 35px;
-  letter-spacing: 0px;
+  font-size: 24px;
+  line-height: 30px;
   text-align: center;
   color: #000000;
   margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 0;
 }
 
 .modalInputWrapper {
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .modalInput {
   width: 100%;
-  padding: 1rem;
-  border: none;
-  border-bottom: 2px solid #e5e7eb;
-  background: transparent;
-  font-size: 1.25rem;
+  padding: 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  background: #f8f9fa;
+  font-size: 16px;
   font-weight: 500;
   text-align: center;
   color: #374151;
-  letter-spacing: 0.5px;
   outline: none;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+  box-sizing: border-box;
 }
 
 .modalInput::placeholder {
-  opacity: 0.2;
-  font-family: var(--font-display);
+  color: #9ca3af;
+  opacity: 1;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 400;
-  font-style: normal;
-  font-size: 28px;
-  line-height: 48px;
-  letter-spacing: 0px;
+  font-size: 16px;
   text-align: center;
-  color: #000000;
 }
 
 .modalInput:focus {
-  border-bottom-color: #2563eb;
+  border-color: #007bff;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
 }
 
 .addButton {
-  width: 156px;
-  height: 39px;
-  opacity: 1;
-  border-radius: 6px;
-  padding: 10px 22px;
-  gap: 10px;
-  background: var(--color-blue-accent);
+  width: 100%;
+  max-width: 200px;
+  height: 48px;
+  border-radius: 12px;
+  padding: 12px 24px;
+  background: #007bff;
   border: none;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -997,31 +1330,138 @@
   justify-content: center;
   box-sizing: border-box;
   margin: 0 auto;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  gap: 8px;
+}
+
+.addButton:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.addButton:active {
+  transform: translateY(0);
+}
+
+.addButton:disabled {
+  background: #e9ecef;
+  color: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.addButton:disabled:hover {
+  background: #e9ecef;
+  transform: none;
+  box-shadow: none;
 }
 
 
 .modalCloseButton {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
+  top: 20px;
+  right: 20px;
+  background: #f8f9fa;
+  border: 1px solid #e5e7eb;
+  font-size: 18px;
   cursor: pointer;
   color: #6B7280;
-  padding: 0.5rem;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  padding: 8px;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
+  font-weight: 400;
 }
 
 .modalCloseButton:hover {
-  background: #F3F4F6;
+  background: #e9ecef;
   color: #374151;
+  border-color: #d1d5db;
+}
+
+/* Modal Responsiveness */
+@media (max-width: 768px) {
+  .modal {
+    padding: 16px;
+  }
+  
+  .modalContent {
+    max-width: 100%;
+    min-height: 350px;
+    padding: 32px 24px;
+    gap: 24px;
+    border-radius: 16px;
+  }
+  
+  .modalTitle {
+    font-size: 20px;
+    line-height: 26px;
+  }
+  
+  .modalInput {
+    padding: 14px;
+    font-size: 15px;
+  }
+  
+  .addButton {
+    height: 44px;
+    font-size: 15px;
+  }
+  
+  .modalCloseButton {
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal {
+    padding: 12px;
+  }
+  
+  .modalContent {
+    min-height: 320px;
+    padding: 28px 20px;
+    gap: 20px;
+    border-radius: 12px;
+  }
+  
+  .modalTitle {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  
+  .modalInput {
+    padding: 12px;
+    font-size: 14px;
+    border-radius: 8px;
+  }
+  
+  .addButton {
+    height: 40px;
+    font-size: 14px;
+    border-radius: 8px;
+  }
+  
+  .modalCloseButton {
+    top: 12px;
+    right: 12px;
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
 }
 
 .editNote {
@@ -1040,15 +1480,6 @@
 }
 
 /* Step 4 - Host Profile */
-.stepTitle {
-  font-family: 'Ultra System', sans-serif;
-  font-weight: 400;
-  font-size: 28px;
-  line-height: 35px;
-  text-align: center;
-  color: #000000;
-  margin-bottom: 2rem;
-}
 
 .hostContainer {
   display: flex;
@@ -1057,7 +1488,24 @@
   align-items: flex-start;
   justify-content: center;
   max-width: 800px;
-  margin: 69px auto 0 auto;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .hostContainer {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .hostContainer {
+    gap: 1.5rem;
+    margin: 0 auto;
+  }
 }
 
 .hostPhotoSection {
@@ -1081,9 +1529,8 @@
 }
 
 .hostPhotoArea {
-  
   width: 211px;
-  height: 247px;
+  min-height: 247px;
   border-radius: 10px;
   background: var(--Neutral-100, #F8F9FA);
   display: flex;
@@ -1094,6 +1541,20 @@
   position: relative;
   overflow: hidden;
   border: none;
+}
+
+@media (max-width: 768px) {
+  .hostPhotoArea {
+    width: 180px;
+    min-height: 210px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hostPhotoArea {
+    width: 160px;
+    min-height: 190px;
+  }
 }
 
 .hostPhotoArea:hover {
@@ -1172,6 +1633,21 @@
   min-width: 300px;
 }
 
+@media (max-width: 768px) {
+  .hostInfoSection {
+    min-width: unset;
+    width: 100%;
+    max-width: 400px;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hostInfoSection {
+    gap: 1.25rem;
+  }
+}
+
 .hostNameSection {
   display: flex;
   flex-direction: column;
@@ -1187,7 +1663,7 @@
 
 .hostBioContainer {
   width: 439px;
-  height: 247px;
+  min-height: 247px;
   border-radius: 10px;
   border: 1px solid #E5E7EB;
   background: white;
@@ -1196,6 +1672,21 @@
   flex-direction: column;
   gap: 0.5rem;
   box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .hostBioContainer {
+    width: 100%;
+    max-width: 400px;
+    min-height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hostBioContainer {
+    min-height: 180px;
+    padding: 0.75rem;
+  }
 }
 
 .hostNameLabel {
@@ -1264,23 +1755,33 @@
 }
 
 /* Step 5 - Photos */
-.photosTitle {
-  font-family: 'Ultra System', sans-serif;
-  font-weight: 400;
-  font-size: 28px;
-  line-height: 35px;
-  text-align: center;
-  color: #000000;
-  margin-bottom: 3rem;
-}
 
 .photosSection {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 2rem;
   margin: 0 auto;
   max-width: 1200px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .photosSection {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .photosSection {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .photosSection {
+    gap: 0.75rem;
+  }
 }
 
 .photosLabel {
@@ -1288,8 +1789,21 @@
   font-weight: 500;
   font-size: 16px;
   color: #374151;
-  text-align: left;
-  align-self: flex-start;
+  text-align: center;
+  align-self: center;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .photosLabel {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .photosLabel {
+    font-size: 14px;
+  }
 }
 
 .photosGrid {
@@ -1298,6 +1812,50 @@
   grid-template-rows: 189px;
   gap: 1rem;
   justify-content: flex-start;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  touch-action: pan-y;
+}
+
+@media (max-width: 1400px) {
+  .photosGrid {
+    grid-template-columns: repeat(5, 160px);
+    grid-template-rows: 160px;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .photosGrid {
+    grid-template-columns: repeat(4, 150px);
+    grid-template-rows: 150px;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .photosGrid {
+    grid-template-columns: repeat(3, 140px);
+    grid-template-rows: 140px;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 580px) {
+  .photosGrid {
+    grid-template-columns: repeat(2, 130px);
+    grid-template-rows: 130px;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .photosGrid {
+    grid-template-columns: repeat(2, 120px);
+    grid-template-rows: 120px;
+    gap: 0.5rem;
+    justify-content: center;
+  }
 }
 
 /* Step 10 - Accommodation Sub-steps */
@@ -1384,13 +1942,44 @@
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .dormitoryQuestionContainer {
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dormitoryQuestionContainer {
+    gap: 1rem;
+    margin-top: 0;
+  }
 }
 
 .dormitoryOptionsWrapper {
   display: flex;
   gap: 1rem;
   justify-content: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+@media (max-width: 480px) {
+  .dormitoryOptionsWrapper {
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 390px) {
+  .dormitoryOptionsWrapper {
+    max-width: 250px;
+  }
 }
 
 .dormitoryOption {
@@ -1432,7 +2021,22 @@
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .dailyRateContainer {
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dailyRateContainer {
+    gap: 1rem;
+    margin-top: 0;
+  }
 }
 
 .priceInputWrapper {
@@ -1445,6 +2049,19 @@
   max-width: 100%;
 }
 
+@media (max-width: 768px) {
+  .priceInputWrapper {
+    width: 100%;
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 480px) {
+  .priceInputWrapper {
+    max-width: 350px;
+  }
+}
+
 .currencySymbol {
   font-family: 'Ultra System', sans-serif;
   font-weight: 400;
@@ -1453,6 +2070,22 @@
   letter-spacing: 0px;
   color: #D1D5DB;
   margin-right: 8px;
+}
+
+@media (max-width: 768px) {
+  .currencySymbol {
+    font-size: 32px;
+    line-height: 40px;
+    margin-right: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .currencySymbol {
+    font-size: 28px;
+    line-height: 36px;
+    margin-right: 4px;
+  }
 }
 
 .priceInputField {
@@ -1472,6 +2105,22 @@
   padding: 8px 0;
   margin: 0;
   transition: border-color 0.2s ease;
+}
+
+@media (max-width: 768px) {
+  .priceInputField {
+    font-size: 32px;
+    line-height: 40px;
+    padding: 6px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .priceInputField {
+    font-size: 24px;
+    line-height: 32px;
+    padding: 4px 0;
+  }
 }
 
 .priceInputField::placeholder {
@@ -1503,6 +2152,22 @@
   margin-left: 8px;
 }
 
+@media (max-width: 768px) {
+  .periodLabel {
+    font-size: 32px;
+    line-height: 40px;
+    margin-left: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .periodLabel {
+    font-size: 28px;
+    line-height: 36px;
+    margin-left: 4px;
+  }
+}
+
 .priceNote {
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
@@ -1525,6 +2190,28 @@
   margin: 0 auto;
   padding: 1rem 0;
   margin-top: 1rem;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .createAccountContainer {
+    max-width: 100%;
+    gap: 1.25rem;
+    padding: 0.75rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .createAccountContainer {
+    gap: 1rem;
+    padding: 0.5rem 0;
+  }
+}
+
+@media (max-width: 390px) {
+  .createAccountContainer {
+    gap: 0.75rem;
+  }
 }
 
 
@@ -1663,6 +2350,44 @@
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 1400px) {
+  .photoSlot {
+    width: 160px;
+    height: 160px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .photoSlot {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .photoSlot {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+@media (max-width: 580px) {
+  .photoSlot {
+    width: 130px;
+    height: 130px;
+  }
+}
+
+@media (max-width: 480px) {
+  .photoSlot {
+    width: 120px;
+    height: 120px;
+    border-radius: 8px;
+  }
 }
 
 .firstSlot {
@@ -1724,6 +2449,11 @@
 .photoContainer {
   position: relative;
   cursor: move;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .photoContainer:hover .photoActions {
@@ -1733,6 +2463,23 @@
 .dragging {
   opacity: 0.5;
   transform: scale(0.95);
+  transition: none;
+}
+
+/* Mobile touch feedback */
+@media (max-width: 768px) {
+  .photoContainer:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+  
+  .photoContainer {
+    cursor: grab;
+  }
+  
+  .photoContainer:active {
+    cursor: grabbing;
+  }
 }
 
 .photoActions {
@@ -1743,7 +2490,21 @@
   gap: 0.5rem;
   opacity: 0;
   transition: opacity 0.2s ease;
-  align-items: flex-start;
+  pointer-events: none;
+}
+
+.photoContainer:hover .photoActions {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Always show actions on mobile */
+@media (max-width: 768px) {
+  .photoActions {
+    opacity: 1;
+    pointer-events: auto;
+    touch-action: manipulation;
+  }
 }
 
 .setMainButton {
@@ -1757,9 +2518,13 @@
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
   opacity: 0.8;
-  height: auto;
+  height: 20px;
   line-height: 1;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: fit-content;
+  white-space: nowrap;
 }
 
 .setMainButton:hover {
@@ -1795,6 +2560,11 @@
   font-size: 0.75rem;
   font-weight: 500;
   font-family: 'Montserrat', sans-serif;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
 /* Delete Modal */
@@ -1917,15 +2687,6 @@
 }
 
 /* Step 6 - Achievements */
-.achievementsTitle {
-  font-family: 'Ultra System', sans-serif;
-  font-weight: 400;
-  font-size: 28px;
-  line-height: 35px;
-  text-align: center;
-  color: #000000;
-  margin-bottom: 4rem;
-}
 
 .achievementsSection {
   display: flex;
@@ -1934,6 +2695,26 @@
   gap: 2rem;
   max-width: 600px;
   margin: 0 auto;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .achievementsSection {
+    max-width: 100%;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .achievementsSection {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .achievementsSection {
+    gap: 0.75rem;
+  }
 }
 
 .addAchievementButton {
@@ -2250,16 +3031,6 @@
 }
 
 /* Step 8 - Location Form */
-.locationTitle {
-  font-family: 'Ultra System', sans-serif;
-  font-weight: 400;
-  font-size: 28px;
-  line-height: 35px;
-  text-align: center;
-  color: #000000;
-  margin-bottom: 2rem;
-  letter-spacing: 0px;
-}
 
 .locationForm {
   width: 100%;
@@ -2267,7 +3038,26 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 6px;
+}
+
+@media (max-width: 768px) {
+  .locationForm {
+    max-width: 100%;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .locationForm {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 390px) {
+  .locationForm {
+    gap: 8px;
+  }
 }
 
 .locationRow {
@@ -2283,21 +3073,19 @@
 }
 
 /* Step 9 - Categories */
-.categoriesTitle {
-  font-family: 'Ultra System', sans-serif;
-  font-weight: 400;
-  font-size: 28px;
-  line-height: 35px;
-  text-align: center;
-  color: #000000;
-  margin-bottom: 4rem;
-  letter-spacing: 0px;
-}
 
 .categoriesContainer {
   width: 100%;
   margin: 0 auto;
   overflow-x: auto;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .categoriesContainer {
+    overflow-x: visible;
+  }
 }
 
 .categoriesGrid {
@@ -2309,6 +3097,21 @@
   justify-content: center;
   overflow-x: auto;
   padding-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .categoriesGrid {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    overflow-x: visible;
+  }
+}
+
+@media (max-width: 480px) {
+  .categoriesGrid {
+    gap: 0.75rem;
+  }
 }
 
 .categoryCard {
@@ -2324,6 +3127,23 @@
   flex-direction: column;
   transition: all 0.2s ease;
   flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .categoryCard {
+    min-width: 100%;
+    max-width: 100%;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .categoryCard {
+    padding: 1rem;
+    min-height: 180px;
+  }
 }
 
 .categoryCard:hover {
@@ -2466,6 +3286,23 @@
   transition: all 0.2s ease;
   background: #F9FAFB;
   flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .addCategoryCard {
+    min-width: 100%;
+    max-width: 100%;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .addCategoryCard {
+    padding: 1rem;
+    min-height: 180px;
+  }
 }
 
 .addCategoryCard:hover {
@@ -2863,13 +3700,9 @@
 }
 
 @media (max-width: 768px) {
-  .stepContainer {
-    padding: 1rem;
-  }
-  
   .locationForm {
     max-width: 100%;
-    padding: 0 1rem;
+    padding: 0 0.75rem;
   }
   
   .locationRow {
@@ -2881,18 +3714,15 @@
     max-width: 100%;
   }
   
-  .categoriesGrid {
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
   .genderGrid {
     grid-template-columns: 1fr;
+    gap: 10px;
   }
   
   .timeInputGroup {
     flex-direction: column;
     align-items: stretch;
+    gap: 10px;
   }
   
   .timeX {
@@ -2902,6 +3732,7 @@
   
   .formRow {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
   
   .modalContent {
@@ -2920,10 +3751,6 @@
   
   .timeChip {
     min-width: 80px;
-  }
-  
-  .timeInputGroup {
-    gap: 8px;
   }
   
   .deleteModalContent {
@@ -2948,67 +3775,26 @@
     gap: 12px;
   }
   
-  .sportsGrid {
-    grid-template-columns: repeat(2, 181.82px);
-    gap: 0.75rem;
-    justify-content: center;
-  }
-  
-  .facilitiesGrid {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  }
-  
-  .photoGrid {
-    grid-template-columns: 1fr;
-  }
-  
-  .photosGrid {
-    grid-template-columns: repeat(6, 120px);
-    grid-template-rows: 120px;
-    gap: 0.5rem;
-    overflow-x: auto;
-  }
-  
-  .photoSlot {
-    width: 120px;
-    height: 120px;
-    border-radius: 10px;
-  }
-  
   .ageGrid {
     grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+    gap: 8px;
   }
   
   .dayGrid {
     grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
   }
   
   .timeRow {
     grid-template-columns: 1fr;
   }
   
-  .modalContent {
-    margin: 1rem;
-    width: calc(100% - 2rem);
-  }
-  
   .modalActions {
     flex-direction: column;
   }
   
-  .hostContainer {
-    flex-direction: column;
-    gap: 2rem;
-    align-items: center;
-  }
-  
-  .hostInfoSection {
-    min-width: unset;
-    width: 100%;
-  }
-  
   .achievementsSection {
-    padding: 0 1rem;
+    padding: 0 0.75rem;
   }
   
   .addAchievementButton {
@@ -3017,5 +3803,106 @@
   
   .noAchievementsContainer {
     max-width: 100%;
+  }
+  
+  .priceNote {
+    font-size: 16px;
+  }
+  
+  .dailyRateContainer {
+    padding: 0 0.75rem;
+  }
+  
+  .createAccountContainer {
+    padding: 0 0.75rem;
+  }
+  
+  .socialButtons {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .locationForm {
+    padding: 0 0.5rem;
+  }
+  
+  .genderGrid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .timeInputGroup {
+    gap: 8px;
+  }
+  
+  .ageGrid {
+    grid-template-columns: repeat(auto-fit, minmax(35px, 1fr));
+    gap: 6px;
+  }
+  
+  .dayGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  
+  .modalContent {
+    width: 95vw;
+    max-width: 350px;
+    padding: 20px;
+    gap: 15px;
+  }
+  
+  .modalForm {
+    gap: 15px;
+  }
+  
+  .deleteModalContent {
+    width: 95vw;
+    max-width: 300px;
+    padding: 20px;
+    gap: 15px;
+  }
+  
+  .deleteModalTitle {
+    font-size: 14px;
+  }
+  
+  .deleteModalIconCircle {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+  }
+  
+  .achievementsSection {
+    padding: 0 0.5rem;
+  }
+  
+  .priceNote {
+    font-size: 14px;
+    max-width: 300px;
+  }
+  
+  .dailyRateContainer {
+    padding: 0 0.5rem;
+  }
+  
+  .createAccountContainer {
+    padding: 0 0.5rem;
+  }
+  
+  .socialButtons {
+    gap: 0.5rem;
+  }
+  
+  .dormitoryOptionsWrapper {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .dormitoryOption {
+    width: 100%;
+    max-width: 250px;
   }
 }

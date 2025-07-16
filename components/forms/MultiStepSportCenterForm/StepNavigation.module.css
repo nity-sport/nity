@@ -72,11 +72,11 @@
   margin-bottom: 1rem;
   display: block;
   opacity: 1;
-  width: 352px;
-  height: 22px;
+  width: 100%;
+  max-width: 500px;
   margin-left: auto;
   margin-right: auto;
-  white-space: nowrap;
+  word-wrap: break-word;
   overflow: visible;
 }
 
@@ -89,12 +89,14 @@
   letter-spacing: 0px;
   line-height: var(--line-display-md);
   text-align: center;
-  width: 688px;
-  height: 48px;
+  width: 100%;
+  max-width: 800px;
+  min-height: 48px;
   opacity: 1;
   margin-left: auto;
   margin-right: auto;
   overflow: visible;
+  word-wrap: break-word;
 }
 
 /* Form content area */
@@ -243,6 +245,17 @@
     padding: 2rem 1.5rem 1.5rem 1.5rem;
   }
   
+  .formSubtitle {
+    font-size: 16px;
+    max-width: 100%;
+  }
+  
+  .formTitle {
+    font-size: 24px;
+    line-height: 30px;
+    max-width: 100%;
+  }
+  
   .formContent {
     padding: 2rem 1.5rem;
   }
@@ -266,5 +279,42 @@
 @media (max-width: 480px) {
   .formCard {
     height: 100vh;
+  }
+  
+  .formSubtitle {
+    font-size: 14px;
+    margin-bottom: 0.75rem;
+  }
+  
+  .formTitle {
+    font-size: 20px;
+    line-height: 26px;
+  }
+  
+  .formHeader {
+    padding: 1.5rem 1rem 1rem 1rem;
+  }
+  
+  .formContent {
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .formSubtitle {
+    font-size: 12px;
+  }
+  
+  .formTitle {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  
+  .formHeader {
+    padding: 1rem 0.75rem 0.75rem 0.75rem;
+  }
+  
+  .formContent {
+    padding: 1rem 0.75rem;
   }
 }

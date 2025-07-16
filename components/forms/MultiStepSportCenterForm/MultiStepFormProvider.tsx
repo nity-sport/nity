@@ -201,8 +201,8 @@ export function MultiStepFormProvider({ children, steps, initialData }: MultiSte
   const getNextStep = (currentStep: number): number => {
     const currentStepId = state.steps[currentStep]?.id;
     
-    // If we're on Step 10 (Dormitory Question) and dormitory is false, skip to Step 14 (Pricing)
-    if (currentStepId === 10 && state.formData.dormitory === false) {
+    // If we're on any dormitory step and dormitory is false, skip to Step 14 (Pricing)
+    if ([10, 11, 12, 13].includes(currentStepId) && state.formData.dormitory === false) {
       // Find Step 14 (Pricing) index
       const pricingStepIndex = state.steps.findIndex(step => step.id === 14);
       return pricingStepIndex !== -1 ? pricingStepIndex : currentStep + 1;
@@ -225,9 +225,27 @@ export function MultiStepFormProvider({ children, steps, initialData }: MultiSte
   };
 
   const nextStep = () => {
+    // Check if current step is optional
+    const currentStep = state.steps[state.currentStep];
+    const isOptional = currentStep?.isOptional === true;
+    const currentStepId = currentStep?.id;
+    
+    // Force Step10B_DailyRate (id: 11) to always proceed
+    if (currentStepId === 11) {
+      console.log('🔧 FORCING Step10B_DailyRate to proceed');
+      const nextStepIndex = getNextStep(state.currentStep);
+      if (nextStepIndex < state.steps.length) {
+        dispatch({ type: 'MARK_STEP_COMPLETED', payload: state.currentStep });
+        dispatch({ type: 'SET_CURRENT_STEP', payload: nextStepIndex });
+      }
+      return;
+    }
+    
     // Mark that we should show errors for current step if it's invalid
     const isCurrentStepValid = state.validSteps[state.currentStep] === true;
-    if (!isCurrentStepValid) {
+    
+    // Only block progression if step is required AND invalid
+    if (!isOptional && !isCurrentStepValid) {
       dispatch({ 
         type: 'SET_SHOW_ERRORS', 
         payload: { stepIndex: state.currentStep, show: true } 

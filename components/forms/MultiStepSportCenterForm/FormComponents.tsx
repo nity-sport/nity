@@ -79,6 +79,7 @@ interface FileUploadProps {
 
 export function FileUpload({ label, onFileSelect, accept, multiple, maxSize = 1024 * 1024, supportedFormats, error }: FileUploadProps) {
   const [dragActive, setDragActive] = useState(false);
+  const [touchActive, setTouchActive] = useState(false);
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -100,6 +101,23 @@ export function FileUpload({ label, onFileSelect, accept, multiple, maxSize = 10
     }
   };
 
+  // Touch event handlers for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    e.preventDefault();
+    setTouchActive(true);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    e.preventDefault();
+    setTouchActive(false);
+    
+    // Trigger file input click on touch
+    const fileInput = e.currentTarget.querySelector('input[type="file"]') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
+    }
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
@@ -111,11 +129,13 @@ export function FileUpload({ label, onFileSelect, accept, multiple, maxSize = 10
     <div className={styles.inputGroup}>
       <label className={styles.label}>{label}</label>
       <div
-        className={`${styles.fileUpload} ${dragActive ? styles.dragActive : ''} ${error ? styles.inputError : ''}`}
+        className={`${styles.fileUpload} ${dragActive ? styles.dragActive : ''} ${touchActive ? styles.touchActive : ''} ${error ? styles.inputError : ''}`}
         onDragEnter={handleDrag}
         onDragLeave={handleDrag}
         onDragOver={handleDrag}
         onDrop={handleDrop}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
         <input
           type="file"

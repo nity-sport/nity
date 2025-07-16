@@ -310,7 +310,6 @@ export function Step9_Categories() {
   return (
     <div className={styles.stepContainer}>
       {error && <div className={styles.errorMessage}>{error}</div>}
-      <h2 className={styles.categoriesTitle}>CATEGORIAS QUE PRATICA</h2>
       
       <div className={styles.categoriesContainer}>
         <div className={styles.categoriesGrid}>
