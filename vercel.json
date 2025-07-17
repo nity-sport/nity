@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "pages/api/upload.ts": {
+      "maxDuration": 30
+    }
+  },
+  "limits": {
+    "duration": 30
+  }
+}
