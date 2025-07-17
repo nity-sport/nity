@@ -61,9 +61,20 @@ export function Step12_CreateAccount() {
   };
 
   const updateStepValidation = () => {
-    const accountData = state.formData.accountData || {};
-    const allFieldsFilled = ['firstName', 'lastName', 'email', 'password'].every(
-      field => accountData[field as keyof typeof accountData]?.trim()
+    const accountData = state.formData.accountData;
+    if (!accountData) {
+      dispatch({
+        type: 'SET_STEP_VALID',
+        payload: { stepIndex: 14, isValid: false }
+      });
+      return;
+    }
+
+    const allFieldsFilled = (['firstName', 'lastName', 'email', 'password'] as const).every(
+      field => {
+        const value = accountData[field];
+        return value && value.trim().length > 0;
+      }
     );
     const validationErrors = validateAllFields();
     const isValid = allFieldsFilled && Object.keys(validationErrors).length === 0;
