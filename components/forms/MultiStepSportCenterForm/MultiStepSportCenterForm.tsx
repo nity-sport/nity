@@ -105,10 +105,36 @@ export function MultiStepSportCenterForm({ initialData, onCancel }: MultiStepSpo
       clearTimeout(timeoutId);
       
       if (!res.ok) {
-        const errData = await res.json();
-        throw new Error(errData.error || `Erro no upload do arquivo: ${file.name}`);
+        let errorMessage = `Erro no upload do arquivo: ${file.name}`;
+        try {
+          const errData = await res.json();
+          errorMessage = errData.error || errorMessage;
+        } catch (jsonError) {
+          // If JSON parsing fails, try to get text response
+          try {
+            const errorText = await res.text();
+            if (errorText.includes('Request Entity Too Large') || res.status === 413) {
+              errorMessage = `Arquivo muito grande: ${file.name}. Tente com uma imagem menor.`;
+            } else if (res.status === 500) {
+              errorMessage = `Erro interno no upload: ${file.name}`;
+            } else {
+              errorMessage = `Erro no upload (${res.status}): ${file.name}`;
+            }
+          } catch (textError) {
+            errorMessage = `Erro no upload (${res.status}): ${file.name}`;
+          }
+        }
+        throw new Error(errorMessage);
       }
-      const data = await res.json();
+      
+      let data;
+      try {
+        data = await res.json();
+      } catch (jsonError) {
+        console.error('❌ Error parsing upload response JSON:', jsonError);
+        throw new Error(`Erro ao processar resposta do upload: ${file.name}`);
+      }
+      
       console.log('✅ File uploaded successfully:', file.name, '→', data.url);
       return data.url;
     } catch (uploadError: any) {
@@ -198,6 +224,15 @@ export function MultiStepSportCenterForm({ initialData, onCancel }: MultiStepSpo
       console.log('🚀 Submitting SportCenter data:', finalSportCenterData);
       console.log('🔑 Using token:', token ? 'Token present' : 'No token');
       
+      // Check payload size to prevent server errors
+      const jsonString = JSON.stringify(finalSportCenterData);
+      const payloadSize = new Blob([jsonString]).size;
+      console.log('📦 Payload size:', payloadSize, 'bytes');
+      
+      if (payloadSize > 10 * 1024 * 1024) { // 10MB limit
+        throw new Error('Dados muito grandes. Tente reduzir o número ou tamanho das imagens.');
+      }
+      
       const response = await fetch('/api/sportcenter', {
         method: 'POST',
         headers: {
@@ -210,21 +245,60 @@ export function MultiStepSportCenterForm({ initialData, onCancel }: MultiStepSpo
       console.log('📡 API Response status:', response.status);
       
       if (response.ok) {
-        const result = await response.json();
-        console.log('✅ SportCenter created successfully:', result);
-        // Success - now move to success step
-        return true;
+        try {
+          const result = await response.json();
+          console.log('✅ SportCenter created successfully:', result);
+          // Success - now move to success step
+          return true;
+        } catch (jsonError) {
+          console.error('❌ Error parsing success response JSON:', jsonError);
+          console.log('✅ SportCenter created successfully (non-JSON response)');
+          return true; // Assume success if we can't parse JSON but status is ok
+        }
       } else {
-        const errorData = await response.json();
-        console.error('❌ Error creating SportCenter:', errorData);
-        console.error('❌ Response status:', response.status);
+        console.error('❌ Error creating SportCenter - Status:', response.status);
         console.error('❌ Response headers:', response.headers);
-        throw new Error(errorData.message || 'Erro ao criar SportCenter');
+        
+        let errorMessage = 'Erro ao criar SportCenter';
+        try {
+          const errorData = await response.json();
+          console.error('❌ Error data:', errorData);
+          errorMessage = errorData.message || errorMessage;
+        } catch (jsonError) {
+          // If JSON parsing fails, try to get text response
+          try {
+            const errorText = await response.text();
+            console.error('❌ Error response text:', errorText);
+            
+            // Check for common server errors
+            if (errorText.includes('Request Entity Too Large') || response.status === 413) {
+              errorMessage = 'Arquivos muito grandes. Tente com imagens menores.';
+            } else if (errorText.includes('Payload Too Large')) {
+              errorMessage = 'Dados muito grandes. Tente reduzir o tamanho das imagens.';
+            } else if (response.status === 500) {
+              errorMessage = 'Erro interno do servidor. Tente novamente.';
+            } else if (response.status === 401) {
+              errorMessage = 'Não autorizado. Faça login novamente.';
+            } else if (response.status === 403) {
+              errorMessage = 'Acesso negado. Verifique suas permissões.';
+            } else {
+              errorMessage = `Erro do servidor (${response.status}): ${errorText.substring(0, 100)}`;
+            }
+          } catch (textError) {
+            console.error('❌ Error parsing error response:', textError);
+            errorMessage = `Erro do servidor (${response.status})`;
+          }
+        }
+        
+        throw new Error(errorMessage);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error submitting form:', error);
-      // You might want to show an error message to the user here
-      alert('Erro ao criar SportCenter. Tente novamente.');
+      
+      // Show more specific error message to user
+      const errorMessage = error.message || 'Erro ao criar SportCenter. Tente novamente.';
+      alert(errorMessage);
+      
       return false;
     } finally {
       setIsSubmitting(false);
