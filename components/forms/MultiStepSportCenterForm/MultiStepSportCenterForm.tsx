@@ -79,24 +79,43 @@ export function MultiStepSportCenterForm({ initialData, onCancel }: MultiStepSpo
   };
 
   const uploadFile = async (file: File | null): Promise<string> => {
-    if (!file) return '';
+    if (!file) {
+      console.log('📁 No file to upload, returning empty string');
+      return '';
+    }
+    
+    console.log('📤 Uploading file:', file.name, 'Size:', file.size);
     const uploadFormData = new FormData();
     uploadFormData.append('file', file);
+    
     try {
       const token = localStorage.getItem('auth_token');
+      
+      // Add timeout to prevent hanging
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+      
       const res = await fetch('/api/upload', { 
         method: 'POST', 
         headers: token ? { 'Authorization': `Bearer ${token}` } : {},
-        body: uploadFormData 
+        body: uploadFormData,
+        signal: controller.signal
       });
+      
+      clearTimeout(timeoutId);
+      
       if (!res.ok) {
         const errData = await res.json();
         throw new Error(errData.error || `Erro no upload do arquivo: ${file.name}`);
       }
       const data = await res.json();
+      console.log('✅ File uploaded successfully:', file.name, '→', data.url);
       return data.url;
     } catch (uploadError: any) {
       console.error("Erro no upload:", uploadError);
+      if (uploadError.name === 'AbortError') {
+        throw new Error(`Upload timeout para arquivo: ${file.name}`);
+      }
       throw uploadError;
     }
   };
@@ -119,10 +138,17 @@ export function MultiStepSportCenterForm({ initialData, onCancel }: MultiStepSpo
     
     try {
       // Upload files first
+      console.log('📁 Starting file uploads...');
+      console.log('📄 Logo file:', formData.logo);
       const mainPhotoUrl = await uploadFile(formData.logo || null);
+      console.log('✅ Logo uploaded:', mainPhotoUrl);
+      
+      console.log('👤 Hoster image file:', formData.hosterImage);
       const hosterImageUrl = await uploadFile(formData.hosterImage instanceof File ? formData.hosterImage : null);
+      console.log('✅ Hoster image uploaded:', hosterImageUrl);
       
       // Handle photos array
+      console.log('📸 Processing photos array...');
       const photosFiles: File[] = [];
       if (Array.isArray(formData.photos)) {
         formData.photos.forEach(item => {
@@ -131,9 +157,12 @@ export function MultiStepSportCenterForm({ initialData, onCancel }: MultiStepSpo
           }
         });
       }
+      console.log('📸 Photos to upload:', photosFiles.length);
       const photosUrls = await uploadMultipleFiles(photosFiles);
+      console.log('✅ Photos uploaded:', photosUrls);
       
       // Handle dormitory photos array
+      console.log('🏠 Processing dormitory photos...');
       const dormitoryPhotosFiles: File[] = [];
       if (Array.isArray(formData.dormitoryPhotos)) {
         formData.dormitoryPhotos.forEach(item => {
@@ -142,9 +171,12 @@ export function MultiStepSportCenterForm({ initialData, onCancel }: MultiStepSpo
           }
         });
       }
+      console.log('🏠 Dormitory photos to upload:', dormitoryPhotosFiles.length);
       const dormitoryPhotosUrls = await uploadMultipleFiles(dormitoryPhotosFiles);
+      console.log('✅ Dormitory photos uploaded:', dormitoryPhotosUrls);
 
       // Prepare final data with uploaded URLs
+      console.log('📋 Preparing final SportCenter data...');
       const finalSportCenterData = {
         ...formData,
         mainPhoto: mainPhotoUrl,
@@ -161,6 +193,7 @@ export function MultiStepSportCenterForm({ initialData, onCancel }: MultiStepSpo
       };
 
       // Send JSON data to SportCenter API
+      console.log('🌐 Starting API call...');
       const token = localStorage.getItem('auth_token');
       console.log('🚀 Submitting SportCenter data:', finalSportCenterData);
       console.log('🔑 Using token:', token ? 'Token present' : 'No token');

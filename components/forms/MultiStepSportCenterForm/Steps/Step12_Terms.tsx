@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMultiStepForm } from '../MultiStepFormProvider';
 import { Checkbox } from '../FormComponents';
 import { useAuth } from '../../../../src/contexts/AuthContext';
@@ -88,6 +88,14 @@ export function Step12_Terms() {
       setLoading(false);
     }
   };
+
+  // Update step validation when terms acceptance changes
+  useEffect(() => {
+    dispatch({
+      type: 'SET_STEP_VALID',
+      payload: { stepIndex: 15, isValid: termsAccepted } // Step12_Terms is index 15
+    });
+  }, [termsAccepted, dispatch]);
 
   return (
     <div className={styles.stepContainer}>
