@@ -17,10 +17,10 @@ const nextConfig = {
         // },
       ],
     },
-    // Configuração para permitir arquivos até 10MB
+    // Configuração para permitir arquivos até 5MB (após compressão)
     api: {
       bodyParser: {
-        sizeLimit: '10mb',
+        sizeLimit: '5mb',
       },
     },
     // Outras configurações do Next.js podem estar aqui...

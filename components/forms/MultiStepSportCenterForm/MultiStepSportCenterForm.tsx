@@ -78,21 +78,73 @@ export function MultiStepSportCenterForm({ initialData, onCancel }: MultiStepSpo
     }
   };
 
+  const compressImage = async (file: File): Promise<File> => {
+    return new Promise((resolve) => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      
+      img.onload = () => {
+        // Calculate new dimensions (max 1920x1080)
+        const maxWidth = 1920;
+        const maxHeight = 1080;
+        let { width, height } = img;
+        
+        if (width > maxWidth || height > maxHeight) {
+          const ratio = Math.min(maxWidth / width, maxHeight / height);
+          width *= ratio;
+          height *= ratio;
+        }
+        
+        canvas.width = width;
+        canvas.height = height;
+        
+        // Draw and compress
+        ctx?.drawImage(img, 0, 0, width, height);
+        
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const compressedFile = new File([blob], file.name, {
+              type: 'image/jpeg',
+              lastModified: Date.now(),
+            });
+            resolve(compressedFile);
+          } else {
+            resolve(file); // Fallback to original if compression fails
+          }
+        }, 'image/jpeg', 0.8); // 80% quality
+      };
+      
+      img.onerror = () => resolve(file); // Fallback to original if loading fails
+      img.src = URL.createObjectURL(file);
+    });
+  };
+
   const uploadFile = async (file: File | null): Promise<string> => {
     if (!file) {
       console.log('📁 No file to upload, returning empty string');
       return '';
     }
     
-    // Check individual file size (10MB limit per file)
-    const maxFileSize = 10 * 1024 * 1024; // 10MB
-    if (file.size > maxFileSize) {
-      throw new Error(`Arquivo muito grande: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB). Limite: 10MB por arquivo.`);
+    console.log('📤 Original file:', file.name, 'Size:', (file.size / 1024 / 1024).toFixed(2), 'MB');
+    
+    // Compress image if it's an image and larger than 2MB
+    let fileToUpload = file;
+    if (file.type.startsWith('image/') && file.size > 2 * 1024 * 1024) {
+      console.log('🗜️ Compressing image...');
+      fileToUpload = await compressImage(file);
+      console.log('✅ Compressed to:', (fileToUpload.size / 1024 / 1024).toFixed(2), 'MB');
     }
     
-    console.log('📤 Uploading file:', file.name, 'Size:', (file.size / 1024 / 1024).toFixed(2), 'MB');
+    // Check individual file size (5MB limit for upload to work around Vercel limits)
+    const maxFileSize = 5 * 1024 * 1024; // 5MB
+    if (fileToUpload.size > maxFileSize) {
+      throw new Error(`Arquivo muito grande após compressão: ${file.name} (${(fileToUpload.size / 1024 / 1024).toFixed(2)}MB). Tente uma imagem menor.`);
+    }
+    
+    console.log('📤 Uploading file:', fileToUpload.name, 'Size:', (fileToUpload.size / 1024 / 1024).toFixed(2), 'MB');
     const uploadFormData = new FormData();
-    uploadFormData.append('file', file);
+    uploadFormData.append('file', fileToUpload);
     
     try {
       const token = localStorage.getItem('auth_token');
@@ -170,8 +222,8 @@ export function MultiStepSportCenterForm({ initialData, onCancel }: MultiStepSpo
     
     try {
       // Validate all files before starting uploads
-      console.log('🔍 Validating file sizes...');
-      const maxFileSize = 10 * 1024 * 1024; // 10MB
+      console.log('🔍 Validating and preparing files...');
+      const maxFileSize = 50 * 1024 * 1024; // 50MB original file limit (will be compressed)
       const filesToCheck: Array<{ file: File; name: string }> = [];
       
       // Check logo
@@ -202,11 +254,11 @@ export function MultiStepSportCenterForm({ initialData, onCancel }: MultiStepSpo
         });
       }
       
-      // Validate each file
+      // Validate each file (allow larger files that will be compressed)
       let totalSize = 0;
       for (const { file, name } of filesToCheck) {
         if (file.size > maxFileSize) {
-          throw new Error(`${name} muito grande (${(file.size / 1024 / 1024).toFixed(2)}MB). Limite: 10MB por arquivo.`);
+          throw new Error(`${name} muito grande (${(file.size / 1024 / 1024).toFixed(2)}MB). Limite: 50MB por arquivo.`);
         }
         totalSize += file.size;
       }
@@ -214,6 +266,7 @@ export function MultiStepSportCenterForm({ initialData, onCancel }: MultiStepSpo
       console.log('✅ All files validated successfully');
       console.log('📊 Total files:', filesToCheck.length);
       console.log('📦 Total files size:', (totalSize / 1024 / 1024).toFixed(2), 'MB');
+      console.log('🗜️ Images will be compressed automatically if needed');
       
       // Upload files first
       console.log('📁 Starting file uploads...');

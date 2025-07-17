@@ -14,8 +14,8 @@ const parseForm = (req: NextApiRequest): Promise<{ fields: any; files: any }> =>
   const form = formidable({
     keepExtensions: true,
     multiples: false, // <- aqui está a mágica
-    maxFileSize: 10 * 1024 * 1024, // 10MB limit
-    maxTotalFileSize: 10 * 1024 * 1024, // 10MB total limit
+    maxFileSize: 5 * 1024 * 1024, // 5MB limit (compressed images)
+    maxTotalFileSize: 5 * 1024 * 1024, // 5MB total limit
   });
 
   return new Promise((resolve, reject) => {
@@ -50,9 +50,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     // Additional file size check
-    if (file.size > 10 * 1024 * 1024) {
+    if (file.size > 5 * 1024 * 1024) {
       return res.status(413).json({
-        error: `Arquivo muito grande: ${file.originalFilename} (${(file.size / 1024 / 1024).toFixed(2)}MB). Limite: 10MB`
+        error: `Arquivo muito grande: ${file.originalFilename} (${(file.size / 1024 / 1024).toFixed(2)}MB). Limite: 5MB`
       });
     }
 
