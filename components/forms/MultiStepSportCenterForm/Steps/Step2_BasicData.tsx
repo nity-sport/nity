@@ -124,10 +124,10 @@ export function Step2_BasicData() {
     if (files && files[0]) {
       const logoFile = files[0];
       
-      // Validação básica de tamanho (1MB)
-      if (logoFile.size > 1024 * 1024) {
+      // Validação básica de tamanho (5MB)
+      if (logoFile.size > 5 * 1024 * 1024) {
         if (state.showErrors[1]) {
-          setErrors(prev => ({ ...prev, logo: 'Arquivo muito grande. Limite de 1MB.' }));
+          setErrors(prev => ({ ...prev, logo: 'Arquivo muito grande. Limite de 5MB.' }));
         }
         return;
       }
@@ -236,7 +236,7 @@ export function Step2_BasicData() {
                 {getLogoPreview() ? 'Alterar arquivo' : 'Inserir arquivo'}
               </label>
               <div className={styles.logoUploadHint}>
-                Limite de 1MB, formatos (JPEG, WEBP, AVIF, PNG)
+                Limite de 5MB, formatos (JPEG, WEBP, AVIF, PNG)
               </div>
             </div>
           </div>

@@ -50,9 +50,9 @@ export function Step5_Photos() {
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
         
-        // Validate file size (10MB max)
-        if (file.size > 10 * 1024 * 1024) {
-          setError('Arquivo muito grande. Limite de 10MB por foto.');
+        // Validate file size (5MB max)
+        if (file.size > 5 * 1024 * 1024) {
+          setError('Arquivo muito grande. Limite de 5MB por foto.');
           continue;
         }
 

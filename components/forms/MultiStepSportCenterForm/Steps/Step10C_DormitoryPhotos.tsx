@@ -38,6 +38,20 @@ export function Step10C_DormitoryPhotos() {
       
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
+        
+        // Validate file size (5MB max)
+        if (file.size > 5 * 1024 * 1024) {
+          alert('Arquivo muito grande. Limite de 5MB por foto.');
+          continue;
+        }
+
+        // Validate file type
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'];
+        if (!allowedTypes.includes(file.type)) {
+          alert('Formato não suportado. Use JPEG, PNG, WEBP ou AVIF.');
+          continue;
+        }
+        
         const id = `dormitory-photo-${Date.now()}-${i}`;
         const url = URL.createObjectURL(file);
         
