@@ -84,7 +84,13 @@ export function MultiStepSportCenterForm({ initialData, onCancel }: MultiStepSpo
       return '';
     }
     
-    console.log('📤 Uploading file:', file.name, 'Size:', file.size);
+    // Check individual file size (10MB limit per file)
+    const maxFileSize = 10 * 1024 * 1024; // 10MB
+    if (file.size > maxFileSize) {
+      throw new Error(`Arquivo muito grande: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB). Limite: 10MB por arquivo.`);
+    }
+    
+    console.log('📤 Uploading file:', file.name, 'Size:', (file.size / 1024 / 1024).toFixed(2), 'MB');
     const uploadFormData = new FormData();
     uploadFormData.append('file', file);
     
@@ -163,6 +169,52 @@ export function MultiStepSportCenterForm({ initialData, onCancel }: MultiStepSpo
     setIsSubmitting(true);
     
     try {
+      // Validate all files before starting uploads
+      console.log('🔍 Validating file sizes...');
+      const maxFileSize = 10 * 1024 * 1024; // 10MB
+      const filesToCheck: Array<{ file: File; name: string }> = [];
+      
+      // Check logo
+      if (formData.logo && formData.logo instanceof File) {
+        filesToCheck.push({ file: formData.logo, name: 'Logo' });
+      }
+      
+      // Check hoster image
+      if (formData.hosterImage && formData.hosterImage instanceof File) {
+        filesToCheck.push({ file: formData.hosterImage, name: 'Foto do representante' });
+      }
+      
+      // Check photos
+      if (Array.isArray(formData.photos)) {
+        formData.photos.forEach((item, index) => {
+          if (item instanceof File) {
+            filesToCheck.push({ file: item, name: `Foto ${index + 1}` });
+          }
+        });
+      }
+      
+      // Check dormitory photos
+      if (Array.isArray(formData.dormitoryPhotos)) {
+        formData.dormitoryPhotos.forEach((item, index) => {
+          if (item instanceof File) {
+            filesToCheck.push({ file: item, name: `Foto do dormitório ${index + 1}` });
+          }
+        });
+      }
+      
+      // Validate each file
+      let totalSize = 0;
+      for (const { file, name } of filesToCheck) {
+        if (file.size > maxFileSize) {
+          throw new Error(`${name} muito grande (${(file.size / 1024 / 1024).toFixed(2)}MB). Limite: 10MB por arquivo.`);
+        }
+        totalSize += file.size;
+      }
+      
+      console.log('✅ All files validated successfully');
+      console.log('📊 Total files:', filesToCheck.length);
+      console.log('📦 Total files size:', (totalSize / 1024 / 1024).toFixed(2), 'MB');
+      
       // Upload files first
       console.log('📁 Starting file uploads...');
       console.log('📄 Logo file:', formData.logo);
@@ -224,14 +276,10 @@ export function MultiStepSportCenterForm({ initialData, onCancel }: MultiStepSpo
       console.log('🚀 Submitting SportCenter data:', finalSportCenterData);
       console.log('🔑 Using token:', token ? 'Token present' : 'No token');
       
-      // Check payload size to prevent server errors
+      // Log payload size for debugging (no limit on total size)
       const jsonString = JSON.stringify(finalSportCenterData);
       const payloadSize = new Blob([jsonString]).size;
-      console.log('📦 Payload size:', payloadSize, 'bytes');
-      
-      if (payloadSize > 10 * 1024 * 1024) { // 10MB limit
-        throw new Error('Dados muito grandes. Tente reduzir o número ou tamanho das imagens.');
-      }
+      console.log('📦 Payload size:', (payloadSize / 1024 / 1024).toFixed(2), 'MB');
       
       const response = await fetch('/api/sportcenter', {
         method: 'POST',
