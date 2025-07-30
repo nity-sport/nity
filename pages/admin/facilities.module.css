@@ -1,7 +1,7 @@
 .container {
-  max-width: 1400px;
+  max-width: 87.5rem;
   margin: 0 auto;
-  margin-top: 100px;
+  margin-top: 6.25rem;
   padding: 2rem;
 }
 
@@ -37,7 +37,7 @@
   background: var(--color-gray-100);
   color: var(--color-gray-700);
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   font-size: var(--text-base);
   font-weight: var(--font-weight-medium);
   transition: all 0.2s ease;
@@ -46,7 +46,7 @@
 
 .backButton:hover {
   background: var(--color-gray-200);
-  transform: translateY(-1px);
+  transform: translateY(-0.0625rem);
 }
 
 .createButton {
@@ -54,7 +54,7 @@
   background: var(--color-primary-light);
   color: var(--color-surface);
   border: none;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   font-size: var(--text-base);
   font-weight: var(--font-weight-medium);
   font-family: var(--font-primary);
@@ -65,7 +65,7 @@
 
 .createButton:hover {
   background: var(--color-primary-dark);
-  transform: translateY(-1px);
+  transform: translateY(-0.0625rem);
 }
 
 .filters {
@@ -74,10 +74,10 @@
 
 .searchInput {
   width: 100%;
-  max-width: 400px;
+  max-width: 25rem;
   padding: 0.75rem;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border: 0.0625rem solid var(--color-border);
+  border-radius: 0.5rem;
   font-size: var(--text-base);
   font-family: var(--font-primary);
   transition: border-color 0.2s ease;
@@ -86,15 +86,15 @@
 .searchInput:focus {
   outline: none;
   border-color: var(--color-primary-light);
-  box-shadow: 0 0 0 2px rgba(var(--color-primary-light), 0.2);
+  box-shadow: 0 0 0 0.125rem rgba(var(--color-primary-light), 0.2);
 }
 
 .formCard {
   background: var(--color-white);
   border-radius: var(--border-radius-lg);
   padding: 2rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  border: 1px solid var(--color-gray-200);
+  box-shadow: 0 0.0625rem 0.1875rem 0 rgba(0, 0, 0, 0.1), 0 0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.06);
+  border: 0.0625rem solid var(--color-gray-200);
   margin-bottom: 2rem;
 }
 
@@ -120,8 +120,8 @@
 .input {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
+  border: 0.0625rem solid var(--color-border);
+  border-radius: 0.375rem;
   font-size: var(--text-base);
   font-family: var(--font-primary);
   transition: border-color 0.2s ease;
@@ -130,14 +130,14 @@
 .input:focus {
   outline: none;
   border-color: var(--color-primary-light);
-  box-shadow: 0 0 0 2px rgba(var(--color-primary-light), 0.2);
+  box-shadow: 0 0 0 0.125rem rgba(var(--color-primary-light), 0.2);
 }
 
 .fileInput {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
+  border: 0.0625rem solid var(--color-border);
+  border-radius: 0.375rem;
   font-size: var(--text-base);
   font-family: var(--font-primary);
   transition: border-color 0.2s ease;
@@ -147,7 +147,7 @@
 .fileInput:focus {
   outline: none;
   border-color: var(--color-primary-light);
-  box-shadow: 0 0 0 2px rgba(var(--color-primary-light), 0.2);
+  box-shadow: 0 0 0 0.125rem rgba(var(--color-primary-light), 0.2);
 }
 
 .uploading {
@@ -165,8 +165,8 @@
   margin-top: 0.5rem;
   padding: 0.75rem;
   background: var(--color-gray-50);
-  border-radius: 6px;
-  border: 1px solid var(--color-gray-200);
+  border-radius: 0.375rem;
+  border: 0.0625rem solid var(--color-gray-200);
 }
 
 .currentIcon span {
@@ -184,8 +184,8 @@
   margin-top: 0.5rem;
   padding: 0.5rem;
   background: var(--color-blue-50);
-  border: 1px solid var(--color-blue-200);
-  border-radius: 4px;
+  border: 0.0625rem solid var(--color-blue-200);
+  border-radius: 0.25rem;
   font-size: var(--text-sm);
   color: var(--color-blue-800);
 }
@@ -201,7 +201,7 @@
   background: var(--color-primary-light);
   color: var(--color-surface);
   border: none;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   font-size: var(--text-base);
   font-weight: var(--font-weight-medium);
   font-family: var(--font-primary);
@@ -211,7 +211,7 @@
 
 .submitButton:hover:not(:disabled) {
   background: var(--color-primary-dark);
-  transform: translateY(-1px);
+  transform: translateY(-0.0625rem);
 }
 
 .submitButton:disabled {
@@ -225,7 +225,7 @@
   background: var(--color-gray-100);
   color: var(--color-gray-700);
   border: none;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   font-size: var(--text-base);
   font-weight: var(--font-weight-medium);
   font-family: var(--font-primary);
@@ -235,12 +235,12 @@
 
 .cancelButton:hover {
   background: var(--color-gray-200);
-  transform: translateY(-1px);
+  transform: translateY(-0.0625rem);
 }
 
 .facilitiesGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr));
   gap: 1.5rem;
   margin-bottom: 2rem;
 }
@@ -248,15 +248,15 @@
 .facilityCard {
   background: var(--color-white);
   border-radius: var(--border-radius-lg);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  border: 1px solid var(--color-gray-200);
+  box-shadow: 0 0.0625rem 0.1875rem 0 rgba(0, 0, 0, 0.1), 0 0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.06);
+  border: 0.0625rem solid var(--color-gray-200);
   overflow: hidden;
   transition: all 0.2s ease;
 }
 
 .facilityCard:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  transform: translateY(-1px);
+  box-shadow: 0 0.25rem 0.375rem -0.0625rem rgba(0, 0, 0, 0.1), 0 0.125rem 0.25rem -0.0625rem rgba(0, 0, 0, 0.06);
+  transform: translateY(-0.0625rem);
 }
 
 .facilityContent {
@@ -301,7 +301,7 @@
   background: var(--color-primary-light);
   color: var(--color-surface);
   border: none;
-  border-radius: 6px;
+  border-radius: 0.375rem;
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
   font-family: var(--font-primary);
@@ -312,7 +312,7 @@
 
 .editButton:hover {
   background: var(--color-primary-dark);
-  transform: translateY(-1px);
+  transform: translateY(-0.0625rem);
 }
 
 .deleteButton {
@@ -321,7 +321,7 @@
   background: var(--color-error);
   color: var(--color-surface);
   border: none;
-  border-radius: 6px;
+  border-radius: 0.375rem;
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
   font-family: var(--font-primary);
@@ -332,7 +332,7 @@
 
 .deleteButton:hover {
   background: #9b2218;
-  transform: translateY(-1px);
+  transform: translateY(-0.0625rem);
 }
 
 .loading {
@@ -348,7 +348,7 @@
   color: var(--color-red-600);
   background: var(--color-red-50);
   border-radius: var(--border-radius-lg);
-  border: 1px solid var(--color-red-200);
+  border: 0.0625rem solid var(--color-red-200);
 }
 
 .emptyState {
@@ -356,8 +356,8 @@
   padding: 4rem 2rem;
   background: var(--color-white);
   border-radius: var(--border-radius-lg);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  border: 1px solid var(--color-gray-200);
+  box-shadow: 0 0.0625rem 0.1875rem 0 rgba(0, 0, 0, 0.1), 0 0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.06);
+  border: 0.0625rem solid var(--color-gray-200);
 }
 
 .emptyState h3 {
@@ -373,14 +373,14 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1024px) {
+@media (max-width: 64rem) {
   .facilitiesGrid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(15.625rem, 1fr));
     gap: 1rem;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
   .container {
     padding: 1rem;
   }

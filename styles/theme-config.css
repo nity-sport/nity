@@ -33,17 +33,17 @@
     --font-display: 'Ultra System', 'Inter', sans-serif;
   
     /* Typography Sizes */
-    --text-base: 16px;
-    --text-sm: 14px;
-    --text-lg: 18px;
-    --text-xl: 28px;
-    --text-display-lg: 60px;
-    --text-display-md: 40px;
+    --text-base: 1rem;
+    --text-sm: 0.875rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.75rem;
+    --text-display-lg: 3.75rem;
+    --text-display-md: 2.5rem;
   
     /* Line Heights */
     --line-base: 140%;
-    --line-display-lg: 72px;
-    --line-display-md: 48px;
+    --line-display-lg: 4.5rem;
+    --line-display-md: 3rem;
   
     /* Font Weights */
     --font-weight-regular: 400;
@@ -51,10 +51,10 @@
     --font-weight-bold: 700;
     
     /* Breakpoints */
-    --breakpoint-sm: 576px;
-    --breakpoint-md: 768px;
-    --breakpoint-lg: 992px;
-    --breakpoint-xl: 1200px;
+    --breakpoint-sm: 36rem;
+    --breakpoint-md: 48rem;
+    --breakpoint-lg: 62rem;
+    --breakpoint-xl: 75rem;
     
     /* Spacing */
     --spacing-xs: 0.25rem;
@@ -65,31 +65,31 @@
     --spacing-xxl: 3rem;
     
     /* Container widths */
-    --container-sm: 540px;
-    --container-md: 720px;
-    --container-lg: 960px;
-    --container-xl: 1140px;
+    --container-sm: 33.75rem;
+    --container-md: 45rem;
+    --container-lg: 60rem;
+    --container-xl: 71.25rem;
   }
   
   /* Responsive Typography */
-  @media (max-width: 768px) {
+  @media (max-width: 48rem) {
     :root {
-      --text-display-lg: 42px;
-      --text-display-md: 32px;
-      --text-xl: 22px;
-      --line-display-lg: 50px;
-      --line-display-md: 38px;
+      --text-display-lg: 2.625rem;
+      --text-display-md: 2rem;
+      --text-xl: 1.375rem;
+      --line-display-lg: 3.125rem;
+      --line-display-md: 2.375rem;
     }
   }
   
-  @media (max-width: 576px) {
+  @media (max-width: 36rem) {
     :root {
-      --text-display-lg: 32px;
-      --text-display-md: 24px;
-      --text-xl: 20px;
-      --text-lg: 16px;
-      --line-display-lg: 40px;
-      --line-display-md: 32px;
+      --text-display-lg: 2rem;
+      --text-display-md: 1.5rem;
+      --text-xl: 1.25rem;
+      --text-lg: 1rem;
+      --line-display-lg: 2.5rem;
+      --line-display-md: 2rem;
     }
   }
   
@@ -108,7 +108,7 @@
     color: #fff;
     font-weight: var(--font-weight-bold);
     border: none;
-    border-radius: 4px;
+    border-radius: 0.25rem;
     padding: 0.75rem 1.5rem;
     cursor: pointer;
     transition: background 0.3s ease-in-out;

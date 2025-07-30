@@ -1,24 +1,24 @@
 .hero {
   position: relative;
   width: 100%;
-  min-height: 420px;
+  min-height: 26.25rem;
   height: 80vh;
-  max-height: 700px;
+  max-height: 43.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: visible;
   background: var(--color-blue-deep);
-  border-radius: 12px;
-  margin-top: 75px;
-  padding-bottom: 56px; 
+  border-radius: 0.75rem;
+  margin-top: 4.6875rem;
+  padding-bottom: 3.5rem; 
 }
 
 .mobileHero {
   padding-bottom: 0;
-  min-height: 300px;
+  min-height: 18.75rem;
   height: 50vh;
-  max-height: 400px;
+  max-height: 25rem;
 }
 
 .videoBackground {
@@ -65,7 +65,7 @@
   color: white;
   font-family: var(--font-display);
   width: 100%;
-  padding: 0 24px;
+  padding: 0 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -73,51 +73,51 @@
 }
 
 .title {
-  font-size: 54px;
+  font-size: 3.375rem;
   line-height: 1.2;
   font-weight: 400;
-  margin-bottom: 16px;
-  letter-spacing: 1px;
+  margin-bottom: 1rem;
+  letter-spacing: 0.0625rem;
 }
 
 @media (max-width: 900px) {
   .hero {
-    margin-top: 65px;
-    min-height: 320px;
+    margin-top: 4.0625rem;
+    min-height: 20rem;
     height: 50vh;
-    max-height: 500px;
-    border-radius: 10px;
+    max-height: 31.25rem;
+    border-radius: 0.625rem;
   }
   .title {
-    font-size: 36px;
+    font-size: 2.25rem;
   }
 }
 
 @media (max-width: 768px) {
   .hero {
-    margin-top: 60px;
+    margin-top: 3.75rem;
     margin-bottom: 0;
-    min-height: 260px;
+    min-height: 16.25rem;
     height: 45vh;
-    max-height: 350px;
-    border-radius: 10px;
+    max-height: 21.875rem;
+    border-radius: 0.625rem;
     padding-bottom: 0;
   }
 }
 
 @media (max-width: 600px) {
   .hero {
-    margin-top: 60px;
-    min-height: 220px;
+    margin-top: 3.75rem;
+    min-height: 13.75rem;
     height: 40vh;
-    max-height: 280px;
-    border-radius: 8px;
+    max-height: 17.5rem;
+    border-radius: 0.5rem;
   }
   .title {
-    font-size: 26px;
+    font-size: 1.625rem;
   }
   .content {
-    padding: 0 10px;
+    padding: 0 0.625rem;
   }
   .videoBackground {
     object-position: center 20%;

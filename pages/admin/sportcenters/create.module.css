@@ -1,7 +1,7 @@
 .container {
-  max-width: 1200px;
+  max-width: 75rem;
   margin: 0 auto;
-  margin-top: 100px;
+  margin-top: 6.25rem;
   padding: 2rem;
 }
 
@@ -31,7 +31,7 @@
   background: var(--color-gray-100);
   color: var(--color-gray-700);
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   font-size: var(--text-base);
   font-weight: var(--font-weight-medium);
   transition: all 0.2s ease;

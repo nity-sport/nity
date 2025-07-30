@@ -1,43 +1,43 @@
 .footer {
     position: relative;
     background: var(--color-text-muted);
-    min-height: 450px;
+    min-height: 28.125rem;
     width: 100%;
     overflow: hidden;
-    padding: 80px 0 120px 0;
+    padding: 5rem 0 7.5rem 0;
   }
   
   .footerContent {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 32px;
-    max-width: 1240px;
-    margin: 0 50px;
-    padding: 0 32px;
+    gap: 2rem;
+    max-width: 77.5rem;
+    margin: 0 3.125rem;
+    padding: 0 2rem;
     position: relative;
     z-index: 1;
   }
   
   .footerLeft {
     flex: 1.5;
-    max-width: 636px;
+    max-width: 39.75rem;
     min-width: auto;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 20px;
+    gap: 1.25rem;
   }
   
   .footerQuestion {
     font-family: var(--font-display);
     font-weight: 400;
-    font-size: 40px;
-    line-height: 48px;
+    font-size: 2.5rem;
+    line-height: 3rem;
     color: #ADB5BD;
-    margin-bottom: 18px;
+    margin-bottom: 1.125rem;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 0.125rem;
 
   }
   
@@ -47,11 +47,11 @@
     color: #1C1B1F;
     font-weight: 500;
     border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    padding: 14px 22px 14px 22px;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    padding: 0.875rem 1.375rem 0.875rem 1.375rem;
     cursor: pointer;
-    margin-top: 4px;
+    margin-top: 0.25rem;
     transition: background .2s;
   }
   
@@ -63,20 +63,20 @@
   .footerLinks {
     flex: 2.5;
     display: flex;
-    gap: 60px;
+    gap: 3.75rem;
     justify-content: center;
   }
   
   .footerLinks div {
-    min-width: 120px;
+    min-width: 7.5rem;
   }
   
   .footerLinks strong {
     font-family: var(--font-primary);
     font-weight: 400;
-    font-size: 18px;
+    font-size: 1.125rem;
     color: #222;
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
     display: block;
   }
   
@@ -89,30 +89,30 @@
   .footerLinks li {
     color: #ADB5BD;
     font-family: var(--font-primary);
-    font-size: 16px;
-    margin-bottom: 5px;
+    font-size: 1rem;
+    margin-bottom: 0.3125rem;
   }
   
   .footerRight {
     flex: 1.2;
-    min-width: 210px;
+    min-width: 13.125rem;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 24px;
+    gap: 1.5rem;
   }
   
   .socials {
     display: flex;
-    gap: 16px;
+    gap: 1rem;
   }
   
   .safeSeal {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 0.5rem;
     color: #38A169;
-    font-size: 16px;
+    font-size: 1rem;
     font-family: var(--font-primary);
     font-weight: 500;
   }
@@ -123,7 +123,7 @@
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 220px;      /* Pode variar conforme layout */
+    height: 13.75rem;      /* Pode variar conforme layout */
     z-index: 0;
     opacity: 0.12;
     pointer-events: none;
@@ -146,24 +146,24 @@
     .footerContent {
       flex-direction: column;
       align-items: stretch;
-      gap: 40px;
-      padding: 0 24px;
+      gap: 2.5rem;
+      padding: 0 1.5rem;
     }
     .footerLeft {
       align-items: flex-start;
-      margin-bottom: 30px;
+      margin-bottom: 1.875rem;
     }
     .footerLinks {
       justify-content: space-between;
-      gap: 20px;
+      gap: 1.25rem;
       flex-wrap: wrap;
     }
     .footerRight {
       align-items: flex-start;
-      margin-top: 30px;
+      margin-top: 1.875rem;
     }
     .footerBgLogo {
-      height: 200px;
+      height: 12.5rem;
       width: 100%;
       bottom: 0;
     }
@@ -171,55 +171,55 @@
   
   @media (max-width: 800px) {
     .footer {
-      padding: 60px 0 100px 0;
+      padding: 3.75rem 0 6.25rem 0;
     }
     .footerQuestion {
-      font-size: 32px;
-      line-height: 38px;
+      font-size: 2rem;
+      line-height: 2.375rem;
       text-align: left;
     }
     .footerLinks div {
       min-width: 45%;
-      margin-bottom: 20px;
+      margin-bottom: 1.25rem;
     }
     .footerBgLogo {
-      height: 100px;
+      height: 6.25rem;
     }
   }
   
   @media (max-width: 520px) {
     .footer {
-      padding: 40px 0 80px 0;
+      padding: 2.5rem 0 5rem 0;
     }
     .footerContent {
-      padding: 0 16px;
-      gap: 30px;
+      padding: 0 1rem;
+      gap: 1.875rem;
     }
     .footerLeft {
       width: 100%;
-      font-size: 18px;
-      gap: 16px;
+      font-size: 1.125rem;
+      gap: 1rem;
     }
     .footerQuestion {
-      font-size: 24px;
-      line-height: 30px;
+      font-size: 1.5rem;
+      line-height: 1.875rem;
     }
     .footerLinks {
       width: 100%;
       flex-direction: column;
-      gap: 24px;
+      gap: 1.5rem;
     }
     .footerLinks div {
       width: 100%;
       min-width: 100%;
     }
     .footerLinks strong {
-      font-size: 16px;
-      margin-bottom: 12px;
+      font-size: 1rem;
+      margin-bottom: 0.75rem;
     }
     .footerLinks li {
-      font-size: 14px;
-      margin-bottom: 8px;
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
     }
     .footerRight {
       width: 100%;
@@ -227,10 +227,10 @@
       justify-content: space-between;
       flex-direction: row;
       min-width: 100%;
-      gap: 12px;
+      gap: 0.75rem;
     }
     .footerBgLogo {
-      height: 60px;
+      height: 3.75rem;
     }
   }
   

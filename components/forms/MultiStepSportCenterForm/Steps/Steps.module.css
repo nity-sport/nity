@@ -1,13 +1,13 @@
 .stepContainer {
   padding: 1rem;
-  margin: -60px auto 0 auto;
+  margin: -3.75rem auto 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  min-height: 200px;
+  min-height: 12.5rem;
   width: 100%;
-  max-width: 1200px;
+  max-width: 75rem;
   box-sizing: border-box;
   text-align: center;
   overflow: visible;
@@ -15,14 +15,14 @@
 
 @media (min-width: 769px) {
   .stepContainer {
-    margin-bottom: 120px;
+    margin-bottom: 7.5rem;
   }
 }
 
 @media (max-width: 768px) {
   .stepContainer {
     padding: 0.25rem 1rem;
-    min-height: 150px;
+    min-height: 9.375rem;
     max-height: 70vh;
     justify-content: flex-start;
     overflow-y: auto;
@@ -32,7 +32,7 @@
 @media (max-width: 480px) {
   .stepContainer {
     padding: 0.25rem 0.75rem;
-    min-height: 120px;
+    min-height: 7.5rem;
   }
 }
 
@@ -46,8 +46,8 @@
 .stepTitle {
   font-family: 'Ultra System', sans-serif;
   font-weight: 400;
-  font-size: 28px;
-  line-height: 35px;
+  font-size: 1.75rem;
+  line-height: 2.1875rem;
   text-align: center;
   color: #000000;
   margin-bottom: 1rem;
@@ -60,8 +60,8 @@
 
 @media (max-width: 768px) {
   .stepTitle {
-    font-size: 22px;
-    line-height: 28px;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
     margin-bottom: 1.5rem;
     padding: 0 0.5rem;
   }
@@ -69,8 +69,8 @@
 
 @media (max-width: 480px) {
   .stepTitle {
-    font-size: 18px;
-    line-height: 24px;
+    font-size: 1.125rem;
+    line-height: 1.5rem;
     margin-bottom: 1.25rem;
     padding: 0 0.25rem;
   }
@@ -78,8 +78,8 @@
 
 @media (max-width: 390px) {
   .stepTitle {
-    font-size: 16px;
-    line-height: 22px;
+    font-size: 1rem;
+    line-height: 1.375rem;
     margin-bottom: 1rem;
   }
 }
@@ -87,7 +87,7 @@
 /* Step 1 - Name Input */
 .inputWrapper {
   width: 100%;
-  max-width: 600px;
+  max-width: 37.5rem;
   margin: 0 auto;
   padding: 0;
   display: flex;
@@ -97,16 +97,16 @@
 
 .nameInput {
   width: 100%;
-  max-width: 600px;
+  max-width: 37.5rem;
   padding: 1rem;
   border: none;
-  border-bottom: 2px solid #e5e7eb;
+  border-bottom: 0.125rem solid #e5e7eb;
   background: transparent;
   font-size: 1.25rem;
   font-weight: 500;
   text-align: center;
   color: #374151;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.03125rem;
   outline: none;
   transition: border-color 0.3s ease;
   margin: 0 auto;
@@ -117,8 +117,8 @@
   font-family: 'Ultra System', 'Inter', sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 28px;
-  line-height: 48px;
+  font-size: 1.75rem;
+  line-height: 3rem;
   letter-spacing: 0px;
   text-align: center;
   color: #000000;
@@ -135,8 +135,8 @@
   }
   
   .nameInput::placeholder {
-    font-size: 24px;
-    line-height: 40px;
+    font-size: 1.5rem;
+    line-height: 2.5rem;
   }
 }
 
@@ -152,8 +152,8 @@
   }
   
   .nameInput::placeholder {
-    font-size: 20px;
-    line-height: 32px;
+    font-size: 1.25rem;
+    line-height: 2rem;
   }
 }
 
@@ -176,7 +176,7 @@
   text-align: center;
   font-family: var(--font-primary);
   width: 100%;
-  max-width: 600px;
+  max-width: 37.5rem;
 }
 
 @media (max-width: 768px) {
@@ -215,8 +215,8 @@
 
 /* Host photo area error styling */
 .hostPhotoArea.inputError {
-  border: 2px solid #ef4444 !important;
-  border-radius: 8px;
+  border: 0.125rem solid #ef4444 !important;
+  border-radius: 0.5rem;
 }
 
 /* Text input and textarea error styling */
@@ -229,14 +229,14 @@
 
 /* Photo upload slot error styling */
 .firstSlot.inputError {
-  border: 2px solid #ef4444 !important;
-  border-radius: 8px;
+  border: 0.125rem solid #ef4444 !important;
+  border-radius: 0.5rem;
 }
 
 /* Step 2 - Basic Data Form */
 .basicDataForm {
   width: 100%;
-  max-width: 688px;
+  max-width: 43rem;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -273,26 +273,26 @@
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   font-style: normal;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 140%;
   letter-spacing: 0px;
   vertical-align: middle;
   color: var(--color-surface-dark);
-  margin-bottom: 12px;
+  margin-bottom: 0.75rem;
   text-align: left;
 }
 
 .selectInput,
 .textInput {
   width: 100%;
-  padding: 12px 16px;
-  border: 1px solid #CED4DA;
-  border-radius: 8px;
-  font-size: 16px;
+  padding: 0.75rem 1rem;
+  border: 0.0625rem solid #CED4DA;
+  border-radius: 0.5rem;
+  font-size: 1rem;
   color: #374151;
   background: white;
   transition: border-color 0.2s ease;
-  height: 48px;
+  height: 3rem;
   box-sizing: border-box;
 }
 
@@ -305,10 +305,10 @@
 
 .textareaInput {
   width: 100%;
-  padding: 12px 16px;
-  border: 1px solid #CED4DA;
-  border-radius: 8px;
-  font-size: 16px;
+  padding: 0.75rem 1rem;
+  border: 0.0625rem solid #CED4DA;
+  border-radius: 0.5rem;
+  font-size: 1rem;
   color: #374151;
   background: white;
   resize: vertical;
@@ -342,21 +342,21 @@
 }
 
 .uploadButton {
-  width: 120px;
-  height: 24px;
+  width: 7.5rem;
+  height: 1.5rem;
   opacity: 1;
-  border-radius: 6px;
-  border: 1px solid var(--color-border-light);
-  gap: 4px;
-  padding: 8px;
+  border-radius: 0.375rem;
+  border: 0.0625rem solid var(--color-border-light);
+  gap: 0.25rem;
+  padding: 0.5rem;
   background: #F8F9FA;
   color: #374151;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   font-style: normal;
-  font-size: 12px;
-  line-height: 18px;
+  font-size: 0.75rem;
+  line-height: 1.125rem;
   letter-spacing: 0px;
   vertical-align: middle;
   transition: all 0.2s ease;
@@ -368,9 +368,9 @@
 }
 
 .logoUploadArea {
-  width: 68px;
+  width: 4.25rem;
   height: 68px;
-  border: 2px solid #CED4DA;
+  border: 0.125rem solid #CED4DA;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -401,7 +401,7 @@
 }
 
 .logoUploadButton {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 300;
   color: #6B7280;
   cursor: pointer;
@@ -420,7 +420,7 @@
 }
 
 .logoUploadHint {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: #6B7280;
   margin-top: 0.5rem;
   text-align: left;
@@ -432,11 +432,11 @@
 .sportsGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: 1rem;
   width: 100%;
-  max-width: 800px;
+  max-width: 50rem;
   margin: 0 auto;
-  padding: 16px;
+  padding: 1rem;
   background: transparent;
   border: none;
 }
@@ -445,8 +445,8 @@
   .sportsGrid {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    height: 350px;
+    gap: 0.75rem;
+    height: 21.875rem;
     overflow-y: scroll;
   }
   
@@ -456,12 +456,12 @@
 
   .sportsGrid::-webkit-scrollbar-track {
     background: #f0f0f0;
-    border-radius: 4px;
+    border-radius: 0.25rem;
   }
 
   .sportsGrid::-webkit-scrollbar-thumb {
     background: #ccc;
-    border-radius: 4px;
+    border-radius: 0.25rem;
   }
 
   .sportsGrid::-webkit-scrollbar-thumb:hover {
@@ -469,24 +469,24 @@
   }
   
   .sportCard {
-    height: 56px;
+    height: 3.5rem;
   }
   
   .addSportCard {
-    height: 56px;
+    height: 3.5rem;
   }
 }
 
 .sportCard {
   width: 100%;
-  height: 80px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
+  height: 5rem;
+  border-radius: 0.5rem;
+  border: 0.0625rem solid #ddd;
   padding: 12px;
   background: #f8f9fa;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 0.75rem;
   cursor: pointer;
   transition: all 0.2s;
   flex-shrink: 0;
@@ -510,7 +510,7 @@
 }
 
 .sportIconContainer {
-  width: 43.25px;
+  width: 2.703125rem;
   height: 43.25px;
   opacity: 1;
   border-radius: 6.27px;
@@ -524,8 +524,8 @@
 }
 
 .sportIcon {
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
   object-fit: contain;
   filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
 }
@@ -534,12 +534,12 @@
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   font-style: normal;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 140%;
   letter-spacing: 0px;
   vertical-align: middle;
   color: var(--color-blue-mid);
-  margin-left: 8px;
+  margin-left: 0.5rem;
 }
 
 .sportCard.selected .sportName {
@@ -548,15 +548,15 @@
 
 .addSportCard {
   width: 100%;
-  height: 80px;
-  border-radius: 8px;
-  border: 2px dashed #007bff;
+  height: 5rem;
+  border-radius: 0.5rem;
+  border: 0.125rem dashed #007bff;
   padding: 12px;
   background: #f8f9fa;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 0.5rem;
   cursor: pointer;
   transition: all 0.2s;
   flex-shrink: 0;
@@ -571,7 +571,7 @@
 
 
 .addSportIcon {
-  font-size: 20px;
+  font-size: 1.25rem;
   color: var(--color-blue-mid);
   font-weight: 300;
 }
@@ -580,29 +580,29 @@
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   font-style: normal;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 140%;
   letter-spacing: 0px;
   vertical-align: middle;
   color: var(--color-blue-mid);
-  margin-left: 8px;
+  margin-left: 0.5rem;
 }
 
 .successMessage {
   background: #d4edda;
-  border: 1px solid #c3e6cb;
-  border-radius: 12px;
-  padding: 16px;
+  border: 0.0625rem solid #c3e6cb;
+  border-radius: 0.75rem;
+  padding: 1rem;
   text-align: center;
   margin: 16px auto;
-  max-width: 400px;
+  max-width: 25rem;
   animation: slideIn 0.3s ease;
 }
 
 .successMessage p {
   margin: 0;
   color: #155724;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
 }
@@ -610,7 +610,7 @@
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-0.625rem);
   }
   to {
     opacity: 1;
@@ -622,11 +622,11 @@
 .facilitiesGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: 1rem;
   width: 100%;
-  max-width: 800px;
+  max-width: 50rem;
   margin: 0 auto;
-  padding: 16px;
+  padding: 1rem;
   background: transparent;
   border: none;
 }
@@ -635,8 +635,8 @@
   .facilitiesGrid {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    height: 350px;
+    gap: 0.75rem;
+    height: 21.875rem;
     overflow-y: scroll;
   }
   
@@ -646,12 +646,12 @@
 
   .facilitiesGrid::-webkit-scrollbar-track {
     background: #f0f0f0;
-    border-radius: 4px;
+    border-radius: 0.25rem;
   }
 
   .facilitiesGrid::-webkit-scrollbar-thumb {
     background: #ccc;
-    border-radius: 4px;
+    border-radius: 0.25rem;
   }
 
   .facilitiesGrid::-webkit-scrollbar-thumb:hover {
@@ -663,12 +663,12 @@
 .paginationTop {
   display: flex;
   justify-content: center;
-  margin-bottom: 8px;
-  margin-top: -20px;
+  margin-bottom: 0.5rem;
+  margin-top: -1.25rem;
 }
 
 .pageInfo {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #666;
   font-weight: 500;
 }
@@ -677,19 +677,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 16px;
-  margin-top: 24px;
-  margin-bottom: 80px;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 5rem;
 }
 
 .paginationButton {
   padding: 8px 16px;
-  border: 1px solid #007bff;
+  border: 0.0625rem solid #007bff;
   background: white;
   color: #007bff;
-  border-radius: 6px;
+  border-radius: 0.375rem;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 500;
   transition: all 0.2s;
 }
@@ -708,17 +708,17 @@
 
 .pageIndicators {
   display: flex;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .pageIndicator {
-  width: 32px;
-  height: 32px;
-  border: 1px solid #ddd;
+  width: 2rem;
+  height: 2rem;
+  border: 0.0625rem solid #ddd;
   background: white;
-  border-radius: 6px;
+  border-radius: 0.375rem;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -738,7 +738,7 @@
 }
 
 .starIcon {
-  font-size: 20px;
+  font-size: 1.25rem;
   color: #ffd700;
   display: flex;
   align-items: center;
@@ -747,9 +747,9 @@
 
 .facilityCard {
   width: 100%;
-  height: 56px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
+  height: 3.5rem;
+  border-radius: 0.5rem;
+  border: 0.0625rem solid #ddd;
   padding: 12px;
   background: #f8f9fa;
   display: flex;
@@ -790,9 +790,9 @@
 
 .addFacilityCard {
   width: 100%;
-  height: 56px;
-  border-radius: 8px;
-  border: 2px dashed #007bff;
+  height: 3.5rem;
+  border-radius: 0.5rem;
+  border: 0.125rem dashed #007bff;
   padding: 12px;
   background: #f8f9fa;
   display: flex;
@@ -850,9 +850,9 @@
 
 .photoItem {
   position: relative;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   overflow: hidden;
-  border: 2px solid var(--border-color);
+  border: 0.125rem solid var(--border-color);
   cursor: move;
 }
 
@@ -862,36 +862,36 @@
 
 .photoImage {
   width: 100%;
-  height: 200px;
+  height: 12.5rem;
   object-fit: cover;
 }
 
 .mainBadge {
   position: absolute;
-  top: 8px;
-  left: 8px;
+  top: 0.5rem;
+  left: 0.5rem;
   background: var(--accent-color);
   color: white;
   padding: 0.25rem 0.5rem;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   font-size: 0.75rem;
   font-weight: 500;
 }
 
 .photoActions {
   position: absolute;
-  bottom: 8px;
-  right: 8px;
+  bottom: 0.5rem;
+  right: 0.5rem;
   display: flex;
   gap: 0.5rem;
 }
 
 .setMainButton {
   background: white;
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   color: var(--text-primary);
   padding: 0.25rem 0.5rem;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   font-size: 0.75rem;
   cursor: pointer;
 }
@@ -900,8 +900,8 @@
   background: var(--error-color);
   border: none;
   color: white;
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 50%;
   cursor: pointer;
   font-size: 1rem;
@@ -922,8 +922,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border: 0.0625rem solid var(--border-color);
+  border-radius: 0.5rem;
   background: white;
 }
 
@@ -948,7 +948,7 @@
   border: none;
   color: white;
   padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   cursor: pointer;
   font-size: 0.875rem;
   font-weight: 500;
@@ -968,8 +968,8 @@
 
 .categoryItem {
   padding: 1rem;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border: 0.0625rem solid var(--border-color);
+  border-radius: 0.5rem;
   background: white;
 }
 
@@ -999,7 +999,7 @@
 .categorySchedule {
   padding: 0.25rem 0.5rem;
   background: var(--background-light);
-  border-radius: 4px;
+  border-radius: 0.25rem;
 }
 
 /* Age Selector */
@@ -1010,19 +1010,19 @@
 .ageGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .ageOption {
   padding: 0.5rem;
-  border: 1px solid #E5E7EB;
-  border-radius: 8px;
+  border: 0.0625rem solid #E5E7EB;
+  border-radius: 0.5rem;
   text-align: center;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   font-style: normal;
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 140%;
   letter-spacing: 0px;
   color: #374151;
@@ -1051,20 +1051,20 @@
 .dayGrid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .dayOption {
   padding: 0.5rem;
-  border: 1px solid #E5E7EB;
-  border-radius: 8px;
+  border: 0.0625rem solid #E5E7EB;
+  border-radius: 0.5rem;
   text-align: center;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   font-style: normal;
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 140%;
   letter-spacing: 0px;
   color: #374151;
@@ -1139,10 +1139,10 @@
 
 .termsContent {
   width: 100%;
-  max-width: 688px;
+  max-width: 43rem;
   height: 300px;
-  border: 2px solid #e5e7eb;
-  border-radius: 12px;
+  border: 0.125rem solid #e5e7eb;
+  border-radius: 0.75rem;
   padding: 1.5rem;
   background: white;
   text-align: left;
@@ -1182,8 +1182,8 @@
 }
 
 .successIcon {
-  width: 80px;
-  height: 80px;
+  width: 5rem;
+  height: 5rem;
   background: #10B981;
   border-radius: 50%;
   display: flex;
@@ -1193,8 +1193,8 @@
 }
 
 .successIcon svg {
-  width: 48px;
-  height: 48px;
+  width: 3rem;
+  height: 3rem;
 }
 
 .successTitle {
@@ -1205,7 +1205,7 @@
   margin: 0;
   max-width: 600px;
   line-height: 1.2;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.03125rem;
 }
 
 .successSubtitle {
@@ -1219,12 +1219,12 @@
   border: none;
   color: white;
   padding: 0.75rem 2rem;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 500;
   transition: all 0.2s;
-  min-width: 150px;
+  min-width: 9.375rem;
 }
 
 .dashboardButton:hover {
@@ -1243,23 +1243,23 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 20px;
+  padding: 1.25rem;
   box-sizing: border-box;
 }
 
 .modalContent {
   background: white;
   width: 100%;
-  max-width: 500px;
-  min-height: 400px;
+  max-width: 31.25rem;
+  min-height: 25rem;
   border-radius: 24px;
-  padding: 40px;
+  padding: 2.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
   box-sizing: border-box;
-  gap: 30px;
+  gap: 1.875rem;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
 
@@ -1267,8 +1267,8 @@
   width: 100%;
   font-family: 'Ultra System', sans-serif;
   font-weight: 400;
-  font-size: 24px;
-  line-height: 30px;
+  font-size: 1.5rem;
+  line-height: 1.875rem;
   text-align: center;
   color: #000000;
   margin: 0;
@@ -1277,20 +1277,20 @@
 
 .modalInputWrapper {
   width: 100%;
-  max-width: 400px;
+  max-width: 25rem;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .modalInput {
   width: 100%;
-  padding: 16px;
-  border: 2px solid #e5e7eb;
-  border-radius: 12px;
+  padding: 1rem;
+  border: 0.125rem solid #e5e7eb;
+  border-radius: 0.75rem;
   background: #f8f9fa;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
   text-align: center;
   color: #374151;
@@ -1305,7 +1305,7 @@
   opacity: 1;
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 1rem;
   text-align: center;
 }
 
@@ -1317,9 +1317,9 @@
 
 .addButton {
   width: 100%;
-  max-width: 200px;
-  height: 48px;
-  border-radius: 12px;
+  max-width: 12.5rem;
+  height: 3rem;
+  border-radius: 0.75rem;
   padding: 12px 24px;
   background: #007bff;
   border: none;
@@ -1333,13 +1333,13 @@
   color: white;
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
-  font-size: 16px;
-  gap: 8px;
+  font-size: 1rem;
+  gap: 0.5rem;
 }
 
 .addButton:hover {
   background: #0056b3;
-  transform: translateY(-2px);
+  transform: translateY(-0.125rem);
   box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
 }
 
@@ -1364,17 +1364,17 @@
 
 .modalCloseButton {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 1.25rem;
+  right: 1.25rem;
   background: #f8f9fa;
-  border: 1px solid #e5e7eb;
+  border: 0.0625rem solid #e5e7eb;
   font-size: 18px;
   cursor: pointer;
   color: #6B7280;
-  padding: 8px;
-  border-radius: 8px;
-  width: 36px;
-  height: 36px;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  width: 2.25rem;
+  height: 2.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1391,20 +1391,20 @@
 /* Modal Responsiveness */
 @media (max-width: 768px) {
   .modal {
-    padding: 16px;
+    padding: 1rem;
   }
   
   .modalContent {
     max-width: 100%;
-    min-height: 350px;
-    padding: 32px 24px;
+    min-height: 21.875rem;
+    padding: 2rem 1.5rem;
     gap: 24px;
     border-radius: 16px;
   }
   
   .modalTitle {
-    font-size: 20px;
-    line-height: 26px;
+    font-size: 1.25rem;
+    line-height: 1.625rem;
   }
   
   .modalInput {
@@ -1413,16 +1413,16 @@
   }
   
   .addButton {
-    height: 44px;
+    height: 2.75rem;
     font-size: 15px;
   }
   
   .modalCloseButton {
-    top: 16px;
-    right: 16px;
-    width: 32px;
-    height: 32px;
-    font-size: 16px;
+    top: 1rem;
+    right: 1rem;
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
   }
 }
 
@@ -1432,35 +1432,35 @@
   }
   
   .modalContent {
-    min-height: 320px;
-    padding: 28px 20px;
-    gap: 20px;
-    border-radius: 12px;
+    min-height: 20rem;
+    padding: 1.75rem 1.25rem;
+    gap: 1.25rem;
+    border-radius: 0.75rem;
   }
   
   .modalTitle {
     font-size: 18px;
-    line-height: 24px;
+    line-height: 1.5rem;
   }
   
   .modalInput {
     padding: 12px;
-    font-size: 14px;
-    border-radius: 8px;
+    font-size: 0.875rem;
+    border-radius: 0.5rem;
   }
   
   .addButton {
-    height: 40px;
-    font-size: 14px;
-    border-radius: 8px;
+    height: 2.5rem;
+    font-size: 0.875rem;
+    border-radius: 0.5rem;
   }
   
   .modalCloseButton {
-    top: 12px;
-    right: 12px;
+    top: 0.75rem;
+    right: 0.75rem;
     width: 28px;
-    height: 28px;
-    font-size: 14px;
+    height: 1.75rem;
+    font-size: 0.875rem;
   }
 }
 
@@ -1484,10 +1484,10 @@
 .hostContainer {
   display: flex;
   flex-direction: row;
-  gap: 25px;
+  gap: 1.5625rem;
   align-items: flex-start;
   justify-content: center;
-  max-width: 800px;
+  max-width: 50rem;
   margin: 0 auto;
   width: 100%;
 }
@@ -1519,7 +1519,7 @@
 .hostPhotoLabel {
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1rem;
   color: #374151;
   text-align: left;
 }
@@ -1529,9 +1529,9 @@
 }
 
 .hostPhotoArea {
-  width: 211px;
-  min-height: 247px;
-  border-radius: 10px;
+  width: 13.1875rem;
+  min-height: 15.4375rem;
+  border-radius: 0.625rem;
   background: var(--Neutral-100, #F8F9FA);
   display: flex;
   align-items: center;
@@ -1545,15 +1545,15 @@
 
 @media (max-width: 768px) {
   .hostPhotoArea {
-    width: 180px;
-    min-height: 210px;
+    width: 11.25rem;
+    min-height: 13.125rem;
   }
 }
 
 @media (max-width: 480px) {
   .hostPhotoArea {
-    width: 160px;
-    min-height: 190px;
+    width: 10rem;
+    min-height: 11.875rem;
   }
 }
 
@@ -1573,14 +1573,14 @@
 
 .hostPhotoContainer {
   position: relative;
-  margin-top: 25px;
+  margin-top: 1.5625rem;
   margin-bottom: 1rem;
 }
 
 .hostPhotoIcon {
-  width: 129px;
+  width: 8.0625rem;
   height: 129px;
-  min-width: 129px;
+  min-width: 8.0625rem;
   min-height: 129px;
   border-radius: 50%;
   background: #FFFFFF;
@@ -1591,7 +1591,7 @@
   font-weight: 300;
   color: #D1D5DB;
   font-family: 'Ultra System', sans-serif;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
 }
 
@@ -1600,14 +1600,14 @@
   bottom: -16px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 300;
   color: #9CA3AF;
   background: white;
-  border: 2px solid #E5E7EB;
+  border: 0.125rem solid #E5E7EB;
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  width: 2rem;
+  height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1616,13 +1616,13 @@
 }
 
 .hostPhotoPreview {
-  width: 129px;
+  width: 8.0625rem;
   height: 129px;
-  min-width: 129px;
+  min-width: 8.0625rem;
   min-height: 129px;
   object-fit: cover;
   border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
 }
 
@@ -1637,7 +1637,7 @@
   .hostInfoSection {
     min-width: unset;
     width: 100%;
-    max-width: 400px;
+    max-width: 25rem;
     gap: 1.5rem;
   }
 }
@@ -1662,10 +1662,10 @@
 }
 
 .hostBioContainer {
-  width: 439px;
-  min-height: 247px;
-  border-radius: 10px;
-  border: 1px solid #E5E7EB;
+  width: 27.4375rem;
+  min-height: 15.4375rem;
+  border-radius: 0.625rem;
+  border: 0.0625rem solid #E5E7EB;
   background: white;
   padding: 1rem;
   display: flex;
@@ -1677,14 +1677,14 @@
 @media (max-width: 768px) {
   .hostBioContainer {
     width: 100%;
-    max-width: 400px;
-    min-height: 200px;
+    max-width: 25rem;
+    min-height: 12.5rem;
   }
 }
 
 @media (max-width: 480px) {
   .hostBioContainer {
-    min-height: 180px;
+    min-height: 11.25rem;
     padding: 0.75rem;
   }
 }
@@ -1692,7 +1692,7 @@
 .hostNameLabel {
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: #6B7280;
   text-align: center;
 }
@@ -1700,7 +1700,7 @@
 .hostBioLabel {
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1rem;
   color: #374151;
   text-align: left;
 }
@@ -1709,15 +1709,15 @@
   width: 100%;
   padding: 8px 12px;
   border: none;
-  border-bottom: 1px solid #E5E7EB;
+  border-bottom: 0.0625rem solid #E5E7EB;
   background: transparent;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #374151;
   outline: none;
   transition: border-color 0.3s ease;
   font-family: 'Montserrat', sans-serif;
   text-align: center;
-  min-height: 20px;
+  min-height: 1.25rem;
 }
 
 .hostNameInput:focus {
@@ -1733,9 +1733,9 @@
   width: 100%;
   padding: 12px 0;
   border: none;
-  border-bottom: 1px solid #E5E7EB;
+  border-bottom: 0.0625rem solid #E5E7EB;
   background: transparent;
-  font-size: 16px;
+  font-size: 1rem;
   color: #374151;
   outline: none;
   transition: border-color 0.3s ease;
@@ -1787,7 +1787,7 @@
 .photosLabel {
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1rem;
   color: #374151;
   text-align: center;
   align-self: center;
@@ -1802,7 +1802,7 @@
 
 @media (max-width: 480px) {
   .photosLabel {
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 }
 
@@ -1864,7 +1864,7 @@
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-  min-height: 400px;
+  min-height: 25rem;
   padding: 2rem 0;
 }
 
@@ -1877,16 +1877,16 @@
 
 .backButton {
   background: #FFFFFF;
-  border: 2px solid #E5E7EB;
+  border: 0.125rem solid #E5E7EB;
   color: #6B7280;
   padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  min-width: 120px;
+  min-width: 7.5rem;
 }
 
 .backButton:hover {
@@ -1899,13 +1899,13 @@
   border: none;
   color: white;
   padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  min-width: 120px;
+  min-width: 7.5rem;
 }
 
 .continueButton:hover {
@@ -1917,13 +1917,13 @@
   border: none;
   color: white;
   padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  min-width: 120px;
+  min-width: 7.5rem;
 }
 
 .finishButton:hover {
@@ -1965,33 +1965,33 @@
   gap: 1rem;
   justify-content: center;
   width: 100%;
-  max-width: 400px;
+  max-width: 25rem;
 }
 
 @media (max-width: 480px) {
   .dormitoryOptionsWrapper {
     flex-direction: column;
     gap: 0.75rem;
-    max-width: 280px;
+    max-width: 17.5rem;
   }
 }
 
 @media (max-width: 390px) {
   .dormitoryOptionsWrapper {
-    max-width: 250px;
+    max-width: 15.625rem;
   }
 }
 
 .dormitoryOption {
   width: 200px;
   height: 60px;
-  border-radius: 12px;
-  border: 2px solid #E5E7EB;
+  border-radius: 0.75rem;
+  border: 0.125rem solid #E5E7EB;
   background: #FFFFFF;
   color: #374151;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1rem;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
@@ -2045,20 +2045,20 @@
   justify-content: center;
   gap: 0;
   position: relative;
-  width: 770px;
+  width: 48.125rem;
   max-width: 100%;
 }
 
 @media (max-width: 768px) {
   .priceInputWrapper {
     width: 100%;
-    max-width: 500px;
+    max-width: 31.25rem;
   }
 }
 
 @media (max-width: 480px) {
   .priceInputWrapper {
-    max-width: 350px;
+    max-width: 21.875rem;
   }
 }
 
@@ -2066,16 +2066,16 @@
   font-family: 'Ultra System', sans-serif;
   font-weight: 400;
   font-size: 40px;
-  line-height: 48px;
+  line-height: 3rem;
   letter-spacing: 0px;
   color: #D1D5DB;
-  margin-right: 8px;
+  margin-right: 0.5rem;
 }
 
 @media (max-width: 768px) {
   .currencySymbol {
     font-size: 32px;
-    line-height: 40px;
+    line-height: 2.5rem;
     margin-right: 6px;
   }
 }
@@ -2083,7 +2083,7 @@
 @media (max-width: 480px) {
   .currencySymbol {
     font-size: 28px;
-    line-height: 36px;
+    line-height: 2.25rem;
     margin-right: 4px;
   }
 }
@@ -2092,7 +2092,7 @@
   font-family: 'Ultra System', sans-serif;
   font-weight: 400;
   font-size: 40px;
-  line-height: 48px;
+  line-height: 3rem;
   letter-spacing: 0px;
   text-align: center;
   color: #000000;
@@ -2110,15 +2110,15 @@
 @media (max-width: 768px) {
   .priceInputField {
     font-size: 32px;
-    line-height: 40px;
+    line-height: 2.5rem;
     padding: 6px 0;
   }
 }
 
 @media (max-width: 480px) {
   .priceInputField {
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 1.5rem;
+    line-height: 2rem;
     padding: 4px 0;
   }
 }
@@ -2146,16 +2146,16 @@
   font-family: 'Ultra System', sans-serif;
   font-weight: 400;
   font-size: 40px;
-  line-height: 48px;
+  line-height: 3rem;
   letter-spacing: 0px;
   color: #D1D5DB;
-  margin-left: 8px;
+  margin-left: 0.5rem;
 }
 
 @media (max-width: 768px) {
   .periodLabel {
     font-size: 32px;
-    line-height: 40px;
+    line-height: 2.5rem;
     margin-left: 6px;
   }
 }
@@ -2163,7 +2163,7 @@
 @media (max-width: 480px) {
   .periodLabel {
     font-size: 28px;
-    line-height: 36px;
+    line-height: 2.25rem;
     margin-left: 4px;
   }
 }
@@ -2177,7 +2177,7 @@
   color: #ADB5BD;
   text-align: center;
   margin: 0;
-  max-width: 500px;
+  max-width: 31.25rem;
 }
 
 /* Step 12 - Create Account */
@@ -2186,7 +2186,7 @@
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
-  max-width: 500px;
+  max-width: 31.25rem;
   margin: 0 auto;
   padding: 1rem 0;
   margin-top: 1rem;
@@ -2227,14 +2227,14 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 12px 16px;
-  border: 1px solid #E5E7EB;
-  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  border: 0.0625rem solid #E5E7EB;
+  border-radius: 0.5rem;
   background: white;
   color: #374151;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 0.875rem;
   cursor: pointer;
   transition: all 0.2s ease;
   flex: 1;
@@ -2247,8 +2247,8 @@
 }
 
 .socialIcon {
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .separator {
@@ -2274,21 +2274,21 @@
   padding: 0 1rem;
   color: #6B7280;
   font-family: 'Montserrat', sans-serif;
-  font-size: 14px;
+  font-size: 0.875rem;
   position: relative;
   z-index: 2;
 }
 
 .errorMessage {
   background: #FEF2F2;
-  border: 1px solid #FECACA;
+  border: 0.0625rem solid #FECACA;
   color: #B91C1C;
-  padding: 12px 16px;
-  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
   width: 100%;
   text-align: center;
   font-family: 'Montserrat', sans-serif;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .accountForm {
@@ -2312,18 +2312,18 @@
 .accountLabel {
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1rem;
   color: #374151;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
   align-self: flex-start;
 }
 
 .accountInput {
-  padding: 12px 16px;
-  border: 1px solid #E5E7EB;
-  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  border: 0.0625rem solid #E5E7EB;
+  border-radius: 0.5rem;
   font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   color: #374151;
   background: white;
   transition: border-color 0.2s ease;
@@ -2342,9 +2342,9 @@
 
 
 .photoSlot {
-  width: 189px;
+  width: 11.8125rem;
   height: 189px;
-  border-radius: 10px;
+  border-radius: 0.625rem;
   overflow: hidden;
   position: relative;
   display: flex;
@@ -2357,43 +2357,43 @@
 
 @media (max-width: 1400px) {
   .photoSlot {
-    width: 160px;
+    width: 10rem;
     height: 160px;
   }
 }
 
 @media (max-width: 1024px) {
   .photoSlot {
-    width: 150px;
+    width: 9.375rem;
     height: 150px;
   }
 }
 
 @media (max-width: 768px) {
   .photoSlot {
-    width: 140px;
+    width: 8.75rem;
     height: 140px;
   }
 }
 
 @media (max-width: 580px) {
   .photoSlot {
-    width: 130px;
+    width: 8.125rem;
     height: 130px;
   }
 }
 
 @media (max-width: 480px) {
   .photoSlot {
-    width: 120px;
+    width: 7.5rem;
     height: 120px;
-    border-radius: 8px;
+    border-radius: 0.5rem;
   }
 }
 
 .firstSlot {
   background: var(--Neutral-100, #F8F9FA);
-  border: 2px dashed #E5E7EB;
+  border: 0.125rem dashed #E5E7EB;
 }
 
 .firstSlot:hover {
@@ -2403,7 +2403,7 @@
 
 .emptySlot {
   background: transparent;
-  border: 2px dashed #E5E7EB;
+  border: 0.125rem dashed #E5E7EB;
 }
 
 .emptySlot:hover {
@@ -2485,8 +2485,8 @@
 
 .photoActions {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 0.5rem;
+  right: 0.5rem;
   display: flex;
   gap: 0.5rem;
   opacity: 0;
@@ -2513,13 +2513,13 @@
   border: none;
   color: white;
   padding: 0.25rem 0.5rem;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   font-size: 0.75rem;
   font-weight: 500;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
   opacity: 0.8;
-  height: 20px;
+  height: 1.25rem;
   line-height: 1;
   display: inline-flex;
   align-items: center;
@@ -2536,8 +2536,8 @@
   background: #EF4444;
   border: none;
   color: white;
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 50%;
   cursor: pointer;
   font-size: 1rem;
@@ -2552,16 +2552,16 @@
 
 .mainBadge {
   position: absolute;
-  top: 8px;
-  left: 8px;
+  top: 0.5rem;
+  left: 0.5rem;
   background: #3B82F6;
   color: white;
   padding: 0.25rem 0.5rem;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   font-size: 0.75rem;
   font-weight: 500;
   font-family: 'Montserrat', sans-serif;
-  height: 20px;
+  height: 1.25rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2585,8 +2585,8 @@
 .deleteModalContent {
   background: white;
   padding: 2rem;
-  border-radius: 12px;
-  max-width: 400px;
+  border-radius: 0.75rem;
+  max-width: 25rem;
   width: 90%;
   display: flex;
   flex-direction: column;
@@ -2607,8 +2607,8 @@
   color: #6B7280;
   padding: 0.5rem;
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  width: 2rem;
+  height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2625,15 +2625,15 @@
 }
 
 .deleteModalIconCircle {
-  width: 60px;
+  width: 3.75rem;
   height: 60px;
   border-radius: 50%;
   background: #FEF2F2;
-  border: 2px solid #FECACA;
+  border: 0.125rem solid #FECACA;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: bold;
   color: #DC2626;
 }
@@ -2656,10 +2656,10 @@
 
 .deleteModalCancelButton {
   background: white;
-  border: 1px solid #E5E7EB;
+  border: 0.0625rem solid #E5E7EB;
   color: #374151;
   padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
@@ -2676,7 +2676,7 @@
   border: none;
   color: white;
   padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
@@ -2720,11 +2720,11 @@
 
 .addAchievementButton {
   width: 100%;
-  max-width: 400px;
+  max-width: 25rem;
   height: 60px;
   background: #F8F9FA;
-  border: 2px dashed #E5E7EB;
-  border-radius: 8px;
+  border: 0.125rem dashed #E5E7EB;
+  border-radius: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2740,22 +2740,22 @@
 }
 
 .addAchievementIcon {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 300;
   color: #3B82F6;
 }
 
 .addAchievementText {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
   color: #374151;
 }
 
 .noAchievementsContainer {
   width: 100%;
-  max-width: 400px;
+  max-width: 25rem;
   background: #CCE7FF;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   padding: 1rem;
   display: flex;
   align-items: center;
@@ -2771,21 +2771,21 @@
 }
 
 .noAchievementsCheckbox {
-  width: 20px;
-  height: 20px;
-  border: 2px solid #3B82F6;
-  border-radius: 4px;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 0.125rem solid #3B82F6;
+  border-radius: 0.25rem;
   cursor: pointer;
 }
 
 .noAchievementsText {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
   color: #374151;
 }
 
 .achievementsNote {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #6B7280;
   text-align: center;
   margin: 0;
@@ -2807,8 +2807,8 @@
   justify-content: space-between;
   padding: 1rem;
   background: #F8F9FA;
-  border-radius: 8px;
-  border: 1px solid #E5E7EB;
+  border-radius: 0.5rem;
+  border: 0.0625rem solid #E5E7EB;
 }
 
 .achievementContent {
@@ -2820,14 +2820,14 @@
 .achievementName {
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 1rem;
   color: #374151;
 }
 
 .achievementYear {
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #6B7280;
 }
 
@@ -2840,10 +2840,10 @@
 .deleteAchievementButton {
   background: none;
   border: none;
-  font-size: 16px;
+  font-size: 1rem;
   cursor: pointer;
   padding: 0.5rem;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   transition: background-color 0.2s ease;
 }
 
@@ -2872,8 +2872,8 @@
 .achievementModalContent {
   background: white;
   padding: 2rem;
-  border-radius: 12px;
-  max-width: 500px;
+  border-radius: 0.75rem;
+  max-width: 31.25rem;
   width: 90%;
   display: flex;
   flex-direction: column;
@@ -2894,8 +2894,8 @@
   color: #6B7280;
   padding: 0.5rem;
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  width: 2rem;
+  height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2912,15 +2912,15 @@
 }
 
 .achievementModalIconCircle {
-  width: 60px;
+  width: 3.75rem;
   height: 60px;
   border-radius: 50%;
   background: #EFF6FF;
-  border: 2px solid #BFDBFE;
+  border: 0.125rem solid #BFDBFE;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 1.5rem;
 }
 
 .achievementModalForm {
@@ -2940,16 +2940,16 @@
 .achievementModalLabel {
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #374151;
 }
 
 .achievementModalInput {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #E5E7EB;
-  border-radius: 8px;
-  font-size: 16px;
+  border: 0.0625rem solid #E5E7EB;
+  border-radius: 0.5rem;
+  font-size: 1rem;
   color: #374151;
   outline: none;
   transition: border-color 0.2s ease;
@@ -2970,11 +2970,11 @@
   border: none;
   color: white;
   padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1rem;
   transition: all 0.2s ease;
 }
 
@@ -3000,10 +3000,10 @@
 
 .achievementModalCancelButton {
   background: white;
-  border: 1px solid #E5E7EB;
+  border: 0.0625rem solid #E5E7EB;
   color: #374151;
   padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
@@ -3020,7 +3020,7 @@
   border: none;
   color: white;
   padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
@@ -3039,32 +3039,32 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 0.375rem;
 }
 
 @media (max-width: 768px) {
   .locationForm {
     max-width: 100%;
-    gap: 16px;
+    gap: 1rem;
   }
 }
 
 @media (max-width: 480px) {
   .locationForm {
-    gap: 12px;
+    gap: 0.75rem;
   }
 }
 
 @media (max-width: 390px) {
   .locationForm {
-    gap: 8px;
+    gap: 0.5rem;
   }
 }
 
 .locationRow {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 1.25rem;
 }
 
 .locationRowSingle {
@@ -3117,13 +3117,13 @@
 
 .categoryCard {
   background: white;
-  border: 1px solid #E5E7EB;
-  border-radius: 10px;
+  border: 0.0625rem solid #E5E7EB;
+  border-radius: 0.625rem;
   padding: 1.5rem;
   position: relative;
-  min-height: 200px;
+  min-height: 12.5rem;
   min-width: 250px;
-  max-width: 250px;
+  max-width: 15.625rem;
   display: flex;
   flex-direction: column;
   transition: all 0.2s ease;
@@ -3135,7 +3135,7 @@
     min-width: 100%;
     max-width: 100%;
     width: 100%;
-    max-width: 400px;
+    max-width: 25rem;
     margin: 0 auto;
   }
 }
@@ -3143,12 +3143,12 @@
 @media (max-width: 480px) {
   .categoryCard {
     padding: 1rem;
-    min-height: 180px;
+    min-height: 11.25rem;
   }
 }
 
 .categoryCard:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
 }
 
 .categoryCard {
@@ -3175,7 +3175,7 @@
 .categoryCardAge {
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #6B7280;
 }
 
@@ -3185,11 +3185,11 @@
   right: 1rem;
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 1.25rem;
   color: #9CA3AF;
   cursor: pointer;
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3208,11 +3208,11 @@
   right: 3rem;
   background: none;
   border: none;
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--color-blue-accent);
   cursor: pointer;
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3239,7 +3239,7 @@
 }
 
 .genderIcon {
-  font-size: 20px;
+  font-size: 1.25rem;
   color: #D1D5DB;
   transition: color 0.2s ease;
 }
@@ -3262,24 +3262,24 @@
 }
 
 .categoryScheduleIcon {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #6B7280;
 }
 
 .categoryScheduleText {
   font-family: 'Montserrat', sans-serif;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: #6B7280;
   font-weight: 500;
 }
 
 .addCategoryCard {
-  border: 2px dashed #E5E7EB;
-  border-radius: 10px;
+  border: 0.125rem dashed #E5E7EB;
+  border-radius: 0.625rem;
   padding: 1.5rem;
-  min-height: 200px;
+  min-height: 12.5rem;
   min-width: 250px;
-  max-width: 250px;
+  max-width: 15.625rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3294,7 +3294,7 @@
     min-width: 100%;
     max-width: 100%;
     width: 100%;
-    max-width: 400px;
+    max-width: 25rem;
     margin: 0 auto;
   }
 }
@@ -3302,7 +3302,7 @@
 @media (max-width: 480px) {
   .addCategoryCard {
     padding: 1rem;
-    min-height: 180px;
+    min-height: 11.25rem;
   }
 }
 
@@ -3328,7 +3328,7 @@
 .addCategoryText {
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1rem;
   color: #374151;
 }
 
@@ -3336,9 +3336,9 @@
 .modalLabel {
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1rem;
   color: #374151;
-  margin-bottom: 12px;
+  margin-bottom: 0.75rem;
   display: block;
 }
 
@@ -3346,7 +3346,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1.25rem;
   flex: 1;
   justify-content: space-evenly;
 }
@@ -3362,19 +3362,19 @@
 .genderGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  gap: 0.75rem;
 }
 
 .genderOption {
   padding: 0.75rem;
-  border: 1px solid #E5E7EB;
-  border-radius: 8px;
+  border: 0.0625rem solid #E5E7EB;
+  border-radius: 0.5rem;
   text-align: center;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   font-style: normal;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 140%;
   letter-spacing: 0px;
   color: #374151;
@@ -3400,15 +3400,15 @@
 }
 
 .timeInputs {
-  margin-top: 12px;
+  margin-top: 0.75rem;
 }
 
 .timeInputGroup {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 8px;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
 }
 
 .timeX {
@@ -3422,16 +3422,16 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 12px 16px;
-  border: 1px solid #CED4DA;
-  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  border: 0.0625rem solid #CED4DA;
+  border-radius: 0.5rem;
   background: white;
-  min-width: 80px;
+  min-width: 5rem;
 }
 
 .timeDisplay {
   font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   color: #374151;
 }
 
@@ -3440,15 +3440,15 @@
   border: none;
   color: #9CA3AF;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 .modalAddButton {
-  width: 288px;
+  width: 18rem;
   height: 31px;
   background: var(--color-blue-accent);
   border: none;
-  border-radius: 6px;
+  border-radius: 0.375rem;
   gap: 10px;
   padding: 10px 22px;
   cursor: pointer;
@@ -3461,7 +3461,7 @@
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   font-style: normal;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 140%;
   letter-spacing: 0px;
   text-align: center;
@@ -3484,14 +3484,14 @@
   width: 31px;
   height: 31px;
   background: #F3F4F6;
-  border: 1px solid #E5E7EB;
-  border-radius: 6px;
+  border: 0.0625rem solid #E5E7EB;
+  border-radius: 0.375rem;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 1rem;
   color: #6B7280;
 }
 
@@ -3502,11 +3502,11 @@
 }
 
 .addTimeButton {
-  width: 36px;
-  height: 36px;
+  width: 2.25rem;
+  height: 2.25rem;
   background: var(--color-blue-accent);
   border: none;
-  border-radius: 6px;
+  border-radius: 0.375rem;
   color: white;
   font-size: 18px;
   font-weight: 300;
@@ -3524,28 +3524,28 @@
 
 
 .timeChip {
-  min-width: 85px;
+  min-width: 5.3125rem;
   width: auto;
-  height: 36px;
-  border-radius: 6px;
+  height: 2.25rem;
+  border-radius: 0.375rem;
   padding: 6px 9px;
-  border: 1px solid #E5E7EB;
+  border: 0.0625rem solid #E5E7EB;
   background: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 6px;
+  gap: 0.375rem;
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: #374151;
   flex-shrink: 0;
 }
 
 .timeText {
   flex: 1;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 500;
   color: #374151;
   white-space: nowrap;
@@ -3558,8 +3558,8 @@
   border: none;
   color: #9CA3AF;
   cursor: pointer;
-  font-size: 14px;
-  width: 16px;
+  font-size: 0.875rem;
+  width: 1rem;
   height: 16px;
   display: flex;
   align-items: center;
@@ -3592,26 +3592,26 @@
   background: white;
   width: 400px;
   border-radius: 20px;
-  padding: 40px;
+  padding: 2.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
+  gap: 1.875rem;
   position: relative;
   box-sizing: border-box;
 }
 
 .deleteModalCloseButton {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 1.25rem;
+  right: 1.25rem;
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 1.5rem;
   cursor: pointer;
   color: #9CA3AF;
-  width: 32px;
-  height: 32px;
+  width: 2rem;
+  height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3631,11 +3631,11 @@
 }
 
 .deleteModalIconCircle {
-  width: 80px;
-  height: 80px;
+  width: 5rem;
+  height: 5rem;
   border-radius: 50%;
   background: #FEF2F2;
-  border: 3px solid #FECACA;
+  border: 0.1875rem solid #FECACA;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3652,29 +3652,29 @@
   text-align: center;
   color: #000000;
   margin: 0;
-  max-width: 300px;
+  max-width: 18.75rem;
   letter-spacing: 0px;
 }
 
 .deleteModalActions {
   display: flex;
-  gap: 16px;
+  gap: 1rem;
   width: 100%;
   justify-content: center;
 }
 
 .deleteModalCancelButton {
   background: white;
-  border: 1px solid #E5E7EB;
+  border: 0.0625rem solid #E5E7EB;
   color: #374151;
   padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 0.875rem;
   transition: all 0.2s ease;
-  min-width: 120px;
+  min-width: 7.5rem;
 }
 
 .deleteModalCancelButton:hover {
@@ -3687,13 +3687,13 @@
   border: none;
   color: white;
   padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 0.875rem;
   transition: all 0.2s ease;
-  min-width: 120px;
+  min-width: 7.5rem;
 }
 
 .deleteModalConfirmButton:hover {
@@ -3708,7 +3708,7 @@
   
   .locationRow {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 1.25rem;
   }
   
   .locationRowSingle {
@@ -3738,52 +3738,52 @@
   
   .modalContent {
     width: 90vw;
-    max-width: 400px;
+    max-width: 25rem;
     height: auto;
     max-height: 85vh;
     border-radius: 20px;
-    padding: 30px;
-    gap: 20px;
+    padding: 1.875rem;
+    gap: 1.25rem;
   }
   
   .modalForm {
-    gap: 20px;
+    gap: 1.25rem;
   }
   
   .timeChip {
-    min-width: 80px;
+    min-width: 5rem;
   }
   
   .deleteModalContent {
     width: 90vw;
-    max-width: 350px;
-    padding: 30px;
-    gap: 20px;
+    max-width: 21.875rem;
+    padding: 1.875rem;
+    gap: 1.25rem;
   }
   
   .deleteModalTitle {
-    font-size: 16px;
+    font-size: 1rem;
   }
   
   .deleteModalIconCircle {
-    width: 60px;
+    width: 3.75rem;
     height: 60px;
     font-size: 28px;
   }
   
   .deleteModalActions {
     flex-direction: column;
-    gap: 12px;
+    gap: 0.75rem;
   }
   
   .ageGrid {
     grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
-    gap: 8px;
+    gap: 0.5rem;
   }
   
   .dayGrid {
     grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
+    gap: 0.5rem;
   }
   
   .timeRow {
@@ -3807,7 +3807,7 @@
   }
   
   .priceNote {
-    font-size: 16px;
+    font-size: 1rem;
   }
   
   .dailyRateContainer {
@@ -3831,27 +3831,27 @@
   
   .genderGrid {
     grid-template-columns: 1fr;
-    gap: 8px;
+    gap: 0.5rem;
   }
   
   .timeInputGroup {
-    gap: 8px;
+    gap: 0.5rem;
   }
   
   .ageGrid {
     grid-template-columns: repeat(auto-fit, minmax(35px, 1fr));
-    gap: 6px;
+    gap: 0.375rem;
   }
   
   .dayGrid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
+    gap: 0.375rem;
   }
   
   .modalContent {
     width: 95vw;
-    max-width: 350px;
-    padding: 20px;
+    max-width: 21.875rem;
+    padding: 1.25rem;
     gap: 15px;
   }
   
@@ -3861,19 +3861,19 @@
   
   .deleteModalContent {
     width: 95vw;
-    max-width: 300px;
-    padding: 20px;
+    max-width: 18.75rem;
+    padding: 1.25rem;
     gap: 15px;
   }
   
   .deleteModalTitle {
-    font-size: 14px;
+    font-size: 0.875rem;
   }
   
   .deleteModalIconCircle {
     width: 50px;
     height: 50px;
-    font-size: 24px;
+    font-size: 1.5rem;
   }
   
   .achievementsSection {
@@ -3881,8 +3881,8 @@
   }
   
   .priceNote {
-    font-size: 14px;
-    max-width: 300px;
+    font-size: 0.875rem;
+    max-width: 18.75rem;
   }
   
   .dailyRateContainer {
@@ -3904,7 +3904,7 @@
   
   .dormitoryOption {
     width: 100%;
-    max-width: 250px;
+    max-width: 15.625rem;
   }
   
   .termsSection {

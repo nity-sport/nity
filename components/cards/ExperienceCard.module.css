@@ -1,56 +1,56 @@
 /* components/cards/ExperienceCard/ExperienceCard.module.css */
 .card {
     background-color: var(--color-surface);
-    border-radius: 12px;
+    border-radius: 0.75rem;
     overflow: hidden;
     text-decoration: none;
     color: inherit;
     display: flex;
     flex-direction: column;
-    width: 280px; /* Largura do card, ajuste conforme necessário */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    width: 17.5rem; /* Largura do card, ajuste conforme necessário */
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.08);
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   }
   
   .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-0.3125rem);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.12);
   }
   
   .imageContainer {
     position: relative;
     width: 100%;
-    height: 180px; /* Altura da imagem, ajuste conforme necessário */
+    height: 11.25rem; /* Altura da imagem, ajuste conforme necessário */
   }
   
   .image {
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
   }
   
   .durationBadge {
     position: absolute;
-    bottom: 10px;
-    left: 10px;
+    bottom: 0.625rem;
+    left: 0.625rem;
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: var(--text-sm, 12px);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    font-size: var(--text-sm, 0.75rem);
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 0.25rem;
   }
   
   .content {
-    padding: 16px;
+    padding: 1rem;
   }
   
   .title {
-    font-size: var(--text-lg, 18px);
+    font-size: var(--text-lg, 1.125rem);
     font-weight: var(--font-weight-bold, 700);
     color: var(--color-text-dark);
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -59,8 +59,8 @@
   .infoRow {
     display: flex;
     align-items: center;
-    gap: 6px;
-    margin-bottom: 6px;
+    gap: 0.375rem;
+    margin-bottom: 0.375rem;
   }
   
   .icon {
@@ -70,7 +70,7 @@
   
   .location,
   .category {
-    font-size: var(--text-sm, 14px);
+    font-size: var(--text-sm, 0.875rem);
     color: var(--color-surface-mid);
     white-space: nowrap;
     overflow: hidden;

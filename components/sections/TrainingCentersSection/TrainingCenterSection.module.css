@@ -1,9 +1,9 @@
 /* src/components/sections/TrainingCentersSection/TrainingCentersSection.module.css */
 .trainingCentersSection {
     width: 100%;
-    max-width: 1412px;
-    margin: 60px auto;
-    padding: 0 20px;
+    max-width: 88.25rem;
+    margin: 3.75rem auto;
+    padding: 0 1.25rem;
     box-sizing: border-box;
   }
   
@@ -11,7 +11,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 1.875rem;
   }
   
   .title {
@@ -25,21 +25,21 @@
   .navigation {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 0.75rem;
   }
   
   .navButton {
     background: transparent;
     border: 1px solid var(--color-border);
     color: var(--color-surface-mid);
-    width: 36px;
-    height: 36px;
+    width: 2.25rem;
+    height: 2.25rem;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
+    font-size: 1.125rem;
     transition: all 0.2s ease;
   }
   
@@ -58,7 +58,7 @@
     font-family: var(--font-primary);
     font-size: var(--text-sm);
     color: var(--color-surface-mid);
-    min-width: 50px;
+    min-width: 3.125rem;
     text-align: center;
   }
   
@@ -66,8 +66,8 @@
     display: flex;
     overflow-x: auto;
     scroll-behavior: smooth;
-    gap: 22px;
-    padding-bottom: 20px;
+    gap: 1.375rem;
+    padding-bottom: 1.25rem;
     cursor: grab;
     user-select: none;
     -webkit-user-select: none;
@@ -91,24 +91,24 @@
   /* Responsive */
   @media (max-width: 1440px) {
     .trainingCentersSection {
-      max-width: 1200px;
+      max-width: 75rem;
     }
   }
   
   @media (max-width: 768px) {
     .trainingCentersSection {
-       margin: 40px auto;
+       margin: 2.5rem auto;
     }
     .header {
       flex-direction: column;
       align-items: flex-start;
-      gap: 15px;
+      gap: 0.9375rem;
     }
     .title {
-      font-size: 22px;
+      font-size: 1.375rem;
     }
     .carousel {
-      gap: 16px;
+      gap: 1rem;
       padding-left: 0;
       padding-right: 0;
     }

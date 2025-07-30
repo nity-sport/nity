@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 5%;
+  padding: 1rem 5%;
   background: var(--color-surface);
   border-bottom: none;
   transition: padding 0.3s ease;
@@ -22,7 +22,7 @@
 
 .nav {
   display: flex;
-  gap: 32px;
+  gap: 2rem;
   align-items: center;
 }
 
@@ -30,8 +30,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 2.5rem;
+  height: 2.5rem;
   background: var(--color-surface);
   border-radius: 50%;
   border: none;
@@ -42,14 +42,14 @@
 .navLink {
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 140%;
   letter-spacing: 0;
   text-align: center;
   vertical-align: middle;
   color: var(--color-surface-mid);
   text-decoration: none;
-  padding: 8px 12px;
+  padding: 0.5rem 0.75rem;
   transition: color 0.2s ease;
 }
 
@@ -68,15 +68,15 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  height: 39px;
+  gap: 0.5rem;
+  height: 2.4375rem;
   width: auto;
-  min-width: 90px;
-  max-width: 128px;
+  min-width: 5.625rem;
+  max-width: 8rem;
   background: var(--gradient-primary);
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 0.375rem;
   padding: 0.5rem 1rem;
   font-family: var(--font-primary);
   font-weight: var(--font-weight-bold);
@@ -86,10 +86,10 @@
 }
 
 .signupIcon {
-  width: 16px;
-  height: 16px;
+  width: 1rem;
+  height: 1rem;
   position: relative;
-  top: -1px;
+  top: -0.0625rem;
 }
 
 .signup:hover {
@@ -98,7 +98,7 @@
 
 @media (max-width: 1024px) {
   .header {
-    padding: 12px 4%;
+    padding: 0.75rem 4%;
   }
   .nav {
     gap: 1rem;
@@ -110,16 +110,16 @@
 
 @media (max-width: 768px) {
   .header {
-    padding: 10px 3%;
+    padding: 0.625rem 3%;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
   }
   
   .signup {
-    font-size: 14px;
+    font-size: 0.875rem;
     padding: 0.5rem 0.75rem;
-    min-width: 80px;
+    min-width: 5rem;
   }
 }
 
@@ -184,12 +184,12 @@
 .userButton {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
   transition: background-color 0.2s ease;
   font-family: var(--font-primary);
   color: var(--color-text-dark);
@@ -200,8 +200,8 @@
 }
 
 .avatar {
-  width: 32px;
-  height: 32px;
+  width: 2rem;
+  height: 2rem;
   border-radius: 50%;
   overflow: hidden;
   display: flex;
@@ -232,15 +232,15 @@
 .userName {
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
-  max-width: 120px;
+  max-width: 7.5rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .chevronIcon {
-  width: 16px;
-  height: 16px;
+  width: 1rem;
+  height: 1rem;
   color: var(--color-surface-mid);
   transition: transform 0.2s ease;
 }
@@ -255,9 +255,9 @@
   right: 0;
   background: var(--color-surface);
   border: 1px solid var(--color-border-light);
-  border-radius: 8px;
-  padding: 8px 0;
-  min-width: 180px;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0;
+  min-width: 11.25rem;
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   animation: slideDown 0.2s ease;
@@ -266,7 +266,7 @@
 .dropdownItem {
   display: block;
   width: 100%;
-  padding: 12px 16px;
+  padding: 0.75rem 1rem;
   text-align: left;
   background: none;
   border: none;
@@ -284,13 +284,13 @@
 
 @media (max-width: 768px) {
   .userName {
-    max-width: 100px;
+    max-width: 6.25rem;
   }
   
   .userDropdown {
     right: auto;
     left: 0;
-    min-width: 160px;
+    min-width: 10rem;
   }
 }
 

@@ -1,7 +1,7 @@
 .partnerSection {
   position: relative;
   width: 100vw;
-  height: 820px;
+  height: 51.25rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,27 +13,27 @@
 .arrowsWrapper {
   position: absolute;
   top: 50%;
-  left: 0px;   /* Faz as setas começarem bem fora do container azul */
+  left: 0rem;   /* Faz as setas começarem bem fora do container azul */
   transform: translateY(-50%);
   z-index: 2;
   pointer-events: none;
-  width: 1800px;
-  height: 580px;
+  width: 112.5rem;
+  height: 36.25rem;
 }
 .arrows {
-  width: 1800px;
-  height: 580px;
+  width: 112.5rem;
+  height: 36.25rem;
   display: block;
 }
 
 /* Camada azul */
 .blueBox {
   position: relative;
-  width: 1560px;
-  height: 566px;
+  width: 97.5rem;
+  height: 35.375rem;
   background: #071c36;
-  border-radius: 18px;
-  margin-left: 0px; /* espaço p/ imagem */
+  border-radius: 1.125rem;
+  margin-left: 0rem; /* espaço p/ imagem */
   z-index: 1;
   display: flex;
   align-items: center;
@@ -43,17 +43,17 @@
 
 .partnerImgWrapper {
   position: absolute;
-  left: 260px;
+  left: 16.25rem;
   top: 50%;
   transform: translateY(-50%);
-  width: 516px;
-  height: 698px;
+  width: 32.25rem;
+  height: 43.625rem;
   z-index: 3;
-  border-radius: 16px;
+  border-radius: 1rem;
   overflow: hidden;
   background: #eee;
-  box-shadow: 0 6px 36px rgba(10,24,36,0.13);
-  border: 2.5px solid #d4e3fa;
+  box-shadow: 0 0.375rem 2.25rem rgba(10,24,36,0.13);
+  border: 0.15625rem solid #d4e3fa;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -64,31 +64,31 @@
   position: relative;
   z-index: 4;
   color: #fff;
-  max-width: 428px;
-  margin-right: 74px;
+  max-width: 26.75rem;
+  margin-right: 4.625rem;
   margin-left: 0;
   text-align: left;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 236px;
+  height: 14.75rem;
 }
 
 .partnerTitle {
   font-family: 'Ultra System', var(--font-display, Arial, sans-serif);
   font-weight: 400;
-  font-size: 40px;
-  line-height: 48px;
-  letter-spacing: 0px;
+  font-size: 2.5rem;
+  line-height: 3rem;
+  letter-spacing: 0rem;
   color: #4892E6;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
   margin-top: 0;
 }
 
 .partnerDesc {
   font-size: 1.06rem;
   line-height: 1.4;
-  margin-bottom: 24px;
+  margin-bottom: 1.5rem;
   color: #d4e3fa;
   font-weight: 400;
 }
@@ -98,12 +98,12 @@
   color: #fff;
   font-size: 1.09rem;
   border: none;
-  border-radius: 7px;
-  padding: 12px 28px;
+  border-radius: 0.4375rem;
+  padding: 0.75rem 1.75rem;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.16s;
-  margin-top: 4px;
+  margin-top: 0.25rem;
 }
 .partnerBtn:hover {
   background: #3d8de8;
@@ -112,29 +112,29 @@
 /* RESPONSIVO */
 @media (max-width: 1440px) {
   .blueBox { width: 98vw; }
-  .partnerImgWrapper { left: 24px; }
-  .arrowsWrapper { left: -160px; }
+  .partnerImgWrapper { left: 1.5rem; }
+  .arrowsWrapper { left: -10rem; }
 }
 @media (max-width: 1150px) {
   .blueBox { width: 94vw; }
-  .partnerImgWrapper { width: 370px; height: 500px; }
-  .arrowsWrapper { width: 1200px; }
+  .partnerImgWrapper { width: 23.125rem; height: 31.25rem; }
+  .arrowsWrapper { width: 75rem; }
 }
 @media (max-width: 900px) {
-  .partnerSection { height: 570px; }
-  .blueBox { width: 82vw; min-width: 380px; height: 320px; }
-  .partnerImgWrapper { width: 160px; height: 220px; left: 8px;}
-  .partnerContent { margin-right: 12px; font-size: 1rem; }
+  .partnerSection { height: 35.625rem; }
+  .blueBox { width: 82vw; min-width: 23.75rem; height: 20rem; }
+  .partnerImgWrapper { width: 10rem; height: 13.75rem; left: 0.5rem;}
+  .partnerContent { margin-right: 0.75rem; font-size: 1rem; }
   .partnerTitle { font-size: 1.25rem; line-height: 1.5; }
-  .arrowsWrapper { width: 850px; left: -90px; }
+  .arrowsWrapper { width: 53.125rem; left: -5.625rem; }
 }
 @media (max-width: 700px) {
-  .partnerSection { flex-direction: column; height: auto; margin-top: 100px;}
+  .partnerSection { flex-direction: column; height: auto; margin-top: 6.25rem;}
   .blueBox {
     margin-left: 0;
     width: 98vw;
-    height: 260px;
-    border-radius: 14px;
+    height: 16.25rem;
+    border-radius: 0.875rem;
     min-width: unset;
   }
   .partnerImgWrapper {

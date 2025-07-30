@@ -1,7 +1,7 @@
 .container {
-  max-width: 1200px;
+  max-width: 75rem;
   margin: 0 auto;
-  margin-top: 100px;
+  margin-top: 6.25rem;
   padding: 2rem;
 }
 
@@ -37,7 +37,7 @@
   color: var(--color-green-700);
   background: var(--color-green-100);
   padding: 0.25rem 0.75rem;
-  border-radius: 12px;
+  border-radius: 0.75rem;
   font-weight: var(--font-weight-medium);
   align-self: flex-start;
 }
@@ -47,7 +47,7 @@
   color: var(--color-blue-700);
   background: var(--color-blue-100);
   padding: 0.25rem 0.75rem;
-  border-radius: 12px;
+  border-radius: 0.75rem;
   font-weight: var(--font-weight-medium);
   align-self: flex-start;
 }
@@ -57,7 +57,7 @@
   background: var(--color-gray-100);
   color: var(--color-gray-700);
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   font-size: var(--text-base);
   font-weight: var(--font-weight-medium);
   transition: all 0.2s ease;
