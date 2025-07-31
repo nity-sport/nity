@@ -21,7 +21,7 @@ yarn type-check   # Run TypeScript type checking
 
 **Component Structure**: Uses CSS Modules for styling with a Layout wrapper pattern (Header/Footer). Pages are composed of sections (Hero, Sports) with mobile-responsive design.
 
-**Styling System**: CSS custom properties design system defined in `styles/theme-config.css` with comprehensive color palette, typography scales, spacing tokens, and responsive breakpoints. Combines CSS Modules with global styles.
+**Styling System**: CSS custom properties design system defined in `styles/theme-config.css` with comprehensive color palette, typography scales, spacing tokens, and responsive breakpoints. Uses rem-based units throughout (16px = 1rem ratio) for consistent scaling. Combines CSS Modules with global styles.
 
 **API Routes**: RESTful endpoints in `/pages/api/` following CRUD patterns with structured error handling. Includes specialized file upload endpoint with S3 integration.
 
@@ -59,12 +59,45 @@ The project uses Jest for unit testing with mocking of external dependencies:
 
 **Frontend & Styling**:
 - CSS Modules naming convention: `ComponentName.module.css`
+- Rem-based unit system (16px = 1rem) for consistent scaling and accessibility
 - Mobile-first responsive design with viewport optimization
 - Component composition with Layout wrapper pattern
 - CSS custom properties from `theme-config.css` for consistent design tokens
+- Modular CSS architecture: complex forms use separate CSS files per component/step
 
 **File Upload Architecture**:
 - Uses Formidable for multipart form parsing with 5MB limits
 - Direct S3 upload via `@aws-sdk/client-s3`
 - UUID-based file naming for uniqueness
 - Files served from S3 bucket with Next.js Image optimization
+
+## CSS Architecture & Modularization
+
+**MultiStepSportCenterForm Structure**:
+- Located in `components/forms/MultiStepSportCenterForm/`
+- Modular CSS architecture with separate files per step
+- Common styles in `Steps/styles/BaseStep.module.css`
+- Step-specific styles in `Steps/styles/StepX.module.css` files
+- Each component imports both base styles and step-specific styles
+
+**CSS File Organization**:
+```
+Steps/styles/
+├── BaseStep.module.css      # Common step container, title, button styles
+├── Step1.module.css         # Name Input (127 lines)
+├── Step2.module.css         # Basic Data Form (197 lines)
+├── Step4.module.css         # Host Profile (282 lines) 
+├── Step5.module.css         # Photos section (453 lines)
+├── Step6.module.css         # Achievements (341 lines)
+├── Step8.module.css         # Location Form (39 lines)
+├── Step9.module.css         # Categories management (583 lines)
+├── Step10.module.css        # Accommodation sub-steps (320 lines)
+└── Step12.module.css        # Create Account (156 lines)
+```
+
+**CSS Standards**:
+- All units in rem (16px = 1rem conversion ratio)
+- Media query breakpoints remain in px (768px, 480px, etc.)
+- Border widths of 1px preserved for crisp rendering
+- Box shadows converted for larger values, small values kept in px
+- Consistent responsive design patterns across all steps
