@@ -20,7 +20,7 @@
   font-weight: 500;
   font-size: 1rem;
   line-height: 140%;
-  letter-spacing: 0px;
+  letter-spacing: 0;
   color: var(--color-surface-dark);
   margin-bottom: 0.75rem;
   text-align: left;
@@ -274,7 +274,7 @@
 }
 
 .toggleSlider:focus {
-  box-shadow: 0 0 0 3px rgba(var(--accent-color-rgb), 0.1);
+  box-shadow: 0 0 0 0.1875rem rgba(var(--accent-color-rgb), 0.1);
 }
 
 @media (max-width: 768px) {
@@ -289,8 +289,8 @@
   }
   
   .label {
-    font-size: 15px;
-    margin-bottom: 10px;
+    font-size: 0.9375rem;
+    margin-bottom: 0.625rem;
   }
   
   .errorMessage {
@@ -308,8 +308,8 @@
   }
   
   .label {
-    font-size: 14px;
-    margin-bottom: 8px;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
   }
   
   .errorMessage {

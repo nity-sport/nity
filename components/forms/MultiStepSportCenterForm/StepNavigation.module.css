@@ -86,7 +86,7 @@
   font-weight: var(--font-weight-regular);
   color: var(--color-surface-dark);
   margin: 0;
-  letter-spacing: 0px;
+  letter-spacing: 0;
   line-height: var(--line-display-md);
   text-align: center;
   width: 100%;
