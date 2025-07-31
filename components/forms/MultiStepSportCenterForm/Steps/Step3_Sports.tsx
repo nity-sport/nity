@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useMultiStepForm } from '../MultiStepFormProvider';
 import { FormInput } from '../FormComponents';
-import styles from './Steps.module.css';
+import baseStyles from './styles/BaseStep.module.css';
+import styles from './Steps.module.css'; // TODO: Create Step3.module.css
 
 interface Sport {
   _id: string;

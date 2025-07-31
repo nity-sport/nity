@@ -1,0 +1,128 @@
+/* Step 1 - Name Input */
+.inputWrapper {
+  width: 100%;
+  max-width: 37.5rem;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nameInput {
+  width: 100%;
+  max-width: 37.5rem;
+  padding: 1rem;
+  border: none;
+  border-bottom: 0.125rem solid #e5e7eb;
+  background: transparent;
+  font-size: 1.25rem;
+  font-weight: 500;
+  text-align: center;
+  color: #374151;
+  letter-spacing: 0.03125rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+  margin: 0 auto;
+}
+
+.nameInput::placeholder {
+  opacity: 0.2;
+  font-family: 'Ultra System', 'Inter', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.75rem;
+  line-height: 3rem;
+  letter-spacing: 0;
+  text-align: center;
+  color: #000000;
+}
+
+@media (max-width: 768px) {
+  .inputWrapper {
+    padding: 0 0.75rem;
+  }
+  
+  .nameInput {
+    font-size: 1.125rem;
+    padding: 0.875rem;
+  }
+  
+  .nameInput::placeholder {
+    font-size: 1.5rem;
+    line-height: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .inputWrapper {
+    padding: 0 0.5rem;
+  }
+  
+  .nameInput {
+    font-size: 1rem;
+    padding: 0.75rem;
+    max-width: 100%;
+  }
+  
+  .nameInput::placeholder {
+    font-size: 1.25rem;
+    line-height: 2rem;
+  }
+}
+
+.nameInput:focus {
+  border-bottom-color: #2563eb;
+}
+
+.inputError {
+  border-bottom-color: #ef4444 !important;
+}
+
+.inputValid {
+  border-bottom-color: #10b981 !important;
+}
+
+.errorMessage {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  text-align: center;
+  font-family: var(--font-primary);
+  width: 100%;
+  max-width: 37.5rem;
+}
+
+@media (max-width: 768px) {
+  .errorMessage {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .errorMessage {
+    font-size: 0.75rem;
+  }
+}
+
+.characterCount {
+  font-size: 0.75rem;
+  color: #6b7280;
+  text-align: center;
+  margin-top: 0.25rem;
+  font-family: var(--font-primary);
+  width: 100%;
+  max-width: 37.5rem;
+}
+
+@media (max-width: 768px) {
+  .characterCount {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .characterCount {
+    font-size: 0.65rem;
+  }
+}

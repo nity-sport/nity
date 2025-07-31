@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useMultiStepForm } from '../MultiStepFormProvider';
 import { FormInput, FormSelect } from '../FormComponents';
-import styles from './Steps.module.css';
+import baseStyles from './styles/BaseStep.module.css';
+import styles from './styles/Step8.module.css';
 
 export function Step8_Location() {
   const { state, dispatch } = useMultiStepForm();

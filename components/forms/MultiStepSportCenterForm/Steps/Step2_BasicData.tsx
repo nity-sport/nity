@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useMultiStepForm } from '../MultiStepFormProvider';
 import { FormInput, FormSelect, FileUpload } from '../FormComponents';
-import styles from './Steps.module.css';
+import baseStyles from './styles/BaseStep.module.css';
+import styles from './styles/Step2.module.css';
 
 export function Step2_BasicData() {
   const { state, dispatch } = useMultiStepForm();

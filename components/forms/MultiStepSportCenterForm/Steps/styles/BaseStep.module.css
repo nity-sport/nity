@@ -1,0 +1,164 @@
+/* Base Step Container Styles - Common to all steps */
+.stepContainer {
+  padding: 1rem;
+  margin: -3.75rem auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 12.5rem;
+  width: 100%;
+  max-width: 75rem;
+  box-sizing: border-box;
+  text-align: center;
+  overflow: visible;
+}
+
+@media (min-width: 769px) {
+  .stepContainer {
+    margin-bottom: 7.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .stepContainer {
+    padding: 0.25rem 1rem;
+    min-height: 9.375rem;
+    max-height: 70vh;
+    justify-content: flex-start;
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .stepContainer {
+    padding: 0.25rem 0.75rem;
+    min-height: 7.5rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .stepContainer {
+    padding: 0.25rem;
+  }
+}
+
+/* Common Title Styles */
+.stepTitle {
+  font-family: 'Ultra System', sans-serif;
+  font-weight: 400;
+  font-size: 1.75rem;
+  line-height: 2.1875rem;
+  text-align: center;
+  color: #000000;
+  margin-bottom: 1rem;
+  letter-spacing: 0;
+  padding: 0 1rem;
+  max-width: 100%;
+  word-wrap: break-word;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .stepTitle {
+    font-size: 1.375rem;
+    line-height: 1.75rem;
+    margin-bottom: 1.5rem;
+    padding: 0 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stepTitle {
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+    margin-bottom: 1.25rem;
+    padding: 0 0.25rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .stepTitle {
+    font-size: 1rem;
+    line-height: 1.375rem;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Common Input Wrapper */
+.inputWrapper {
+  width: 100%;
+  max-width: 37.5rem;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Common Form Grid */
+.formGrid {
+  display: grid;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 37.5rem;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .formGrid {
+    gap: 1.25rem;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .formGrid {
+    gap: 1rem;
+  }
+}
+
+/* Common Button Styles */
+.submitButton {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 1.5rem;
+  min-width: 8rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(37, 99, 235, 0.3);
+}
+
+.submitButton:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  transform: translateY(-0.0625rem);
+  box-shadow: 0 0.25rem 0.75rem rgba(37, 99, 235, 0.3);
+}
+
+.submitButton:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Common Error Styles */
+.errorMessage {
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+/* Common Success Styles */
+.successMessage {
+  color: #16a34a;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  text-align: center;
+}
