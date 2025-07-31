@@ -1,12 +1,24 @@
 // pages/_app.tsx
 import type { AppProps } from 'next/app';
+import type { NextPage } from 'next';
 import Head from 'next/head';
 import '../styles/theme-config.css';
 import Layout from '../components/layout/Layout';
 import '../styles/globals.css';
 import { AuthProvider } from '../src/contexts/AuthContext';
 
-export default function App({ Component, pageProps }: AppProps) {
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: React.ReactElement) => React.ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
+  // Use the layout defined at the page level, if available
+  const getLayout = Component.getLayout ?? ((page) => <Layout>{page}</Layout>);
+
   return (
     <>
       <AuthProvider>
@@ -17,9 +29,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
       </Head>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        {getLayout(<Component {...pageProps} />)}
       </AuthProvider>
     </>
   );
