@@ -1,0 +1,175 @@
+/* Step 11 - Pricing - Replicated from Step10B_DailyRate */
+
+.stepContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.dailyRateContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .dailyRateContainer {
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dailyRateContainer {
+    gap: 1rem;
+    margin-top: 0;
+  }
+}
+
+.priceInputWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  position: relative;
+  width: 48.125rem;
+  max-width: 100%;
+  margin-top: 10rem;
+}
+
+@media (max-width: 768px) {
+  .priceInputWrapper {
+    width: 100%;
+    max-width: 31.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .priceInputWrapper {
+    max-width: 21.875rem;
+  }
+}
+
+.currencySymbol {
+  font-family: 'Ultra System', sans-serif;
+  font-weight: 400;
+  font-size: 2.5rem;
+  line-height: 3rem;
+  letter-spacing: 0;
+  color: #D1D5DB;
+  margin-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .currencySymbol {
+    font-size: 2rem;
+    line-height: 2.5rem;
+    margin-right: 0.375rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .currencySymbol {
+    font-size: 1.75rem;
+    line-height: 2.25rem;
+    margin-right: 0.25rem;
+  }
+}
+
+.priceInputField {
+  font-family: 'Ultra System', sans-serif;
+  font-weight: 400;
+  font-size: 2.5rem;
+  line-height: 3rem;
+  letter-spacing: 0;
+  text-align: center;
+  color: #000000;
+  border: none;
+  border-bottom: 0.125rem solid #D1D5DB;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  flex: 1;
+  padding: 0.5rem 0;
+  margin: 0;
+  transition: border-color 0.2s ease;
+}
+
+@media (max-width: 768px) {
+  .priceInputField {
+    font-size: 2rem;
+    line-height: 2.5rem;
+    padding: 0.375rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .priceInputField {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    padding: 0.25rem 0;
+  }
+}
+
+.priceInputField::placeholder {
+  color: #ADB5BD;
+  opacity: 1;
+}
+
+.priceInputField:focus {
+  border-bottom-color: #3B82F6;
+}
+
+.priceInputField::-webkit-outer-spin-button,
+.priceInputField::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.priceInputField[type=number] {
+  -moz-appearance: textfield;
+}
+
+.periodLabel {
+  font-family: 'Ultra System', sans-serif;
+  font-weight: 400;
+  font-size: 2.5rem;
+  line-height: 3rem;
+  letter-spacing: 0;
+  color: #D1D5DB;
+  margin-left: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .periodLabel {
+    font-size: 2rem;
+    line-height: 2.5rem;
+    margin-left: 0.375rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .periodLabel {
+    font-size: 1.75rem;
+    line-height: 2.25rem;
+    margin-left: 0.25rem;
+  }
+}
+
+.priceNote {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 1.125rem;
+  line-height: 140%;
+  letter-spacing: 0;
+  color: #ADB5BD;
+  text-align: center;
+  margin: 0;
+  max-width: 31.25rem;
+}

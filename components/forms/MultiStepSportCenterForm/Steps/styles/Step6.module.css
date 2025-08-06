@@ -30,7 +30,7 @@
 
 .addAchievementButton {
   width: 100%;
-  max-width: 25rem;
+  max-width: 24rem;
   height: 3.75rem;
   background: #F8F9FA;
   border: 0.125rem dashed #E5E7EB;
@@ -63,7 +63,8 @@
 
 .noAchievementsContainer {
   width: 100%;
-  max-width: 25rem;
+  max-width: 24rem;
+  height: 3.75rem;
   background: #CCE7FF;
   border-radius: 0.5rem;
   padding: 1rem;
@@ -177,13 +178,16 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
+
 }
 
 .achievementModalContent {
   background: white;
-  padding: 2rem;
+  padding: 4rem 4rem 2rem 4rem;
+
   border-radius: 0.75rem;
-  max-width: 31.25rem;
+  max-width: 33.25rem;
+  height: 31.75rem;
   width: 90%;
   display: flex;
   flex-direction: column;
@@ -219,6 +223,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 3.12rem;
 }
 
 .achievementModalIconCircle {
@@ -231,6 +236,12 @@
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
+}
+
+.trophyIcon {
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
 }
 
 .achievementModalForm {
@@ -339,4 +350,12 @@
 
 .achievementModalConfirmButton:hover {
   background: #B91C1C;
+}
+
+.errorMessage {
+  color: #DC2626;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
 }

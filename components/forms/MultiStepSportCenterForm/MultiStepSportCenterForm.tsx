@@ -49,20 +49,20 @@ interface MultiStepSportCenterFormProps {
 const steps: FormStep[] = [
   { id: 1, title: 'Nome do Sportcenter', component: Step1_Name },
   { id: 2, title: 'Dados básicos', component: Step2_BasicData },
-  { id: 3, title: 'Esportes', component: Step3_Sports },
-  { id: 4, title: 'Quem vai representar seu Sportcenter ?', component: Step4_Host },
+  { id: 3, title: 'Quais esportes seu centro oferece?', component: Step3_Sports },
+  { id: 4, title: 'Quem vai representar seu Sportcenter', component: Step4_Host },
   { id: 5, title: 'Adicione fotos do seu Centro esportivo', component: Step5_Photos },
-  { id: 6, title: 'Conquistas', component: Step6_Achievements },
-  { id: 7, title: 'Facilidades', component: Step7_Facilities },
+  { id: 6, title: 'Quais as conquistas do seu centro?', component: Step6_Achievements },
+  { id: 7, title: 'Quais facilidades seu centro possui', component: Step7_Facilities },
   { id: 8, title: 'Localização', component: Step8_Location },
-  { id: 9, title: 'Categorias', component: Step9_Categories },
-  { id: 10, title: 'Dormitórios', component: Step10A_DormitoryQuestion, isOptional: true },
+  { id: 9, title: 'Categorias que pratica', component: Step9_Categories },
+  { id: 10, title: 'Seu centro possue Dormitórios?', component: Step10A_DormitoryQuestion, isOptional: true },
   { id: 11, title: 'Valor da diária', component: Step10B_DailyRate, isOptional: true },
   { id: 12, title: 'Fotos do dormitório', component: Step10C_DormitoryPhotos, isOptional: true },
   { id: 13, title: 'Facilidades do dormitório', component: Step10D_DormitoryFacilities, isOptional: true },
-  { id: 14, title: 'Preços', component: Step11_Pricing },
+  { id: 14, title: 'Qual o valor da sua experiência?', component: Step11_Pricing },
   { id: 15, title: 'CRIAR UMA CONTA', component: Step12_CreateAccount },
-  { id: 16, title: 'Termos', component: Step12_Terms },
+  { id: 16, title: 'Termos de uso', component: Step12_Terms },
   { id: 17, title: 'Sucesso', component: Step13_Success }
 ];
 

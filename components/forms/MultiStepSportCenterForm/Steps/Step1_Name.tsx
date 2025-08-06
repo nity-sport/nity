@@ -62,8 +62,8 @@ export function Step1_Name() {
   const isValid = !error && state.formData.name && state.formData.name.length >= 3;
 
   return (
-    <div className={styles.stepContainer}>
-      <div className={styles.inputWrapper}>
+    <div className={baseStyles.stepContainer}>
+      <div className={baseStyles.inputWrapper} style={{ marginTop: '7.5rem' }}>
         <input
           type="text"
           value={state.formData.name || ''}

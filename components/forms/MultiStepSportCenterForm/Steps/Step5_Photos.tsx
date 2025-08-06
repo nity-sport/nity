@@ -292,7 +292,7 @@ export function Step5_Photos() {
           className={styles.fileInput}
         />
         <label htmlFor="photo-upload" className={styles.photoUploadButton}>
-          <span className={`${styles.uploadIcon} ${styles.firstSlotIcon}`}>+</span>
+          <img src="/assets/add_2.png" alt="Adicionar foto" className={`${styles.uploadIcon} ${styles.firstSlotIcon}`} />
         </label>
       </div>
     );
@@ -368,7 +368,7 @@ export function Step5_Photos() {
             onDragOver={handleDragOver}
             onDrop={(e) => handleDrop(e, i)}
           >
-            {/* Empty slot for drag and drop */}
+            <img src="/assets/add_2_gray.png" alt="Slot vazio" className={`${styles.uploadIcon} ${styles.secondSlotIcon}`} />
           </div>
         );
       }

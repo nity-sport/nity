@@ -1,4 +1,28 @@
 /* Step 10 - Accommodation Sub-steps */
+
+/* File input hidden */
+.fileInput {
+  display: none;
+}
+
+/* Photo upload icons */
+.uploadIcon {
+  width: 3rem;
+  height: 3rem;
+  transition: opacity 0.2s ease;
+}
+
+.firstSlotIcon {
+  opacity: 1;
+}
+
+.secondSlotIcon {
+  opacity: 0.6;
+}
+
+.photoUploadButton:hover .uploadIcon {
+  opacity: 0.8;
+}
 .subStepContainer {
   display: flex;
   flex-direction: column;
@@ -82,7 +106,7 @@
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-  margin-top: 1rem;
+  margin-top: 10rem;
   width: 100%;
 }
 
@@ -187,6 +211,7 @@
   position: relative;
   width: 48.125rem;
   max-width: 100%;
+  margin-top: 10rem;
 }
 
 @media (max-width: 768px) {

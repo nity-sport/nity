@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useMultiStepForm } from '../MultiStepFormProvider';
 import baseStyles from './styles/BaseStep.module.css';
-import styles from './styles/Step10.module.css';
+import styles from './styles/Step10C.module.css';
 
 interface PhotoItem {
   id: string;
@@ -256,7 +256,7 @@ export function Step10C_DormitoryPhotos() {
           className={styles.fileInput}
         />
         <label htmlFor="dormitory-photo-upload" className={styles.photoUploadButton}>
-          <span className={`${styles.uploadIcon} ${styles.firstSlotIcon}`}>+</span>
+          <img src="/assets/add_2.png" alt="Adicionar foto" className={`${styles.uploadIcon} ${styles.firstSlotIcon}`} />
         </label>
       </div>
     );
@@ -332,7 +332,7 @@ export function Step10C_DormitoryPhotos() {
             onDragOver={handleDragOver}
             onDrop={(e) => handleDrop(e, i)}
           >
-            {/* Empty slot for drag and drop */}
+            <img src="/assets/add_2_gray.png" alt="Slot vazio" className={`${styles.uploadIcon} ${styles.secondSlotIcon}`} />
           </div>
         );
       }

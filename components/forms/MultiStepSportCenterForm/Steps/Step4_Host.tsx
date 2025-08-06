@@ -193,8 +193,8 @@ export function Step4_Host() {
   }, [state.showErrors[3], state.formData.hosterName, state.formData.hostBio, state.formData.hosterImage]);
 
   return (
-    <div className={styles.stepContainer}>
-      <div className={styles.hostContainer}>
+    <div className={baseStyles.stepContainer}>
+      <div className={styles.hostContainer} style={{ marginTop: '4.31rem' }}>
         <div className={styles.hostPhotoSection}>
           <label className={styles.hostPhotoLabel}>Choose a profile photo</label>
           <div className={styles.hostPhotoUpload}>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useMultiStepForm } from '../MultiStepFormProvider';
 import baseStyles from './styles/BaseStep.module.css';
-import styles from './styles/Step10.module.css';
+import styles from './styles/Step10D.module.css';
 
 interface DormitoryFacility {
   _id: string;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useMultiStepForm } from '../MultiStepFormProvider';
 import baseStyles from './styles/BaseStep.module.css';
-import styles from './Steps.module.css'; // TODO: Create Step7.module.css
+import styles from './styles/Step7.module.css';
 
 interface Facility {
   _id: string;

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useMultiStepForm } from '../MultiStepFormProvider';
 import baseStyles from './styles/BaseStep.module.css';
-import styles from './Steps.module.css'; // TODO: Create Step11.module.css
+import styles from './styles/Step11.module.css';
 
 export function Step11_Pricing() {
   const { state, dispatch } = useMultiStepForm();

@@ -211,9 +211,9 @@ export function Step3_Sports() {
   const selectedSports = state.formData.sport || [];
 
   return (
-    <div className={styles.stepContainer}>
-      {error && <div className={styles.errorMessage}>{error}</div>}
-      <div className={styles.sportsGrid}>
+    <div className={baseStyles.stepContainer}>
+      {error && <div className={baseStyles.errorMessage}>{error}</div>}
+      <div className={styles.sportsGrid} style={{ marginTop: '22.37rem', position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: '100%', maxWidth: '50rem' }}>
         {availableSports.map(sport => (
           <div
             key={sport._id}

@@ -118,8 +118,6 @@ export function Step6_Achievements() {
 
   return (
     <div className={styles.stepContainer}>
-      {error && <div className={styles.errorMessage}>{error}</div>}
-      
       <div className={styles.achievementsSection}>
         {/* Lista de conquistas */}
         {achievements.length > 0 && (
@@ -166,6 +164,8 @@ export function Step6_Achievements() {
           </label>
         </div>
 
+        {error && <div className={styles.errorMessage}>{error}</div>}
+
         <p className={styles.achievementsNote}>
           Essas informações poderão ser editadas depois
         </p>
@@ -182,7 +182,13 @@ export function Step6_Achievements() {
               ×
             </button>
             <div className={styles.achievementModalIcon}>
-              <div className={styles.achievementModalIconCircle}>🏆</div>
+              
+                <img 
+                  src="/assets/rewarded_ads.png" 
+                  alt="Trophy" 
+                  className={styles.trophyIcon}
+                />
+              
             </div>
             <div className={styles.achievementModalForm}>
               <div className={styles.achievementModalField}>

@@ -1,4 +1,9 @@
 /* Step 4 - Host Profile */
+
+.fileInput {
+  display: none;
+}
+
 .hostContainer {
   display: flex;
   flex-direction: row;

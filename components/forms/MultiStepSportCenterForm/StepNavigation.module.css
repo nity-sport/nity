@@ -5,6 +5,9 @@
   margin: 0;
   position: relative;
   z-index: 1;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Top header with logo */
@@ -15,6 +18,9 @@
   padding: 2rem 4rem;
   background: white;
   border-bottom: 0.0625rem solid #e0e0e0;
+  flex-shrink: 0;
+  height: 5rem;
+  box-sizing: border-box;
 }
 
 .logoContainer {
@@ -40,23 +46,24 @@
 /* Main form container */
 .formCard {
   width: 100%;
-  height: calc(100vh - 5rem);
+  flex: 1;
   background: white;
   display: flex;
   flex-direction: column;
   margin: 0;
-  margin-top: 5rem;
   position: relative;
   z-index: 10;
+  overflow: hidden;
 }
 
 /* Form header */
 .formHeader {
   text-align: center;
-  padding-top: calc(9.375rem - 5rem);
-  padding-bottom: 1.6875rem;
+  padding-top: 13.1rem;
+  padding-bottom: 1rem;
   padding-left: 2rem;
   padding-right: 2rem;
+  flex-shrink: 0;
 }
 
 .formSubtitle {
@@ -102,18 +109,19 @@
 /* Form content area */
 .formContent {
   flex: 1;
-  padding: 3.75rem 2rem 3rem 2rem;
+  padding: 0 2rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  min-height: 12.5rem;
+  overflow-y: auto;
+  min-height: 0;
 }
 
 /* Bottom navigation area */
 .bottomNavigation {
-  padding: 2rem;
+  padding: 1rem 2rem 2rem 2rem;
   background: white;
-  margin-bottom: 2.0625rem;
+  flex-shrink: 0;
 }
 
 .progressSection {

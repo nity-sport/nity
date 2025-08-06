@@ -1,5 +1,6 @@
 import React from 'react';
 import { useMultiStepForm } from './MultiStepFormProvider';
+import Header from '../../../components/layout/Header';
 import styles from './StepNavigation.module.css';
 
 interface StepNavigationProps {
@@ -28,6 +29,8 @@ export function StepNavigation({ onCancel, onSubmit, children }: StepNavigationP
 
   return (
     <div className={styles.fullContainer}>
+      <Header />
+      
       {/* Main Form Container */}
       <div className={styles.formCard}>
         <div className={styles.formHeader}>
