@@ -1,6 +1,6 @@
-import { CoachType } from "./coach";
-import { FacilityType } from "./facility";
-import { LocationType } from "./location";
+import { CoachType } from './coach';
+import { FacilityType } from './facility';
+import { LocationType } from './location';
 
 export interface CategoryType {
   id: string;
@@ -12,8 +12,6 @@ export interface CategoryType {
     times: string[];
   };
 }
-
-
 
 export interface SportCenterType {
   name: string;

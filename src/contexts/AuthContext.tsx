@@ -14,11 +14,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
       newState = { ...state, user: action.payload, isLoading: false };
       break;
     case 'LOGIN_SUCCESS':
-      console.log('[AuthReducer] LOGIN_SUCCESS - payload recebido:', action.payload);
-      console.log('[AuthReducer] LOGIN_SUCCESS - role no payload:', action.payload?.role);
       newState = { ...state, user: action.payload, isLoading: false };
-      console.log('[AuthReducer] LOGIN_SUCCESS - novo estado user:', newState.user);
-      console.log('[AuthReducer] LOGIN_SUCCESS - role no novo estado:', newState.user?.role);
       break;
     case 'LOGOUT':
       newState = { ...state, user: null, isLoading: false };
@@ -32,8 +28,6 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
     default:
       newState = state;
   }
-  console.log('[AuthReducer] Estado NOVO:', newState);
-  console.log('[AuthReducer] Usuário autenticado após reducer:', !!newState.user);
   return newState;
 };
 
@@ -49,7 +43,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     const checkInitialAuth = async () => {
-      console.log('[Auth] Iniciando checkAuthStatus...');
       await checkAuthStatus();
       // O console.log do estado atualizado é melhor no reducer ou no valor do provider
     };
@@ -59,15 +52,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const checkAuthStatus = async () => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
-      console.log('[Auth] checkAuthStatus - Verificando token...');
       const token = localStorage.getItem('auth_token');
       if (!token) {
-        console.log('[Auth] checkAuthStatus - Nenhum token encontrado.');
         dispatch({ type: 'SET_USER', payload: null });
         return;
       }
   
-      console.log('[Auth] checkAuthStatus - Token encontrado, validando...');
       const response = await fetch('/api/auth/me', {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -76,12 +66,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   
       if (response.ok) {
         const user = await response.json();
-        console.log('[Auth] checkAuthStatus - Usuário validado:', user);
-        console.log('[Auth] checkAuthStatus - Role específico:', user.role);
-        console.log('[Auth] checkAuthStatus - Todas as propriedades:', Object.keys(user));
         dispatch({ type: 'LOGIN_SUCCESS', payload: user });
       } else {
-        console.log('[Auth] checkAuthStatus - Falha ao validar token, limpando.');
         localStorage.removeItem('auth_token');
         dispatch({ type: 'SET_USER', payload: null });
       }
@@ -198,10 +184,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const hasRole = (role: UserRole): boolean => {
-    console.log('[Auth] hasRole - state.user:', state.user);
-    console.log('[Auth] hasRole - state.user?.role:', state.user?.role);
-    console.log('[Auth] hasRole - target role:', role);
-    console.log('[Auth] hasRole - comparison result:', state.user?.role === role);
     return state.user?.role === role;
   };
 
@@ -210,12 +192,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const isSuperuser = state.user?.role === UserRole.SUPERUSER;
-  console.log('[Auth] isSuperuser calculation:');
-  console.log('  - state.user:', state.user);
-  console.log('  - state.user?.role:', state.user?.role);
-  console.log('  - UserRole.SUPERUSER:', UserRole.SUPERUSER);
-  console.log('  - Comparison result:', state.user?.role === UserRole.SUPERUSER);
-  console.log('  - Final isSuperuser value:', isSuperuser);
   const isMarketing = state.user?.role === UserRole.MARKETING;
   const isOwner = state.user?.role === UserRole.OWNER;
   const isScout = state.user?.role === UserRole.SCOUT;

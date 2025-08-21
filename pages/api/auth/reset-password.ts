@@ -3,7 +3,10 @@ import bcrypt from 'bcryptjs';
 import dbConnect from '../../../src/lib/dbConnect';
 import User from '../../../src/models/User';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
@@ -14,11 +17,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { email, code, newPassword } = req.body;
 
     if (!email || !code || !newPassword) {
-      return res.status(400).json({ message: 'Email, code, and new password are required' });
+      return res
+        .status(400)
+        .json({ message: 'Email, code, and new password are required' });
     }
 
     if (newPassword.length < 6) {
-      return res.status(400).json({ message: 'Password must be at least 6 characters long' });
+      return res
+        .status(400)
+        .json({ message: 'Password must be at least 6 characters long' });
     }
 
     // Encontrar usuário pelo email
@@ -52,7 +59,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     await user.save();
 
     res.status(200).json({ message: 'Password reset successfully' });
-
   } catch (error) {
     console.error('Reset password error:', error);
     res.status(500).json({ message: 'Internal server error' });

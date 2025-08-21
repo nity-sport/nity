@@ -3,11 +3,11 @@ import mongoose from 'mongoose';
 import User from '../../../../src/models/User';
 import { UserRole } from '../../../../src/types/auth';
 import dbConnect from '../../../../src/lib/dbConnect';
-import { 
-  AuthenticatedRequest, 
-  authenticate, 
+import {
+  AuthenticatedRequest,
+  authenticate,
   requireSuperuser,
-  createApiHandler 
+  createApiHandler,
 } from '../../../../src/lib/auth-middleware';
 
 const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
@@ -27,15 +27,18 @@ const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
   }
 };
 
-const handleChangeRole = async (req: AuthenticatedRequest, res: NextApiResponse) => {
+const handleChangeRole = async (
+  req: AuthenticatedRequest,
+  res: NextApiResponse
+) => {
   try {
     const { id } = req.query;
     const { role } = req.body;
 
     if (!role || !Object.values(UserRole).includes(role)) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         message: 'Invalid role',
-        validRoles: Object.values(UserRole)
+        validRoles: Object.values(UserRole),
       });
     }
 
@@ -49,34 +52,39 @@ const handleChangeRole = async (req: AuthenticatedRequest, res: NextApiResponse)
     }
 
     // Se estávamos rebaixando um Scout para outro role, verificar indicações
-    if (user.role === UserRole.SCOUT && role !== UserRole.SCOUT && user.affiliateCode) {
-      const referralCount = await User.countDocuments({ referredBy: user.affiliateCode });
-      
+    if (
+      user.role === UserRole.SCOUT &&
+      role !== UserRole.SCOUT &&
+      user.affiliateCode
+    ) {
+      const referralCount = await User.countDocuments({
+        referredBy: user.affiliateCode,
+      });
+
       if (referralCount > 0) {
-        return res.status(400).json({ 
+        return res.status(400).json({
           message: `Cannot demote Scout: has ${referralCount} active referrals. Consider transferring referrals first.`,
-          referralCount 
+          referralCount,
         });
       }
     }
 
     // Preparar update data
     const updateData: any = { role };
-    
+
     // Se rebaixando de Scout, remover código de afiliação
     if (user.role === UserRole.SCOUT && role !== UserRole.SCOUT) {
       updateData.affiliateCode = undefined;
     }
 
-    const updatedUser = await User.findByIdAndUpdate(
-      id,
-      updateData,
-      { new: true, runValidators: true }
-    ).select('-password -resetPasswordToken -resetPasswordExpires');
+    const updatedUser = await User.findByIdAndUpdate(id, updateData, {
+      new: true,
+      runValidators: true,
+    }).select('-password -resetPasswordToken -resetPasswordExpires');
 
     return res.status(200).json({
       message: 'User role updated successfully',
-      user: updatedUser
+      user: updatedUser,
     });
   } catch (error) {
     console.error('Error changing user role:', error);
@@ -84,7 +92,4 @@ const handleChangeRole = async (req: AuthenticatedRequest, res: NextApiResponse)
   }
 };
 
-export default createApiHandler(handler, [
-  authenticate,
-  requireSuperuser
-]);
+export default createApiHandler(handler, [authenticate, requireSuperuser]);

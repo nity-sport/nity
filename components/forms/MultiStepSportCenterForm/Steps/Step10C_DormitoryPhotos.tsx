@@ -127,8 +127,7 @@ export function Step10C_DormitoryPhotos() {
     element.style.zIndex = '1000';
     element.style.transition = 'none';
     
-    console.log('Touch started on photo:', photoId);
-  };
+    };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!touchDragItem || !touchStartPos) return;
@@ -141,13 +140,10 @@ export function Step10C_DormitoryPhotos() {
     
     setTouchOffset(newOffset);
     
-    console.log('Touch moving:', newOffset);
-  };
+    };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (!touchDragItem) return;
-    
-    console.log('Touch ended for:', touchDragItem);
     
     // Find the element under the touch point
     const touch = e.changedTouches[0];
@@ -162,22 +158,14 @@ export function Step10C_DormitoryPhotos() {
     // Restore the dragged element
     draggedElement.style.display = originalDisplay;
     
-    console.log('Element below:', elementBelow);
-    
     if (elementBelow) {
       // Find the photo slot that was touched
       const photoSlot = elementBelow.closest('[data-slot-index]') as HTMLElement;
-      console.log('Photo slot found:', photoSlot);
-      
       if (photoSlot) {
         const targetIndex = parseInt(photoSlot.getAttribute('data-slot-index') || '0');
-        console.log('Target index:', targetIndex);
-        
         if (targetIndex > 0) { // Can't drop on position 0 (upload slot)
           const draggedIndex = photos.findIndex(p => p.id === touchDragItem);
           const actualTargetIndex = targetIndex - 1; // Adjust for upload slot
-          
-          console.log('Dragged index:', draggedIndex, 'Target index:', actualTargetIndex);
           
           if (draggedIndex !== -1 && draggedIndex !== actualTargetIndex) {
             const newPhotos = [...photos];
@@ -186,8 +174,6 @@ export function Step10C_DormitoryPhotos() {
             newPhotos.splice(draggedIndex, 1);
             newPhotos.splice(actualTargetIndex, 0, draggedPhoto);
             
-            console.log('✅ Reordering photos:', newPhotos.map(p => p.id));
-            
             setPhotos(newPhotos);
             dispatch({
               type: 'UPDATE_FORM_DATA',
@@ -195,17 +181,9 @@ export function Step10C_DormitoryPhotos() {
                 dormitoryPhotos: newPhotos.map(p => p.file)
               }
             });
-          } else {
-            console.log('❌ Same position or invalid indices');
           }
-        } else {
-          console.log('❌ Cannot drop on upload slot');
         }
-      } else {
-        console.log('❌ No photo slot found');
       }
-    } else {
-      console.log('❌ No element below touch point');
     }
     
     // Reset visual state

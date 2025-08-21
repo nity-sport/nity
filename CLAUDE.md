@@ -101,3 +101,48 @@ Steps/styles/
 - Border widths of 1px preserved for crisp rendering
 - Box shadows converted for larger values, small values kept in px
 - Consistent responsive design patterns across all steps
+
+## Error Handling & API Standards
+
+**Standardized Error System**: Custom error classes and structured logging implemented for consistent API responses and better debugging.
+
+**Error Classes** (`src/utils/errors.ts`):
+- `AppError`: Base class for operational errors with codes and structured data
+- Specific classes: `ValidationError`, `AuthenticationError`, `AuthorizationError`, `NotFoundError`, `ConflictError`
+- Factory functions for common error scenarios
+
+**API Response Format** (`src/utils/apiResponse.ts`):
+- Standardized success/error response structure with metadata
+- Built-in pagination support
+- Automatic request ID generation for tracing
+- Consistent error formatting with security considerations
+
+**Middleware System** (`src/middleware/errorHandler.ts`):
+- `withErrorHandler`: Automatic error catching and response formatting
+- `withMethods`: HTTP method validation
+- `withRateLimit`: Request rate limiting
+- `withCors`: CORS configuration
+- Composable middleware pattern for API routes
+
+**Structured Logging** (`src/utils/logger.ts`):
+- Environment-aware logging (JSON in production, readable in development)
+- Specialized logging methods: `apiRequest`, `dbOperation`, `securityEvent`, `performance`
+- Contextual logging with request IDs, user data, and operation metadata
+- Performance monitoring and error tracking
+
+**Usage Pattern**:
+```typescript
+// API Route with middleware
+export default compose(
+  withMethods(['GET', 'POST']),
+  withRateLimit({ windowMs: 60000, max: 100 }),
+  withErrorHandler
+)(handler);
+
+// Structured error throwing
+throw new ValidationError('Email is required', { field: 'email' });
+
+// Standardized responses
+ResponseHandler.success(res, data, { requestId: req.requestId });
+ResponseHandler.paginated(res, items, pagination);
+```

@@ -3,11 +3,11 @@ import Team from '../../../src/models/Team';
 import User from '../../../src/models/User';
 import dbConnect from '../../../src/lib/dbConnect';
 import { sendEmail } from '../../../src/lib/resend';
-import { 
-  AuthenticatedRequest, 
-  authenticate, 
-  requireAuthenticated, 
-  createApiHandler 
+import {
+  AuthenticatedRequest,
+  authenticate,
+  requireAuthenticated,
+  createApiHandler,
 } from '../../../src/lib/auth-middleware';
 import { UserRole } from '../../../src/types/auth';
 
@@ -44,7 +44,9 @@ const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
     }
 
     if (team.scoutId.toString() !== scoutId) {
-      return res.status(403).json({ message: 'You can only send invites for your own teams' });
+      return res
+        .status(403)
+        .json({ message: 'You can only send invites for your own teams' });
     }
 
     // Get scout data for email
@@ -60,7 +62,9 @@ const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
     });
 
     if (validEmails.length === 0) {
-      return res.status(400).json({ message: 'No valid email addresses provided' });
+      return res
+        .status(400)
+        .json({ message: 'No valid email addresses provided' });
     }
 
     // Send emails
@@ -71,9 +75,8 @@ const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
       sent: emailResults.sent,
       failed: emailResults.failed,
       totalSent: emailResults.sent.length,
-      totalFailed: emailResults.failed.length
+      totalFailed: emailResults.failed.length,
     });
-
   } catch (error) {
     console.error('Error sending invites:', error);
     return res.status(500).json({ message: 'Internal server error' });
@@ -83,17 +86,17 @@ const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
 async function sendInviteEmails(emails: string[], scout: any, team: any) {
   const results = {
     sent: [] as string[],
-    failed: [] as string[]
+    failed: [] as string[],
   };
 
   // Using Resend for email delivery
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-  
+
   for (const email of emails) {
     try {
       const inviteLink = `${baseUrl}/register?ref=${scout.affiliateCode}&team=${team._id}`;
-      
+
       const emailResult = await sendEmail({
         to: email,
         subject: `${scout.name} invited you to join team "${team.name}" on Nity`,
@@ -137,7 +140,7 @@ async function sendInviteEmails(emails: string[], scout: any, team: any) {
             </div>
           </body>
           </html>
-        `
+        `,
       });
 
       if (emailResult.success) {
@@ -155,7 +158,4 @@ async function sendInviteEmails(emails: string[], scout: any, team: any) {
   return results;
 }
 
-export default createApiHandler(handler, [
-  authenticate,
-  requireAuthenticated
-]);
+export default createApiHandler(handler, [authenticate, requireAuthenticated]);

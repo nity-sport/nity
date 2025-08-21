@@ -1,6 +1,6 @@
 // src/types/accommodation.ts
-import { LocationType } from "./location";
-import { FacilityType } from "./facility";
+import { LocationType } from './location';
+import { FacilityType } from './facility';
 
 export interface AccommodationType {
   name: string;

@@ -10,10 +10,14 @@ interface ExperienceCardProps {
 }
 
 const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience }) => {
-    const displayLocation = experience.location && experience.location.name
-    ? `${experience.location.name}`
-    : 'Local não informado';
-  const displayTag = experience.tags && experience.tags.length > 0 ? experience.tags[0] : experience.category;
+  const displayLocation =
+    experience.location && experience.location.name
+      ? `${experience.location.name}`
+      : 'Local não informado';
+  const displayTag =
+    experience.tags && experience.tags.length > 0
+      ? experience.tags[0]
+      : experience.category;
 
   return (
     <Link href={`/experiences/${experience._id}`} legacyBehavior>
@@ -22,8 +26,8 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience }) => {
           <Image
             src={experience.coverImage || '/assets/placeholder-image.png'} // Use um placeholder se não houver imagem
             alt={experience.title}
-            layout="fill"
-            objectFit="cover"
+            layout='fill'
+            objectFit='cover'
             className={styles.image}
           />
           {experience.duration && (

@@ -26,7 +26,7 @@ export default function AdminCoaches() {
     page: 1,
     limit: 10,
     total: 0,
-    pages: 0
+    pages: 0,
   });
 
   // New coach form states
@@ -36,7 +36,7 @@ export default function AdminCoaches() {
     age: undefined,
     miniBio: '',
     achievements: [],
-    profileImage: ''
+    profileImage: '',
   });
   const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
   const [createLoading, setCreateLoading] = useState(false);
@@ -48,9 +48,11 @@ export default function AdminCoaches() {
     age: undefined,
     miniBio: '',
     achievements: [],
-    profileImage: ''
+    profileImage: '',
   });
-  const [editProfileImageFile, setEditProfileImageFile] = useState<File | null>(null);
+  const [editProfileImageFile, setEditProfileImageFile] = useState<File | null>(
+    null
+  );
   const [editLoading, setEditLoading] = useState(false);
 
   useEffect(() => {
@@ -62,19 +64,30 @@ export default function AdminCoaches() {
     if (isAuthenticated && canManageCoaches) {
       fetchCoaches();
     }
-  }, [isAuthenticated, canManageCoaches, isLoading, pagination.page, searchTerm]);
+  }, [
+    isAuthenticated,
+    canManageCoaches,
+    isLoading,
+    pagination.page,
+    searchTerm,
+  ]);
 
   const fetchCoaches = async () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('auth_token');
-      const searchQuery = searchTerm ? `&search=${encodeURIComponent(searchTerm)}` : '';
-      
-      const response = await fetch(`/api/coach?page=${pagination.page}&limit=${pagination.limit}${searchQuery}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
+      const searchQuery = searchTerm
+        ? `&search=${encodeURIComponent(searchTerm)}`
+        : '';
+
+      const response = await fetch(
+        `/api/coach?page=${pagination.page}&limit=${pagination.limit}${searchQuery}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      });
+      );
 
       if (!response.ok) {
         throw new Error('Erro ao carregar coaches');
@@ -92,20 +105,20 @@ export default function AdminCoaches() {
 
   const uploadFile = async (file: File): Promise<string> => {
     if (!file) return '';
-    
+
     const formData = new FormData();
     formData.append('file', file);
-    
+
     try {
       const response = await fetch('/api/upload', {
         method: 'POST',
-        body: formData
+        body: formData,
       });
-      
+
       if (!response.ok) {
         throw new Error('Erro no upload da imagem');
       }
-      
+
       const data = await response.json();
       return data.url;
     } catch (error) {
@@ -120,7 +133,7 @@ export default function AdminCoaches() {
 
     try {
       let profileImageUrl = newCoach.profileImage;
-      
+
       if (profileImageFile) {
         profileImageUrl = await uploadFile(profileImageFile);
       }
@@ -130,12 +143,12 @@ export default function AdminCoaches() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           ...newCoach,
-          profileImage: profileImageUrl
-        })
+          profileImage: profileImageUrl,
+        }),
       });
 
       if (!response.ok) {
@@ -143,7 +156,13 @@ export default function AdminCoaches() {
       }
 
       // Reset form
-      setNewCoach({ name: '', age: undefined, miniBio: '', achievements: [], profileImage: '' });
+      setNewCoach({
+        name: '',
+        age: undefined,
+        miniBio: '',
+        achievements: [],
+        profileImage: '',
+      });
       setProfileImageFile(null);
       setShowCreateForm(false);
       fetchCoaches();
@@ -161,7 +180,7 @@ export default function AdminCoaches() {
       age: coach.age,
       miniBio: coach.miniBio,
       achievements: coach.achievements || [],
-      profileImage: coach.profileImage
+      profileImage: coach.profileImage,
     });
     setEditProfileImageFile(null);
   };
@@ -169,12 +188,12 @@ export default function AdminCoaches() {
   const handleEditCoach = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingCoach) return;
-    
+
     setEditLoading(true);
 
     try {
       let profileImageUrl = editFormData.profileImage;
-      
+
       if (editProfileImageFile) {
         profileImageUrl = await uploadFile(editProfileImageFile);
       }
@@ -184,12 +203,12 @@ export default function AdminCoaches() {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           ...editFormData,
-          profileImage: profileImageUrl
-        })
+          profileImage: profileImageUrl,
+        }),
       });
 
       if (!response.ok) {
@@ -213,8 +232,8 @@ export default function AdminCoaches() {
       const response = await fetch(`/api/coach/${id}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (!response.ok) {
@@ -228,8 +247,11 @@ export default function AdminCoaches() {
   };
 
   const handleAchievementsChange = (value: string, isEdit = false) => {
-    const achievements = value.split(',').map(item => item.trim()).filter(item => item !== '');
-    
+    const achievements = value
+      .split(',')
+      .map(item => item.trim())
+      .filter(item => item !== '');
+
     if (isEdit) {
       setEditFormData(prev => ({ ...prev, achievements }));
     } else {
@@ -250,12 +272,10 @@ export default function AdminCoaches() {
       <div className={styles.header}>
         <div>
           <h1 className={styles.title}>Gerenciar Coaches</h1>
-          <p className={styles.subtitle}>
-            Total: {pagination.total} coaches
-          </p>
+          <p className={styles.subtitle}>Total: {pagination.total} coaches</p>
         </div>
         <div className={styles.actions}>
-          <button 
+          <button
             onClick={() => setShowCreateForm(!showCreateForm)}
             className={styles.createButton}
           >
@@ -274,10 +294,10 @@ export default function AdminCoaches() {
       {/* Search */}
       <div className={styles.searchContainer}>
         <input
-          type="text"
-          placeholder="Buscar coaches por nome ou bio..."
+          type='text'
+          placeholder='Buscar coaches por nome ou bio...'
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={e => setSearchTerm(e.target.value)}
           className={styles.searchInput}
         />
       </div>
@@ -286,13 +306,15 @@ export default function AdminCoaches() {
       {showCreateForm && (
         <form onSubmit={handleCreateCoach} className={styles.createForm}>
           <h2>Criar Novo Coach</h2>
-          
+
           <div className={styles.formGroup}>
             <label>Nome *</label>
             <input
-              type="text"
+              type='text'
               value={newCoach.name}
-              onChange={(e) => setNewCoach(prev => ({ ...prev, name: e.target.value }))}
+              onChange={e =>
+                setNewCoach(prev => ({ ...prev, name: e.target.value }))
+              }
               required
             />
           </div>
@@ -300,9 +322,14 @@ export default function AdminCoaches() {
           <div className={styles.formGroup}>
             <label>Idade</label>
             <input
-              type="number"
+              type='number'
               value={newCoach.age || ''}
-              onChange={(e) => setNewCoach(prev => ({ ...prev, age: e.target.value ? parseInt(e.target.value) : undefined }))}
+              onChange={e =>
+                setNewCoach(prev => ({
+                  ...prev,
+                  age: e.target.value ? parseInt(e.target.value) : undefined,
+                }))
+              }
             />
           </div>
 
@@ -310,7 +337,9 @@ export default function AdminCoaches() {
             <label>Mini Bio</label>
             <textarea
               value={newCoach.miniBio}
-              onChange={(e) => setNewCoach(prev => ({ ...prev, miniBio: e.target.value }))}
+              onChange={e =>
+                setNewCoach(prev => ({ ...prev, miniBio: e.target.value }))
+              }
               rows={3}
             />
           </div>
@@ -319,33 +348,33 @@ export default function AdminCoaches() {
             <label>Conquistas (separadas por vírgula)</label>
             <textarea
               value={newCoach.achievements?.join(', ') || ''}
-              onChange={(e) => handleAchievementsChange(e.target.value)}
+              onChange={e => handleAchievementsChange(e.target.value)}
               rows={2}
-              placeholder="Ex: Campeão Nacional 2020, Melhor Técnico 2021"
+              placeholder='Ex: Campeão Nacional 2020, Melhor Técnico 2021'
             />
           </div>
 
           <div className={styles.formGroup}>
             <label>Foto de Perfil</label>
             <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setProfileImageFile(e.target.files?.[0] || null)}
+              type='file'
+              accept='image/*'
+              onChange={e => setProfileImageFile(e.target.files?.[0] || null)}
             />
             {profileImageFile && (
-              <img 
-                src={URL.createObjectURL(profileImageFile)} 
-                alt="Preview" 
+              <img
+                src={URL.createObjectURL(profileImageFile)}
+                alt='Preview'
                 className={styles.imagePreview}
               />
             )}
           </div>
 
           <div className={styles.formActions}>
-            <button type="submit" disabled={createLoading}>
+            <button type='submit' disabled={createLoading}>
               {createLoading ? 'Criando...' : 'Criar Coach'}
             </button>
-            <button type="button" onClick={() => setShowCreateForm(false)}>
+            <button type='button' onClick={() => setShowCreateForm(false)}>
               Cancelar
             </button>
           </div>
@@ -362,16 +391,21 @@ export default function AdminCoaches() {
             </button>
           </div>
         ) : (
-          coaches.map((coach) => (
+          coaches.map(coach => (
             <div key={coach._id} className={styles.coachCard}>
               {editingCoach?._id === coach._id ? (
                 <form onSubmit={handleEditCoach} className={styles.editForm}>
                   <div className={styles.formGroup}>
                     <label>Nome *</label>
                     <input
-                      type="text"
+                      type='text'
                       value={editFormData.name}
-                      onChange={(e) => setEditFormData(prev => ({ ...prev, name: e.target.value }))}
+                      onChange={e =>
+                        setEditFormData(prev => ({
+                          ...prev,
+                          name: e.target.value,
+                        }))
+                      }
                       required
                     />
                   </div>
@@ -379,9 +413,16 @@ export default function AdminCoaches() {
                   <div className={styles.formGroup}>
                     <label>Idade</label>
                     <input
-                      type="number"
+                      type='number'
                       value={editFormData.age || ''}
-                      onChange={(e) => setEditFormData(prev => ({ ...prev, age: e.target.value ? parseInt(e.target.value) : undefined }))}
+                      onChange={e =>
+                        setEditFormData(prev => ({
+                          ...prev,
+                          age: e.target.value
+                            ? parseInt(e.target.value)
+                            : undefined,
+                        }))
+                      }
                     />
                   </div>
 
@@ -389,7 +430,12 @@ export default function AdminCoaches() {
                     <label>Mini Bio</label>
                     <textarea
                       value={editFormData.miniBio}
-                      onChange={(e) => setEditFormData(prev => ({ ...prev, miniBio: e.target.value }))}
+                      onChange={e =>
+                        setEditFormData(prev => ({
+                          ...prev,
+                          miniBio: e.target.value,
+                        }))
+                      }
                       rows={3}
                     />
                   </div>
@@ -398,7 +444,9 @@ export default function AdminCoaches() {
                     <label>Conquistas (separadas por vírgula)</label>
                     <textarea
                       value={editFormData.achievements?.join(', ') || ''}
-                      onChange={(e) => handleAchievementsChange(e.target.value, true)}
+                      onChange={e =>
+                        handleAchievementsChange(e.target.value, true)
+                      }
                       rows={2}
                     />
                   </div>
@@ -406,31 +454,33 @@ export default function AdminCoaches() {
                   <div className={styles.formGroup}>
                     <label>Foto de Perfil</label>
                     <input
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => setEditProfileImageFile(e.target.files?.[0] || null)}
+                      type='file'
+                      accept='image/*'
+                      onChange={e =>
+                        setEditProfileImageFile(e.target.files?.[0] || null)
+                      }
                     />
                     {editProfileImageFile && (
-                      <img 
-                        src={URL.createObjectURL(editProfileImageFile)} 
-                        alt="Preview" 
+                      <img
+                        src={URL.createObjectURL(editProfileImageFile)}
+                        alt='Preview'
                         className={styles.imagePreview}
                       />
                     )}
                     {editFormData.profileImage && !editProfileImageFile && (
-                      <img 
-                        src={editFormData.profileImage} 
-                        alt="Atual" 
+                      <img
+                        src={editFormData.profileImage}
+                        alt='Atual'
                         className={styles.imagePreview}
                       />
                     )}
                   </div>
 
                   <div className={styles.formActions}>
-                    <button type="submit" disabled={editLoading}>
+                    <button type='submit' disabled={editLoading}>
                       {editLoading ? 'Salvando...' : 'Salvar'}
                     </button>
-                    <button type="button" onClick={() => setEditingCoach(null)}>
+                    <button type='button' onClick={() => setEditingCoach(null)}>
                       Cancelar
                     </button>
                   </div>
@@ -439,8 +489,8 @@ export default function AdminCoaches() {
                 <>
                   <div className={styles.coachInfo}>
                     {coach.profileImage && (
-                      <img 
-                        src={coach.profileImage} 
+                      <img
+                        src={coach.profileImage}
                         alt={coach.name}
                         className={styles.coachImage}
                       />
@@ -448,7 +498,9 @@ export default function AdminCoaches() {
                     <div className={styles.coachDetails}>
                       <h3>{coach.name}</h3>
                       {coach.age && <p>Idade: {coach.age}</p>}
-                      {coach.miniBio && <p className={styles.bio}>{coach.miniBio}</p>}
+                      {coach.miniBio && (
+                        <p className={styles.bio}>{coach.miniBio}</p>
+                      )}
                       {coach.achievements && coach.achievements.length > 0 && (
                         <div className={styles.achievements}>
                           <strong>Conquistas:</strong>
@@ -462,13 +514,13 @@ export default function AdminCoaches() {
                     </div>
                   </div>
                   <div className={styles.coachActions}>
-                    <button 
+                    <button
                       onClick={() => startEdit(coach)}
                       className={styles.editButton}
                     >
                       Editar
                     </button>
-                    <button 
+                    <button
                       onClick={() => deleteCoach(coach._id)}
                       className={styles.deleteButton}
                     >
@@ -486,7 +538,12 @@ export default function AdminCoaches() {
       {pagination.pages > 1 && (
         <div className={styles.pagination}>
           <button
-            onClick={() => setPagination(prev => ({ ...prev, page: Math.max(1, prev.page - 1) }))}
+            onClick={() =>
+              setPagination(prev => ({
+                ...prev,
+                page: Math.max(1, prev.page - 1),
+              }))
+            }
             disabled={pagination.page === 1}
           >
             Anterior
@@ -495,7 +552,12 @@ export default function AdminCoaches() {
             Página {pagination.page} de {pagination.pages}
           </span>
           <button
-            onClick={() => setPagination(prev => ({ ...prev, page: Math.min(prev.pages, prev.page + 1) }))}
+            onClick={() =>
+              setPagination(prev => ({
+                ...prev,
+                page: Math.min(prev.pages, prev.page + 1),
+              }))
+            }
             disabled={pagination.page === pagination.pages}
           >
             Próxima

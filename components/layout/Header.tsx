@@ -11,11 +11,7 @@ export default function Header() {
   const { user, isAuthenticated, logout, isSuperuser, canCreateExperiences, canManageSportCenters, canManageFacilities, isOwner, isScout } = useAuth();
 
   useEffect(() => {
-    console.log('🔐 Authentication Status:', {
-      isAuthenticated,
-      user: user ? { name: user.name, email: user.email } : null,
-      timestamp: new Date().toLocaleTimeString()
-    });
+    // Authentication status changed
   }, [isAuthenticated, user]);
 
   return (

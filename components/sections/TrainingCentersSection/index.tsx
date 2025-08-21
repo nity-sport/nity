@@ -1,10 +1,9 @@
 // src/components/sections/TrainingCentersSection/index.tsx
-"use client";
+'use client';
 import React, { useRef, useState, useEffect } from 'react';
 import styles from './TrainingCenterSection.module.css';
 import TrainingCenterCard from './TrainingCenterCard';
 import { SportCenterType } from '../../../src/types/sportcenter';
-
 
 export default function TrainingCentersSection() {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -14,7 +13,9 @@ export default function TrainingCentersSection() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(2);
   const [totalPages, setTotalPages] = useState(1);
-  const [centers, setCenters] = useState<(SportCenterType & { _id: string })[]>([]);
+  const [centers, setCenters] = useState<(SportCenterType & { _id: string })[]>(
+    []
+  );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -24,24 +25,33 @@ export default function TrainingCentersSection() {
       setError(null);
       try {
         const response = await fetch('/api/sportcenter?public=true');
-        
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+
         const data = await response.json();
-        
-        if (data.sportCenters && Array.isArray(data.sportCenters)) {
-          setCenters(data.sportCenters as (SportCenterType & { _id: string })[]);
+
+        // Handle new standardized API response format
+        if (data.success && data.data && Array.isArray(data.data)) {
+          setCenters(data.data as (SportCenterType & { _id: string })[]);
+        } 
+        // Fallback for old API format (backward compatibility)
+        else if (data.sportCenters && Array.isArray(data.sportCenters)) {
+          setCenters(
+            data.sportCenters as (SportCenterType & { _id: string })[]
+          );
         } else if (Array.isArray(data)) {
           setCenters(data as (SportCenterType & { _id: string })[]);
         } else {
-          console.warn("Formato de dados inesperado da API:", data);
           setCenters([]);
         }
       } catch (e: any) {
-        console.error("[TrainingCentersSection] Falha ao buscar centros de treinamento:", e);
-        setError(e.message || "Erro ao carregar dados.");
+        console.error(
+          '[TrainingCentersSection] Falha ao buscar centros de treinamento:',
+          e
+        );
+        setError(e.message || 'Erro ao carregar dados.');
         setCenters([]);
       } finally {
         setLoading(false);
@@ -74,32 +84,42 @@ export default function TrainingCentersSection() {
     }
     setCurrentPage(1);
     if (carouselRef.current) {
-        carouselRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+      carouselRef.current.scrollTo({ left: 0, behavior: 'smooth' });
     }
   }, [itemsPerPage, centers]);
-
 
   const handleNavigation = (direction: 'next' | 'prev') => {
     if (!carouselRef.current || centers.length === 0) return;
 
-    let newPageTarget = direction === 'next' ? currentPage + 1 : currentPage - 1;
-    
+    const newPageTarget =
+      direction === 'next' ? currentPage + 1 : currentPage - 1;
+
     const cardWidth = carouselRef.current.children[0]?.clientWidth || 0; // Largura do primeiro card
     const gap = 22; // Gap entre os cards, conforme CSS
     const itemTotalWidth = cardWidth + gap;
 
-    const scrollAmount = (newPageTarget -1) * itemTotalWidth * itemsPerPage;
+    const scrollAmount = (newPageTarget - 1) * itemTotalWidth * itemsPerPage;
     const firstItemIndexOfNewPage = (newPageTarget - 1) * itemsPerPage;
-    if (firstItemIndexOfNewPage < centers.length && firstItemIndexOfNewPage >=0) {
-        const targetScrollLeft = firstItemIndexOfNewPage * itemTotalWidth;
-        carouselRef.current.scrollTo({ left: targetScrollLeft, behavior: 'smooth' });
-        setCurrentPage(newPageTarget);
-    } else if (direction === 'next' && currentPage < totalPages) { // Caso de arredondamento ou último item
-        carouselRef.current.scrollTo({ left: carouselRef.current.scrollWidth - carouselRef.current.clientWidth, behavior: 'smooth' });
-        setCurrentPage(totalPages);
+    if (
+      firstItemIndexOfNewPage < centers.length &&
+      firstItemIndexOfNewPage >= 0
+    ) {
+      const targetScrollLeft = firstItemIndexOfNewPage * itemTotalWidth;
+      carouselRef.current.scrollTo({
+        left: targetScrollLeft,
+        behavior: 'smooth',
+      });
+      setCurrentPage(newPageTarget);
+    } else if (direction === 'next' && currentPage < totalPages) {
+      // Caso de arredondamento ou último item
+      carouselRef.current.scrollTo({
+        left: carouselRef.current.scrollWidth - carouselRef.current.clientWidth,
+        behavior: 'smooth',
+      });
+      setCurrentPage(totalPages);
     } else if (direction === 'prev' && currentPage > 1) {
-        carouselRef.current.scrollTo({ left: 0, behavior: 'smooth' });
-        setCurrentPage(1);
+      carouselRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+      setCurrentPage(1);
     }
   };
 
@@ -164,7 +184,7 @@ export default function TrainingCentersSection() {
       </section>
     );
   }
-  
+
   if (centers.length === 0) {
     return (
       <section className={styles.trainingCentersSection}>
@@ -181,31 +201,32 @@ export default function TrainingCentersSection() {
       <div className={styles.header}>
         <h2 className={styles.title}>Sport Centers</h2>
         {centers.length > itemsPerPage && ( // Só mostra navegação se houver mais itens que o visível
-            <div className={styles.navigation}>
+          <div className={styles.navigation}>
             <button
-                onClick={() => handleNavigation('prev')}
-                disabled={currentPage === 1}
-                className={styles.navButton}
-                aria-label="Anterior"
+              onClick={() => handleNavigation('prev')}
+              disabled={currentPage === 1}
+              className={styles.navButton}
+              aria-label='Anterior'
             >
-                &lt;
+              &lt;
             </button>
             <span className={styles.pagination}>
-                {String(currentPage).padStart(2, '0')}/{String(totalPages).padStart(2, '0')}
+              {String(currentPage).padStart(2, '0')}/
+              {String(totalPages).padStart(2, '0')}
             </span>
             <button
-                onClick={() => handleNavigation('next')}
-                disabled={currentPage === totalPages}
-                className={styles.navButton}
-                aria-label="Próximo"
+              onClick={() => handleNavigation('next')}
+              disabled={currentPage === totalPages}
+              className={styles.navButton}
+              aria-label='Próximo'
             >
-                &gt;
+              &gt;
             </button>
-            </div>
+          </div>
         )}
       </div>
       <div
-        className={`${styles.carousel} ${isDragging ? styles.active : ""}`}
+        className={`${styles.carousel} ${isDragging ? styles.active : ''}`}
         ref={carouselRef}
         onMouseDown={handleMouseDown}
         onMouseLeave={handleMouseLeave}
@@ -215,7 +236,7 @@ export default function TrainingCentersSection() {
         onTouchEnd={handleTouchEnd}
         onTouchMove={handleTouchMove}
       >
-        {centers.map((center) => (
+        {centers.map(center => (
           <div className={styles.cardWrapper} key={center._id}>
             <TrainingCenterCard center={center} />
           </div>

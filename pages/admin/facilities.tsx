@@ -28,7 +28,9 @@ const FacilitiesAdminPage: React.FC = () => {
 
   useEffect(() => {
     if (!canManageFacilities) {
-      setError('Acesso negado. Apenas superusuários podem gerenciar facilities.');
+      setError(
+        'Acesso negado. Apenas superusuários podem gerenciar facilities.'
+      );
       setLoading(false);
       return;
     }
@@ -41,7 +43,7 @@ const FacilitiesAdminPage: React.FC = () => {
 
     const response = await fetch('/api/upload', {
       method: 'POST',
-      body: uploadFormData
+      body: uploadFormData,
     });
 
     if (!response.ok) {
@@ -58,7 +60,7 @@ const FacilitiesAdminPage: React.FC = () => {
       setLoading(true);
       const params = new URLSearchParams();
       if (searchTerm) params.set('search', searchTerm);
-      
+
       const response = await fetch(`/api/facilities?${params}`);
       if (!response.ok) {
         const errorData = await response.json();
@@ -83,7 +85,7 @@ const FacilitiesAdminPage: React.FC = () => {
     setSubmitting(true);
     try {
       let iconUrl = '';
-      
+
       // Upload icon file if provided
       if (iconFile) {
         setUploading(true);
@@ -96,12 +98,12 @@ const FacilitiesAdminPage: React.FC = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           name: formData.name,
-          icon: iconUrl || undefined
-        })
+          icon: iconUrl || undefined,
+        }),
       });
 
       if (!response.ok) {
@@ -129,7 +131,7 @@ const FacilitiesAdminPage: React.FC = () => {
     setSubmitting(true);
     try {
       let iconUrl = formData.icon; // Keep existing icon by default
-      
+
       // Upload new icon file if provided
       if (iconFile) {
         setUploading(true);
@@ -142,12 +144,12 @@ const FacilitiesAdminPage: React.FC = () => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           name: formData.name,
-          icon: iconUrl || undefined
-        })
+          icon: iconUrl || undefined,
+        }),
       });
 
       if (!response.ok) {
@@ -178,8 +180,8 @@ const FacilitiesAdminPage: React.FC = () => {
       const response = await fetch(`/api/facilities/${facilityId}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (!response.ok) {
@@ -238,10 +240,12 @@ const FacilitiesAdminPage: React.FC = () => {
       <div className={styles.header}>
         <div>
           <h1 className={styles.title}>Gerenciar Facilities</h1>
-          <p className={styles.subtitle}>Facilities disponíveis para SportCenters</p>
+          <p className={styles.subtitle}>
+            Facilities disponíveis para SportCenters
+          </p>
         </div>
         <div className={styles.headerActions}>
-          <Link href="/admin/sportcenters" className={styles.backButton}>
+          <Link href='/admin/sportcenters' className={styles.backButton}>
             ← SportCenters
           </Link>
           <button onClick={startCreate} className={styles.createButton}>
@@ -252,10 +256,10 @@ const FacilitiesAdminPage: React.FC = () => {
 
       <div className={styles.filters}>
         <input
-          type="text"
-          placeholder="Buscar facilities..."
+          type='text'
+          placeholder='Buscar facilities...'
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={e => setSearchTerm(e.target.value)}
           className={styles.searchInput}
         />
       </div>
@@ -265,31 +269,43 @@ const FacilitiesAdminPage: React.FC = () => {
           <h3 className={styles.formTitle}>
             {editingFacility ? 'Editar Facility' : 'Nova Facility'}
           </h3>
-          <form onSubmit={editingFacility ? handleUpdateFacility : handleCreateFacility}>
+          <form
+            onSubmit={
+              editingFacility ? handleUpdateFacility : handleCreateFacility
+            }
+          >
             <div className={styles.formGroup}>
               <label className={styles.label}>Nome *</label>
               <input
-                type="text"
+                type='text'
                 className={styles.input}
                 value={formData.name}
-                onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                onChange={e =>
+                  setFormData(prev => ({ ...prev, name: e.target.value }))
+                }
                 required
-                placeholder="Ex: Piscina Olímpica"
+                placeholder='Ex: Piscina Olímpica'
               />
             </div>
             <div className={styles.formGroup}>
               <label className={styles.label}>Ícone (SVG)</label>
               <input
-                type="file"
+                type='file'
                 className={styles.fileInput}
-                accept=".svg,image/svg+xml"
-                onChange={(e) => setIconFile(e.target.files?.[0] || null)}
+                accept='.svg,image/svg+xml'
+                onChange={e => setIconFile(e.target.files?.[0] || null)}
               />
-              {uploading && <span className={styles.uploading}>Fazendo upload...</span>}
+              {uploading && (
+                <span className={styles.uploading}>Fazendo upload...</span>
+              )}
               {editingFacility?.icon && !iconFile && (
                 <div className={styles.currentIcon}>
                   <span>Ícone atual:</span>
-                  <img src={editingFacility.icon} alt="Current icon" className={styles.iconPreview} />
+                  <img
+                    src={editingFacility.icon}
+                    alt='Current icon'
+                    className={styles.iconPreview}
+                  />
                 </div>
               )}
               {iconFile && (
@@ -299,12 +315,22 @@ const FacilitiesAdminPage: React.FC = () => {
               )}
             </div>
             <div className={styles.formActions}>
-              <button type="submit" disabled={submitting} className={styles.submitButton}>
-                {submitting ? 'Salvando...' : editingFacility ? 'Atualizar' : 'Criar'}
+              <button
+                type='submit'
+                disabled={submitting}
+                className={styles.submitButton}
+              >
+                {submitting
+                  ? 'Salvando...'
+                  : editingFacility
+                    ? 'Atualizar'
+                    : 'Criar'}
               </button>
               <button
-                type="button"
-                onClick={editingFacility ? cancelEdit : () => setShowCreateForm(false)}
+                type='button'
+                onClick={
+                  editingFacility ? cancelEdit : () => setShowCreateForm(false)
+                }
                 className={styles.cancelButton}
               >
                 Cancelar
@@ -332,7 +358,7 @@ const FacilitiesAdminPage: React.FC = () => {
                     )}
                     <h3 className={styles.facilityName}>{facility.name}</h3>
                   </div>
-                  
+
                   <div className={styles.facilityActions}>
                     <button
                       onClick={() => startEdit(facility)}
@@ -355,7 +381,9 @@ const FacilitiesAdminPage: React.FC = () => {
           {facilities.length === 0 && !loading && (
             <div className={styles.emptyState}>
               <h3>Nenhuma facility encontrada</h3>
-              <p>Crie sua primeira facility clicando no botão "Nova Facility".</p>
+              <p>
+                Crie sua primeira facility clicando no botão "Nova Facility".
+              </p>
             </div>
           )}
         </>

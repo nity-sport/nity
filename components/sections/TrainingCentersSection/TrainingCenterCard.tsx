@@ -8,8 +8,11 @@ interface TrainingCenterCardProps {
   center: SportCenterType & { _id?: string }; // Adicionando _id opcional se vier do banco
 }
 
-export default function TrainingCenterCard({ center }: TrainingCenterCardProps) {
-  const displayCategory = center.categories?.join(', ') || center.yearOfFoundation || 'N/A';
+export default function TrainingCenterCard({
+  center,
+}: TrainingCenterCardProps) {
+  const displayCategory =
+    center.categories?.join(', ') || center.yearOfFoundation || 'N/A';
   const displaySports = center.sport?.join(', ') || 'N/A';
 
   return (
@@ -19,8 +22,8 @@ export default function TrainingCenterCard({ center }: TrainingCenterCardProps) 
           <Image
             src={center.mainPhoto}
             alt={`Imagem de ${center.name}`}
-            layout="fill"
-            objectFit="cover"
+            layout='fill'
+            objectFit='cover'
             className={styles.mainImage}
           />
         ) : (
@@ -37,7 +40,7 @@ export default function TrainingCenterCard({ center }: TrainingCenterCardProps) 
                   alt={`Logo de ${center.name}`}
                   width={30}
                   height={30}
-                  objectFit="cover"
+                  objectFit='cover'
                 />
               </div>
             )}
@@ -49,49 +52,69 @@ export default function TrainingCenterCard({ center }: TrainingCenterCardProps) 
             </div>
           </div>
           {center.hosterName && (
-  <div className={styles.hosterInfo}>
-    {center.hosterImage && (
-      <div className={styles.hosterAvatar}>
-        <Image
-          src={center.hosterImage}
-          alt={center.hosterName}
-          width={32}
-          height={32}
-          className={styles.hosterAvatarImage} // Garanta que esta classe aplique object-fit: cover e border-radius se necessário
-        />
-      </div>
-    )}
-    {/* Contêiner para o texto */}
-    <div className={styles.hosterTextContainer}>
-      <span className={styles.hosterLabel}>Hoster</span>
-      <p className={styles.hosterName}>{center.hosterName}</p>
-      {/* Supondo que você tenha um dado como center.hosterSince */}
-      {center.hosterSince && (
-        <span className={styles.hosterDetail}>{center.hosterSince}</span>
-      )}
-    </div>
-  </div>
-)}
+            <div className={styles.hosterInfo}>
+              {center.hosterImage && (
+                <div className={styles.hosterAvatar}>
+                  <Image
+                    src={center.hosterImage}
+                    alt={center.hosterName}
+                    width={32}
+                    height={32}
+                    className={styles.hosterAvatarImage} // Garanta que esta classe aplique object-fit: cover e border-radius se necessário
+                  />
+                </div>
+              )}
+              {/* Contêiner para o texto */}
+              <div className={styles.hosterTextContainer}>
+                <span className={styles.hosterLabel}>Hoster</span>
+                <p className={styles.hosterName}>{center.hosterName}</p>
+                {/* Supondo que você tenha um dado como center.hosterSince */}
+                {center.hosterSince && (
+                  <span className={styles.hosterDetail}>
+                    {center.hosterSince}
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
         </div>
         <div className={styles.rowBottom}>
           <div className={styles.details}>
             <p className={styles.detailItem}>
-              <span className={styles.detailIcon}> {/* Ícone para Sports */} </span>
+              <span className={styles.detailIcon}>
+                {' '}
+                {/* Ícone para Sports */}{' '}
+              </span>
               Sports: {displaySports}
             </p>
             <p className={styles.detailItem}>
-              <span className={styles.detailIcon}> {/* Ícone para Categorias */} </span>
+              <span className={styles.detailIcon}>
+                {' '}
+                {/* Ícone para Categorias */}{' '}
+              </span>
               Categorias: {displayCategory}
             </p>
           </div>
           {center._id && (
             <Link
               href={`/sport-centers/${center._id}`}
-              className={styles.goToClubButton} 
+              className={styles.goToClubButton}
             >
               Go to Club{' '}
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M13.5 4.5L21 12M21 12L13.5 19.5M21 12H3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <svg
+                width='12'
+                height='12'
+                viewBox='0 0 24 24'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path
+                  d='M13.5 4.5L21 12M21 12L13.5 19.5M21 12H3'
+                  stroke='currentColor'
+                  strokeWidth='2'
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                />
               </svg>
             </Link>
           )}

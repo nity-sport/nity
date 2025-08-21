@@ -1,7 +1,11 @@
 import React, { createContext, useContext, useReducer, ReactNode } from 'react';
 import { SportCenterType } from '../../../src/types/sportcenter';
 
-interface FormDataType extends Omit<Partial<SportCenterType>, 'photos' | 'dormitoryPhotos' | 'hosterImage' | 'facilities'> {
+interface FormDataType
+  extends Omit<
+    Partial<SportCenterType>,
+    'photos' | 'dormitoryPhotos' | 'hosterImage' | 'facilities'
+  > {
   logo?: File;
   hosterImage?: File | string;
   photos?: File[] | string[];
@@ -41,7 +45,7 @@ export interface MultiStepFormState {
   showErrors: Record<number, boolean>;
 }
 
-export type FormAction = 
+export type FormAction =
   | { type: 'SET_CURRENT_STEP'; payload: number }
   | { type: 'UPDATE_FORM_DATA'; payload: Partial<FormDataType> }
   | { type: 'SET_LOADING'; payload: boolean }
@@ -70,7 +74,7 @@ const initialState: MultiStepFormState = {
       state: '',
       country: 'Brazil',
       zip_code: '',
-      number: ''
+      number: '',
     },
     hosterName: '',
     hostBio: '',
@@ -79,7 +83,7 @@ const initialState: MultiStepFormState = {
     dormitoryCosts: undefined,
     dormitoryPhotos: [],
     dormitoryFacilities: [],
-    experienceCost: undefined
+    experienceCost: undefined,
   },
   steps: [],
   isLoading: false,
@@ -88,77 +92,80 @@ const initialState: MultiStepFormState = {
   customFacilities: [],
   completedSteps: [],
   validSteps: {},
-  showErrors: {}
+  showErrors: {},
 };
 
-function formReducer(state: MultiStepFormState, action: FormAction): MultiStepFormState {
+function formReducer(
+  state: MultiStepFormState,
+  action: FormAction
+): MultiStepFormState {
   switch (action.type) {
     case 'SET_CURRENT_STEP':
       return {
         ...state,
-        currentStep: action.payload
+        currentStep: action.payload,
       };
-    
+
     case 'UPDATE_FORM_DATA':
       return {
         ...state,
         formData: {
           ...state.formData,
-          ...action.payload
-        }
+          ...action.payload,
+        },
       };
-    
+
     case 'SET_LOADING':
       return {
         ...state,
-        isLoading: action.payload
+        isLoading: action.payload,
       };
-    
+
     case 'SET_ERRORS':
       return {
         ...state,
-        errors: action.payload
+        errors: action.payload,
       };
-    
+
     case 'ADD_CUSTOM_SPORT':
       return {
         ...state,
-        customSports: [...state.customSports, action.payload]
+        customSports: [...state.customSports, action.payload],
       };
-    
+
     case 'ADD_CUSTOM_FACILITY':
       return {
         ...state,
-        customFacilities: [...state.customFacilities, action.payload]
+        customFacilities: [...state.customFacilities, action.payload],
       };
-    
+
     case 'MARK_STEP_COMPLETED':
       return {
         ...state,
-        completedSteps: [...state.completedSteps, action.payload]
+        completedSteps: [...state.completedSteps, action.payload],
       };
-    
+
     case 'SET_STEP_VALID':
       return {
         ...state,
         validSteps: {
           ...state.validSteps,
-          [action.payload.stepIndex]: action.payload.isValid
-        }
+          [action.payload.stepIndex]: action.payload.isValid,
+        },
       };
-    
+
     case 'SET_SHOW_ERRORS':
       return {
         ...state,
         showErrors: {
           ...state.showErrors,
-          [action.payload.stepIndex]: action.payload.show
-        }
+          [action.payload.stepIndex]: action.payload.show,
+        },
       };
-    
+
     case 'RESET_FORM':
       return initialState;
-    
+
     default:
       return state;
   }
@@ -175,12 +182,16 @@ interface MultiStepFormContextType {
   canProceed: boolean;
 }
 
-const MultiStepFormContext = createContext<MultiStepFormContextType | null>(null);
+const MultiStepFormContext = createContext<MultiStepFormContextType | null>(
+  null
+);
 
 export function useMultiStepForm() {
   const context = useContext(MultiStepFormContext);
   if (!context) {
-    throw new Error('useMultiStepForm must be used within a MultiStepFormProvider');
+    throw new Error(
+      'useMultiStepForm must be used within a MultiStepFormProvider'
+    );
   }
   return context;
 }
@@ -191,36 +202,45 @@ interface MultiStepFormProviderProps {
   initialData?: Partial<FormDataType>;
 }
 
-export function MultiStepFormProvider({ children, steps, initialData }: MultiStepFormProviderProps) {
+export function MultiStepFormProvider({
+  children,
+  steps,
+  initialData,
+}: MultiStepFormProviderProps) {
   const [state, dispatch] = useReducer(formReducer, {
     ...initialState,
     steps,
-    formData: initialData ? { ...initialState.formData, ...initialData } : initialState.formData
+    formData: initialData
+      ? { ...initialState.formData, ...initialData }
+      : initialState.formData,
   });
 
   const getNextStep = (currentStep: number): number => {
     const currentStepId = state.steps[currentStep]?.id;
-    
+
     // If we're on any dormitory step and dormitory is false, skip to Step 14 (Pricing)
-    if ([10, 11, 12, 13].includes(currentStepId) && state.formData.dormitory === false) {
+    if (
+      [10, 11, 12, 13].includes(currentStepId) &&
+      state.formData.dormitory === false
+    ) {
       // Find Step 14 (Pricing) index
       const pricingStepIndex = state.steps.findIndex(step => step.id === 14);
       return pricingStepIndex !== -1 ? pricingStepIndex : currentStep + 1;
     }
-    
+
     return currentStep + 1;
   };
 
   const getPreviousStep = (currentStep: number): number => {
     const currentStepId = state.steps[currentStep]?.id;
-    
+
     // If we're on Step 14 (Pricing) and dormitory is false, go back to Step 10 (Dormitory Question)
     if (currentStepId === 14 && state.formData.dormitory === false) {
       // Find Step 10 (Dormitory Question) index
       const dormitoryStepIndex = state.steps.findIndex(step => step.id === 10);
       return dormitoryStepIndex !== -1 ? dormitoryStepIndex : currentStep - 1;
     }
-    
+
     return currentStep - 1;
   };
 
@@ -229,10 +249,9 @@ export function MultiStepFormProvider({ children, steps, initialData }: MultiSte
     const currentStep = state.steps[state.currentStep];
     const isOptional = currentStep?.isOptional === true;
     const currentStepId = currentStep?.id;
-    
+
     // Force Step10B_DailyRate (id: 11) to always proceed
     if (currentStepId === 11) {
-      console.log('🔧 FORCING Step10B_DailyRate to proceed');
       const nextStepIndex = getNextStep(state.currentStep);
       if (nextStepIndex < state.steps.length) {
         dispatch({ type: 'MARK_STEP_COMPLETED', payload: state.currentStep });
@@ -240,15 +259,15 @@ export function MultiStepFormProvider({ children, steps, initialData }: MultiSte
       }
       return;
     }
-    
+
     // Mark that we should show errors for current step if it's invalid
     const isCurrentStepValid = state.validSteps[state.currentStep] === true;
-    
+
     // Only block progression if step is required AND invalid
     if (!isOptional && !isCurrentStepValid) {
-      dispatch({ 
-        type: 'SET_SHOW_ERRORS', 
-        payload: { stepIndex: state.currentStep, show: true } 
+      dispatch({
+        type: 'SET_SHOW_ERRORS',
+        payload: { stepIndex: state.currentStep, show: true },
       });
       return; // Don't proceed if step is invalid
     }
@@ -287,7 +306,7 @@ export function MultiStepFormProvider({ children, steps, initialData }: MultiSte
         goToStep,
         isFirstStep,
         isLastStep,
-        canProceed
+        canProceed,
       }}
     >
       {children}

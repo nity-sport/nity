@@ -30,9 +30,11 @@ const OwnerDashboard: React.FC = () => {
     totalCoaches: 0,
     averageExperienceCost: 0,
     totalDormitoryCapacity: 0,
-    sportCentersWithDormitory: 0
+    sportCentersWithDormitory: 0,
   });
-  const [recentSportCenters, setRecentSportCenters] = useState<SportCenter[]>([]);
+  const [recentSportCenters, setRecentSportCenters] = useState<SportCenter[]>(
+    []
+  );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -49,12 +51,12 @@ const OwnerDashboard: React.FC = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('auth_token');
-      
+
       // Fetch all sport centers for the owner
       const response = await fetch('/api/sportcenter', {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (!response.ok) {
@@ -62,18 +64,40 @@ const OwnerDashboard: React.FC = () => {
       }
 
       const data = await response.json();
-      const sportCenters = data.sportCenters || [];
+      
+      // Handle new standardized API response format
+      let sportCenters = [];
+      if (data.success && data.data && Array.isArray(data.data)) {
+        sportCenters = data.data;
+      }
+      // Fallback for old API format (backward compatibility)
+      else if (data.sportCenters && Array.isArray(data.sportCenters)) {
+        sportCenters = data.sportCenters;
+      }
 
       // Calculate statistics
       const calculatedStats: DashboardStats = {
         totalSportCenters: sportCenters.length,
-        totalFacilities: sportCenters.reduce((sum: number, sc: any) => sum + (sc.facilities?.length || 0), 0),
-        totalCoaches: sportCenters.reduce((sum: number, sc: any) => sum + (sc.coaches?.length || 0), 0),
-        averageExperienceCost: sportCenters.length > 0 
-          ? sportCenters.reduce((sum: number, sc: any) => sum + (sc.experienceCost || 0), 0) / sportCenters.length
-          : 0,
-        totalDormitoryCapacity: sportCenters.filter((sc: any) => sc.dormitory).length,
-        sportCentersWithDormitory: sportCenters.filter((sc: any) => sc.dormitory).length
+        totalFacilities: sportCenters.reduce(
+          (sum: number, sc: any) => sum + (sc.facilities?.length || 0),
+          0
+        ),
+        totalCoaches: sportCenters.reduce(
+          (sum: number, sc: any) => sum + (sc.coaches?.length || 0),
+          0
+        ),
+        averageExperienceCost:
+          sportCenters.length > 0
+            ? sportCenters.reduce(
+                (sum: number, sc: any) => sum + (sc.experienceCost || 0),
+                0
+              ) / sportCenters.length
+            : 0,
+        totalDormitoryCapacity: sportCenters.filter((sc: any) => sc.dormitory)
+          .length,
+        sportCentersWithDormitory: sportCenters.filter(
+          (sc: any) => sc.dormitory
+        ).length,
       };
 
       setStats(calculatedStats);
@@ -90,7 +114,7 @@ const OwnerDashboard: React.FC = () => {
   const formatPrice = (price: number): string => {
     return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
-      currency: 'BRL'
+      currency: 'BRL',
     }).format(price);
   };
 
@@ -120,7 +144,7 @@ const OwnerDashboard: React.FC = () => {
           <h1 className={styles.title}>Dashboard do Owner</h1>
           <p className={styles.subtitle}>Bem-vindo, {user?.name}!</p>
         </div>
-        <Link href="/admin/sportcenters" className={styles.manageButton}>
+        <Link href='/admin/sportcenters' className={styles.manageButton}>
           Gerenciar SportCenters
         </Link>
       </div>
@@ -160,7 +184,9 @@ const OwnerDashboard: React.FC = () => {
             <div className={styles.statCard}>
               <div className={styles.statIcon}>💰</div>
               <div className={styles.statContent}>
-                <h3 className={styles.statNumber}>{formatPrice(stats.averageExperienceCost)}</h3>
+                <h3 className={styles.statNumber}>
+                  {formatPrice(stats.averageExperienceCost)}
+                </h3>
                 <p className={styles.statLabel}>Preço Médio</p>
               </div>
             </div>
@@ -168,7 +194,9 @@ const OwnerDashboard: React.FC = () => {
             <div className={styles.statCard}>
               <div className={styles.statIcon}>🏠</div>
               <div className={styles.statContent}>
-                <h3 className={styles.statNumber}>{stats.sportCentersWithDormitory}</h3>
+                <h3 className={styles.statNumber}>
+                  {stats.sportCentersWithDormitory}
+                </h3>
                 <p className={styles.statLabel}>Com Dormitório</p>
               </div>
             </div>
@@ -178,7 +206,10 @@ const OwnerDashboard: React.FC = () => {
           <div className={styles.quickActions}>
             <h2 className={styles.sectionTitle}>Ações Rápidas</h2>
             <div className={styles.actionsGrid}>
-              <Link href="/admin/sportcenters/create" className={styles.actionCard}>
+              <Link
+                href='/admin/sportcenters/create'
+                className={styles.actionCard}
+              >
                 <div className={styles.actionIcon}>➕</div>
                 <div className={styles.actionContent}>
                   <h3>Criar SportCenter</h3>
@@ -186,7 +217,10 @@ const OwnerDashboard: React.FC = () => {
                 </div>
               </Link>
 
-              <div className={styles.actionCard} onClick={() => alert('Em breve!')}>
+              <div
+                className={styles.actionCard}
+                onClick={() => alert('Em breve!')}
+              >
                 <div className={styles.actionIcon}>📊</div>
                 <div className={styles.actionContent}>
                   <h3>Relatórios</h3>
@@ -194,7 +228,10 @@ const OwnerDashboard: React.FC = () => {
                 </div>
               </div>
 
-              <div className={styles.actionCard} onClick={() => alert('Em breve!')}>
+              <div
+                className={styles.actionCard}
+                onClick={() => alert('Em breve!')}
+              >
                 <div className={styles.actionIcon}>⚙️</div>
                 <div className={styles.actionContent}>
                   <h3>Configurações</h3>
@@ -209,23 +246,28 @@ const OwnerDashboard: React.FC = () => {
             <div className={styles.recentSection}>
               <div className={styles.sectionHeader}>
                 <h2 className={styles.sectionTitle}>Seus SportCenters</h2>
-                <Link href="/admin/sportcenters" className={styles.viewAllLink}>
+                <Link href='/admin/sportcenters' className={styles.viewAllLink}>
                   Ver todos
                 </Link>
               </div>
-              
+
               <div className={styles.sportCentersList}>
                 {recentSportCenters.map(sportCenter => (
                   <div key={sportCenter._id} className={styles.sportCenterItem}>
                     <div className={styles.sportCenterInfo}>
-                      <h4 className={styles.sportCenterName}>{sportCenter.name}</h4>
+                      <h4 className={styles.sportCenterName}>
+                        {sportCenter.name}
+                      </h4>
                       <p className={styles.sportCenterSports}>
-                        {sportCenter.sport?.join(', ') || 'Esportes não informados'}
+                        {sportCenter.sport?.join(', ') ||
+                          'Esportes não informados'}
                       </p>
                     </div>
                     <div className={styles.sportCenterMeta}>
                       {sportCenter.dormitory && (
-                        <span className={styles.dormitoryBadge}>🏠 Dormitório</span>
+                        <span className={styles.dormitoryBadge}>
+                          🏠 Dormitório
+                        </span>
                       )}
                       {sportCenter.experienceCost && (
                         <span className={styles.priceBadge}>
@@ -243,8 +285,14 @@ const OwnerDashboard: React.FC = () => {
             <div className={styles.emptyState}>
               <div className={styles.emptyIcon}>🏢</div>
               <h3>Nenhum SportCenter encontrado</h3>
-              <p>Crie seu primeiro SportCenter para começar a gerenciar suas facilities e coaches.</p>
-              <Link href="/admin/sportcenters" className={styles.createFirstButton}>
+              <p>
+                Crie seu primeiro SportCenter para começar a gerenciar suas
+                facilities e coaches.
+              </p>
+              <Link
+                href='/admin/sportcenters'
+                className={styles.createFirstButton}
+              >
                 Criar Primeiro SportCenter
               </Link>
             </div>

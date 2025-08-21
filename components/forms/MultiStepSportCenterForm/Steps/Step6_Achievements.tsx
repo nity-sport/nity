@@ -19,20 +19,27 @@ export function Step6_Achievements() {
   const [newAchievementYear, setNewAchievementYear] = useState('');
   const [error, setError] = useState('');
 
-  const updateValidation = (achievementsList?: Achievement[], noAchievementsState?: boolean) => {
+  const updateValidation = (
+    achievementsList?: Achievement[],
+    noAchievementsState?: boolean
+  ) => {
     // Use parameters if provided, otherwise use current state
-    const currentAchievements = achievementsList !== undefined ? achievementsList : achievements;
-    const currentNoAchievements = noAchievementsState !== undefined ? noAchievementsState : noAchievements;
-    
+    const currentAchievements =
+      achievementsList !== undefined ? achievementsList : achievements;
+    const currentNoAchievements =
+      noAchievementsState !== undefined ? noAchievementsState : noAchievements;
+
     // Step is valid if they have achievements OR they've checked "no achievements"
     const isValid = currentAchievements.length > 0 || currentNoAchievements;
-    const errorMessage = !isValid ? 'Adicione pelo menos uma conquista ou marque "Não possuímos conquistas ainda"' : '';
-    
+    const errorMessage = !isValid
+      ? 'Adicione pelo menos uma conquista ou marque "Não possuímos conquistas ainda"'
+      : '';
+
     dispatch({
       type: 'SET_STEP_VALID',
-      payload: { stepIndex: 5, isValid }
+      payload: { stepIndex: 5, isValid },
     });
-    
+
     // Only show error if we're supposed to show errors for this step
     if (state.showErrors[5]) {
       setError(errorMessage);
@@ -46,62 +53,66 @@ export function Step6_Achievements() {
       const newAchievement: Achievement = {
         id: `achievement-${Date.now()}`,
         name: newAchievementName.trim(),
-        year: parseInt(newAchievementYear)
+        year: parseInt(newAchievementYear),
       };
-      
+
       const updatedAchievements = [...achievements, newAchievement];
       setAchievements(updatedAchievements);
-      
+
       dispatch({
         type: 'UPDATE_FORM_DATA',
         payload: {
-          achievements: updatedAchievements.map(a => `${a.name} (${a.year})`)
-        }
+          achievements: updatedAchievements.map(a => `${a.name} (${a.year})`),
+        },
       });
-      
+
       setNewAchievementName('');
       setNewAchievementYear('');
       setShowAddModal(false);
-      
+
       // Update validation after adding achievement
       updateValidation(updatedAchievements, noAchievements);
     }
   };
 
   const handleDeleteAchievement = (achievementId: string) => {
-    const updatedAchievements = achievements.filter(a => a.id !== achievementId);
+    const updatedAchievements = achievements.filter(
+      a => a.id !== achievementId
+    );
     setAchievements(updatedAchievements);
-    
+
     dispatch({
       type: 'UPDATE_FORM_DATA',
       payload: {
-        achievements: updatedAchievements.map(a => `${a.name} (${a.year})`)
-      }
+        achievements: updatedAchievements.map(a => `${a.name} (${a.year})`),
+      },
     });
-    
+
     setShowDeleteModal(null);
-    
+
     // Update validation after deleting achievement
     updateValidation(updatedAchievements, noAchievements);
   };
 
-  const handleNoAchievementsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNoAchievementsChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const checked = e.target.checked;
     setNoAchievements(checked);
-    
+
     let finalAchievements = achievements;
-    
+
     if (checked) {
       finalAchievements = [];
       setAchievements([]);
       dispatch({
         type: 'UPDATE_FORM_DATA',
         payload: {
-          achievements: []
-        }
+          achievements: [],
+        },
       });
     }
-    
+
     // Update validation immediately with the new states
     updateValidation(finalAchievements, checked);
   };
@@ -125,14 +136,16 @@ export function Step6_Achievements() {
             {achievements.map(achievement => (
               <div key={achievement.id} className={styles.achievementItem}>
                 <div className={styles.achievementContent}>
-                  <span className={styles.achievementName}>{achievement.name}</span>
-                  <span className={styles.achievementYear}>{achievement.year}</span>
+                  <span className={styles.achievementName}>
+                    {achievement.name}
+                  </span>
+                  <span className={styles.achievementYear}>
+                    {achievement.year}
+                  </span>
                 </div>
                 <div className={styles.achievementActions}>
-                  <button className={styles.editAchievementButton}>
-                    ✏️
-                  </button>
-                  <button 
+                  <button className={styles.editAchievementButton}>✏️</button>
+                  <button
                     className={styles.deleteAchievementButton}
                     onClick={() => setShowDeleteModal(achievement.id)}
                   >
@@ -155,12 +168,14 @@ export function Step6_Achievements() {
         <div className={styles.noAchievementsContainer}>
           <label className={styles.noAchievementsLabel}>
             <input
-              type="checkbox"
+              type='checkbox'
               checked={noAchievements}
               onChange={handleNoAchievementsChange}
               className={styles.noAchievementsCheckbox}
             />
-            <span className={styles.noAchievementsText}>Não possuimos conquistas ainda</span>
+            <span className={styles.noAchievementsText}>
+              Não possuimos conquistas ainda
+            </span>
           </label>
         </div>
 
@@ -173,45 +188,53 @@ export function Step6_Achievements() {
 
       {/* Modal Adicionar Conquista */}
       {showAddModal && (
-        <div className={styles.achievementModal} onClick={() => setShowAddModal(false)}>
-          <div className={styles.achievementModalContent} onClick={(e) => e.stopPropagation()}>
-            <button 
+        <div
+          className={styles.achievementModal}
+          onClick={() => setShowAddModal(false)}
+        >
+          <div
+            className={styles.achievementModalContent}
+            onClick={e => e.stopPropagation()}
+          >
+            <button
               className={styles.achievementModalCloseButton}
               onClick={() => setShowAddModal(false)}
             >
               ×
             </button>
             <div className={styles.achievementModalIcon}>
-              
-                <img 
-                  src="/assets/rewarded_ads.png" 
-                  alt="Trophy" 
-                  className={styles.trophyIcon}
-                />
-              
+              <img
+                src='/assets/rewarded_ads.png'
+                alt='Trophy'
+                className={styles.trophyIcon}
+              />
             </div>
             <div className={styles.achievementModalForm}>
               <div className={styles.achievementModalField}>
-                <label className={styles.achievementModalLabel}>Nome da conquista</label>
+                <label className={styles.achievementModalLabel}>
+                  Nome da conquista
+                </label>
                 <input
-                  type="text"
+                  type='text'
                   value={newAchievementName}
-                  onChange={(e) => setNewAchievementName(e.target.value)}
-                  placeholder="Insira o nome da conquista"
+                  onChange={e => setNewAchievementName(e.target.value)}
+                  placeholder='Insira o nome da conquista'
                   className={styles.achievementModalInput}
                 />
               </div>
               <div className={styles.achievementModalField}>
-                <label className={styles.achievementModalLabel}>Ano da conquista</label>
+                <label className={styles.achievementModalLabel}>
+                  Ano da conquista
+                </label>
                 <input
-                  type="number"
+                  type='number'
                   value={newAchievementYear}
-                  onChange={(e) => setNewAchievementYear(e.target.value)}
-                  placeholder="Insira o ano"
+                  onChange={e => setNewAchievementYear(e.target.value)}
+                  placeholder='Insira o ano'
                   className={styles.achievementModalInput}
                 />
               </div>
-              <button 
+              <button
                 className={styles.achievementModalAddButton}
                 onClick={handleAddAchievement}
               >
@@ -224,9 +247,15 @@ export function Step6_Achievements() {
 
       {/* Modal Excluir Conquista */}
       {showDeleteModal && (
-        <div className={styles.achievementModal} onClick={() => setShowDeleteModal(null)}>
-          <div className={styles.achievementModalContent} onClick={(e) => e.stopPropagation()}>
-            <button 
+        <div
+          className={styles.achievementModal}
+          onClick={() => setShowDeleteModal(null)}
+        >
+          <div
+            className={styles.achievementModalContent}
+            onClick={e => e.stopPropagation()}
+          >
+            <button
               className={styles.achievementModalCloseButton}
               onClick={() => setShowDeleteModal(null)}
             >
@@ -235,15 +264,17 @@ export function Step6_Achievements() {
             <div className={styles.achievementModalIcon}>
               <div className={styles.achievementModalIconCircle}>!</div>
             </div>
-            <h3 className={styles.achievementModalTitle}>Tem certeza que deseja excluir conquista?</h3>
+            <h3 className={styles.achievementModalTitle}>
+              Tem certeza que deseja excluir conquista?
+            </h3>
             <div className={styles.achievementModalActions}>
-              <button 
+              <button
                 className={styles.achievementModalCancelButton}
                 onClick={() => setShowDeleteModal(null)}
               >
                 Não, cancelar
               </button>
-              <button 
+              <button
                 className={styles.achievementModalConfirmButton}
                 onClick={() => handleDeleteAchievement(showDeleteModal)}
               >

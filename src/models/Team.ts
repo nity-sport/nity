@@ -22,10 +22,12 @@ const TeamSchema: Schema = new Schema(
       ref: 'User',
       required: true,
     },
-    memberIds: [{
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-    }],
+    memberIds: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
   },
   {
     timestamps: true,
@@ -36,5 +38,7 @@ TeamSchema.index({ scoutId: 1 });
 TeamSchema.index({ memberIds: 1 });
 TeamSchema.index({ name: 1, scoutId: 1 });
 
-const Team: ITeamModel = (mongoose.models.Team as ITeamModel) || mongoose.model<ITeam, ITeamModel>('Team', TeamSchema);
+const Team: ITeamModel =
+  (mongoose.models.Team as ITeamModel) ||
+  mongoose.model<ITeam, ITeamModel>('Team', TeamSchema);
 export default Team;

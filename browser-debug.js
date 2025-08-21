@@ -17,38 +17,40 @@ if (token) {
 console.log('\n2. 🌐 API TEST:');
 if (token) {
   fetch('/api/auth/me', {
-    headers: { 'Authorization': `Bearer ${token}` }
+    headers: { Authorization: `Bearer ${token}` },
   })
-  .then(r => r.json())
-  .then(data => {
-    console.log('   ✅ API Response:', data);
-    console.log('   User role:', data.role);
-    console.log('   Role type:', typeof data.role);
-    console.log('   Is SUPERUSER string?:', data.role === 'SUPERUSER');
-    
-    // 3. Compare with enum
-    console.log('\n3. 🔄 ENUM COMPARISON:');
-    console.log('   UserRole enum check...');
-    
-    // Try to access the enum from the page context
-    if (window.UserRole) {
-      console.log('   UserRole found in window:', window.UserRole);
-      console.log('   UserRole.SUPERUSER:', window.UserRole.SUPERUSER);
-      console.log('   Enum comparison:', data.role === window.UserRole.SUPERUSER);
-    } else {
-      console.log('   UserRole not found in window context');
-      console.log('   Testing string comparison:', data.role === 'SUPERUSER');
-    }
-    
-    // 4. Test the exact comparison from AuthContext
-    console.log('\n4. ⚛️ REACT CONTEXT SIMULATION:');
-    console.log('   If user state was:', data);
-    console.log('   Then isSuperuser would be:', data.role === 'SUPERUSER');
-    
-  })
-  .catch(err => {
-    console.log('   ❌ API Error:', err);
-  });
+    .then(r => r.json())
+    .then(data => {
+      console.log('   ✅ API Response:', data);
+      console.log('   User role:', data.role);
+      console.log('   Role type:', typeof data.role);
+      console.log('   Is SUPERUSER string?:', data.role === 'SUPERUSER');
+
+      // 3. Compare with enum
+      console.log('\n3. 🔄 ENUM COMPARISON:');
+      console.log('   UserRole enum check...');
+
+      // Try to access the enum from the page context
+      if (window.UserRole) {
+        console.log('   UserRole found in window:', window.UserRole);
+        console.log('   UserRole.SUPERUSER:', window.UserRole.SUPERUSER);
+        console.log(
+          '   Enum comparison:',
+          data.role === window.UserRole.SUPERUSER
+        );
+      } else {
+        console.log('   UserRole not found in window context');
+        console.log('   Testing string comparison:', data.role === 'SUPERUSER');
+      }
+
+      // 4. Test the exact comparison from AuthContext
+      console.log('\n4. ⚛️ REACT CONTEXT SIMULATION:');
+      console.log('   If user state was:', data);
+      console.log('   Then isSuperuser would be:', data.role === 'SUPERUSER');
+    })
+    .catch(err => {
+      console.log('   ❌ API Error:', err);
+    });
 } else {
   console.log('   ❌ No token to test API');
 }

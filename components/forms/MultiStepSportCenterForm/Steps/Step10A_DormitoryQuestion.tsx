@@ -11,7 +11,7 @@ function Step10A_DormitoryQuestion() {
     const isValid = state.formData.dormitory !== undefined;
     dispatch({
       type: 'SET_STEP_VALID',
-      payload: { stepIndex: 9, isValid }
+      payload: { stepIndex: 9, isValid },
     });
   };
 
@@ -20,10 +20,10 @@ function Step10A_DormitoryQuestion() {
     dispatch({
       type: 'UPDATE_FORM_DATA',
       payload: {
-        dormitory: available
-      }
+        dormitory: available,
+      },
     });
-    
+
     // Update validation immediately after selection
     setTimeout(() => updateValidation(), 0);
   };
@@ -43,18 +43,22 @@ function Step10A_DormitoryQuestion() {
       <div className={styles.dormitoryQuestionContainer}>
         <div className={styles.dormitoryOptionsWrapper}>
           <button
-            type="button"
+            type='button'
             className={`${styles.dormitoryOption} ${
-              state.formData.dormitory === true ? styles.dormitoryOptionSelected : ''
+              state.formData.dormitory === true
+                ? styles.dormitoryOptionSelected
+                : ''
             }`}
             onClick={() => handleAccommodationToggle('Sim')}
           >
             Sim
           </button>
           <button
-            type="button"
+            type='button'
             className={`${styles.dormitoryOption} ${
-              state.formData.dormitory === false ? styles.dormitoryOptionSelected : ''
+              state.formData.dormitory === false
+                ? styles.dormitoryOptionSelected
+                : ''
             }`}
             onClick={() => handleAccommodationToggle('Não')}
           >

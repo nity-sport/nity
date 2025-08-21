@@ -52,7 +52,10 @@ export function Step12_CreateAccount() {
     const newErrors: Record<string, string> = {};
 
     ['firstName', 'lastName', 'email', 'password'].forEach(field => {
-      const error = validateField(field, accountData[field as keyof typeof accountData] || '');
+      const error = validateField(
+        field,
+        accountData[field as keyof typeof accountData] || ''
+      );
       if (error) {
         newErrors[field] = error;
       }
@@ -66,23 +69,24 @@ export function Step12_CreateAccount() {
     if (!accountData) {
       dispatch({
         type: 'SET_STEP_VALID',
-        payload: { stepIndex: 14, isValid: false }
+        payload: { stepIndex: 14, isValid: false },
       });
       return;
     }
 
-    const allFieldsFilled = (['firstName', 'lastName', 'email', 'password'] as const).every(
-      field => {
-        const value = accountData[field];
-        return value && value.trim().length > 0;
-      }
-    );
+    const allFieldsFilled = (
+      ['firstName', 'lastName', 'email', 'password'] as const
+    ).every(field => {
+      const value = accountData[field];
+      return value && value.trim().length > 0;
+    });
     const validationErrors = validateAllFields();
-    const isValid = allFieldsFilled && Object.keys(validationErrors).length === 0;
+    const isValid =
+      allFieldsFilled && Object.keys(validationErrors).length === 0;
 
     dispatch({
       type: 'SET_STEP_VALID',
-      payload: { stepIndex: 14, isValid } // Step12_CreateAccount is index 14
+      payload: { stepIndex: 14, isValid }, // Step12_CreateAccount is index 14
     });
 
     // Only show errors if we're supposed to show errors for this step
@@ -95,15 +99,15 @@ export function Step12_CreateAccount() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    
+
     dispatch({
       type: 'UPDATE_FORM_DATA',
       payload: {
         accountData: {
           ...state.formData.accountData,
-          [name]: value
-        }
-      }
+          [name]: value,
+        },
+      },
     });
   };
 
@@ -115,14 +119,21 @@ export function Step12_CreateAccount() {
   return (
     <div className={styles.stepContainer}>
       <div className={styles.createAccountContainer}>
-
         <div className={styles.socialButtons}>
-          <button className={styles.socialButton} type="button">
-            <img src="/assets/google-icon.svg" alt="Google" className={styles.socialIcon} />
+          <button className={styles.socialButton} type='button'>
+            <img
+              src='/assets/google-icon.svg'
+              alt='Google'
+              className={styles.socialIcon}
+            />
             <span>Entrar com Google</span>
           </button>
-          <button className={styles.socialButton} type="button">
-            <img src="/assets/apple-icon.svg" alt="Apple" className={styles.socialIcon} />
+          <button className={styles.socialButton} type='button'>
+            <img
+              src='/assets/apple-icon.svg'
+              alt='Apple'
+              className={styles.socialIcon}
+            />
             <span>Entrar com Apple</span>
           </button>
         </div>
@@ -134,68 +145,76 @@ export function Step12_CreateAccount() {
         <form className={styles.accountForm}>
           <div className={styles.formRow}>
             <div className={styles.formGroup}>
-              <label htmlFor="firstName" className={styles.accountLabel}>
+              <label htmlFor='firstName' className={styles.accountLabel}>
                 Nome
               </label>
               <input
-                type="text"
-                id="firstName"
-                name="firstName"
+                type='text'
+                id='firstName'
+                name='firstName'
                 value={state.formData.accountData?.firstName || ''}
                 onChange={handleChange}
                 className={`${styles.accountInput} ${errors.firstName ? styles.inputError : ''}`}
-                placeholder="Seu nome"
+                placeholder='Seu nome'
               />
-              {errors.firstName && <div className={styles.errorMessage}>{errors.firstName}</div>}
+              {errors.firstName && (
+                <div className={styles.errorMessage}>{errors.firstName}</div>
+              )}
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="lastName" className={styles.accountLabel}>
+              <label htmlFor='lastName' className={styles.accountLabel}>
                 Sobrenome
               </label>
               <input
-                type="text"
-                id="lastName"
-                name="lastName"
+                type='text'
+                id='lastName'
+                name='lastName'
                 value={state.formData.accountData?.lastName || ''}
                 onChange={handleChange}
                 className={`${styles.accountInput} ${errors.lastName ? styles.inputError : ''}`}
-                placeholder="Seu sobrenome"
+                placeholder='Seu sobrenome'
               />
-              {errors.lastName && <div className={styles.errorMessage}>{errors.lastName}</div>}
+              {errors.lastName && (
+                <div className={styles.errorMessage}>{errors.lastName}</div>
+              )}
             </div>
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="email" className={styles.accountLabel}>
+            <label htmlFor='email' className={styles.accountLabel}>
               E-mail
             </label>
             <input
-              type="email"
-              id="email"
-              name="email"
+              type='email'
+              id='email'
+              name='email'
               value={state.formData.accountData?.email || ''}
               onChange={handleChange}
               className={`${styles.accountInput} ${errors.email ? styles.inputError : ''}`}
-              placeholder="Digite seu e-mail"
+              placeholder='Digite seu e-mail'
             />
-            {errors.email && <div className={styles.errorMessage}>{errors.email}</div>}
+            {errors.email && (
+              <div className={styles.errorMessage}>{errors.email}</div>
+            )}
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="password" className={styles.accountLabel}>
+            <label htmlFor='password' className={styles.accountLabel}>
               Senha
             </label>
             <input
-              type="password"
-              id="password"
-              name="password"
+              type='password'
+              id='password'
+              name='password'
               value={state.formData.accountData?.password || ''}
               onChange={handleChange}
               className={`${styles.accountInput} ${errors.password ? styles.inputError : ''}`}
-              placeholder="Digite sua senha"
+              placeholder='Digite sua senha'
             />
-            {errors.password && <div className={styles.errorMessage}>{errors.password}</div>}
+            {errors.password && (
+              <div className={styles.errorMessage}>{errors.password}</div>
+            )}
           </div>
         </form>
       </div>

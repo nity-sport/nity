@@ -16,7 +16,9 @@ export default function TeamsPage() {
   const [teams, setTeams] = useState<TeamWithMembers[]>([]);
   const [loadingTeams, setLoadingTeams] = useState(true);
   const [error, setError] = useState('');
-  const [selectedTeam, setSelectedTeam] = useState<TeamWithMembers | null>(null);
+  const [selectedTeam, setSelectedTeam] = useState<TeamWithMembers | null>(
+    null
+  );
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [showMemberForm, setShowMemberForm] = useState(false);
@@ -44,9 +46,9 @@ export default function TeamsPage() {
       const token = localStorage.getItem('token');
       const response = await fetch('/api/teams?includeMembers=true', {
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
       });
 
       if (response.ok) {
@@ -64,7 +66,7 @@ export default function TeamsPage() {
 
   const handleCreateTeam = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!teamName.trim()) {
       setError('Team name is required');
       return;
@@ -79,9 +81,9 @@ export default function TeamsPage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ name: teamName })
+        body: JSON.stringify({ name: teamName }),
       });
 
       const data = await response.json();
@@ -102,7 +104,7 @@ export default function TeamsPage() {
 
   const handleEditTeam = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!selectedTeam || !teamName.trim()) {
       setError('Team name is required');
       return;
@@ -117,17 +119,19 @@ export default function TeamsPage() {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ name: teamName })
+        body: JSON.stringify({ name: teamName }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        setTeams(prev => prev.map(team => 
-          team.id === selectedTeam.id ? { ...team, ...data.team } : team
-        ));
+        setTeams(prev =>
+          prev.map(team =>
+            team.id === selectedTeam.id ? { ...team, ...data.team } : team
+          )
+        );
         setTeamName('');
         setShowEditForm(false);
         setSelectedTeam(null);
@@ -149,8 +153,8 @@ export default function TeamsPage() {
       const response = await fetch(`/api/teams/${teamId}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (response.ok) {
@@ -175,11 +179,14 @@ export default function TeamsPage() {
     setSearching(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`/api/users/search?email=${encodeURIComponent(email)}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
+      const response = await fetch(
+        `/api/users/search?email=${encodeURIComponent(email)}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      });
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -203,20 +210,24 @@ export default function TeamsPage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ userId })
+        body: JSON.stringify({ userId }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        setTeams(prev => prev.map(team => 
-          team.id === selectedTeam.id 
-            ? { ...team, members: [...team.members, data.member] }
-            : team
-        ));
-        setSelectedTeam(prev => prev ? { ...prev, members: [...prev.members, data.member] } : null);
+        setTeams(prev =>
+          prev.map(team =>
+            team.id === selectedTeam.id
+              ? { ...team, members: [...team.members, data.member] }
+              : team
+          )
+        );
+        setSelectedTeam(prev =>
+          prev ? { ...prev, members: [...prev.members, data.member] } : null
+        );
         setSearchEmail('');
         setSearchResults([]);
       } else {
@@ -232,20 +243,35 @@ export default function TeamsPage() {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`/api/teams/${selectedTeam.id}/members/${userId}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`
+      const response = await fetch(
+        `/api/teams/${selectedTeam.id}/members/${userId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      });
+      );
 
       if (response.ok) {
-        setTeams(prev => prev.map(team => 
-          team.id === selectedTeam.id 
-            ? { ...team, members: team.members.filter(member => member.id !== userId) }
-            : team
-        ));
-        setSelectedTeam(prev => prev ? { ...prev, members: prev.members.filter(member => member.id !== userId) } : null);
+        setTeams(prev =>
+          prev.map(team =>
+            team.id === selectedTeam.id
+              ? {
+                  ...team,
+                  members: team.members.filter(member => member.id !== userId),
+                }
+              : team
+          )
+        );
+        setSelectedTeam(prev =>
+          prev
+            ? {
+                ...prev,
+                members: prev.members.filter(member => member.id !== userId),
+              }
+            : null
+        );
       } else {
         setError('Failed to remove member');
       }
@@ -266,7 +292,7 @@ export default function TeamsPage() {
     <div className={styles.container}>
       <div className={styles.header}>
         <h1>Teams Management</h1>
-        <button 
+        <button
           className={styles.backButton}
           onClick={() => router.push('/scout/dashboard')}
         >
@@ -280,7 +306,7 @@ export default function TeamsPage() {
         <div className={styles.sidebar}>
           <div className={styles.sidebarHeader}>
             <h2>Your Teams</h2>
-            <button 
+            <button
               className={styles.createButton}
               onClick={() => setShowCreateForm(true)}
             >
@@ -290,16 +316,16 @@ export default function TeamsPage() {
 
           <div className={styles.teamsList}>
             {teams.map(team => (
-              <div 
-                key={team.id} 
+              <div
+                key={team.id}
                 className={`${styles.teamItem} ${selectedTeam?.id === team.id ? styles.active : ''}`}
                 onClick={() => setSelectedTeam(team)}
               >
                 <h3>{team.name}</h3>
                 <p>{team.members.length} members</p>
                 <div className={styles.teamItemActions}>
-                  <button 
-                    onClick={(e) => {
+                  <button
+                    onClick={e => {
                       e.stopPropagation();
                       setSelectedTeam(team);
                       setTeamName(team.name);
@@ -309,8 +335,8 @@ export default function TeamsPage() {
                   >
                     Edit
                   </button>
-                  <button 
-                    onClick={(e) => {
+                  <button
+                    onClick={e => {
                       e.stopPropagation();
                       handleDeleteTeam(team.id);
                     }}
@@ -326,7 +352,7 @@ export default function TeamsPage() {
           {teams.length === 0 && (
             <div className={styles.emptyState}>
               <p>No teams created yet</p>
-              <button 
+              <button
                 className={styles.createButton}
                 onClick={() => setShowCreateForm(true)}
               >
@@ -341,7 +367,7 @@ export default function TeamsPage() {
             <div className={styles.teamDetails}>
               <div className={styles.teamHeader}>
                 <h2>{selectedTeam.name}</h2>
-                <button 
+                <button
                   className={styles.addMemberButton}
                   onClick={() => setShowMemberForm(true)}
                 >
@@ -354,7 +380,7 @@ export default function TeamsPage() {
                 {selectedTeam.members.length === 0 ? (
                   <div className={styles.emptyMembers}>
                     <p>No members in this team yet</p>
-                    <button 
+                    <button
                       className={styles.addMemberButton}
                       onClick={() => setShowMemberForm(true)}
                     >
@@ -368,9 +394,11 @@ export default function TeamsPage() {
                         <div className={styles.memberInfo}>
                           <h4>{member.name}</h4>
                           <p>{member.email}</p>
-                          <span className={styles.memberRole}>{member.role}</span>
+                          <span className={styles.memberRole}>
+                            {member.role}
+                          </span>
                         </div>
-                        <button 
+                        <button
                           className={styles.removeMemberButton}
                           onClick={() => removeMemberFromTeam(member.id)}
                         >
@@ -399,16 +427,16 @@ export default function TeamsPage() {
               <div className={styles.formGroup}>
                 <label>Team Name</label>
                 <input
-                  type="text"
+                  type='text'
                   value={teamName}
-                  onChange={(e) => setTeamName(e.target.value)}
-                  placeholder="Enter team name"
+                  onChange={e => setTeamName(e.target.value)}
+                  placeholder='Enter team name'
                   required
                 />
               </div>
               <div className={styles.formButtons}>
                 <button
-                  type="button"
+                  type='button'
                   onClick={() => {
                     setShowCreateForm(false);
                     setTeamName('');
@@ -417,7 +445,7 @@ export default function TeamsPage() {
                 >
                   Cancel
                 </button>
-                <button type="submit" disabled={submitting}>
+                <button type='submit' disabled={submitting}>
                   {submitting ? 'Creating...' : 'Create Team'}
                 </button>
               </div>
@@ -435,16 +463,16 @@ export default function TeamsPage() {
               <div className={styles.formGroup}>
                 <label>Team Name</label>
                 <input
-                  type="text"
+                  type='text'
                   value={teamName}
-                  onChange={(e) => setTeamName(e.target.value)}
-                  placeholder="Enter team name"
+                  onChange={e => setTeamName(e.target.value)}
+                  placeholder='Enter team name'
                   required
                 />
               </div>
               <div className={styles.formButtons}>
                 <button
-                  type="button"
+                  type='button'
                   onClick={() => {
                     setShowEditForm(false);
                     setTeamName('');
@@ -454,7 +482,7 @@ export default function TeamsPage() {
                 >
                   Cancel
                 </button>
-                <button type="submit" disabled={submitting}>
+                <button type='submit' disabled={submitting}>
                   {submitting ? 'Updating...' : 'Update Team'}
                 </button>
               </div>
@@ -472,18 +500,18 @@ export default function TeamsPage() {
               <div className={styles.formGroup}>
                 <label>Search by Email</label>
                 <input
-                  type="email"
+                  type='email'
                   value={searchEmail}
-                  onChange={(e) => {
+                  onChange={e => {
                     setSearchEmail(e.target.value);
                     searchUsers(e.target.value);
                   }}
-                  placeholder="Enter email address"
+                  placeholder='Enter email address'
                 />
               </div>
-              
+
               {searching && <p>Searching...</p>}
-              
+
               {searchResults.length > 0 && (
                 <div className={styles.searchResults}>
                   <h4>Search Results:</h4>
@@ -496,23 +524,29 @@ export default function TeamsPage() {
                       </div>
                       <button
                         onClick={() => addMemberToTeam(user.id)}
-                        disabled={selectedTeam?.members.some(member => member.id === user.id)}
+                        disabled={selectedTeam?.members.some(
+                          member => member.id === user.id
+                        )}
                       >
-                        {selectedTeam?.members.some(member => member.id === user.id) ? 'Already Member' : 'Add'}
+                        {selectedTeam?.members.some(
+                          member => member.id === user.id
+                        )
+                          ? 'Already Member'
+                          : 'Add'}
                       </button>
                     </div>
                   ))}
                 </div>
               )}
-              
+
               {searchEmail && !searching && searchResults.length === 0 && (
                 <p>No users found with this email</p>
               )}
             </div>
-            
+
             <div className={styles.formButtons}>
               <button
-                type="button"
+                type='button'
                 onClick={() => {
                   setShowMemberForm(false);
                   setSearchEmail('');

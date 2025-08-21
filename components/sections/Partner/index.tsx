@@ -14,21 +14,17 @@ export default function PartnerSection() {
     <section className={styles.partnerSection}>
       {/* Arrows SVG wrapper - FORA do blueBox */}
       <div className={styles.arrowsWrapper}>
-        <svg
-          className={styles.arrows}
-          width="1800"
-          height="580"
-        >
+        <svg className={styles.arrows} width='1800' height='580'>
           {arrows.map((arrow, idx) => (
             <g key={idx}>
               <line
-                x1="0"
+                x1='0'
                 y1={arrow.y}
                 x2={arrow.width}
                 y2={arrow.y}
-                stroke="#4892E6"
-                strokeWidth="9"
-                opacity="0.19"
+                stroke='#4892E6'
+                strokeWidth='9'
+                opacity='0.19'
               />
               <polyline
                 points={`
@@ -36,10 +32,10 @@ export default function PartnerSection() {
                   ${arrow.width},${arrow.y}
                   ${arrow.width - 40},${arrow.y + 28}
                 `}
-                stroke="#4892E6"
-                strokeWidth="9"
-                fill="none"
-                opacity="0.19"
+                stroke='#4892E6'
+                strokeWidth='9'
+                fill='none'
+                opacity='0.19'
               />
             </g>
           ))}
@@ -48,11 +44,16 @@ export default function PartnerSection() {
       {/* Camada Azul */}
       <div className={styles.blueBox}>
         <div className={styles.partnerContent}>
-          <h2 className={styles.partnerTitle}>BECOME A<br />NITY PARTNER</h2>
+          <h2 className={styles.partnerTitle}>
+            BECOME A<br />
+            NITY PARTNER
+          </h2>
           <p className={styles.partnerDesc}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam,
           </p>
-          <Link href="/register-scout">
+          <Link href='/register-scout'>
             <button className={styles.partnerBtn}>Be a Scout &rarr;</button>
           </Link>
         </div>
@@ -60,11 +61,11 @@ export default function PartnerSection() {
       {/* Imagem */}
       <div className={styles.partnerImgWrapper}>
         <Image
-          src="/assets/partner.png"
-          alt="Parceira Nity"
+          src='/assets/partner.png'
+          alt='Parceira Nity'
           fill
           style={{ objectFit: 'cover' }}
-          sizes="(max-width: 800px) 100vw, 516px"
+          sizes='(max-width: 800px) 100vw, 516px'
         />
       </div>
     </section>

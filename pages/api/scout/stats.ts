@@ -2,11 +2,11 @@ import { NextApiResponse } from 'next';
 import User from '../../../src/models/User';
 import { UserRole } from '../../../src/types/auth';
 import dbConnect from '../../../src/lib/dbConnect';
-import { 
-  AuthenticatedRequest, 
-  authenticate, 
-  requireScout, 
-  createApiHandler 
+import {
+  AuthenticatedRequest,
+  authenticate,
+  requireScout,
+  createApiHandler,
 } from '../../../src/lib/auth-middleware';
 
 const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
@@ -21,26 +21,36 @@ const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
     }
   } catch (error) {
     console.error('[API /scout/stats] Handler error:', error);
-    return res.status(500).json({ 
+    return res.status(500).json({
       message: 'Internal server error',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Server error'
+      error:
+        process.env.NODE_ENV === 'development' ? error.message : 'Server error',
     });
   }
 };
 
-const handleGetScoutStats = async (req: AuthenticatedRequest, res: NextApiResponse) => {
+const handleGetScoutStats = async (
+  req: AuthenticatedRequest,
+  res: NextApiResponse
+) => {
   try {
     const scoutId = req.user!.id;
 
     // Get scout user to get affiliate code
-    const scout = await User.findById(scoutId).select('affiliateCode name email');
+    const scout = await User.findById(scoutId).select(
+      'affiliateCode name email'
+    );
     if (!scout || !scout.affiliateCode) {
-      return res.status(404).json({ message: 'Scout affiliate code not found' });
+      return res
+        .status(404)
+        .json({ message: 'Scout affiliate code not found' });
     }
 
     // Get referral statistics
-    const totalReferrals = await User.countDocuments({ referredBy: scout.affiliateCode });
-    
+    const totalReferrals = await User.countDocuments({
+      referredBy: scout.affiliateCode,
+    });
+
     const recentReferrals = await User.find({ referredBy: scout.affiliateCode })
       .select('name email createdAt')
       .sort({ createdAt: -1 })
@@ -52,13 +62,13 @@ const handleGetScoutStats = async (req: AuthenticatedRequest, res: NextApiRespon
         $group: {
           _id: {
             year: { $year: '$createdAt' },
-            month: { $month: '$createdAt' }
+            month: { $month: '$createdAt' },
           },
-          count: { $sum: 1 }
-        }
+          count: { $sum: 1 },
+        },
       },
       { $sort: { '_id.year': -1, '_id.month': -1 } },
-      { $limit: 12 }
+      { $limit: 12 },
     ]);
 
     // Get this month's referrals
@@ -66,17 +76,17 @@ const handleGetScoutStats = async (req: AuthenticatedRequest, res: NextApiRespon
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
     const thisMonthReferrals = await User.countDocuments({
       referredBy: scout.affiliateCode,
-      createdAt: { $gte: startOfMonth }
+      createdAt: { $gte: startOfMonth },
     });
 
     // Get this week's referrals
     const startOfWeek = new Date();
     startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
     startOfWeek.setHours(0, 0, 0, 0);
-    
+
     const thisWeekReferrals = await User.countDocuments({
       referredBy: scout.affiliateCode,
-      createdAt: { $gte: startOfWeek }
+      createdAt: { $gte: startOfWeek },
     });
 
     const stats = {
@@ -84,7 +94,7 @@ const handleGetScoutStats = async (req: AuthenticatedRequest, res: NextApiRespon
         id: scout._id.toString(),
         name: scout.name,
         email: scout.email,
-        affiliateCode: scout.affiliateCode
+        affiliateCode: scout.affiliateCode,
       },
       totalReferrals,
       thisMonthReferrals,
@@ -93,13 +103,13 @@ const handleGetScoutStats = async (req: AuthenticatedRequest, res: NextApiRespon
         id: user._id.toString(),
         name: user.name,
         email: user.email,
-        createdAt: user.createdAt
+        createdAt: user.createdAt,
       })),
       referralsByMonth: referralsByMonth.map(item => ({
         year: item._id.year,
         month: item._id.month,
-        count: item.count
-      }))
+        count: item.count,
+      })),
     };
 
     return res.status(200).json(stats);
@@ -109,7 +119,4 @@ const handleGetScoutStats = async (req: AuthenticatedRequest, res: NextApiRespon
   }
 };
 
-export default createApiHandler(handler, [
-  authenticate,
-  requireScout
-]);
+export default createApiHandler(handler, [authenticate, requireScout]);

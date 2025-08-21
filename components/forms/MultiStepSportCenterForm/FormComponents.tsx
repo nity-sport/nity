@@ -11,9 +11,17 @@ interface FormInputProps {
   error?: string;
 }
 
-export function FormInput({ label, value, onChange, placeholder, type = 'text', required, error }: FormInputProps) {
+export function FormInput({
+  label,
+  value,
+  onChange,
+  placeholder,
+  type = 'text',
+  required,
+  error,
+}: FormInputProps) {
   const InputComponent = type === 'textarea' ? 'textarea' : 'input';
-  
+
   return (
     <div className={styles.inputGroup}>
       <label className={styles.label}>
@@ -23,7 +31,7 @@ export function FormInput({ label, value, onChange, placeholder, type = 'text', 
       <InputComponent
         type={type === 'textarea' ? undefined : type}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={e => onChange(e.target.value)}
         placeholder={placeholder}
         className={`${styles.input} ${error ? styles.inputError : ''}`}
         rows={type === 'textarea' ? 4 : undefined}
@@ -43,7 +51,15 @@ interface FormSelectProps {
   error?: string;
 }
 
-export function FormSelect({ label, value, onChange, options, placeholder, required, error }: FormSelectProps) {
+export function FormSelect({
+  label,
+  value,
+  onChange,
+  options,
+  placeholder,
+  required,
+  error,
+}: FormSelectProps) {
   return (
     <div className={styles.inputGroup}>
       <label className={styles.label}>
@@ -52,10 +68,10 @@ export function FormSelect({ label, value, onChange, options, placeholder, requi
       </label>
       <select
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={e => onChange(e.target.value)}
         className={`${styles.select} ${error ? styles.inputError : ''}`}
       >
-        {placeholder && <option value="">{placeholder}</option>}
+        {placeholder && <option value=''>{placeholder}</option>}
         {options.map(option => (
           <option key={option.value} value={option.value}>
             {option.label}
@@ -77,7 +93,15 @@ interface FileUploadProps {
   error?: string;
 }
 
-export function FileUpload({ label, onFileSelect, accept, multiple, maxSize = 1024 * 1024, supportedFormats, error }: FileUploadProps) {
+export function FileUpload({
+  label,
+  onFileSelect,
+  accept,
+  multiple,
+  maxSize = 1024 * 1024,
+  supportedFormats,
+  error,
+}: FileUploadProps) {
   const [dragActive, setDragActive] = useState(false);
   const [touchActive, setTouchActive] = useState(false);
 
@@ -95,7 +119,7 @@ export function FileUpload({ label, onFileSelect, accept, multiple, maxSize = 10
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    
+
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       onFileSelect(e.dataTransfer.files);
     }
@@ -110,9 +134,11 @@ export function FileUpload({ label, onFileSelect, accept, multiple, maxSize = 10
   const handleTouchEnd = (e: React.TouchEvent) => {
     e.preventDefault();
     setTouchActive(false);
-    
+
     // Trigger file input click on touch
-    const fileInput = e.currentTarget.querySelector('input[type="file"]') as HTMLInputElement;
+    const fileInput = e.currentTarget.querySelector(
+      'input[type="file"]'
+    ) as HTMLInputElement;
     if (fileInput) {
       fileInput.click();
     }
@@ -138,7 +164,7 @@ export function FileUpload({ label, onFileSelect, accept, multiple, maxSize = 10
         onTouchEnd={handleTouchEnd}
       >
         <input
-          type="file"
+          type='file'
           accept={accept}
           multiple={multiple}
           onChange={handleChange}
@@ -148,7 +174,8 @@ export function FileUpload({ label, onFileSelect, accept, multiple, maxSize = 10
           <span className={styles.fileUploadText}>Inserir arquivo</span>
           {supportedFormats && (
             <span className={styles.fileUploadHint}>
-              Limite de {Math.round(maxSize / (1024 * 1024))}MB, formatos ({supportedFormats.join(', ')})
+              Limite de {Math.round(maxSize / (1024 * 1024))}MB, formatos (
+              {supportedFormats.join(', ')})
             </span>
           )}
         </div>
@@ -170,9 +197,9 @@ export function Checkbox({ label, checked, onChange, error }: CheckboxProps) {
     <div className={styles.inputGroup}>
       <label className={styles.checkboxLabel}>
         <input
-          type="checkbox"
+          type='checkbox'
           checked={checked}
-          onChange={(e) => onChange(e.target.checked)}
+          onChange={e => onChange(e.target.checked)}
           className={styles.checkbox}
         />
         <span className={styles.checkboxText}>{label}</span>
@@ -190,7 +217,13 @@ interface RadioGroupProps {
   error?: string;
 }
 
-export function RadioGroup({ label, options, value, onChange, error }: RadioGroupProps) {
+export function RadioGroup({
+  label,
+  options,
+  value,
+  onChange,
+  error,
+}: RadioGroupProps) {
   return (
     <div className={styles.inputGroup}>
       <label className={styles.label}>{label}</label>
@@ -198,10 +231,10 @@ export function RadioGroup({ label, options, value, onChange, error }: RadioGrou
         {options.map(option => (
           <label key={option.value} className={styles.radioLabel}>
             <input
-              type="radio"
+              type='radio'
               value={option.value}
               checked={value === option.value}
-              onChange={(e) => onChange(e.target.value)}
+              onChange={e => onChange(e.target.value)}
               className={styles.radio}
             />
             <span className={styles.radioText}>{option.label}</span>
@@ -227,9 +260,9 @@ export function Toggle({ label, checked, onChange, error }: ToggleProps) {
         <label className={styles.label}>{label}</label>
         <div className={styles.toggleContainer}>
           <input
-            type="checkbox"
+            type='checkbox'
             checked={checked}
-            onChange={(e) => onChange(e.target.checked)}
+            onChange={e => onChange(e.target.checked)}
             className={styles.toggleInput}
           />
           <span className={styles.toggleSlider}></span>

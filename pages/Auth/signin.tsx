@@ -13,7 +13,12 @@ export default function SignIn() {
   // const [loading, setLoading] = useState(false); // O useAuth já tem isLoading
   const [error, setError] = useState('');
   const router = useRouter();
-  const { login, isLoading: authLoading, loginWithGoogle, loginWithFacebook } = useAuth();
+  const {
+    login,
+    isLoading: authLoading,
+    loginWithGoogle,
+    loginWithFacebook,
+  } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -23,23 +28,26 @@ export default function SignIn() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-  
+
     try {
       await login(formData.email, formData.password);
       router.push('/');
     } catch (err: any) {
-      console.log('Erro recebido do login:', err);
-      console.log('Mensagem de erro:', err.message); // Confirmado como "Login failed"
-  
+      // Confirmado como "Login failed"
+
       let displayMessage = 'Login failed. Please try again.';
-  
+
       if (err && err.message) {
         const lowerCaseMessage = err.message.toLowerCase();
-  
+
         // Ajuste a condição para verificar a mensagem que você está recebendo
-        if (lowerCaseMessage === 'login failed') { // <--- MUDANÇA AQUI
-          displayMessage = 'Invalid email or password. Please check your details and try again.';
-        } else if (lowerCaseMessage.includes('email and password are required')) {
+        if (lowerCaseMessage === 'login failed') {
+          // <--- MUDANÇA AQUI
+          displayMessage =
+            'Invalid email or password. Please check your details and try again.';
+        } else if (
+          lowerCaseMessage.includes('email and password are required')
+        ) {
           displayMessage = 'Please fill in your email and password.';
         }
         // Adicione mais 'else if' para outras mensagens de erro específicas, se houver.
@@ -69,23 +77,47 @@ export default function SignIn() {
   return (
     <div className={styles.container}>
       <div className={styles.leftImage}>
-        <img src="/assets/auth-bg.svg" alt="Background" className={styles.bgImage} />
+        <img
+          src='/assets/auth-bg.svg'
+          alt='Background'
+          className={styles.bgImage}
+        />
       </div>
 
       <div className={styles.rightForm}>
-        
-      <div className={styles.authHeader}>
-        <h1 className={styles.title}>NICE TO SEE</h1>
-        <h1 className={styles.title}>YOU AGAIN</h1>
-        <p className={styles.subtitle}>PLEASE LOGIN INTO YOUR NITY ACCOUNT</p>
+        <div className={styles.authHeader}>
+          <h1 className={styles.title}>NICE TO SEE</h1>
+          <h1 className={styles.title}>YOU AGAIN</h1>
+          <p className={styles.subtitle}>PLEASE LOGIN INTO YOUR NITY ACCOUNT</p>
         </div>
         <div className={styles.socialButtons}>
           {/* Atualize para usar as funções do useAuth se disponíveis */}
-          <button className={styles.socialButton} onClick={handleGoogleSignIn} disabled={authLoading}>
-            <span><img src="/assets/google-icon.svg" alt="Google Icon" style={{ width: '20px', height: '20px' }} /></span> Sign in with Google
+          <button
+            className={styles.socialButton}
+            onClick={handleGoogleSignIn}
+            disabled={authLoading}
+          >
+            <span>
+              <img
+                src='/assets/google-icon.svg'
+                alt='Google Icon'
+                style={{ width: '20px', height: '20px' }}
+              />
+            </span>{' '}
+            Sign in with Google
           </button>
-          <button className={styles.socialButton} /* onClick={handleFacebookSignIn} */ disabled={authLoading}>
-            <span><img src="/assets/apple-icon.svg" alt="Apple Icon" style={{ width: '20px', height: '20px' }} /></span> Sign in with Apple
+          <button
+            className={styles.socialButton}
+            /* onClick={handleFacebookSignIn} */ disabled={authLoading}
+          >
+            <span>
+              <img
+                src='/assets/apple-icon.svg'
+                alt='Apple Icon'
+                style={{ width: '20px', height: '20px' }}
+              />
+            </span>{' '}
+            Sign in with Apple
           </button>
         </div>
 
@@ -97,41 +129,41 @@ export default function SignIn() {
 
         <form onSubmit={handleSubmit} className={styles.form}>
           {/* ... (campos de email e senha como antes) ... */}
-          <label htmlFor="email" className={styles.label}>
+          <label htmlFor='email' className={styles.label}>
             E-mail
           </label>
           <input
-            type="email"
-            id="email"
-            name="email"
+            type='email'
+            id='email'
+            name='email'
             value={formData.email}
             onChange={handleChange}
             className={styles.input}
             required
-            placeholder="Enter your E-mail"
+            placeholder='Enter your E-mail'
             disabled={authLoading}
           />
 
-          <label htmlFor="password" className={styles.label}>
+          <label htmlFor='password' className={styles.label}>
             Password
           </label>
           <div className={styles.passwordInputWrapper}>
             <input
               type={showPassword ? 'text' : 'password'}
-              id="password"
-              name="password"
+              id='password'
+              name='password'
               value={formData.password}
               onChange={handleChange}
               className={styles.input}
               required
-              placeholder="Enter your Password"
+              placeholder='Enter your Password'
               disabled={authLoading}
             />
             <button
-              type="button"
+              type='button'
               onClick={toggleShowPassword}
               className={styles.eyeButton}
-              aria-label="Toggle password visibility"
+              aria-label='Toggle password visibility'
               disabled={authLoading}
             >
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -140,7 +172,7 @@ export default function SignIn() {
 
           <div style={{ textAlign: 'right', marginBottom: '1rem' }}>
             <button
-              type="button"
+              type='button'
               onClick={() => setShowForgotPasswordModal(true)}
               style={{
                 background: 'none',
@@ -148,7 +180,7 @@ export default function SignIn() {
                 color: '#4da6ff',
                 cursor: 'pointer',
                 fontSize: '0.9rem',
-                textDecoration: 'underline'
+                textDecoration: 'underline',
               }}
             >
               Forgot your password?
@@ -156,7 +188,7 @@ export default function SignIn() {
           </div>
 
           <button
-            type="submit"
+            type='submit'
             disabled={authLoading} // Usar o isLoading do contexto
             className={styles.submitButton}
           >
@@ -166,7 +198,7 @@ export default function SignIn() {
 
         <p className={styles.signUpText}>
           Don't you have an account?{' '}
-          <Link href="/Auth/signup" className={styles.link}>
+          <Link href='/Auth/signup' className={styles.link}>
             Sign up
           </Link>
         </p>

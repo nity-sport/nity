@@ -8,44 +8,46 @@ export function Step10B_DailyRate() {
 
   const updateValidation = () => {
     // Daily rate is optional - always valid
-    console.log('🔧 Step10B_DailyRate: Setting validation for stepIndex 10 to TRUE');
     dispatch({
       type: 'SET_STEP_VALID',
-      payload: { stepIndex: 10, isValid: true }
+      payload: { stepIndex: 10, isValid: true },
     });
   };
 
   const formatCurrency = (value: string): string => {
     // Remove all non-numeric characters except comma
     const numericValue = value.replace(/[^0-9]/g, '');
-    
+
     if (numericValue === '') return '';
-    
+
     // Convert to cents, then format with decimal places
     const cents = parseInt(numericValue);
     const formatted = (cents / 100).toFixed(2).replace('.', ',');
-    
+
     return formatted;
   };
 
   const handleDailyRateChange = (value: string) => {
     const formatted = formatCurrency(value);
-    const numericValue = formatted ? parseFloat(formatted.replace(',', '.')) : undefined;
-    
+    const numericValue = formatted
+      ? parseFloat(formatted.replace(',', '.'))
+      : undefined;
+
     dispatch({
       type: 'UPDATE_FORM_DATA',
       payload: {
-        dormitoryCosts: numericValue
-      }
+        dormitoryCosts: numericValue,
+      },
     });
-    
+
     // Update validation after change
     updateValidation();
   };
 
-  const displayValue = state.formData.dormitoryCosts !== undefined 
-    ? state.formData.dormitoryCosts.toFixed(2).replace('.', ',')
-    : '';
+  const displayValue =
+    state.formData.dormitoryCosts !== undefined
+      ? state.formData.dormitoryCosts.toFixed(2).replace('.', ',')
+      : '';
 
   // Initial validation on mount
   useEffect(() => {
@@ -63,10 +65,10 @@ export function Step10B_DailyRate() {
         <div className={styles.priceInputWrapper}>
           <span className={styles.currencySymbol}>R$</span>
           <input
-            type="text"
+            type='text'
             value={displayValue}
-            onChange={(e) => handleDailyRateChange(e.target.value)}
-            placeholder="0,00"
+            onChange={e => handleDailyRateChange(e.target.value)}
+            placeholder='0,00'
             className={styles.priceInputField}
           />
           <span className={styles.periodLabel}>/DIA</span>

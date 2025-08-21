@@ -12,7 +12,7 @@ export function Step8_Location() {
     street: '',
     number: '',
     city: '',
-    state: ''
+    state: '',
   });
 
   const validateLocationField = (field: string, value: string): string => {
@@ -23,7 +23,7 @@ export function Step8_Location() {
         street: 'Rua',
         number: 'Número',
         city: 'Cidade',
-        state: 'Estado'
+        state: 'Estado',
       };
       return `${fieldNames[field]} é obrigatório`;
     }
@@ -37,7 +37,7 @@ export function Step8_Location() {
       street: '',
       number: '',
       city: '',
-      state: ''
+      state: '',
     };
     const fieldErrors = {
       zip_code: validateLocationField('zip_code', location.zip_code || ''),
@@ -45,24 +45,28 @@ export function Step8_Location() {
       street: validateLocationField('street', location.street || ''),
       number: validateLocationField('number', location.number || ''),
       city: validateLocationField('city', location.city || ''),
-      state: validateLocationField('state', location.state || '')
+      state: validateLocationField('state', location.state || ''),
     };
 
     const isValid = Object.values(fieldErrors).every(error => error === '');
     dispatch({
       type: 'SET_STEP_VALID',
-      payload: { stepIndex: 7, isValid }
+      payload: { stepIndex: 7, isValid },
     });
 
     // Always update errors for this step since it's called by useEffect
-    setErrors(state.showErrors[7] ? fieldErrors : {
-      zip_code: '',
-      country: '',
-      street: '',
-      number: '',
-      city: '',
-      state: ''
-    });
+    setErrors(
+      state.showErrors[7]
+        ? fieldErrors
+        : {
+            zip_code: '',
+            country: '',
+            street: '',
+            number: '',
+            city: '',
+            state: '',
+          }
+    );
 
     return isValid;
   };
@@ -70,14 +74,14 @@ export function Step8_Location() {
   const handleLocationChange = (field: string, value: string) => {
     const newLocation = {
       ...state.formData.location,
-      [field]: value
+      [field]: value,
     };
-    
+
     dispatch({
       type: 'UPDATE_FORM_DATA',
       payload: {
-        location: newLocation
-      }
+        location: newLocation,
+      },
     });
 
     // Validate immediately with the new location data
@@ -87,13 +91,13 @@ export function Step8_Location() {
       street: validateLocationField('street', newLocation.street || ''),
       number: validateLocationField('number', newLocation.number || ''),
       city: validateLocationField('city', newLocation.city || ''),
-      state: validateLocationField('state', newLocation.state || '')
+      state: validateLocationField('state', newLocation.state || ''),
     };
 
     const isValid = Object.values(fieldErrors).every(error => error === '');
     dispatch({
       type: 'SET_STEP_VALID',
-      payload: { stepIndex: 7, isValid }
+      payload: { stepIndex: 7, isValid },
     });
 
     // Only show errors if we're supposed to show errors for this step
@@ -107,7 +111,7 @@ export function Step8_Location() {
         street: '',
         number: '',
         city: '',
-        state: ''
+        state: '',
       });
     }
   };
@@ -117,7 +121,7 @@ export function Step8_Location() {
     { value: 'Argentina', label: 'Argentina' },
     { value: 'Chile', label: 'Chile' },
     { value: 'Colombia', label: 'Colombia' },
-    { value: 'Peru', label: 'Peru' }
+    { value: 'Peru', label: 'Peru' },
   ];
 
   // Validate on mount and when showErrors changes
@@ -130,18 +134,18 @@ export function Step8_Location() {
       <div className={styles.locationForm}>
         <div className={styles.locationRow}>
           <FormInput
-            label="Zip code"
+            label='Zip code'
             value={state.formData.location?.zip_code || ''}
-            onChange={(value) => handleLocationChange('zip_code', value)}
-            placeholder="Insert Zip Code"
+            onChange={value => handleLocationChange('zip_code', value)}
+            placeholder='Insert Zip Code'
             required
             error={errors.zip_code}
           />
-          
+
           <FormSelect
-            label="Country"
+            label='Country'
             value={state.formData.location?.country || 'Brazil'}
-            onChange={(value) => handleLocationChange('country', value)}
+            onChange={value => handleLocationChange('country', value)}
             options={countryOptions}
             required
             error={errors.country}
@@ -150,10 +154,10 @@ export function Step8_Location() {
 
         <div className={styles.locationRowSingle}>
           <FormInput
-            label="Street"
+            label='Street'
             value={state.formData.location?.street || ''}
-            onChange={(value) => handleLocationChange('street', value)}
-            placeholder="Insert your Street"
+            onChange={value => handleLocationChange('street', value)}
+            placeholder='Insert your Street'
             required
             error={errors.street}
           />
@@ -161,10 +165,10 @@ export function Step8_Location() {
 
         <div className={styles.locationRowSingle}>
           <FormInput
-            label="State"
+            label='State'
             value={state.formData.location?.state || ''}
-            onChange={(value) => handleLocationChange('state', value)}
-            placeholder="São Paulo"
+            onChange={value => handleLocationChange('state', value)}
+            placeholder='São Paulo'
             required
             error={errors.state}
           />
@@ -172,19 +176,19 @@ export function Step8_Location() {
 
         <div className={styles.locationRow}>
           <FormInput
-            label="Number"
+            label='Number'
             value={state.formData.location?.number || ''}
-            onChange={(value) => handleLocationChange('number', value)}
-            placeholder="Insert number"
+            onChange={value => handleLocationChange('number', value)}
+            placeholder='Insert number'
             required
             error={errors.number}
           />
-          
+
           <FormInput
-            label="City"
+            label='City'
             value={state.formData.location?.city || ''}
-            onChange={(value) => handleLocationChange('city', value)}
-            placeholder="São Paulo"
+            onChange={value => handleLocationChange('city', value)}
+            placeholder='São Paulo'
             required
             error={errors.city}
           />

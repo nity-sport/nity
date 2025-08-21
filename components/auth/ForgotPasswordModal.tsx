@@ -9,7 +9,10 @@ interface ForgotPasswordModalProps {
 
 type Step = 'email' | 'code' | 'password' | 'success';
 
-export default function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordModalProps) {
+export default function ForgotPasswordModal({
+  isOpen,
+  onClose,
+}: ForgotPasswordModalProps) {
   const [step, setStep] = useState<Step>('email');
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
@@ -132,20 +135,21 @@ export default function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordM
           {step === 'email' && (
             <form onSubmit={handleEmailSubmit}>
               <p className={styles.description}>
-                Enter your email address and we'll send you a verification code to reset your password.
+                Enter your email address and we'll send you a verification code
+                to reset your password.
               </p>
-              
+
               <div className={styles.inputGroup}>
-                <label htmlFor="email" className={styles.label}>
+                <label htmlFor='email' className={styles.label}>
                   Email Address
                 </label>
                 <input
-                  type="email"
-                  id="email"
+                  type='email'
+                  id='email'
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={e => setEmail(e.target.value)}
                   className={styles.input}
-                  placeholder="Enter your email"
+                  placeholder='Enter your email'
                   required
                   disabled={loading}
                 />
@@ -153,8 +157,8 @@ export default function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordM
 
               {error && <div className={styles.error}>{error}</div>}
 
-              <button 
-                type="submit" 
+              <button
+                type='submit'
                 className={styles.submitButton}
                 disabled={loading}
               >
@@ -166,21 +170,23 @@ export default function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordM
           {step === 'code' && (
             <form onSubmit={handleCodeSubmit}>
               <p className={styles.description}>
-                We've sent a 6-digit verification code to <strong>{email}</strong>. 
-                Enter the code below to continue.
+                We've sent a 6-digit verification code to{' '}
+                <strong>{email}</strong>. Enter the code below to continue.
               </p>
-              
+
               <div className={styles.inputGroup}>
-                <label htmlFor="code" className={styles.label}>
+                <label htmlFor='code' className={styles.label}>
                   Verification Code
                 </label>
                 <input
-                  type="text"
-                  id="code"
+                  type='text'
+                  id='code'
                   value={code}
-                  onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                  onChange={e =>
+                    setCode(e.target.value.replace(/\D/g, '').slice(0, 6))
+                  }
                   className={styles.codeInput}
-                  placeholder="000000"
+                  placeholder='000000'
                   maxLength={6}
                   required
                 />
@@ -188,16 +194,16 @@ export default function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordM
 
               {error && <div className={styles.error}>{error}</div>}
 
-              <button 
-                type="submit" 
+              <button
+                type='submit'
                 className={styles.submitButton}
                 disabled={code.length !== 6}
               >
                 Verify Code
               </button>
 
-              <button 
-                type="button" 
+              <button
+                type='button'
                 onClick={() => setStep('email')}
                 className={styles.backButton}
               >
@@ -211,24 +217,24 @@ export default function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordM
               <p className={styles.description}>
                 Create a new password for your account.
               </p>
-              
+
               <div className={styles.inputGroup}>
-                <label htmlFor="newPassword" className={styles.label}>
+                <label htmlFor='newPassword' className={styles.label}>
                   New Password
                 </label>
                 <div className={styles.passwordWrapper}>
                   <input
                     type={showPassword ? 'text' : 'password'}
-                    id="newPassword"
+                    id='newPassword'
                     value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
+                    onChange={e => setNewPassword(e.target.value)}
                     className={styles.input}
-                    placeholder="Enter new password"
+                    placeholder='Enter new password'
                     required
                     disabled={loading}
                   />
                   <button
-                    type="button"
+                    type='button'
                     onClick={() => setShowPassword(!showPassword)}
                     className={styles.eyeButton}
                   >
@@ -238,42 +244,46 @@ export default function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordM
               </div>
 
               <div className={styles.inputGroup}>
-                <label htmlFor="confirmPassword" className={styles.label}>
+                <label htmlFor='confirmPassword' className={styles.label}>
                   Confirm New Password
                 </label>
                 <div className={styles.passwordWrapper}>
                   <input
                     type={showConfirmPassword ? 'text' : 'password'}
-                    id="confirmPassword"
+                    id='confirmPassword'
                     value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    onChange={e => setConfirmPassword(e.target.value)}
                     className={styles.input}
-                    placeholder="Confirm new password"
+                    placeholder='Confirm new password'
                     required
                     disabled={loading}
                   />
                   <button
-                    type="button"
+                    type='button'
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     className={styles.eyeButton}
                   >
-                    {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    {showConfirmPassword ? (
+                      <EyeOff size={20} />
+                    ) : (
+                      <Eye size={20} />
+                    )}
                   </button>
                 </div>
               </div>
 
               {error && <div className={styles.error}>{error}</div>}
 
-              <button 
-                type="submit" 
+              <button
+                type='submit'
                 className={styles.submitButton}
                 disabled={loading || !newPassword || !confirmPassword}
               >
                 {loading ? 'Resetting...' : 'Reset Password'}
               </button>
 
-              <button 
-                type="button" 
+              <button
+                type='button'
                 onClick={() => setStep('code')}
                 className={styles.backButton}
               >
@@ -286,12 +296,10 @@ export default function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordM
             <div className={styles.successContent}>
               <div className={styles.successIcon}>✓</div>
               <p className={styles.successMessage}>
-                Your password has been reset successfully! You can now sign in with your new password.
+                Your password has been reset successfully! You can now sign in
+                with your new password.
               </p>
-              <button 
-                onClick={handleClose}
-                className={styles.submitButton}
-              >
+              <button onClick={handleClose} className={styles.submitButton}>
                 Return to Sign In
               </button>
             </div>

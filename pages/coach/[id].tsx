@@ -1,5 +1,5 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 export default function CoachDetail() {
   const router = useRouter();
@@ -9,7 +9,7 @@ export default function CoachDetail() {
   useEffect(() => {
     if (id) {
       fetch(`/api/coach/${id}`)
-        .then((res) => res.json())
+        .then(res => res.json())
         .then(setCoach);
     }
   }, [id]);

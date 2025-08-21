@@ -1,6 +1,6 @@
 // src/models/SportCenter.ts
-import mongoose, { Schema, Document, Model } from "mongoose";
-import { SportCenterType } from "../types/sportcenter";
+import mongoose, { Schema, Document, Model } from 'mongoose';
+import { SportCenterType } from '../types/sportcenter';
 
 type SportCenterDocument = SportCenterType & Document;
 type SportCenterModel = Model<SportCenterDocument>;
@@ -10,22 +10,24 @@ const SportCenterSchema = new Schema<SportCenterDocument>({
   mainPhoto: String,
   profilePhoto: String,
   photos: [String],
-  categories: [{
-    id: String,
-    name: String,
-    ageRange: [Number],
-    gender: {
-      type: String,
-      enum: ['Masculino', 'Feminino', 'Misto']
+  categories: [
+    {
+      id: String,
+      name: String,
+      ageRange: [Number],
+      gender: {
+        type: String,
+        enum: ['Masculino', 'Feminino', 'Misto'],
+      },
+      schedule: {
+        days: [String],
+        times: [String],
+      },
     },
-    schedule: {
-      days: [String],
-      times: [String]
-    }
-  }],
+  ],
   achievements: [String],
   badge: String,
-  coaches: [{ type: Schema.Types.Mixed }], 
+  coaches: [{ type: Schema.Types.Mixed }],
   dormitory: { type: Boolean, required: true },
   dormitoryCosts: Number,
   dormitoryMainPhoto: String,
@@ -52,4 +54,4 @@ const SportCenterSchema = new Schema<SportCenterDocument>({
 });
 
 export default (mongoose.models.SportCenter as SportCenterModel) ||
-  mongoose.model<SportCenterDocument>("SportCenter", SportCenterSchema);
+  mongoose.model<SportCenterDocument>('SportCenter', SportCenterSchema);

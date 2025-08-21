@@ -54,17 +54,11 @@ const SportCentersAdminPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log('[Admin SportCenters] useEffect triggered');
-    console.log('[Admin SportCenters] canManageSportCenters:', canManageSportCenters);
-    console.log('[Admin SportCenters] user:', user);
-    
     if (!canManageSportCenters) {
-      console.log('[Admin SportCenters] Access denied - cannot manage sport centers');
       setError('Acesso negado. Apenas usuários com permissão podem acessar esta página.');
       setLoading(false);
       return;
     }
-    console.log('[Admin SportCenters] Access granted - fetching sport centers');
     fetchSportCenters();
   }, [currentPage, searchTerm, canManageSportCenters, user]);
 
@@ -73,15 +67,11 @@ const SportCentersAdminPage: React.FC = () => {
       setLoading(true);
       const token = localStorage.getItem('auth_token');
       
-      console.log('[Admin SportCenters] Fetching sport centers with token:', token ? 'Present' : 'Missing');
-      
       const params = new URLSearchParams({
         page: currentPage.toString(),
         limit: '12',
         ...(searchTerm && { search: searchTerm })
       });
-
-      console.log('[Admin SportCenters] Request params:', params.toString());
 
       const response = await fetch(`/api/sportcenter?${params}`, {
         headers: {
@@ -89,19 +79,27 @@ const SportCentersAdminPage: React.FC = () => {
         }
       });
 
-      console.log('[Admin SportCenters] Response status:', response.status);
-
       if (!response.ok) {
         const errorData = await response.json();
         console.error('[Admin SportCenters] API Error:', errorData);
         throw new Error(errorData.message || 'Erro ao carregar sportcenters');
       }
 
-      const data: SportCentersResponse = await response.json();
-      console.log('[Admin SportCenters] Received data:', data);
+      const data = await response.json();
       
-      setSportCenters(data.sportCenters || []);
-      setPagination(data.pagination);
+      // Handle new standardized API response format
+      if (data.success && data.data && Array.isArray(data.data)) {
+        setSportCenters(data.data);
+        setPagination(data.metadata?.pagination || null);
+      }
+      // Fallback for old API format (backward compatibility)
+      else if (data.sportCenters && Array.isArray(data.sportCenters)) {
+        setSportCenters(data.sportCenters);
+        setPagination(data.pagination);
+      } else {
+        setSportCenters([]);
+        setPagination(null);
+      }
       setError(null);
     } catch (error: any) {
       console.error('[Admin SportCenters] Fetch error:', error);

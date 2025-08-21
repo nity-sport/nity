@@ -20,13 +20,13 @@ export default async function handler(
 
         res.status(200).json({
           success: true,
-          data: sports
+          data: sports,
         });
       } catch (error) {
         console.error('Error fetching sports:', error);
         res.status(500).json({
           success: false,
-          error: 'Erro ao buscar esportes'
+          error: 'Erro ao buscar esportes',
         });
       }
       break;
@@ -38,33 +38,33 @@ export default async function handler(
         if (!name) {
           return res.status(400).json({
             success: false,
-            error: 'Nome do esporte é obrigatório'
+            error: 'Nome do esporte é obrigatório',
           });
         }
 
         const sport = await Sport.create({
           name: name.trim(),
           icon,
-          status: 'sugerido'
+          status: 'sugerido',
         });
 
         res.status(201).json({
           success: true,
-          data: sport
+          data: sport,
         });
       } catch (error: any) {
         console.error('Error creating sport:', error);
-        
+
         if (error.code === 11000) {
           return res.status(400).json({
             success: false,
-            error: 'Esporte já cadastrado'
+            error: 'Esporte já cadastrado',
           });
         }
 
         res.status(500).json({
           success: false,
-          error: 'Erro ao criar esporte'
+          error: 'Erro ao criar esporte',
         });
       }
       break;

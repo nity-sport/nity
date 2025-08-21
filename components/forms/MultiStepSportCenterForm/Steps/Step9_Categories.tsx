@@ -16,18 +16,18 @@ export function Step9_Categories() {
       gender: 'Masculino',
       schedule: {
         days: ['Seg', 'Qua', 'Sex'],
-        times: ['14:30', '16:00']
-      }
+        times: ['14:30', '16:00'],
+      },
     },
     {
       id: '2',
       name: 'Sub 16',
-      ageRange: [15, 16], 
+      ageRange: [15, 16],
       gender: 'Feminino',
       schedule: {
         days: ['Ter', 'Qui'],
-        times: ['14:30', '18:00']
-      }
+        times: ['14:30', '18:00'],
+      },
     },
     {
       id: '3',
@@ -36,11 +36,11 @@ export function Step9_Categories() {
       gender: 'Masculino',
       schedule: {
         days: ['Seg', 'Qua'],
-        times: ['16:00', '17:30']
-      }
-    }
+        times: ['16:00', '17:30'],
+      },
+    },
   ]);
-  
+
   const [showAddModal, setShowAddModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState<string | null>(null);
   const [showEditModal, setShowEditModal] = useState<string | null>(null);
@@ -52,8 +52,8 @@ export function Step9_Categories() {
     gender: 'Masculino',
     schedule: {
       days: [],
-      times: []
-    }
+      times: [],
+    },
   });
 
   const validateCategories = (categoriesList: CategoryType[]): string => {
@@ -63,12 +63,12 @@ export function Step9_Categories() {
 
   const updateValidation = (categoriesList: CategoryType[]) => {
     const validationError = validateCategories(categoriesList);
-    
+
     dispatch({
       type: 'SET_STEP_VALID',
-      payload: { stepIndex: 8, isValid: validationError === '' }
+      payload: { stepIndex: 8, isValid: validationError === '' },
     });
-    
+
     // Only show error if we're supposed to show errors for this step
     if (state.showErrors[8]) {
       setError(validationError);
@@ -88,19 +88,24 @@ export function Step9_Categories() {
     { value: 16, label: '16' },
     { value: 17, label: '17' },
     { value: 18, label: '18' },
-    { value: 19, label: '>18' }
+    { value: 19, label: '>18' },
   ];
 
   const genderOptions = [
     { value: 'Masculino', label: 'Masculino' },
     { value: 'Feminino', label: 'Feminino' },
-    { value: 'Misto', label: 'Misto' }
+    { value: 'Misto', label: 'Misto' },
   ];
 
   const dayOptions = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
 
   const handleAddCategory = () => {
-    if (newCategory.name?.trim() && newCategory.ageRange?.length && newCategory.schedule?.days.length && newCategory.schedule?.times?.length) {
+    if (
+      newCategory.name?.trim() &&
+      newCategory.ageRange?.length &&
+      newCategory.schedule?.days.length &&
+      newCategory.schedule?.times?.length
+    ) {
       const categoryToAdd: CategoryType = {
         id: `category-${Date.now()}`,
         name: newCategory.name.trim(),
@@ -108,32 +113,32 @@ export function Step9_Categories() {
         gender: newCategory.gender || 'Masculino',
         schedule: {
           days: newCategory.schedule.days,
-          times: newCategory.schedule.times || []
-        }
+          times: newCategory.schedule.times || [],
+        },
       };
-      
+
       const updatedCategories = [...categories, categoryToAdd];
       setCategories(updatedCategories);
-      
+
       dispatch({
         type: 'UPDATE_FORM_DATA',
         payload: {
-          categories: updatedCategories
-        }
+          categories: updatedCategories,
+        },
       });
-      
+
       setNewCategory({
         name: '',
         ageRange: [],
         gender: 'Masculino',
         schedule: {
           days: [],
-          times: []
-        }
+          times: [],
+        },
       });
       setNewTimeInput('');
       setShowAddModal(false);
-      
+
       // Update validation after adding category
       updateValidation(updatedCategories);
     }
@@ -142,16 +147,16 @@ export function Step9_Categories() {
   const handleDeleteCategory = (categoryId: string) => {
     const updatedCategories = categories.filter(c => c.id !== categoryId);
     setCategories(updatedCategories);
-    
+
     dispatch({
       type: 'UPDATE_FORM_DATA',
       payload: {
-        categories: updatedCategories
-      }
+        categories: updatedCategories,
+      },
     });
-    
+
     setShowDeleteModal(null);
-    
+
     // Update validation after deleting category
     updateValidation(updatedCategories);
   };
@@ -159,16 +164,16 @@ export function Step9_Categories() {
   const handleAgeToggle = (age: number) => {
     const currentAges = newCategory.ageRange || [];
     const isSelected = currentAges.includes(age);
-    
+
     if (isSelected) {
       setNewCategory(prev => ({
         ...prev,
-        ageRange: currentAges.filter(a => a !== age)
+        ageRange: currentAges.filter(a => a !== age),
       }));
     } else {
       setNewCategory(prev => ({
         ...prev,
-        ageRange: [...currentAges, age].sort((a, b) => a - b)
+        ageRange: [...currentAges, age].sort((a, b) => a - b),
       }));
     }
   };
@@ -176,34 +181,37 @@ export function Step9_Categories() {
   const handleDayToggle = (day: string) => {
     const currentDays = newCategory.schedule?.days || [];
     const isSelected = currentDays.includes(day);
-    
+
     if (isSelected) {
       setNewCategory(prev => ({
         ...prev,
         schedule: {
           ...prev.schedule!,
-          days: currentDays.filter(d => d !== day)
-        }
+          days: currentDays.filter(d => d !== day),
+        },
       }));
     } else {
       setNewCategory(prev => ({
         ...prev,
         schedule: {
           ...prev.schedule!,
-          days: [...currentDays, day]
-        }
+          days: [...currentDays, day],
+        },
       }));
     }
   };
 
   const handleAddTime = () => {
-    if (newTimeInput.trim() && !newCategory.schedule?.times?.includes(newTimeInput)) {
+    if (
+      newTimeInput.trim() &&
+      !newCategory.schedule?.times?.includes(newTimeInput)
+    ) {
       setNewCategory(prev => ({
         ...prev,
         schedule: {
           ...prev.schedule!,
-          times: [...(prev.schedule?.times || []), newTimeInput]
-        }
+          times: [...(prev.schedule?.times || []), newTimeInput],
+        },
       }));
       setNewTimeInput('');
     }
@@ -214,8 +222,9 @@ export function Step9_Categories() {
       ...prev,
       schedule: {
         ...prev.schedule!,
-        times: prev.schedule?.times?.filter(time => time !== timeToRemove) || []
-      }
+        times:
+          prev.schedule?.times?.filter(time => time !== timeToRemove) || [],
+      },
     }));
   };
 
@@ -228,17 +237,23 @@ export function Step9_Categories() {
         gender: categoryToEdit.gender,
         schedule: {
           days: categoryToEdit.schedule.days,
-          times: categoryToEdit.schedule.times
-        }
+          times: categoryToEdit.schedule.times,
+        },
       });
       setShowEditModal(categoryId);
     }
   };
 
   const handleUpdateCategory = () => {
-    if (showEditModal && newCategory.name?.trim() && newCategory.ageRange?.length && newCategory.schedule?.days.length && newCategory.schedule?.times?.length) {
-      const updatedCategories = categories.map(category => 
-        category.id === showEditModal 
+    if (
+      showEditModal &&
+      newCategory.name?.trim() &&
+      newCategory.ageRange?.length &&
+      newCategory.schedule?.days.length &&
+      newCategory.schedule?.times?.length
+    ) {
+      const updatedCategories = categories.map(category =>
+        category.id === showEditModal
           ? {
               ...category,
               name: newCategory.name!.trim(),
@@ -246,33 +261,33 @@ export function Step9_Categories() {
               gender: newCategory.gender!,
               schedule: {
                 days: newCategory.schedule!.days,
-                times: newCategory.schedule!.times
-              }
+                times: newCategory.schedule!.times,
+              },
             }
           : category
       );
-      
+
       setCategories(updatedCategories);
-      
+
       dispatch({
         type: 'UPDATE_FORM_DATA',
         payload: {
-          categories: updatedCategories
-        }
+          categories: updatedCategories,
+        },
       });
-      
+
       setNewCategory({
         name: '',
         ageRange: [],
         gender: 'Masculino',
         schedule: {
           days: [],
-          times: []
-        }
+          times: [],
+        },
       });
       setNewTimeInput('');
       setShowEditModal(null);
-      
+
       // Update validation after editing category
       updateValidation(updatedCategories);
     }
@@ -285,8 +300,8 @@ export function Step9_Categories() {
       gender: 'Masculino',
       schedule: {
         days: [],
-        times: []
-      }
+        times: [],
+      },
     });
     setNewTimeInput('');
   };
@@ -302,8 +317,8 @@ export function Step9_Categories() {
     dispatch({
       type: 'UPDATE_FORM_DATA',
       payload: {
-        categories: categories
-      }
+        categories: categories,
+      },
     });
     updateValidation(categories);
   }, []);
@@ -311,14 +326,18 @@ export function Step9_Categories() {
   return (
     <div className={styles.stepContainer}>
       {error && <div className={styles.errorMessage}>{error}</div>}
-      
+
       <div className={styles.categoriesContainer}>
         <div className={styles.categoriesGrid}>
           {categories.map(category => (
-            <div 
-              key={category.id} 
+            <div
+              key={category.id}
               className={`${styles.categoryCard} ${selectedCategory === category.id ? styles.categoryCardSelected : ''}`}
-              onClick={() => setSelectedCategory(selectedCategory === category.id ? null : category.id)}
+              onClick={() =>
+                setSelectedCategory(
+                  selectedCategory === category.id ? null : category.id
+                )
+              }
             >
               <div className={styles.categoryCardHeader}>
                 <h4 className={styles.categoryCardName}>{category.name}</h4>
@@ -327,7 +346,7 @@ export function Step9_Categories() {
                 </span>
                 <button
                   className={styles.categoryDeleteButton}
-                  onClick={(e) => {
+                  onClick={e => {
                     e.stopPropagation();
                     setShowDeleteModal(category.id);
                   }}
@@ -337,7 +356,7 @@ export function Step9_Categories() {
                 {selectedCategory === category.id && (
                   <button
                     className={styles.categoryEditButton}
-                    onClick={(e) => {
+                    onClick={e => {
                       e.stopPropagation();
                       handleEditCategory(category.id);
                     }}
@@ -346,13 +365,17 @@ export function Step9_Categories() {
                   </button>
                 )}
               </div>
-              
+
               <div className={styles.categoryCardContent}>
                 <div className={styles.categoryGenderIcons}>
-                  <span className={`${styles.genderIcon} ${category.gender === 'Masculino' || category.gender === 'Misto' ? styles.genderIconActive : ''}`}>
+                  <span
+                    className={`${styles.genderIcon} ${category.gender === 'Masculino' || category.gender === 'Misto' ? styles.genderIconActive : ''}`}
+                  >
                     ♂
                   </span>
-                  <span className={`${styles.genderIcon} ${category.gender === 'Feminino' || category.gender === 'Misto' ? styles.genderIconActive : ''}`}>
+                  <span
+                    className={`${styles.genderIcon} ${category.gender === 'Feminino' || category.gender === 'Misto' ? styles.genderIconActive : ''}`}
+                  >
                     ♀
                   </span>
                 </div>
@@ -367,8 +390,11 @@ export function Step9_Categories() {
               </div>
             </div>
           ))}
-          
-          <div className={styles.addCategoryCard} onClick={() => setShowAddModal(true)}>
+
+          <div
+            className={styles.addCategoryCard}
+            onClick={() => setShowAddModal(true)}
+          >
             <div className={styles.addCategoryContent}>
               <span className={styles.addCategoryIcon}>+</span>
               <span className={styles.addCategoryText}>Adicione categoria</span>
@@ -380,31 +406,37 @@ export function Step9_Categories() {
       {showAddModal && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
-            <button 
+            <button
               className={styles.modalCloseButton}
               onClick={() => setShowAddModal(false)}
             >
               ×
             </button>
-            
+
             <h3 className={styles.modalTitle}>Adicione uma Categoria</h3>
-            
+
             <div className={styles.modalForm}>
               <FormInput
-                label="Nome da Categoria"
+                label='Nome da Categoria'
                 value={newCategory.name || ''}
-                onChange={(value) => setNewCategory(prev => ({ ...prev, name: value }))}
-                placeholder="Ex: Sub14"
+                onChange={value =>
+                  setNewCategory(prev => ({ ...prev, name: value }))
+                }
+                placeholder='Ex: Sub14'
               />
 
               <div className={styles.ageSelector}>
-                <label className={styles.modalLabel}>Quais idades essa categoria contempla</label>
+                <label className={styles.modalLabel}>
+                  Quais idades essa categoria contempla
+                </label>
                 <div className={styles.ageGrid}>
                   {ageOptions.map(age => (
                     <div
                       key={age.label}
                       className={`${styles.ageOption} ${
-                        newCategory.ageRange?.includes(age.value) ? styles.selected : ''
+                        newCategory.ageRange?.includes(age.value)
+                          ? styles.selected
+                          : ''
                       }`}
                       onClick={() => handleAgeToggle(age.value)}
                     >
@@ -421,9 +453,16 @@ export function Step9_Categories() {
                     <div
                       key={gender.value}
                       className={`${styles.genderOption} ${
-                        newCategory.gender === gender.value ? styles.selected : ''
+                        newCategory.gender === gender.value
+                          ? styles.selected
+                          : ''
                       }`}
-                      onClick={() => setNewCategory(prev => ({ ...prev, gender: gender.value as any }))}
+                      onClick={() =>
+                        setNewCategory(prev => ({
+                          ...prev,
+                          gender: gender.value as any,
+                        }))
+                      }
                     >
                       {gender.label}
                     </div>
@@ -432,13 +471,17 @@ export function Step9_Categories() {
               </div>
 
               <div className={styles.scheduleSelector}>
-                <label className={styles.modalLabel}>Quais dias e horários</label>
+                <label className={styles.modalLabel}>
+                  Quais dias e horários
+                </label>
                 <div className={styles.dayGrid}>
                   {dayOptions.map(day => (
                     <div
                       key={day}
                       className={`${styles.dayOption} ${
-                        newCategory.schedule?.days.includes(day) ? styles.selected : ''
+                        newCategory.schedule?.days.includes(day)
+                          ? styles.selected
+                          : ''
                       }`}
                       onClick={() => handleDayToggle(day)}
                     >
@@ -455,24 +498,24 @@ export function Step9_Categories() {
                         <button
                           className={styles.removeTimeButton}
                           onClick={() => handleRemoveTime(time)}
-                          type="button"
+                          type='button'
                         >
                           ×
                         </button>
                       </div>
                     ))}
-                    
+
                     <FormInput
-                      label=""
+                      label=''
                       value={newTimeInput}
                       onChange={setNewTimeInput}
-                      type="time"
-                      placeholder="14:30"
+                      type='time'
+                      placeholder='14:30'
                     />
-                    <button 
+                    <button
                       className={styles.addTimeButton}
                       onClick={handleAddTime}
-                      type="button"
+                      type='button'
                     >
                       +
                     </button>
@@ -480,16 +523,16 @@ export function Step9_Categories() {
                 </div>
               </div>
             </div>
-            
+
             <div className={styles.modalButtonContainer}>
-              <button 
+              <button
                 className={styles.modalClearButton}
                 onClick={handleClearForm}
-                title="Limpar formulário"
+                title='Limpar formulário'
               >
                 🗑️
               </button>
-              <button 
+              <button
                 className={styles.modalAddButton}
                 onClick={handleAddCategory}
               >
@@ -503,31 +546,37 @@ export function Step9_Categories() {
       {showEditModal && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
-            <button 
+            <button
               className={styles.modalCloseButton}
               onClick={() => setShowEditModal(null)}
             >
               ×
             </button>
-            
+
             <h3 className={styles.modalTitle}>Editar Categoria</h3>
-            
+
             <div className={styles.modalForm}>
               <FormInput
-                label="Nome da Categoria"
+                label='Nome da Categoria'
                 value={newCategory.name || ''}
-                onChange={(value) => setNewCategory(prev => ({ ...prev, name: value }))}
-                placeholder="Ex: Sub14"
+                onChange={value =>
+                  setNewCategory(prev => ({ ...prev, name: value }))
+                }
+                placeholder='Ex: Sub14'
               />
 
               <div className={styles.ageSelector}>
-                <label className={styles.modalLabel}>Quais idades essa categoria contempla</label>
+                <label className={styles.modalLabel}>
+                  Quais idades essa categoria contempla
+                </label>
                 <div className={styles.ageGrid}>
                   {ageOptions.map(age => (
                     <div
                       key={age.label}
                       className={`${styles.ageOption} ${
-                        newCategory.ageRange?.includes(age.value) ? styles.selected : ''
+                        newCategory.ageRange?.includes(age.value)
+                          ? styles.selected
+                          : ''
                       }`}
                       onClick={() => handleAgeToggle(age.value)}
                     >
@@ -544,9 +593,16 @@ export function Step9_Categories() {
                     <div
                       key={gender.value}
                       className={`${styles.genderOption} ${
-                        newCategory.gender === gender.value ? styles.selected : ''
+                        newCategory.gender === gender.value
+                          ? styles.selected
+                          : ''
                       }`}
-                      onClick={() => setNewCategory(prev => ({ ...prev, gender: gender.value as any }))}
+                      onClick={() =>
+                        setNewCategory(prev => ({
+                          ...prev,
+                          gender: gender.value as any,
+                        }))
+                      }
                     >
                       {gender.label}
                     </div>
@@ -555,13 +611,17 @@ export function Step9_Categories() {
               </div>
 
               <div className={styles.scheduleSelector}>
-                <label className={styles.modalLabel}>Quais dias e horários</label>
+                <label className={styles.modalLabel}>
+                  Quais dias e horários
+                </label>
                 <div className={styles.dayGrid}>
                   {dayOptions.map(day => (
                     <div
                       key={day}
                       className={`${styles.dayOption} ${
-                        newCategory.schedule?.days.includes(day) ? styles.selected : ''
+                        newCategory.schedule?.days.includes(day)
+                          ? styles.selected
+                          : ''
                       }`}
                       onClick={() => handleDayToggle(day)}
                     >
@@ -578,24 +638,24 @@ export function Step9_Categories() {
                         <button
                           className={styles.removeTimeButton}
                           onClick={() => handleRemoveTime(time)}
-                          type="button"
+                          type='button'
                         >
                           ×
                         </button>
                       </div>
                     ))}
-                    
+
                     <FormInput
-                      label=""
+                      label=''
                       value={newTimeInput}
                       onChange={setNewTimeInput}
-                      type="time"
-                      placeholder="14:30"
+                      type='time'
+                      placeholder='14:30'
                     />
-                    <button 
+                    <button
                       className={styles.addTimeButton}
                       onClick={handleAddTime}
-                      type="button"
+                      type='button'
                     >
                       +
                     </button>
@@ -603,16 +663,16 @@ export function Step9_Categories() {
                 </div>
               </div>
             </div>
-            
+
             <div className={styles.modalButtonContainer}>
-              <button 
+              <button
                 className={styles.modalClearButton}
                 onClick={handleClearForm}
-                title="Limpar formulário"
+                title='Limpar formulário'
               >
                 🗑️
               </button>
-              <button 
+              <button
                 className={styles.modalAddButton}
                 onClick={handleUpdateCategory}
               >
@@ -626,29 +686,29 @@ export function Step9_Categories() {
       {showDeleteModal && (
         <div className={styles.deleteModal}>
           <div className={styles.deleteModalContent}>
-            <button 
+            <button
               className={styles.deleteModalCloseButton}
               onClick={() => setShowDeleteModal(null)}
             >
               ×
             </button>
-            
+
             <div className={styles.deleteModalIcon}>
-              <div className={styles.deleteModalIconCircle}>
-                !
-              </div>
+              <div className={styles.deleteModalIconCircle}>!</div>
             </div>
-            
-            <h3 className={styles.deleteModalTitle}>TEM CERTEZA QUE DESEJA EXCLUIR CATEGORIA?</h3>
-            
+
+            <h3 className={styles.deleteModalTitle}>
+              TEM CERTEZA QUE DESEJA EXCLUIR CATEGORIA?
+            </h3>
+
             <div className={styles.deleteModalActions}>
-              <button 
+              <button
                 className={styles.deleteModalCancelButton}
                 onClick={() => setShowDeleteModal(null)}
               >
                 Não, cancelar
               </button>
-              <button 
+              <button
                 className={styles.deleteModalConfirmButton}
                 onClick={() => handleDeleteCategory(showDeleteModal)}
               >

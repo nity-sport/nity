@@ -34,7 +34,9 @@ const UsersAdminPage: React.FC = () => {
   const { user, isSuperuser, isLoading: authLoading } = useAuth();
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
-  const [pagination, setPagination] = useState<UsersResponse['pagination'] | null>(null);
+  const [pagination, setPagination] = useState<
+    UsersResponse['pagination'] | null
+  >(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const [roleFilter, setRoleFilter] = useState<UserRole | ''>('');
@@ -44,24 +46,13 @@ const UsersAdminPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log('[Admin Users] useEffect triggered');
-    console.log('[Admin Users] useEffect - isSuperuser:', isSuperuser);
-    console.log('[Admin Users] useEffect - user:', user);
-    console.log('[Admin Users] useEffect - user?.role:', user?.role);
-    console.log('[Admin Users] useEffect - UserRole.SUPERUSER:', UserRole.SUPERUSER);
-    console.log('[Admin Users] useEffect - comparison:', user?.role === UserRole.SUPERUSER);
-    console.log('[Admin Users] useEffect - typeof user?.role:', typeof user?.role);
-    console.log('[Admin Users] useEffect - typeof UserRole.SUPERUSER:', typeof UserRole.SUPERUSER);
-    
     if (!isSuperuser) {
-      console.log('[Admin Users] Access denied - not superuser');
-      console.log('[Admin Users] Access denied - isSuperuser value:', isSuperuser);
-      console.log('[Admin Users] Access denied - user role:', user?.role);
-      setError('Acesso negado. Apenas super usuários podem acessar esta página.');
+      setError(
+        'Acesso negado. Apenas super usuários podem acessar esta página.'
+      );
       setLoading(false);
       return;
     }
-    console.log('[Admin Users] Access granted - fetching users');
     fetchUsers();
   }, [currentPage, searchTerm, roleFilter, isSuperuser, user]);
 
@@ -73,13 +64,13 @@ const UsersAdminPage: React.FC = () => {
         page: currentPage.toString(),
         limit: '10',
         ...(searchTerm && { search: searchTerm }),
-        ...(roleFilter && { role: roleFilter })
+        ...(roleFilter && { role: roleFilter }),
       });
 
       const response = await fetch(`/api/users?${params}`, {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (!response.ok) {
@@ -104,9 +95,9 @@ const UsersAdminPage: React.FC = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(userData)
+        body: JSON.stringify(userData),
       });
 
       if (!response.ok) {
@@ -132,8 +123,8 @@ const UsersAdminPage: React.FC = () => {
       const response = await fetch(`/api/users/${userId}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (!response.ok) {
@@ -151,14 +142,14 @@ const UsersAdminPage: React.FC = () => {
   const handleRoleChange = async (userId: string, newRole: UserRole) => {
     try {
       const token = localStorage.getItem('auth_token');
-      
+
       // Se estamos promovendo para Scout, usar a API específica
       if (newRole === UserRole.SCOUT) {
         const response = await fetch(`/api/users/${userId}/promote-scout`, {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
 
         if (!response.ok) {
@@ -170,7 +161,9 @@ const UsersAdminPage: React.FC = () => {
         setShowRoleChangeForm(false);
         setSelectedUser(null);
         fetchUsers();
-        alert(`Usuário promovido para Scout com sucesso! Código de afiliação: ${data.affiliateCode}`);
+        alert(
+          `Usuário promovido para Scout com sucesso! Código de afiliação: ${data.affiliateCode}`
+        );
         return;
       }
 
@@ -179,9 +172,9 @@ const UsersAdminPage: React.FC = () => {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ role: newRole })
+        body: JSON.stringify({ role: newRole }),
       });
 
       if (!response.ok) {
@@ -198,7 +191,6 @@ const UsersAdminPage: React.FC = () => {
     }
   };
 
-
   const getRoleDisplayName = (role: UserRole): string => {
     const roleNames = {
       [UserRole.SUPERUSER]: 'Super Usuário',
@@ -206,7 +198,7 @@ const UsersAdminPage: React.FC = () => {
       [UserRole.OWNER]: 'Proprietário',
       [UserRole.SCOUT]: 'Scout',
       [UserRole.USER]: 'Usuário',
-      [UserRole.ATHLETE]: 'Atleta'
+      [UserRole.ATHLETE]: 'Atleta',
     };
     return roleNames[role];
   };
@@ -218,7 +210,7 @@ const UsersAdminPage: React.FC = () => {
       [UserRole.OWNER]: styles.badgeOwner,
       [UserRole.SCOUT]: styles.badgeScout,
       [UserRole.USER]: styles.badgeUser,
-      [UserRole.ATHLETE]: styles.badgeAthlete
+      [UserRole.ATHLETE]: styles.badgeAthlete,
     };
     return `${styles.badge} ${roleClasses[role]}`;
   };
@@ -243,165 +235,163 @@ const UsersAdminPage: React.FC = () => {
   }
 
   return (
-      <div className={styles.container}>
-        <div className={styles.header}>
-          <h1 className={styles.title}>Administração de Usuários</h1>
-          <button
-            onClick={() => setShowCreateForm(true)}
-            className={styles.createButton}
-          >
-            Criar Usuário
-          </button>
-        </div>
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <h1 className={styles.title}>Administração de Usuários</h1>
+        <button
+          onClick={() => setShowCreateForm(true)}
+          className={styles.createButton}
+        >
+          Criar Usuário
+        </button>
+      </div>
 
-        <div className={styles.filters}>
-          <input
-            type="text"
-            placeholder="Buscar por nome ou email..."
-            value={searchTerm}
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-              setCurrentPage(1);
-            }}
-            className={styles.searchInput}
-          />
-          <select
-            value={roleFilter}
-            onChange={(e) => {
-              setRoleFilter(e.target.value as UserRole | '');
-              setCurrentPage(1);
-            }}
-            className={styles.filterSelect}
-          >
-            <option value="">Todos os perfis</option>
-            {Object.values(UserRole).map(role => (
-              <option key={role} value={role}>
-                {getRoleDisplayName(role)}
-              </option>
-            ))}
-          </select>
-        </div>
+      <div className={styles.filters}>
+        <input
+          type='text'
+          placeholder='Buscar por nome ou email...'
+          value={searchTerm}
+          onChange={e => {
+            setSearchTerm(e.target.value);
+            setCurrentPage(1);
+          }}
+          className={styles.searchInput}
+        />
+        <select
+          value={roleFilter}
+          onChange={e => {
+            setRoleFilter(e.target.value as UserRole | '');
+            setCurrentPage(1);
+          }}
+          className={styles.filterSelect}
+        >
+          <option value=''>Todos os perfis</option>
+          {Object.values(UserRole).map(role => (
+            <option key={role} value={role}>
+              {getRoleDisplayName(role)}
+            </option>
+          ))}
+        </select>
+      </div>
 
-        {loading ? (
-          <div className={styles.loading}>Carregando usuários...</div>
-        ) : error ? (
-          <div className={styles.errorMessage}>{error}</div>
-        ) : (
-          <>
-            <div className={styles.usersTable}>
-              <div className={styles.tableHeader}>
-                <div>Nome</div>
-                <div>Email</div>
-                <div>Perfil</div>
-                <div>Provedor</div>
-                <div>Criado em</div>
-                <div>Ações</div>
-              </div>
-              {users.map(userItem => (
-                <div key={userItem.id} className={styles.tableRow}>
-                  <div className={styles.userName}>
-                    {userItem.avatar && (
-                      <img
-                        src={userItem.avatar}
-                        alt={userItem.name}
-                        className={styles.userAvatar}
-                      />
-                    )}
-                    <span>{userItem.name}</span>
-                  </div>
-                  <div>{userItem.email}</div>
-                  <div>
-                    <span className={getRoleBadgeClass(userItem.role)}>
-                      {getRoleDisplayName(userItem.role)}
-                      {userItem.role === UserRole.SCOUT && userItem.affiliateCode && (
+      {loading ? (
+        <div className={styles.loading}>Carregando usuários...</div>
+      ) : error ? (
+        <div className={styles.errorMessage}>{error}</div>
+      ) : (
+        <>
+          <div className={styles.usersTable}>
+            <div className={styles.tableHeader}>
+              <div>Nome</div>
+              <div>Email</div>
+              <div>Perfil</div>
+              <div>Provedor</div>
+              <div>Criado em</div>
+              <div>Ações</div>
+            </div>
+            {users.map(userItem => (
+              <div key={userItem.id} className={styles.tableRow}>
+                <div className={styles.userName}>
+                  {userItem.avatar && (
+                    <img
+                      src={userItem.avatar}
+                      alt={userItem.name}
+                      className={styles.userAvatar}
+                    />
+                  )}
+                  <span>{userItem.name}</span>
+                </div>
+                <div>{userItem.email}</div>
+                <div>
+                  <span className={getRoleBadgeClass(userItem.role)}>
+                    {getRoleDisplayName(userItem.role)}
+                    {userItem.role === UserRole.SCOUT &&
+                      userItem.affiliateCode && (
                         <small className={styles.affiliateCodeInBadge}>
                           {userItem.affiliateCode}
                         </small>
                       )}
-                    </span>
-                  </div>
-                  <div>{userItem.provider}</div>
-                  <div>{new Date(userItem.createdAt).toLocaleDateString()}</div>
-                  <div className={styles.actions}>
-                    <button
-                      onClick={() => {
-                        setSelectedUser(userItem);
-                        setShowRoleChangeForm(true);
-                      }}
-                      className={styles.roleButton}
-                      disabled={userItem.id === user?.id}
-                    >
-                      Alterar
-                    </button>
-                    <button
-                      onClick={() => handleDeleteUser(userItem.id)}
-                      className={styles.deleteButton}
-                      disabled={userItem.id === user?.id}
-                    >
-                      Excluir
-                    </button>
-                  </div>
+                  </span>
                 </div>
-              ))}
-            </div>
-
-            {pagination && pagination.totalPages > 1 && (
-              <div className={styles.pagination}>
-                <button
-                  onClick={() => setCurrentPage(currentPage - 1)}
-                  disabled={!pagination.hasPrevPage}
-                  className={styles.paginationButton}
-                >
-                  Anterior
-                </button>
-                <span className={styles.paginationInfo}>
-                  Página {pagination.page} de {pagination.totalPages}
-                </span>
-                <button
-                  onClick={() => setCurrentPage(currentPage + 1)}
-                  disabled={!pagination.hasNextPage}
-                  className={styles.paginationButton}
-                >
-                  Próxima
-                </button>
+                <div>{userItem.provider}</div>
+                <div>{new Date(userItem.createdAt).toLocaleDateString()}</div>
+                <div className={styles.actions}>
+                  <button
+                    onClick={() => {
+                      setSelectedUser(userItem);
+                      setShowRoleChangeForm(true);
+                    }}
+                    className={styles.roleButton}
+                    disabled={userItem.id === user?.id}
+                  >
+                    Alterar
+                  </button>
+                  <button
+                    onClick={() => handleDeleteUser(userItem.id)}
+                    className={styles.deleteButton}
+                    disabled={userItem.id === user?.id}
+                  >
+                    Excluir
+                  </button>
+                </div>
               </div>
-            )}
-          </>
-        )}
-
-        {showCreateForm && (
-          <div className={styles.modalOverlay}>
-            <div className={styles.modal}>
-              <div className={styles.modalHeader}>
-                <h2>Criar Novo Usuário</h2>
-                <button
-                  onClick={() => setShowCreateForm(false)}
-                  className={styles.closeButton}
-                >
-                  ×
-                </button>
-              </div>
-              <UserForm
-                onSubmit={handleCreateUser}
-                showRoleSelection={true}
-              />
-            </div>
+            ))}
           </div>
-        )}
 
-        {showRoleChangeForm && selectedUser && (
-          <RoleChangeForm
-            userId={selectedUser.id}
-            currentRole={selectedUser.role}
-            userName={selectedUser.name}
-            onSubmit={handleRoleChange}
-            onCancel={() => {
-              setShowRoleChangeForm(false);
-              setSelectedUser(null);
-            }}
-          />
-        )}
-      </div>
+          {pagination && pagination.totalPages > 1 && (
+            <div className={styles.pagination}>
+              <button
+                onClick={() => setCurrentPage(currentPage - 1)}
+                disabled={!pagination.hasPrevPage}
+                className={styles.paginationButton}
+              >
+                Anterior
+              </button>
+              <span className={styles.paginationInfo}>
+                Página {pagination.page} de {pagination.totalPages}
+              </span>
+              <button
+                onClick={() => setCurrentPage(currentPage + 1)}
+                disabled={!pagination.hasNextPage}
+                className={styles.paginationButton}
+              >
+                Próxima
+              </button>
+            </div>
+          )}
+        </>
+      )}
+
+      {showCreateForm && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <div className={styles.modalHeader}>
+              <h2>Criar Novo Usuário</h2>
+              <button
+                onClick={() => setShowCreateForm(false)}
+                className={styles.closeButton}
+              >
+                ×
+              </button>
+            </div>
+            <UserForm onSubmit={handleCreateUser} showRoleSelection={true} />
+          </div>
+        </div>
+      )}
+
+      {showRoleChangeForm && selectedUser && (
+        <RoleChangeForm
+          userId={selectedUser.id}
+          currentRole={selectedUser.role}
+          userName={selectedUser.name}
+          onSubmit={handleRoleChange}
+          onCancel={() => {
+            setShowRoleChangeForm(false);
+            setSelectedUser(null);
+          }}
+        />
+      )}
+    </div>
   );
 };
 

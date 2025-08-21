@@ -2,11 +2,11 @@ import { NextApiResponse } from 'next';
 import User from '../../../src/models/User';
 import Team from '../../../src/models/Team';
 import dbConnect from '../../../src/lib/dbConnect';
-import { 
-  AuthenticatedRequest, 
-  authenticate, 
-  requireAuthenticated, 
-  createApiHandler 
+import {
+  AuthenticatedRequest,
+  authenticate,
+  requireAuthenticated,
+  createApiHandler,
 } from '../../../src/lib/auth-middleware';
 import { UserRole } from '../../../src/types/auth';
 
@@ -35,16 +35,17 @@ const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
 
     // Check if user is scout
     if (req.user!.role !== UserRole.SCOUT) {
-      return res.status(403).json({ message: 'Only scouts can access notifications' });
+      return res
+        .status(403)
+        .json({ message: 'Only scouts can access notifications' });
     }
 
     const notifications = await getScoutNotifications(scoutId);
 
     return res.status(200).json({
       notifications,
-      unreadCount: notifications.filter(n => !n.read).length
+      unreadCount: notifications.filter(n => !n.read).length,
     });
-
   } catch (error) {
     console.error('Error fetching scout notifications:', error);
     return res.status(500).json({ message: 'Internal server error' });
@@ -68,7 +69,11 @@ async function getScoutNotifications(scoutId: string): Promise<Notification[]> {
       if (team.memberIds && team.memberIds.length > 0) {
         for (const memberId of team.memberIds) {
           // Type guard to check if member is populated
-          if (typeof memberId === 'object' && memberId !== null && 'createdAt' in memberId) {
+          if (
+            typeof memberId === 'object' &&
+            memberId !== null &&
+            'createdAt' in memberId
+          ) {
             const member = memberId as any; // Cast to any to access populated fields
             // Check if member joined recently
             if (member.createdAt > thirtyDaysAgo) {
@@ -81,7 +86,7 @@ async function getScoutNotifications(scoutId: string): Promise<Notification[]> {
                 memberName: member.name,
                 memberEmail: member.email,
                 timestamp: member.createdAt,
-                read: false // In a real app, you'd track this in a separate collection
+                read: false, // In a real app, you'd track this in a separate collection
               });
             }
           }
@@ -99,7 +104,4 @@ async function getScoutNotifications(scoutId: string): Promise<Notification[]> {
   }
 }
 
-export default createApiHandler(handler, [
-  authenticate,
-  requireAuthenticated
-]);
+export default createApiHandler(handler, [authenticate, requireAuthenticated]);

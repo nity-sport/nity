@@ -22,14 +22,18 @@ export const generateToken = (userId: string): string => {
 
 export const verifyToken = (token: string): { userId: string } | null => {
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload & { userId: string };
+    const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload & {
+      userId: string;
+    };
     return decoded;
   } catch (error) {
     return null;
   }
 };
 
-export const getTokenFromHeader = (authHeader: string | undefined): string | null => {
+export const getTokenFromHeader = (
+  authHeader: string | undefined
+): string | null => {
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return null;
   }

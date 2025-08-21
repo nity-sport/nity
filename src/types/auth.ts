@@ -4,7 +4,7 @@ export enum UserRole {
   OWNER = 'OWNER',
   SCOUT = 'SCOUT',
   USER = 'USER',
-  ATHLETE = 'ATHLETE'
+  ATHLETE = 'ATHLETE',
 }
 
 export interface User {
@@ -27,7 +27,12 @@ export interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   loginWithGoogle: () => Promise<void>;
   loginWithFacebook: () => Promise<void>;
-  register: (email: string, password: string, name: string, referralCode?: string) => Promise<void>;
+  register: (
+    email: string,
+    password: string,
+    name: string,
+    referralCode?: string
+  ) => Promise<void>;
   logout: () => Promise<void>;
   updateProfile: (data: Partial<User>) => Promise<void>;
   checkAuthStatus: () => Promise<void>;

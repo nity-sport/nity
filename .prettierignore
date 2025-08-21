@@ -1,0 +1,12 @@
+node_modules/
+.next/
+out/
+*.config.js
+scripts/
+__tests__/
+debug-*.js
+test-*.js
+*.md
+.git/
+yarn.lock
+package-lock.json

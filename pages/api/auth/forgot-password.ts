@@ -5,7 +5,10 @@ import dbConnect from '../../../src/lib/dbConnect';
 import User from '../../../src/models/User';
 import { sendEmail } from '../../../src/lib/resend';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
@@ -23,17 +26,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const user = await User.findOne({ email: email.toLowerCase() });
     if (!user) {
       // Por segurança, não revelamos se o email existe ou não
-      return res.status(200).json({ 
-        message: 'If this email exists in our system, you will receive a password reset link shortly.' 
+      return res.status(200).json({
+        message:
+          'If this email exists in our system, you will receive a password reset link shortly.',
       });
     }
 
     // Gerar código de 6 dígitos
     const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
-    
+
     // Hash do código para armazenar no banco
     const hashedCode = await bcrypt.hash(resetCode, 10);
-    
+
     // Token expira em 15 minutos
     const resetPasswordExpires = new Date(Date.now() + 15 * 60 * 1000);
 
@@ -116,10 +120,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(500).json({ message: 'Failed to send reset email' });
     }
 
-    res.status(200).json({ 
-      message: 'If this email exists in our system, you will receive a password reset link shortly.' 
+    res.status(200).json({
+      message:
+        'If this email exists in our system, you will receive a password reset link shortly.',
     });
-
   } catch (error) {
     console.error('Forgot password error:', error);
     res.status(500).json({ message: 'Internal server error' });

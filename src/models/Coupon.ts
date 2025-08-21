@@ -31,7 +31,7 @@ const CouponSchema: Schema = new Schema(
       type: Number,
       min: 0,
       validate: {
-        validator: function(this: ICoupon) {
+        validator: function (this: ICoupon) {
           return !!(this.discountValue || this.discountPercentage);
         },
         message: 'Either discountValue or discountPercentage must be provided',
@@ -42,7 +42,7 @@ const CouponSchema: Schema = new Schema(
       min: 0,
       max: 100,
       validate: {
-        validator: function(this: ICoupon) {
+        validator: function (this: ICoupon) {
           return !!(this.discountValue || this.discountPercentage);
         },
         message: 'Either discountValue or discountPercentage must be provided',
@@ -58,10 +58,12 @@ const CouponSchema: Schema = new Schema(
       default: 0,
       min: 0,
     },
-    usedBy: [{
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-    }],
+    usedBy: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
     maxUses: {
       type: Number,
       min: 1,
@@ -84,17 +86,21 @@ CouponSchema.index({ createdBy: 1 });
 CouponSchema.index({ isActive: 1, expiresAt: 1 });
 CouponSchema.index({ usedBy: 1 });
 
-CouponSchema.methods.isValid = function(): boolean {
+CouponSchema.methods.isValid = function (): boolean {
   if (!this.isActive) return false;
   if (this.expiresAt && this.expiresAt < new Date()) return false;
   if (this.maxUses && this.uses >= this.maxUses) return false;
   return true;
 };
 
-CouponSchema.methods.canBeUsedBy = function(userId: mongoose.Types.ObjectId): boolean {
+CouponSchema.methods.canBeUsedBy = function (
+  userId: mongoose.Types.ObjectId
+): boolean {
   if (!this.isValid()) return false;
   return !this.usedBy.includes(userId);
 };
 
-const Coupon: ICouponModel = (mongoose.models.Coupon as ICouponModel) || mongoose.model<ICoupon, ICouponModel>('Coupon', CouponSchema);
+const Coupon: ICouponModel =
+  (mongoose.models.Coupon as ICouponModel) ||
+  mongoose.model<ICoupon, ICouponModel>('Coupon', CouponSchema);
 export default Coupon;

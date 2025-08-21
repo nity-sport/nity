@@ -1,10 +1,19 @@
-
-import type { NextApiRequest, NextApiResponse } from "next";
-import dbConnect from "../../../src/lib/dbConnect";
-import SportCenter from "../../../src/models/SportCenter";
-import User from "../../../src/models/User";
-import { SportCenterType } from "../../../src/types/sportcenter";
-import { getTokenFromHeader, verifyToken } from "../../../src/lib/auth";
+import type { NextApiResponse } from 'next';
+import dbConnect from '../../../src/lib/dbConnect';
+import SportCenter from '../../../src/models/SportCenter';
+import User from '../../../src/models/User';
+import { SportCenterType } from '../../../src/types/sportcenter';
+import { getTokenFromHeader, verifyToken } from '../../../src/lib/auth';
+import { ResponseHandler } from '../../../src/utils/apiResponse';
+import { 
+  AuthenticationError, 
+  AuthorizationError, 
+  ValidationError,
+  DatabaseError,
+  NotFoundError
+} from '../../../src/utils/errors';
+import { withErrorHandler, withMethods, ApiRequest } from '../../../src/middleware/errorHandler';
+import { logger } from '../../../src/utils/logger';
 
 interface SportCentersResponse {
   sportCenters: SportCenterType[];
@@ -18,138 +27,224 @@ interface SportCentersResponse {
   };
 }
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<SportCenterType | SportCentersResponse | { message: string; error?: any }>
-) {
-  await dbConnect();
+async function getSportCenters(req: ApiRequest, res: NextApiResponse) {
+  const startTime = Date.now();
+  
+  try {
+    await dbConnect();
+    logger.dbOperation('connect', 'sportcenters', undefined, { requestId: req.requestId });
 
-  const token = getTokenFromHeader(req.headers.authorization);
-  const decodedToken = token ? verifyToken(token) : null;
+    const token = getTokenFromHeader(req.headers.authorization);
+    const decodedToken = token ? verifyToken(token) : null;
 
-  switch (req.method) {
-    case "GET":
-      try {
-        console.log("[API SportCenter] GET request received", { query: req.query });
-        // Extract query parameters
-        const { page = '1', limit = '12', search, owner, public: isPublic } = req.query;
-        const pageNum = parseInt(page as string);
-        const limitNum = parseInt(limit as string);
-        const skip = (pageNum - 1) * limitNum;
+    // Extract and validate query parameters
+    const {
+      page = '1',
+      limit = '12',
+      search,
+      owner,
+      public: isPublic,
+    } = req.query;
 
-        // Build query based on parameters
-        let query: any = {};
+    const pageNum = parseInt(page as string);
+    const limitNum = parseInt(limit as string);
 
-        // If owner parameter is provided, filter by owner
-        if (owner) {
-          query.owner = owner;
-        }
-        // If public parameter is provided, show all sport centers (no owner filter)
-        else if (isPublic) {
-          console.log("[API SportCenter] Public request - showing all sportcenters");
-          // No additional filters, show all public sportcenters
-        }
-        // If authenticated user is OWNER, show only their sport centers  
-        else if (decodedToken?.userId) {
-          const user = await User.findById(decodedToken.userId);
-          console.log("[API SportCenter] Authenticated user:", user?.role);
-          if (user && user.role === 'OWNER') {
-            console.log("[API SportCenter] Owner user - filtering by owner");
-            query.owner = decodedToken.userId;
-          }
-        }
-        // For unauthenticated users without public flag, show all sportcenters too
-        else {
-          console.log("[API SportCenter] Unauthenticated user - showing all sportcenters");
-        }
+    if (pageNum < 1 || limitNum < 1 || limitNum > 100) {
+      throw new ValidationError('Invalid pagination parameters', { page: pageNum, limit: limitNum });
+    }
 
-        // Add search filter if provided
-        if (search) {
-          query.$or = [
-            { name: { $regex: search, $options: 'i' } },
-            { sportcenterBio: { $regex: search, $options: 'i' } },
-            { sport: { $in: [new RegExp(search as string, 'i')] } },
-            { categories: { $in: [new RegExp(search as string, 'i')] } },
-            { 'location.city': { $regex: search, $options: 'i' } },
-            { 'location.state': { $regex: search, $options: 'i' } },
-            { 'location.country': { $regex: search, $options: 'i' } }
-          ];
-        }
+    const skip = (pageNum - 1) * limitNum;
 
-        // Get total count for pagination
-        const total = await SportCenter.countDocuments(query);
-        const totalPages = Math.ceil(total / limitNum);
+    // Build query based on parameters
+    const query: any = {};
 
-        console.log("[API SportCenter] Query built:", query);
-        console.log("[API SportCenter] Total count:", total);
-
-        // Fetch sport centers with pagination
-        const sportCenters = await SportCenter.find(query)
-          .sort({ createdAt: -1 })
-          .skip(skip)
-          .limit(limitNum)
-          .lean()
-          .exec();
-
-        console.log("[API SportCenter] Found sportCenters:", sportCenters.length);
-
-        const formattedSportCenters = sportCenters.map(center => ({
-          ...center,
-          _id: center._id.toString(),
-        })) as SportCenterType[];
-
-        // Build pagination info
-        const pagination = {
-          page: pageNum,
-          limit: limitNum,
-          total,
-          totalPages,
-          hasNextPage: pageNum < totalPages,
-          hasPrevPage: pageNum > 1
-        };
-
-        console.log("[API SportCenter] Returning response with", formattedSportCenters.length, "sportCenters");
-        return res.status(200).json({ 
-          sportCenters: formattedSportCenters,
-          pagination
-        });
-      } catch (err) {
-        console.error("❌ Erro ao buscar SportCenters:", err);
-        return res
-          .status(500)
-          .json({ message: "Erro ao buscar centros de treinamento", error: err });
-      }
-
-    
-    case "POST":
-      if (!decodedToken || !decodedToken.userId) {
-        return res.status(401).json({ message: 'Não autorizado: Token inválido ou não fornecido' });
-      }
-
-      // Check if user can manage sport centers (OWNER or SUPERUSER)
+    // Authentication and authorization logic
+    if (owner) {
+      query.owner = owner;
+    } else if (isPublic) {
+      // Show all public sport centers
+    } else if (decodedToken?.userId) {
       const user = await User.findById(decodedToken.userId);
-      if (!user || (user.role !== 'OWNER' && user.role !== 'SUPERUSER')) {
-        return res.status(403).json({ message: 'Acesso negado: Apenas owners podem criar sportcenters' });
+      if (!user) {
+        throw new NotFoundError('User');
       }
-
-      try {
-        console.log("📥 Recebido para criar SportCenter:", req.body);
-        
-        const sportCenterData = {
-          ...req.body,
-          owner: decodedToken.userId, // Set owner to authenticated user
-        };
-
-        const sportCenter = await SportCenter.create(sportCenterData);
-        const createdCenter = { ...sportCenter.toObject(), _id: sportCenter._id.toString() };
-        return res.status(201).json(createdCenter);
-      } catch (err) {
-        console.error("❌ Erro ao criar SportCenter:", err);
-        return res.status(400).json({ message: "Erro ao criar SportCenter", error: err });
+      
+      if (user.role === 'OWNER') {
+        query.owner = decodedToken.userId;
       }
+    }
 
-    default:
-      res.setHeader("Allow", ["GET", "POST"]);
-      return res.status(405).json({ message: `Método ${req.method} não permitido` });
+    // Add search filter if provided
+    if (search) {
+      query.$or = [
+        { name: { $regex: search, $options: 'i' } },
+        { sportcenterBio: { $regex: search, $options: 'i' } },
+        { sport: { $in: [new RegExp(search as string, 'i')] } },
+        { categories: { $in: [new RegExp(search as string, 'i')] } },
+        { 'location.city': { $regex: search, $options: 'i' } },
+        { 'location.state': { $regex: search, $options: 'i' } },
+        { 'location.country': { $regex: search, $options: 'i' } },
+      ];
+    }
+
+    // Get total count and sport centers
+    const [total, sportCenters] = await Promise.all([
+      SportCenter.countDocuments(query),
+      SportCenter.find(query)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limitNum)
+        .lean()
+        .exec()
+    ]);
+
+    logger.dbOperation('find', 'sportcenters', Date.now() - startTime, { 
+      requestId: req.requestId, 
+      query: JSON.stringify(query),
+      count: sportCenters.length
+    });
+
+    const formattedSportCenters = sportCenters.map(center => ({
+      ...center,
+      _id: center._id.toString(),
+    })) as SportCenterType[];
+
+    const pagination = {
+      page: pageNum,
+      limit: limitNum,
+      total,
+      totalPages: Math.ceil(total / limitNum),
+      hasNextPage: pageNum * limitNum < total,
+      hasPrevPage: pageNum > 1,
+    };
+
+    logger.apiResponse(
+      req.method || 'GET', 
+      req.url || '/api/sportcenter', 
+      200, 
+      Date.now() - startTime,
+      { requestId: req.requestId }
+    );
+
+    return ResponseHandler.paginated(res, formattedSportCenters, pagination, {
+      requestId: req.requestId
+    });
+
+  } catch (error) {
+    logger.dbError('find', 'sportcenters', error instanceof Error ? error.message : String(error), {
+      requestId: req.requestId,
+      duration: Date.now() - startTime
+    });
+    throw error;
   }
 }
+
+async function createSportCenter(req: ApiRequest, res: NextApiResponse) {
+  const startTime = Date.now();
+
+  try {
+    await dbConnect();
+
+    const token = getTokenFromHeader(req.headers.authorization);
+    const decodedToken = token ? verifyToken(token) : null;
+
+    if (!decodedToken || !decodedToken.userId) {
+      throw new AuthenticationError('Token inválido ou não fornecido');
+    }
+
+    // Check user permissions
+    const user = await User.findById(decodedToken.userId);
+    if (!user) {
+      throw new NotFoundError('User');
+    }
+
+    if (user.role !== 'OWNER' && user.role !== 'SUPERUSER') {
+      logger.authError('Unauthorized sport center creation attempt', {
+        userId: decodedToken.userId,
+        userRole: user.role,
+        requestId: req.requestId
+      });
+      throw new AuthorizationError('Apenas owners podem criar sportcenters');
+    }
+
+    // Validate required fields
+    const { name, sport, location } = req.body;
+    if (!name || !sport || !location) {
+      throw new ValidationError('Campos obrigatórios não preenchidos', {
+        missing: {
+          name: !name,
+          sport: !sport,
+          location: !location
+        }
+      });
+    }
+
+    const sportCenterData = {
+      ...req.body,
+      owner: decodedToken.userId,
+    };
+
+    logger.dbOperation('create', 'sportcenters', undefined, { requestId: req.requestId });
+
+    const sportCenter = await SportCenter.create(sportCenterData);
+    
+    const createdCenter = {
+      ...sportCenter.toObject(),
+      _id: sportCenter._id.toString(),
+    } as SportCenterType;
+
+    logger.info('SportCenter created successfully', {
+      sportCenterId: createdCenter._id,
+      ownerId: decodedToken.userId,
+      name: createdCenter.name,
+      requestId: req.requestId
+    });
+
+    logger.apiResponse(
+      req.method || 'POST', 
+      req.url || '/api/sportcenter', 
+      201, 
+      Date.now() - startTime,
+      { requestId: req.requestId }
+    );
+
+    return ResponseHandler.created(
+      res, 
+      createdCenter, 
+      'SportCenter criado com sucesso',
+      req.requestId
+    );
+
+  } catch (error) {
+    if (error instanceof Error && error.name === 'ValidationError') {
+      throw new DatabaseError('Erro de validação dos dados', {
+        details: error.message,
+        duration: Date.now() - startTime
+      });
+    }
+    
+    logger.dbError('create', 'sportcenters', error instanceof Error ? error.message : String(error), {
+      requestId: req.requestId,
+      duration: Date.now() - startTime
+    });
+    throw error;
+  }
+}
+
+async function handler(req: ApiRequest, res: NextApiResponse) {
+  switch (req.method) {
+    case 'GET':
+      return getSportCenters(req, res);
+    case 'POST':
+      return createSportCenter(req, res);
+    default:
+      res.setHeader('Allow', ['GET', 'POST']);
+      return ResponseHandler.error(
+        res,
+        new Error(`Método ${req.method} não permitido`),
+        req.requestId
+      );
+  }
+}
+
+export default withMethods(['GET', 'POST'])(withErrorHandler(handler));

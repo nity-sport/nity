@@ -3,7 +3,10 @@ import dbConnect from '../../../src/lib/dbConnect';
 import User from '../../../src/models/User';
 import { hashPassword, generateToken } from '../../../src/lib/auth';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
@@ -18,7 +21,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     if (password.length < 6) {
-      return res.status(400).json({ message: 'Password must be at least 6 characters' });
+      return res
+        .status(400)
+        .json({ message: 'Password must be at least 6 characters' });
     }
 
     const existingUser = await User.findOne({ email: email.toLowerCase() });
@@ -30,7 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     let referralValid = false;
     let scoutUser = null;
     let targetTeam = null;
-    
+
     if (referralCode) {
       const referralCodeUpper = referralCode.trim().toUpperCase();
       scoutUser = await User.findOne({ affiliateCode: referralCodeUpper });
@@ -38,13 +43,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(400).json({ message: 'Invalid referral code' });
       }
       referralValid = true;
-      
+
       // If teamId is provided, validate it belongs to the scout
       if (teamId) {
         const Team = require('../../../src/models/Team').default;
-        targetTeam = await Team.findOne({ _id: teamId, scoutId: scoutUser._id });
+        targetTeam = await Team.findOne({
+          _id: teamId,
+          scoutId: scoutUser._id,
+        });
         if (!targetTeam) {
-          return res.status(400).json({ message: 'Invalid team or team does not belong to scout' });
+          return res
+            .status(400)
+            .json({ message: 'Invalid team or team does not belong to scout' });
         }
       }
     }
@@ -66,12 +76,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (targetTeam) {
       const Team = require('../../../src/models/Team').default;
       await Team.findByIdAndUpdate(targetTeam._id, {
-        $addToSet: { memberIds: user._id }
+        $addToSet: { memberIds: user._id },
       });
-      
+
       // Also add team to user's teams array
       await User.findByIdAndUpdate(user._id, {
-        $addToSet: { teams: targetTeam._id }
+        $addToSet: { teams: targetTeam._id },
       });
     }
 

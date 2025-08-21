@@ -12,17 +12,17 @@ const DebugAuthPage: React.FC = () => {
     if (typeof window !== 'undefined') {
       const storedToken = localStorage.getItem('auth_token');
       setToken(storedToken);
-      
+
       if (storedToken) {
         // Test API call
         fetch('/api/auth/me', {
           headers: {
-            'Authorization': `Bearer ${storedToken}`
-          }
+            Authorization: `Bearer ${storedToken}`,
+          },
         })
-        .then(res => res.json())
-        .then(data => setApiResponse(data))
-        .catch(err => setApiResponse({ error: err.message }));
+          .then(res => res.json())
+          .then(data => setApiResponse(data))
+          .catch(err => setApiResponse({ error: err.message }));
       }
     }
   }, []);
@@ -31,32 +31,56 @@ const DebugAuthPage: React.FC = () => {
     <Layout>
       <div style={{ padding: '2rem', fontFamily: 'monospace' }}>
         <h1>Debug Auth Status</h1>
-        
+
         <h2>Auth Context:</h2>
-        <pre style={{ background: '#f0f0f0', padding: '1rem', borderRadius: '4px' }}>
-          {JSON.stringify({
-            user: auth.user,
-            isAuthenticated: auth.isAuthenticated,
-            isLoading: auth.isLoading,
-            isSuperuser: auth.isSuperuser,
-            isMarketing: auth.isMarketing,
-            isOwner: auth.isOwner,
-            canManageUsers: auth.canManageUsers,
-          }, null, 2)}
+        <pre
+          style={{
+            background: '#f0f0f0',
+            padding: '1rem',
+            borderRadius: '4px',
+          }}
+        >
+          {JSON.stringify(
+            {
+              user: auth.user,
+              isAuthenticated: auth.isAuthenticated,
+              isLoading: auth.isLoading,
+              isSuperuser: auth.isSuperuser,
+              isMarketing: auth.isMarketing,
+              isOwner: auth.isOwner,
+              canManageUsers: auth.canManageUsers,
+            },
+            null,
+            2
+          )}
         </pre>
 
         <h2>Token:</h2>
-        <pre style={{ background: '#f0f0f0', padding: '1rem', borderRadius: '4px' }}>
-          {token ? `Token exists: ${token.substring(0, 20)}...` : 'No token found'}
+        <pre
+          style={{
+            background: '#f0f0f0',
+            padding: '1rem',
+            borderRadius: '4px',
+          }}
+        >
+          {token
+            ? `Token exists: ${token.substring(0, 20)}...`
+            : 'No token found'}
         </pre>
 
         <h2>API Response (/api/auth/me):</h2>
-        <pre style={{ background: '#f0f0f0', padding: '1rem', borderRadius: '4px' }}>
+        <pre
+          style={{
+            background: '#f0f0f0',
+            padding: '1rem',
+            borderRadius: '4px',
+          }}
+        >
           {JSON.stringify(apiResponse, null, 2)}
         </pre>
 
         <h2>Actions:</h2>
-        <button 
+        <button
           onClick={() => {
             if (typeof window !== 'undefined') {
               localStorage.removeItem('auth_token');
@@ -67,8 +91,8 @@ const DebugAuthPage: React.FC = () => {
         >
           Clear Token & Reload
         </button>
-        
-        <button 
+
+        <button
           onClick={() => auth.logout()}
           style={{ margin: '0.5rem', padding: '0.5rem 1rem' }}
         >

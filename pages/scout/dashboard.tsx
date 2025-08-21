@@ -25,12 +25,17 @@ export default function ScoutDashboard() {
 
   // Create team form
   const [showCreateForm, setShowCreateForm] = useState(false);
-  const [createTeamData, setCreateTeamData] = useState<CreateTeamFormData>({ name: '' });
+  const [createTeamData, setCreateTeamData] = useState<CreateTeamFormData>({
+    name: '',
+  });
   const [creatingTeam, setCreatingTeam] = useState(false);
 
   // Invite form
   const [showInviteForm, setShowInviteForm] = useState(false);
-  const [inviteData, setInviteData] = useState<InviteFormData>({ emails: '', teamId: '' });
+  const [inviteData, setInviteData] = useState<InviteFormData>({
+    emails: '',
+    teamId: '',
+  });
   const [sendingInvites, setSendingInvites] = useState(false);
 
   useEffect(() => {
@@ -51,20 +56,15 @@ export default function ScoutDashboard() {
   const fetchTeams = async () => {
     try {
       const token = localStorage.getItem('token');
-      console.log('Fetching teams with token:', token ? 'Token exists' : 'No token');
-      
       const response = await fetch('/api/teams?asScout=true', {
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
       });
-
-      console.log('Teams API response status:', response.status);
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Teams data received:', data);
         setTeams(data.teams || []);
       } else {
         const errorData = await response.json();
@@ -84,8 +84,8 @@ export default function ScoutDashboard() {
       const token = localStorage.getItem('token');
       const response = await fetch('/api/scout/notifications', {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (response.ok) {
@@ -107,9 +107,9 @@ export default function ScoutDashboard() {
       const response = await fetch('/api/scout/update-affiliate-code', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
       });
 
       if (response.ok) {
@@ -118,7 +118,7 @@ export default function ScoutDashboard() {
         const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
         currentUser.affiliateCode = data.affiliateCode;
         localStorage.setItem('user', JSON.stringify(currentUser));
-        
+
         // Just refresh the page once
         window.location.reload();
       }
@@ -130,7 +130,7 @@ export default function ScoutDashboard() {
 
   const handleCreateTeam = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!createTeamData.name.trim()) {
       setError('Team name is required');
       return;
@@ -145,9 +145,9 @@ export default function ScoutDashboard() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ name: createTeamData.name })
+        body: JSON.stringify({ name: createTeamData.name }),
       });
 
       const data = await response.json();
@@ -168,7 +168,7 @@ export default function ScoutDashboard() {
 
   const handleSendInvites = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!inviteData.emails.trim() || !inviteData.teamId) {
       setError('Please enter emails and select a team');
       return;
@@ -188,12 +188,12 @@ export default function ScoutDashboard() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           emails,
-          teamId: inviteData.teamId
-        })
+          teamId: inviteData.teamId,
+        }),
       });
 
       const data = await response.json();
@@ -232,7 +232,7 @@ export default function ScoutDashboard() {
             </span>
           )}
           {!user.affiliateCode && (
-            <button 
+            <button
               className={styles.generateCodeButton}
               onClick={generateAffiliateCode}
             >
@@ -250,19 +250,19 @@ export default function ScoutDashboard() {
       {error && <div className={styles.error}>{error}</div>}
 
       <div className={styles.actions}>
-        <button 
+        <button
           className={styles.primaryButton}
           onClick={() => router.push('/scout/teams')}
         >
           Manage Teams
         </button>
-        <button 
+        <button
           className={styles.primaryButton}
           onClick={() => setShowCreateForm(true)}
         >
           Create New Team
         </button>
-        <button 
+        <button
           className={styles.secondaryButton}
           onClick={() => setShowInviteForm(true)}
         >
@@ -279,7 +279,9 @@ export default function ScoutDashboard() {
               <div key={notification.id} className={styles.notificationItem}>
                 <div className={styles.notificationContent}>
                   <p>{notification.message}</p>
-                  <small>{new Date(notification.timestamp).toLocaleDateString()}</small>
+                  <small>
+                    {new Date(notification.timestamp).toLocaleDateString()}
+                  </small>
                 </div>
               </div>
             ))}
@@ -289,11 +291,11 @@ export default function ScoutDashboard() {
 
       <div className={styles.teamsSection}>
         <h2>Your Teams ({teams.length})</h2>
-        
+
         {teams.length === 0 ? (
           <div className={styles.emptyState}>
             <p>You haven't created any teams yet.</p>
-            <button 
+            <button
               className={styles.primaryButton}
               onClick={() => setShowCreateForm(true)}
             >
@@ -307,13 +309,13 @@ export default function ScoutDashboard() {
                 <h3>{team.name}</h3>
                 <p>{team.members?.length || 0} members</p>
                 <div className={styles.teamActions}>
-                  <button 
+                  <button
                     className={styles.primaryButton}
                     onClick={() => router.push('/scout/teams')}
                   >
                     Manage
                   </button>
-                  <button 
+                  <button
                     className={styles.secondaryButton}
                     onClick={() => {
                       setInviteData(prev => ({ ...prev, teamId: team.id }));
@@ -336,19 +338,19 @@ export default function ScoutDashboard() {
             <h3>Create New Team</h3>
             <form onSubmit={handleCreateTeam} className={styles.form}>
               <div className={styles.formGroup}>
-                <label htmlFor="teamName">Team Name</label>
+                <label htmlFor='teamName'>Team Name</label>
                 <input
-                  type="text"
-                  id="teamName"
+                  type='text'
+                  id='teamName'
                   value={createTeamData.name}
-                  onChange={(e) => setCreateTeamData({ name: e.target.value })}
-                  placeholder="Enter team name"
+                  onChange={e => setCreateTeamData({ name: e.target.value })}
+                  placeholder='Enter team name'
                   required
                 />
               </div>
               <div className={styles.formButtons}>
                 <button
-                  type="button"
+                  type='button'
                   className={styles.cancelButton}
                   onClick={() => {
                     setShowCreateForm(false);
@@ -359,7 +361,7 @@ export default function ScoutDashboard() {
                   Cancel
                 </button>
                 <button
-                  type="submit"
+                  type='submit'
                   className={styles.primaryButton}
                   disabled={creatingTeam}
                 >
@@ -378,14 +380,16 @@ export default function ScoutDashboard() {
             <h3>Send Team Invites</h3>
             <form onSubmit={handleSendInvites} className={styles.form}>
               <div className={styles.formGroup}>
-                <label htmlFor="teamSelect">Select Team</label>
+                <label htmlFor='teamSelect'>Select Team</label>
                 <select
-                  id="teamSelect"
+                  id='teamSelect'
                   value={inviteData.teamId}
-                  onChange={(e) => setInviteData(prev => ({ ...prev, teamId: e.target.value }))}
+                  onChange={e =>
+                    setInviteData(prev => ({ ...prev, teamId: e.target.value }))
+                  }
                   required
                 >
-                  <option value="">Choose a team</option>
+                  <option value=''>Choose a team</option>
                   {teams.map(team => (
                     <option key={team.id} value={team.id}>
                       {team.name}
@@ -394,12 +398,14 @@ export default function ScoutDashboard() {
                 </select>
               </div>
               <div className={styles.formGroup}>
-                <label htmlFor="emails">Email Addresses</label>
+                <label htmlFor='emails'>Email Addresses</label>
                 <textarea
-                  id="emails"
+                  id='emails'
                   value={inviteData.emails}
-                  onChange={(e) => setInviteData(prev => ({ ...prev, emails: e.target.value }))}
-                  placeholder="Enter email addresses separated by commas"
+                  onChange={e =>
+                    setInviteData(prev => ({ ...prev, emails: e.target.value }))
+                  }
+                  placeholder='Enter email addresses separated by commas'
                   rows={4}
                   required
                 />
@@ -407,7 +413,7 @@ export default function ScoutDashboard() {
               </div>
               <div className={styles.formButtons}>
                 <button
-                  type="button"
+                  type='button'
                   className={styles.cancelButton}
                   onClick={() => {
                     setShowInviteForm(false);
@@ -418,7 +424,7 @@ export default function ScoutDashboard() {
                   Cancel
                 </button>
                 <button
-                  type="submit"
+                  type='submit'
                   className={styles.primaryButton}
                   disabled={sendingInvites}
                 >

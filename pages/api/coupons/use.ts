@@ -2,11 +2,11 @@ import { NextApiResponse } from 'next';
 import mongoose from 'mongoose';
 import Coupon from '../../../src/models/Coupon';
 import dbConnect from '../../../src/lib/dbConnect';
-import { 
-  AuthenticatedRequest, 
-  authenticate, 
-  requireAuthenticated, 
-  createApiHandler 
+import {
+  AuthenticatedRequest,
+  authenticate,
+  requireAuthenticated,
+  createApiHandler,
 } from '../../../src/lib/auth-middleware';
 
 const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
@@ -21,14 +21,18 @@ const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
     }
   } catch (error) {
     console.error('[API /coupons/use] Handler error:', error);
-    return res.status(500).json({ 
+    return res.status(500).json({
       message: 'Internal server error',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Server error'
+      error:
+        process.env.NODE_ENV === 'development' ? error.message : 'Server error',
     });
   }
 };
 
-const handleUseCoupon = async (req: AuthenticatedRequest, res: NextApiResponse) => {
+const handleUseCoupon = async (
+  req: AuthenticatedRequest,
+  res: NextApiResponse
+) => {
   try {
     const { code } = req.body;
     const userId = req.user!.id;
@@ -38,8 +42,10 @@ const handleUseCoupon = async (req: AuthenticatedRequest, res: NextApiResponse) 
     }
 
     const upperCode = code.trim().toUpperCase();
-    const coupon = await Coupon.findOne({ code: upperCode })
-      .populate('createdBy', 'name email avatar') as any;
+    const coupon = (await Coupon.findOne({ code: upperCode }).populate(
+      'createdBy',
+      'name email avatar'
+    )) as any;
 
     if (!coupon) {
       return res.status(404).json({ message: 'Coupon not found' });
@@ -58,7 +64,9 @@ const handleUseCoupon = async (req: AuthenticatedRequest, res: NextApiResponse) 
     }
 
     if (coupon.usedBy.some(id => id.toString() === userId)) {
-      return res.status(400).json({ message: 'You have already used this coupon' });
+      return res
+        .status(400)
+        .json({ message: 'You have already used this coupon' });
     }
 
     coupon.uses += 1;
@@ -79,14 +87,14 @@ const handleUseCoupon = async (req: AuthenticatedRequest, res: NextApiResponse) 
           id: coupon.createdBy._id.toString(),
           name: coupon.createdBy.name,
           email: coupon.createdBy.email,
-          avatar: coupon.createdBy.avatar
-        }
+          avatar: coupon.createdBy.avatar,
+        },
       },
       discount: {
         value: coupon.discountValue,
         percentage: coupon.discountPercentage,
-        type: discountType
-      }
+        type: discountType,
+      },
     });
   } catch (error) {
     console.error('Error using coupon:', error);
@@ -94,7 +102,4 @@ const handleUseCoupon = async (req: AuthenticatedRequest, res: NextApiResponse) 
   }
 };
 
-export default createApiHandler(handler, [
-  authenticate,
-  requireAuthenticated
-]);
+export default createApiHandler(handler, [authenticate, requireAuthenticated]);

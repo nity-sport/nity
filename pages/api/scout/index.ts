@@ -2,11 +2,11 @@ import { NextApiResponse } from 'next';
 import User from '../../../src/models/User';
 import { UserRole } from '../../../src/types/auth';
 import dbConnect from '../../../src/lib/dbConnect';
-import { 
-  AuthenticatedRequest, 
-  authenticate, 
-  requireSuperuser, 
-  createApiHandler 
+import {
+  AuthenticatedRequest,
+  authenticate,
+  requireSuperuser,
+  createApiHandler,
 } from '../../../src/lib/auth-middleware';
 
 const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
@@ -21,29 +21,33 @@ const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
     }
   } catch (error) {
     console.error('[API /scout] Handler error:', error);
-    return res.status(500).json({ 
+    return res.status(500).json({
       message: 'Internal server error',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Server error'
+      error:
+        process.env.NODE_ENV === 'development' ? error.message : 'Server error',
     });
   }
 };
 
-const handleGetScouts = async (req: AuthenticatedRequest, res: NextApiResponse) => {
+const handleGetScouts = async (
+  req: AuthenticatedRequest,
+  res: NextApiResponse
+) => {
   try {
     const { page = 1, limit = 10, search } = req.query;
-    
+
     const filter: any = { role: UserRole.SCOUT };
-    
+
     if (search) {
       filter.$or = [
         { name: { $regex: search, $options: 'i' } },
         { email: { $regex: search, $options: 'i' } },
-        { affiliateCode: { $regex: search, $options: 'i' } }
+        { affiliateCode: { $regex: search, $options: 'i' } },
       ];
     }
 
     const skip = (Number(page) - 1) * Number(limit);
-    
+
     const scouts = await User.find(filter)
       .select('-password -resetPasswordToken -resetPasswordExpires')
       .sort({ createdAt: -1 })
@@ -55,18 +59,18 @@ const handleGetScouts = async (req: AuthenticatedRequest, res: NextApiResponse) 
 
     // Get referral counts for each scout
     const scoutsWithStats = await Promise.all(
-      scouts.map(async (scout) => {
-        const referralCount = await User.countDocuments({ 
-          referredBy: scout.affiliateCode 
+      scouts.map(async scout => {
+        const referralCount = await User.countDocuments({
+          referredBy: scout.affiliateCode,
         });
-        
+
         const thisMonthStart = new Date();
         thisMonthStart.setDate(1);
         thisMonthStart.setHours(0, 0, 0, 0);
-        
+
         const thisMonthReferrals = await User.countDocuments({
           referredBy: scout.affiliateCode,
-          createdAt: { $gte: thisMonthStart }
+          createdAt: { $gte: thisMonthStart },
         });
 
         return {
@@ -83,8 +87,8 @@ const handleGetScouts = async (req: AuthenticatedRequest, res: NextApiResponse) 
           updatedAt: scout.updatedAt,
           stats: {
             totalReferrals: referralCount,
-            thisMonthReferrals
-          }
+            thisMonthReferrals,
+          },
         };
       })
     );
@@ -97,8 +101,8 @@ const handleGetScouts = async (req: AuthenticatedRequest, res: NextApiResponse) 
         total,
         totalPages,
         hasNextPage: Number(page) < totalPages,
-        hasPrevPage: Number(page) > 1
-      }
+        hasPrevPage: Number(page) > 1,
+      },
     });
   } catch (error) {
     console.error('Error fetching scouts:', error);
@@ -106,7 +110,4 @@ const handleGetScouts = async (req: AuthenticatedRequest, res: NextApiResponse) 
   }
 };
 
-export default createApiHandler(handler, [
-  authenticate,
-  requireSuperuser
-]);
+export default createApiHandler(handler, [authenticate, requireSuperuser]);

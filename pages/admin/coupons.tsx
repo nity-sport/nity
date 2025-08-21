@@ -29,7 +29,9 @@ const CouponsAdminPage: React.FC = () => {
   const [coupons, setCoupons] = useState<Coupon[]>([]);
   const [stats, setStats] = useState<CouponStats | null>(null);
   const [loading, setLoading] = useState(true);
-  const [pagination, setPagination] = useState<CouponsResponse['pagination'] | null>(null);
+  const [pagination, setPagination] = useState<
+    CouponsResponse['pagination'] | null
+  >(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
@@ -54,13 +56,13 @@ const CouponsAdminPage: React.FC = () => {
         page: currentPage.toString(),
         limit: '10',
         includeStats: 'true',
-        ...(onlyMine && { onlyMine: 'true' })
+        ...(onlyMine && { onlyMine: 'true' }),
       });
 
       const response = await fetch(`/api/coupons?${params}`, {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (!response.ok) {
@@ -86,9 +88,9 @@ const CouponsAdminPage: React.FC = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
@@ -104,16 +106,19 @@ const CouponsAdminPage: React.FC = () => {
     }
   };
 
-  const handleToggleCouponStatus = async (couponId: string, isActive: boolean) => {
+  const handleToggleCouponStatus = async (
+    couponId: string,
+    isActive: boolean
+  ) => {
     try {
       const token = localStorage.getItem('auth_token');
       const response = await fetch(`/api/coupons/${couponId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ isActive })
+        body: JSON.stringify({ isActive }),
       });
 
       if (!response.ok) {
@@ -138,8 +143,8 @@ const CouponsAdminPage: React.FC = () => {
       const response = await fetch(`/api/coupons/${couponId}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (!response.ok) {
@@ -176,7 +181,8 @@ const CouponsAdminPage: React.FC = () => {
 
   const getStatusText = (coupon: Coupon) => {
     if (!coupon.isActive) return 'Inativo';
-    if (coupon.expiresAt && new Date(coupon.expiresAt) < new Date()) return 'Expirado';
+    if (coupon.expiresAt && new Date(coupon.expiresAt) < new Date())
+      return 'Expirado';
     if (coupon.maxUses && coupon.uses >= coupon.maxUses) return 'Esgotado';
     return 'Ativo';
   };
@@ -228,7 +234,10 @@ const CouponsAdminPage: React.FC = () => {
           </div>
           <div className={styles.statCard}>
             <div className={styles.statValue}>
-              R$ {stats.totalDiscountGiven ? stats.totalDiscountGiven.toFixed(2) : '0.00'}
+              R${' '}
+              {stats.totalDiscountGiven
+                ? stats.totalDiscountGiven.toFixed(2)
+                : '0.00'}
             </div>
             <div className={styles.statLabel}>Desconto Total</div>
           </div>
@@ -238,9 +247,9 @@ const CouponsAdminPage: React.FC = () => {
       <div className={styles.filters}>
         <label className={styles.checkboxLabel}>
           <input
-            type="checkbox"
+            type='checkbox'
             checked={onlyMine}
-            onChange={(e) => {
+            onChange={e => {
               setOnlyMine(e.target.checked);
               setCurrentPage(1);
             }}
@@ -291,8 +300,14 @@ const CouponsAdminPage: React.FC = () => {
                     Detalhes
                   </button>
                   <button
-                    onClick={() => handleToggleCouponStatus(coupon.id, !coupon.isActive)}
-                    className={coupon.isActive ? styles.deactivateButton : styles.activateButton}
+                    onClick={() =>
+                      handleToggleCouponStatus(coupon.id, !coupon.isActive)
+                    }
+                    className={
+                      coupon.isActive
+                        ? styles.deactivateButton
+                        : styles.activateButton
+                    }
                   >
                     {coupon.isActive ? 'Desativar' : 'Ativar'}
                   </button>
@@ -344,7 +359,7 @@ const CouponsAdminPage: React.FC = () => {
               </button>
             </div>
             <form
-              onSubmit={(e) => {
+              onSubmit={e => {
                 e.preventDefault();
                 const formData = new FormData(e.currentTarget);
                 const data: CouponFormData = {
@@ -355,7 +370,9 @@ const CouponsAdminPage: React.FC = () => {
                 if (discountType === 'value') {
                   data.discountValue = Number(formData.get('discountValue'));
                 } else {
-                  data.discountPercentage = Number(formData.get('discountPercentage'));
+                  data.discountPercentage = Number(
+                    formData.get('discountPercentage')
+                  );
                 }
 
                 const maxUses = formData.get('maxUses') as string;
@@ -373,16 +390,16 @@ const CouponsAdminPage: React.FC = () => {
               className={styles.form}
             >
               <div className={styles.formGroup}>
-                <label htmlFor="code" className={styles.label}>
+                <label htmlFor='code' className={styles.label}>
                   Código do Cupom
                 </label>
                 <input
-                  type="text"
-                  id="code"
-                  name="code"
+                  type='text'
+                  id='code'
+                  name='code'
                   required
                   className={styles.input}
-                  placeholder="Digite o código do cupom"
+                  placeholder='Digite o código do cupom'
                   style={{ textTransform: 'uppercase' }}
                 />
               </div>
@@ -392,18 +409,18 @@ const CouponsAdminPage: React.FC = () => {
                 <div className={styles.radioGroup}>
                   <label className={styles.radioLabel}>
                     <input
-                      type="radio"
-                      name="discountType"
-                      value="value"
+                      type='radio'
+                      name='discountType'
+                      value='value'
                       defaultChecked
                     />
                     Valor fixo (R$)
                   </label>
                   <label className={styles.radioLabel}>
                     <input
-                      type="radio"
-                      name="discountType"
-                      value="percentage"
+                      type='radio'
+                      name='discountType'
+                      value='percentage'
                     />
                     Porcentagem (%)
                   </label>
@@ -411,73 +428,70 @@ const CouponsAdminPage: React.FC = () => {
               </div>
 
               <div className={styles.formGroup}>
-                <label htmlFor="discountValue" className={styles.label}>
+                <label htmlFor='discountValue' className={styles.label}>
                   Valor do Desconto
                 </label>
                 <input
-                  type="number"
-                  id="discountValue"
-                  name="discountValue"
-                  step="0.01"
-                  min="0"
+                  type='number'
+                  id='discountValue'
+                  name='discountValue'
+                  step='0.01'
+                  min='0'
                   className={styles.input}
-                  placeholder="Ex: 10.00"
+                  placeholder='Ex: 10.00'
                 />
               </div>
 
               <div className={styles.formGroup}>
-                <label htmlFor="discountPercentage" className={styles.label}>
+                <label htmlFor='discountPercentage' className={styles.label}>
                   Porcentagem do Desconto
                 </label>
                 <input
-                  type="number"
-                  id="discountPercentage"
-                  name="discountPercentage"
-                  min="1"
-                  max="100"
+                  type='number'
+                  id='discountPercentage'
+                  name='discountPercentage'
+                  min='1'
+                  max='100'
                   className={styles.input}
-                  placeholder="Ex: 15"
+                  placeholder='Ex: 15'
                 />
               </div>
 
               <div className={styles.formGroup}>
-                <label htmlFor="maxUses" className={styles.label}>
+                <label htmlFor='maxUses' className={styles.label}>
                   Máximo de Usos (opcional)
                 </label>
                 <input
-                  type="number"
-                  id="maxUses"
-                  name="maxUses"
-                  min="1"
+                  type='number'
+                  id='maxUses'
+                  name='maxUses'
+                  min='1'
                   className={styles.input}
-                  placeholder="Deixe vazio para ilimitado"
+                  placeholder='Deixe vazio para ilimitado'
                 />
               </div>
 
               <div className={styles.formGroup}>
-                <label htmlFor="expiresAt" className={styles.label}>
+                <label htmlFor='expiresAt' className={styles.label}>
                   Data de Expiração (opcional)
                 </label>
                 <input
-                  type="datetime-local"
-                  id="expiresAt"
-                  name="expiresAt"
+                  type='datetime-local'
+                  id='expiresAt'
+                  name='expiresAt'
                   className={styles.input}
                 />
               </div>
 
               <div className={styles.formActions}>
                 <button
-                  type="button"
+                  type='button'
                   onClick={() => setShowCreateForm(false)}
                   className={styles.cancelButton}
                 >
                   Cancelar
                 </button>
-                <button
-                  type="submit"
-                  className={styles.submitButton}
-                >
+                <button type='submit' className={styles.submitButton}>
                   Criar Cupom
                 </button>
               </div>
@@ -509,30 +523,35 @@ const CouponsAdminPage: React.FC = () => {
                 <strong>Desconto:</strong> {formatDiscount(selectedCoupon)}
               </div>
               <div className={styles.detailItem}>
-                <strong>Criado por:</strong> {selectedCoupon.creator?.name} ({selectedCoupon.creator?.email})
+                <strong>Criado por:</strong> {selectedCoupon.creator?.name} (
+                {selectedCoupon.creator?.email})
               </div>
               <div className={styles.detailItem}>
                 <strong>Usos:</strong> {selectedCoupon.uses}
                 {selectedCoupon.maxUses && ` / ${selectedCoupon.maxUses}`}
               </div>
               <div className={styles.detailItem}>
-                <strong>Status:</strong> 
+                <strong>Status:</strong>
                 <span className={getStatusBadgeClass(selectedCoupon)}>
                   {getStatusText(selectedCoupon)}
                 </span>
               </div>
               {selectedCoupon.expiresAt && (
                 <div className={styles.detailItem}>
-                  <strong>Expira em:</strong> {new Date(selectedCoupon.expiresAt).toLocaleString()}
+                  <strong>Expira em:</strong>{' '}
+                  {new Date(selectedCoupon.expiresAt).toLocaleString()}
                 </div>
               )}
               <div className={styles.detailItem}>
-                <strong>Criado em:</strong> {new Date(selectedCoupon.createdAt).toLocaleString()}
+                <strong>Criado em:</strong>{' '}
+                {new Date(selectedCoupon.createdAt).toLocaleString()}
               </div>
-              
+
               {selectedCoupon.users && selectedCoupon.users.length > 0 && (
                 <div className={styles.usersSection}>
-                  <strong>Usuários que usaram ({selectedCoupon.users.length}):</strong>
+                  <strong>
+                    Usuários que usaram ({selectedCoupon.users.length}):
+                  </strong>
                   <div className={styles.usersList}>
                     {selectedCoupon.users.map(user => (
                       <div key={user.id} className={styles.userItem}>

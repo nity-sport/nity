@@ -3,21 +3,17 @@ import bcrypt from 'bcryptjs';
 import User from '../../../src/models/User';
 import { UserRole } from '../../../src/types/auth';
 import dbConnect from '../../../src/lib/dbConnect';
-import { 
-  AuthenticatedRequest, 
-  authenticate, 
-  requireAuthenticated, 
+import {
+  AuthenticatedRequest,
+  authenticate,
+  requireAuthenticated,
   requireSuperuser,
-  createApiHandler 
+  createApiHandler,
 } from '../../../src/lib/auth-middleware';
 
 const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
   try {
-    console.log('[API /users] Handler started, method:', req.method);
-    console.log('[API /users] Connecting to database...');
     await dbConnect();
-    console.log('[API /users] Database connected successfully');
-
     if (req.method === 'GET') {
       return handleGetUsers(req, res);
     } else if (req.method === 'POST') {
@@ -28,46 +24,41 @@ const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
     }
   } catch (error) {
     console.error('[API /users] Handler error:', error);
-    return res.status(500).json({ 
+    return res.status(500).json({
       message: 'Internal server error',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Server error'
+      error:
+        process.env.NODE_ENV === 'development' ? error.message : 'Server error',
     });
   }
 };
 
-const handleGetUsers = async (req: AuthenticatedRequest, res: NextApiResponse) => {
+const handleGetUsers = async (
+  req: AuthenticatedRequest,
+  res: NextApiResponse
+) => {
   try {
-    console.log('[API /users] Starting get users request');
-    console.log('[API /users] User:', req.user);
-    console.log('[API /users] Query params:', req.query);
-
     const { role, page = 1, limit = 10, search } = req.query;
-    
+
     const filter: any = {};
-    
+
     if (role && Object.values(UserRole).includes(role as UserRole)) {
       filter.role = role;
     }
-    
+
     if (search) {
       filter.$or = [
         { name: { $regex: search, $options: 'i' } },
-        { email: { $regex: search, $options: 'i' } }
+        { email: { $regex: search, $options: 'i' } },
       ];
     }
 
-    console.log('[API /users] Filter:', filter);
-
     const skip = (Number(page) - 1) * Number(limit);
-    
-    console.log('[API /users] Querying database...');
+
     const usersFromDb = await User.find(filter)
       .select('-password -resetPasswordToken -resetPasswordExpires')
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(Number(limit));
-
-    console.log('[API /users] Found users:', usersFromDb.length);
 
     const users = usersFromDb.map(user => ({
       id: user._id.toString(),
@@ -80,14 +71,11 @@ const handleGetUsers = async (req: AuthenticatedRequest, res: NextApiResponse) =
       affiliateCode: user.affiliateCode,
       referredBy: user.referredBy,
       createdAt: user.createdAt,
-      updatedAt: user.updatedAt
+      updatedAt: user.updatedAt,
     }));
 
-    console.log('[API /users] Counting total documents...');
     const total = await User.countDocuments(filter);
     const totalPages = Math.ceil(total / Number(limit));
-
-    console.log('[API /users] Sending response with', users.length, 'users');
 
     return res.status(200).json({
       users,
@@ -97,24 +85,28 @@ const handleGetUsers = async (req: AuthenticatedRequest, res: NextApiResponse) =
         total,
         totalPages,
         hasNextPage: Number(page) < totalPages,
-        hasPrevPage: Number(page) > 1
-      }
+        hasPrevPage: Number(page) > 1,
+      },
     });
   } catch (error) {
     console.error('Error fetching users:', error);
     console.error('Error details:', {
       message: error instanceof Error ? error.message : 'Unknown error',
       stack: error instanceof Error ? error.stack : 'No stack trace',
-      name: error instanceof Error ? error.name : 'Unknown error type'
+      name: error instanceof Error ? error.name : 'Unknown error type',
     });
-    return res.status(500).json({ 
+    return res.status(500).json({
       message: 'Internal server error',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Server error'
+      error:
+        process.env.NODE_ENV === 'development' ? error.message : 'Server error',
     });
   }
 };
 
-const handleCreateUser = async (req: AuthenticatedRequest, res: NextApiResponse) => {
+const handleCreateUser = async (
+  req: AuthenticatedRequest,
+  res: NextApiResponse
+) => {
   try {
     const { email, password, name, role = UserRole.USER } = req.body;
 
@@ -142,7 +134,7 @@ const handleCreateUser = async (req: AuthenticatedRequest, res: NextApiResponse)
       name,
       role,
       provider: 'email',
-      isVerified: false
+      isVerified: false,
     });
 
     await user.save();
@@ -154,7 +146,7 @@ const handleCreateUser = async (req: AuthenticatedRequest, res: NextApiResponse)
 
     return res.status(201).json({
       message: 'User created successfully',
-      user: userResponse
+      user: userResponse,
     });
   } catch (error) {
     console.error('Error creating user:', error);
@@ -170,5 +162,5 @@ export default createApiHandler(handler, [
     } else {
       return requireAuthenticated(req, res, next);
     }
-  }
+  },
 ]);

@@ -62,17 +62,11 @@ const ExperiencesAdminPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log('[Admin Experiences] useEffect triggered');
-    console.log('[Admin Experiences] canCreateExperiences:', canCreateExperiences);
-    console.log('[Admin Experiences] user:', user);
-    
     if (!canCreateExperiences) {
-      console.log('[Admin Experiences] Access denied - cannot create experiences');
       setError('Acesso negado. Apenas usuários com permissão podem acessar esta página.');
       setLoading(false);
       return;
     }
-    console.log('[Admin Experiences] Access granted - fetching experiences');
     fetchExperiences();
   }, [currentPage, searchTerm, visibilityFilter, canCreateExperiences, user]);
 
@@ -81,8 +75,6 @@ const ExperiencesAdminPage: React.FC = () => {
       setLoading(true);
       const token = localStorage.getItem('auth_token');
       
-      console.log('[Admin Experiences] Fetching experiences with token:', token ? 'Present' : 'Missing');
-      
       const params = new URLSearchParams({
         page: currentPage.toString(),
         limit: '12',
@@ -90,15 +82,11 @@ const ExperiencesAdminPage: React.FC = () => {
         ...(visibilityFilter !== 'all' && { visibility: visibilityFilter })
       });
 
-      console.log('[Admin Experiences] Request params:', params.toString());
-
       const response = await fetch(`/api/experiences?${params}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
-
-      console.log('[Admin Experiences] Response status:', response.status);
 
       if (!response.ok) {
         const errorData = await response.json();

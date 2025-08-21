@@ -3,7 +3,10 @@ import dbConnect from '../../../src/lib/dbConnect';
 import User from '../../../src/models/User';
 import { verifyToken, getTokenFromHeader } from '../../../src/lib/auth';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
@@ -38,13 +41,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     };
-
-    console.log('[API /auth/me] User found:', {
-      id: userResponse.id,
-      email: userResponse.email,
-      role: userResponse.role,
-      roleType: typeof userResponse.role
-    });
 
     res.status(200).json(userResponse);
   } catch (error) {

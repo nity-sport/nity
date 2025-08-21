@@ -1,11 +1,11 @@
 import { NextApiResponse } from 'next';
 import User from '../../../src/models/User';
 import dbConnect from '../../../src/lib/dbConnect';
-import { 
-  AuthenticatedRequest, 
-  authenticate, 
-  requireAuthenticated, 
-  createApiHandler 
+import {
+  AuthenticatedRequest,
+  authenticate,
+  requireAuthenticated,
+  createApiHandler,
 } from '../../../src/lib/auth-middleware';
 import { UserRole } from '../../../src/types/auth';
 import { generateAffiliateCode } from '../../../src/lib/affiliateCode';
@@ -23,7 +23,9 @@ const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
 
     // Check if user is scout
     if (req.user!.role !== UserRole.SCOUT) {
-      return res.status(403).json({ message: 'Only scouts can update affiliate code' });
+      return res
+        .status(403)
+        .json({ message: 'Only scouts can update affiliate code' });
     }
 
     // Get current user
@@ -34,9 +36,9 @@ const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
 
     // Check if user already has affiliate code
     if (user.affiliateCode) {
-      return res.status(200).json({ 
+      return res.status(200).json({
         message: 'Affiliate code already exists',
-        affiliateCode: user.affiliateCode 
+        affiliateCode: user.affiliateCode,
       });
     }
 
@@ -48,16 +50,12 @@ const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
 
     return res.status(200).json({
       message: 'Affiliate code generated successfully',
-      affiliateCode
+      affiliateCode,
     });
-
   } catch (error) {
     console.error('Error updating affiliate code:', error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
 
-export default createApiHandler(handler, [
-  authenticate,
-  requireAuthenticated
-]);
+export default createApiHandler(handler, [authenticate, requireAuthenticated]);

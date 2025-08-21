@@ -26,12 +26,12 @@ export function Step3_Sports() {
   useEffect(() => {
     const sports = state.formData.sport || [];
     const validationError = validateSports(sports);
-    
+
     dispatch({
       type: 'SET_STEP_VALID',
-      payload: { stepIndex: 2, isValid: validationError === '' }
+      payload: { stepIndex: 2, isValid: validationError === '' },
     });
-    
+
     // Only show error if we're supposed to show errors for this step
     if (state.showErrors[2]) {
       setError(validationError);
@@ -46,7 +46,7 @@ export function Step3_Sports() {
         setShowSuggestModal(false);
       }
     };
-    
+
     if (showSuggestModal) {
       document.addEventListener('keydown', handleEsc);
       return () => document.removeEventListener('keydown', handleEsc);
@@ -57,15 +57,15 @@ export function Step3_Sports() {
     try {
       const response = await fetch('/api/sports');
       const result = await response.json();
-      
+
       if (result.success) {
         const dbSports = result.data;
         const customSports = state.customSports.map((sport, index) => ({
           _id: `custom-${index}`,
           name: sport,
-          icon: '/assets/sports/svg/star_shine.svg'
+          icon: '/assets/sports/svg/star_shine.svg',
         }));
-        
+
         setAvailableSports([...dbSports, ...customSports]);
       } else {
         // Fallback para esportes padrão se a API falhar
@@ -77,17 +77,20 @@ export function Step3_Sports() {
           { _id: '5', name: 'Surf' },
           { _id: '6', name: 'Handball' },
           { _id: '7', name: 'Muai Tay' },
-          { _id: '8', name: 'Swimming' }
+          { _id: '8', name: 'Swimming' },
         ];
-        
-        setAvailableSports([...defaultSports, ...state.customSports.map((sport, index) => ({
-          _id: `custom-${index}`,
-          name: sport
-        }))]);
+
+        setAvailableSports([
+          ...defaultSports,
+          ...state.customSports.map((sport, index) => ({
+            _id: `custom-${index}`,
+            name: sport,
+          })),
+        ]);
       }
     } catch (error) {
       console.error('Error fetching sports:', error);
-      
+
       // Fallback para esportes padrão se houver erro
       const defaultSports = [
         { _id: '1', name: 'Futebol' },
@@ -97,13 +100,16 @@ export function Step3_Sports() {
         { _id: '5', name: 'Surf' },
         { _id: '6', name: 'Handball' },
         { _id: '7', name: 'Muai Tay' },
-        { _id: '8', name: 'Swimming' }
+        { _id: '8', name: 'Swimming' },
       ];
-      
-      setAvailableSports([...defaultSports, ...state.customSports.map((sport, index) => ({
-        _id: `custom-${index}`,
-        name: sport
-      }))]);
+
+      setAvailableSports([
+        ...defaultSports,
+        ...state.customSports.map((sport, index) => ({
+          _id: `custom-${index}`,
+          name: sport,
+        })),
+      ]);
     }
   };
 
@@ -116,12 +122,12 @@ export function Step3_Sports() {
 
   const updateValidation = (sports: string[]) => {
     const validationError = validateSports(sports);
-    
+
     dispatch({
       type: 'SET_STEP_VALID',
-      payload: { stepIndex: 2, isValid: validationError === '' }
+      payload: { stepIndex: 2, isValid: validationError === '' },
     });
-    
+
     // Only show error if we're supposed to show errors for this step
     if (state.showErrors[2]) {
       setError(validationError);
@@ -131,19 +137,19 @@ export function Step3_Sports() {
   const handleSportToggle = (sportId: string, sportName: string) => {
     const currentSports = state.formData.sport || [];
     const isSelected = currentSports.includes(sportName);
-    
+
     let newSports: string[];
     if (isSelected) {
       newSports = currentSports.filter(s => s !== sportName);
     } else {
       newSports = [...currentSports, sportName];
     }
-    
+
     dispatch({
       type: 'UPDATE_FORM_DATA',
       payload: {
-        sport: newSports
-      }
+        sport: newSports,
+      },
     });
 
     // Update validation immediately
@@ -158,16 +164,16 @@ export function Step3_Sports() {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ name: newSportName.trim() })
+          body: JSON.stringify({ name: newSportName.trim() }),
         });
-        
+
         const result = await response.json();
-        
+
         if (result.success) {
           // Adicionar o novo esporte à lista com ícone da estrela
           const newSport = {
             ...result.data,
-            icon: '/assets/sports/svg/star_shine.svg'
+            icon: '/assets/sports/svg/star_shine.svg',
           };
           setAvailableSports(prev => [...prev, newSport]);
           setNewSportName('');
@@ -177,12 +183,18 @@ export function Step3_Sports() {
         } else {
           // Se o esporte já existe, ainda adiciona localmente
           if (result.error === 'Esporte já cadastrado') {
-            dispatch({ type: 'ADD_CUSTOM_SPORT', payload: newSportName.trim() });
-            setAvailableSports(prev => [...prev, { 
-              _id: `custom-${Date.now()}`, 
-              name: newSportName.trim(),
-              icon: '/assets/sports/svg/star_shine.svg'
-            }]);
+            dispatch({
+              type: 'ADD_CUSTOM_SPORT',
+              payload: newSportName.trim(),
+            });
+            setAvailableSports(prev => [
+              ...prev,
+              {
+                _id: `custom-${Date.now()}`,
+                name: newSportName.trim(),
+                icon: '/assets/sports/svg/star_shine.svg',
+              },
+            ]);
             setNewSportName('');
             setShowSuggestModal(false);
             setShowSuccessMessage(true);
@@ -195,11 +207,14 @@ export function Step3_Sports() {
         console.error('Error suggesting sport:', error);
         // Fallback para adicionar localmente
         dispatch({ type: 'ADD_CUSTOM_SPORT', payload: newSportName.trim() });
-        setAvailableSports(prev => [...prev, { 
-          _id: `custom-${Date.now()}`, 
-          name: newSportName.trim(),
-          icon: '/assets/sports/svg/star_shine.svg'
-        }]);
+        setAvailableSports(prev => [
+          ...prev,
+          {
+            _id: `custom-${Date.now()}`,
+            name: newSportName.trim(),
+            icon: '/assets/sports/svg/star_shine.svg',
+          },
+        ]);
         setNewSportName('');
         setShowSuggestModal(false);
         setShowSuccessMessage(true);
@@ -213,7 +228,18 @@ export function Step3_Sports() {
   return (
     <div className={baseStyles.stepContainer}>
       {error && <div className={baseStyles.errorMessage}>{error}</div>}
-      <div className={styles.sportsGrid} style={{ marginTop: '22.37rem', position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: '100%', maxWidth: '50rem' }}>
+      <div
+        className={styles.sportsGrid}
+        style={{
+          marginTop: '22.37rem',
+          position: 'absolute',
+          top: 0,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '100%',
+          maxWidth: '50rem',
+        }}
+      >
         {availableSports.map(sport => (
           <div
             key={sport._id}
@@ -224,9 +250,9 @@ export function Step3_Sports() {
           >
             {sport.icon && (
               <div className={styles.sportIconContainer}>
-                <img 
-                  src={sport.icon} 
-                  alt={sport.name} 
+                <img
+                  src={sport.icon}
+                  alt={sport.name}
                   className={styles.sportIcon}
                 />
               </div>
@@ -234,7 +260,7 @@ export function Step3_Sports() {
             <span className={styles.sportName}>{sport.name}</span>
           </div>
         ))}
-        
+
         <div
           className={styles.addSportCard}
           onClick={() => setShowSuggestModal(true)}
@@ -252,9 +278,15 @@ export function Step3_Sports() {
       )}
 
       {showSuggestModal && (
-        <div className={styles.modal} onClick={() => setShowSuggestModal(false)}>
-          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-            <button 
+        <div
+          className={styles.modal}
+          onClick={() => setShowSuggestModal(false)}
+        >
+          <div
+            className={styles.modalContent}
+            onClick={e => e.stopPropagation()}
+          >
+            <button
               className={styles.modalCloseButton}
               onClick={() => setShowSuggestModal(false)}
             >
@@ -263,17 +295,17 @@ export function Step3_Sports() {
             <h1 className={styles.modalTitle}>Sugira um novo esporte</h1>
             <div className={styles.modalInputWrapper}>
               <input
-                type="text"
+                type='text'
                 value={newSportName}
-                onChange={(e) => setNewSportName(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleSuggestSport()}
-                placeholder="Insira o Nome"
+                onChange={e => setNewSportName(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && handleSuggestSport()}
+                placeholder='Insira o Nome'
                 className={styles.modalInput}
                 required
                 autoFocus
               />
             </div>
-            <button 
+            <button
               className={styles.addButton}
               onClick={handleSuggestSport}
               disabled={!newSportName.trim()}

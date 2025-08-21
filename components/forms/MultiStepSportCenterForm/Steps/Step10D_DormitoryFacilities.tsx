@@ -11,7 +11,9 @@ interface DormitoryFacility {
 
 export function Step10D_DormitoryFacilities() {
   const { state, dispatch } = useMultiStepForm();
-  const [availableFacilities, setAvailableFacilities] = useState<DormitoryFacility[]>([]);
+  const [availableFacilities, setAvailableFacilities] = useState<
+    DormitoryFacility[]
+  >([]);
   const [showSuggestModal, setShowSuggestModal] = useState(false);
   const [newFacilityName, setNewFacilityName] = useState('');
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -22,15 +24,15 @@ export function Step10D_DormitoryFacilities() {
 
   useEffect(() => {
     fetchDormitoryFacilities();
-    
+
     // Check if mobile
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-    
+
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    
+
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
@@ -38,7 +40,7 @@ export function Step10D_DormitoryFacilities() {
   useEffect(() => {
     dispatch({
       type: 'SET_STEP_VALID',
-      payload: { stepIndex: 12, isValid: true }
+      payload: { stepIndex: 12, isValid: true },
     });
   }, []);
 
@@ -48,7 +50,7 @@ export function Step10D_DormitoryFacilities() {
         setShowSuggestModal(false);
       }
     };
-    
+
     if (showSuggestModal) {
       document.addEventListener('keydown', handleEsc);
       return () => document.removeEventListener('keydown', handleEsc);
@@ -60,14 +62,14 @@ export function Step10D_DormitoryFacilities() {
       // Try to fetch from main facilities API first
       const response = await fetch('/api/facilities');
       const result = await response.json();
-      
+
       let dbFacilities = [];
       if (result.facilities) {
         // Filter relevant facilities for dormitory
-        dbFacilities = result.facilities.filter((facility: any) => 
+        dbFacilities = result.facilities.filter((facility: any) =>
           [
             'Próximo a estação de metro',
-            'Boa localização', 
+            'Boa localização',
             'X quadras',
             'Quadras poliesportivas',
             'Piscina',
@@ -77,11 +79,11 @@ export function Step10D_DormitoryFacilities() {
             'Quadras cobertas',
             'Salão de jogos',
             'Academia',
-            'Aula de dança'
+            'Aula de dança',
           ].includes(facility.name)
         );
       }
-      
+
       // Fallback to default dormitory facilities
       const defaultFacilities = [
         { _id: '1', name: 'Próximo a estação de metro' },
@@ -95,16 +97,17 @@ export function Step10D_DormitoryFacilities() {
         { _id: '9', name: 'Quadras cobertas' },
         { _id: '10', name: 'Salão de jogos' },
         { _id: '11', name: 'Academia' },
-        { _id: '12', name: 'Aula de dança' }
+        { _id: '12', name: 'Aula de dança' },
       ];
-      
+
       // Use DB facilities if available, otherwise use defaults
-      const facilitiesToUse = dbFacilities.length > 0 ? dbFacilities : defaultFacilities;
-      
+      const facilitiesToUse =
+        dbFacilities.length > 0 ? dbFacilities : defaultFacilities;
+
       setAvailableFacilities(facilitiesToUse);
     } catch (error) {
       console.error('Error fetching dormitory facilities:', error);
-      
+
       // Fallback to default facilities
       const defaultFacilities = [
         { _id: '1', name: 'Próximo a estação de metro' },
@@ -118,9 +121,9 @@ export function Step10D_DormitoryFacilities() {
         { _id: '9', name: 'Quadras cobertas' },
         { _id: '10', name: 'Salão de jogos' },
         { _id: '11', name: 'Academia' },
-        { _id: '12', name: 'Aula de dança' }
+        { _id: '12', name: 'Aula de dança' },
       ];
-      
+
       setAvailableFacilities(defaultFacilities);
     }
   };
@@ -128,20 +131,22 @@ export function Step10D_DormitoryFacilities() {
   const handleFacilityToggle = (facilityId: string, facilityName: string) => {
     const currentFacilities = state.formData.dormitoryFacilities || [];
     const isSelected = currentFacilities.includes(facilityName);
-    
+
     if (isSelected) {
       dispatch({
         type: 'UPDATE_FORM_DATA',
         payload: {
-          dormitoryFacilities: currentFacilities.filter(f => f !== facilityName)
-        }
+          dormitoryFacilities: currentFacilities.filter(
+            f => f !== facilityName
+          ),
+        },
       });
     } else {
       dispatch({
         type: 'UPDATE_FORM_DATA',
         payload: {
-          dormitoryFacilities: [...currentFacilities, facilityName]
-        }
+          dormitoryFacilities: [...currentFacilities, facilityName],
+        },
       });
     }
   };
@@ -151,9 +156,9 @@ export function Step10D_DormitoryFacilities() {
       // Add locally for dormitory facilities
       const newFacility = {
         _id: `dormitory-custom-${Date.now()}`,
-        name: newFacilityName.trim()
+        name: newFacilityName.trim(),
       };
-      
+
       setAvailableFacilities(prev => [...prev, newFacility]);
       setNewFacilityName('');
       setShowSuggestModal(false);
@@ -167,7 +172,7 @@ export function Step10D_DormitoryFacilities() {
     if (isMobile) {
       return availableFacilities;
     }
-    
+
     const startIndex = currentPage * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     return availableFacilities.slice(startIndex, endIndex);
@@ -201,7 +206,7 @@ export function Step10D_DormitoryFacilities() {
           </span>
         </div>
       )}
-      
+
       <div className={styles.facilitiesGrid}>
         {getPaginatedFacilities().map(facility => (
           <div
@@ -217,7 +222,7 @@ export function Step10D_DormitoryFacilities() {
             <span className={styles.sportName}>{facility.name}</span>
           </div>
         ))}
-        
+
         <div
           className={styles.addSportCard}
           onClick={() => setShowSuggestModal(true)}
@@ -229,14 +234,14 @@ export function Step10D_DormitoryFacilities() {
 
       {!isMobile && getTotalPages() > 1 && (
         <div className={styles.paginationControls}>
-          <button 
+          <button
             className={`${styles.paginationButton} ${currentPage === 0 ? styles.disabled : ''}`}
             onClick={handlePrevPage}
             disabled={currentPage === 0}
           >
             ← Anterior
           </button>
-          
+
           <div className={styles.pageIndicators}>
             {Array.from({ length: getTotalPages() }, (_, i) => (
               <button
@@ -248,8 +253,8 @@ export function Step10D_DormitoryFacilities() {
               </button>
             ))}
           </div>
-          
-          <button 
+
+          <button
             className={`${styles.paginationButton} ${currentPage === getTotalPages() - 1 ? styles.disabled : ''}`}
             onClick={handleNextPage}
             disabled={currentPage === getTotalPages() - 1}
@@ -267,9 +272,15 @@ export function Step10D_DormitoryFacilities() {
       )}
 
       {showSuggestModal && (
-        <div className={styles.modal} onClick={() => setShowSuggestModal(false)}>
-          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-            <button 
+        <div
+          className={styles.modal}
+          onClick={() => setShowSuggestModal(false)}
+        >
+          <div
+            className={styles.modalContent}
+            onClick={e => e.stopPropagation()}
+          >
+            <button
               className={styles.modalCloseButton}
               onClick={() => setShowSuggestModal(false)}
             >
@@ -278,17 +289,17 @@ export function Step10D_DormitoryFacilities() {
             <h1 className={styles.modalTitle}>Sugira uma nova facilidade</h1>
             <div className={styles.modalInputWrapper}>
               <input
-                type="text"
+                type='text'
                 value={newFacilityName}
-                onChange={(e) => setNewFacilityName(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleSuggestFacility()}
-                placeholder="Insira o Nome"
+                onChange={e => setNewFacilityName(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && handleSuggestFacility()}
+                placeholder='Insira o Nome'
                 className={styles.modalInput}
                 required
                 autoFocus
               />
             </div>
-            <button 
+            <button
               className={styles.addButton}
               onClick={handleSuggestFacility}
             >

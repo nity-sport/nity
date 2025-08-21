@@ -32,7 +32,7 @@ const UserSchema: Schema = new Schema(
     },
     password: {
       type: String,
-      required: function(this: IUser) {
+      required: function (this: IUser) {
         return this.provider === 'email';
       },
     },
@@ -64,10 +64,12 @@ const UserSchema: Schema = new Schema(
       default: UserRole.USER,
       required: true,
     },
-    teams: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Team',
-    }],
+    teams: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Team',
+      },
+    ],
     affiliateCode: {
       type: String,
       unique: true,
@@ -95,5 +97,7 @@ UserSchema.index({ teams: 1 });
 UserSchema.index({ affiliateCode: 1 });
 UserSchema.index({ referredBy: 1 });
 
-const User: IUserModel = (mongoose.models.User as IUserModel) || mongoose.model<IUser, IUserModel>('User', UserSchema);
+const User: IUserModel =
+  (mongoose.models.User as IUserModel) ||
+  mongoose.model<IUser, IUserModel>('User', UserSchema);
 export default User;

@@ -32,9 +32,11 @@ export default function CreateSportCenter() {
       <div className={styles.header}>
         <div>
           <h1 className={styles.title}>Create New SportCenter</h1>
-          <p className={styles.subtitle}>Fill in the information below to create a new SportCenter</p>
+          <p className={styles.subtitle}>
+            Fill in the information below to create a new SportCenter
+          </p>
         </div>
-        <Link href="/admin/sportcenters" className={styles.backButton}>
+        <Link href='/admin/sportcenters' className={styles.backButton}>
           ← Back to SportCenters
         </Link>
       </div>

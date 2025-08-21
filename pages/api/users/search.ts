@@ -1,11 +1,11 @@
 import { NextApiResponse } from 'next';
 import User from '../../../src/models/User';
 import dbConnect from '../../../src/lib/dbConnect';
-import { 
-  AuthenticatedRequest, 
-  authenticate, 
-  requireAuthenticated, 
-  createApiHandler 
+import {
+  AuthenticatedRequest,
+  authenticate,
+  requireAuthenticated,
+  createApiHandler,
 } from '../../../src/lib/auth-middleware';
 import { UserRole } from '../../../src/types/auth';
 
@@ -21,23 +21,29 @@ const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
     }
   } catch (error) {
     console.error('[API /users/search] Handler error:', error);
-    return res.status(500).json({ 
+    return res.status(500).json({
       message: 'Internal server error',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Server error'
+      error:
+        process.env.NODE_ENV === 'development' ? error.message : 'Server error',
     });
   }
 };
 
-const handleSearchUsers = async (req: AuthenticatedRequest, res: NextApiResponse) => {
+const handleSearchUsers = async (
+  req: AuthenticatedRequest,
+  res: NextApiResponse
+) => {
   try {
     const { email, name, limit = 10 } = req.query;
     const scoutId = req.user!.id;
 
     if (!email && !name) {
-      return res.status(400).json({ message: 'Email or name query parameter is required' });
+      return res
+        .status(400)
+        .json({ message: 'Email or name query parameter is required' });
     }
 
-    let searchFilter: any = {};
+    const searchFilter: any = {};
 
     if (email) {
       searchFilter.email = { $regex: email, $options: 'i' };
@@ -64,11 +70,11 @@ const handleSearchUsers = async (req: AuthenticatedRequest, res: NextApiResponse
       name: user.name,
       email: user.email,
       avatar: user.avatar,
-      role: user.role
+      role: user.role,
     }));
 
     return res.status(200).json({
-      users: userResults
+      users: userResults,
     });
   } catch (error) {
     console.error('Error searching users:', error);
@@ -76,7 +82,4 @@ const handleSearchUsers = async (req: AuthenticatedRequest, res: NextApiResponse
   }
 };
 
-export default createApiHandler(handler, [
-  authenticate,
-  requireAuthenticated
-]);
+export default createApiHandler(handler, [authenticate, requireAuthenticated]);

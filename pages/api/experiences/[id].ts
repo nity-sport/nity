@@ -27,13 +27,18 @@ interface ExperienceUpdateInput {
   availableDates?: string[];
 }
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   await dbConnect();
 
   const { id } = req.query;
-  
+
   if (!id || typeof id !== 'string') {
-    return res.status(400).json({ success: false, error: 'ID da experiência é obrigatório' });
+    return res
+      .status(400)
+      .json({ success: false, error: 'ID da experiência é obrigatório' });
   }
 
   const token = getTokenFromHeader(req.headers.authorization);
@@ -43,46 +48,64 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case 'GET':
       try {
         const experience = await ExperienceModel.findById(id);
-        
+
         if (!experience) {
-          return res.status(404).json({ success: false, error: 'Experiência não encontrada' });
+          return res
+            .status(404)
+            .json({ success: false, error: 'Experiência não encontrada' });
         }
 
         // Check if user can view this experience
-        if (experience.visibility !== 'public' && 
-            (!decodedToken || experience.owner.userId !== decodedToken.userId)) {
-          return res.status(403).json({ success: false, error: 'Acesso negado' });
+        if (
+          experience.visibility !== 'public' &&
+          (!decodedToken || experience.owner.userId !== decodedToken.userId)
+        ) {
+          return res
+            .status(403)
+            .json({ success: false, error: 'Acesso negado' });
         }
 
         res.status(200).json({ success: true, data: experience });
       } catch (error: any) {
-        console.error("Erro ao buscar experiência:", error);
-        res.status(400).json({ success: false, error: error.message || 'Erro no servidor' });
+        console.error('Erro ao buscar experiência:', error);
+        res
+          .status(400)
+          .json({ success: false, error: error.message || 'Erro no servidor' });
       }
       break;
 
     case 'PUT':
       if (!decodedToken || !decodedToken.userId) {
-        return res.status(401).json({ success: false, error: 'Não autorizado: Token inválido ou não fornecido' });
+        return res.status(401).json({
+          success: false,
+          error: 'Não autorizado: Token inválido ou não fornecido',
+        });
       }
 
       try {
         const experience = await ExperienceModel.findById(id);
-        
+
         if (!experience) {
-          return res.status(404).json({ success: false, error: 'Experiência não encontrada' });
+          return res
+            .status(404)
+            .json({ success: false, error: 'Experiência não encontrada' });
         }
 
         // Check if user owns this experience
         if (experience.owner.userId !== decodedToken.userId) {
-          return res.status(403).json({ success: false, error: 'Você só pode editar suas próprias experiências' });
+          return res.status(403).json({
+            success: false,
+            error: 'Você só pode editar suas próprias experiências',
+          });
         }
 
         const updateData = req.body as ExperienceUpdateInput;
-        
+
         // Convert availableDates to Date objects if provided
         if (updateData.availableDates) {
-          (updateData as any).availableDates = updateData.availableDates.map(dateStr => new Date(dateStr));
+          (updateData as any).availableDates = updateData.availableDates.map(
+            dateStr => new Date(dateStr)
+          );
         }
 
         const updatedExperience = await ExperienceModel.findByIdAndUpdate(
@@ -93,33 +116,47 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         res.status(200).json({ success: true, data: updatedExperience });
       } catch (error: any) {
-        console.error("Erro ao atualizar experiência:", error);
-        res.status(400).json({ success: false, error: error.message || 'Erro no servidor' });
+        console.error('Erro ao atualizar experiência:', error);
+        res
+          .status(400)
+          .json({ success: false, error: error.message || 'Erro no servidor' });
       }
       break;
 
     case 'DELETE':
       if (!decodedToken || !decodedToken.userId) {
-        return res.status(401).json({ success: false, error: 'Não autorizado: Token inválido ou não fornecido' });
+        return res.status(401).json({
+          success: false,
+          error: 'Não autorizado: Token inválido ou não fornecido',
+        });
       }
 
       try {
         const experience = await ExperienceModel.findById(id);
-        
+
         if (!experience) {
-          return res.status(404).json({ success: false, error: 'Experiência não encontrada' });
+          return res
+            .status(404)
+            .json({ success: false, error: 'Experiência não encontrada' });
         }
 
         // Check if user owns this experience
         if (experience.owner.userId !== decodedToken.userId) {
-          return res.status(403).json({ success: false, error: 'Você só pode deletar suas próprias experiências' });
+          return res.status(403).json({
+            success: false,
+            error: 'Você só pode deletar suas próprias experiências',
+          });
         }
 
         await ExperienceModel.findByIdAndDelete(id);
-        res.status(200).json({ success: true, message: 'Experiência deletada com sucesso' });
+        res
+          .status(200)
+          .json({ success: true, message: 'Experiência deletada com sucesso' });
       } catch (error: any) {
-        console.error("Erro ao deletar experiência:", error);
-        res.status(400).json({ success: false, error: error.message || 'Erro no servidor' });
+        console.error('Erro ao deletar experiência:', error);
+        res
+          .status(400)
+          .json({ success: false, error: error.message || 'Erro no servidor' });
       }
       break;
 

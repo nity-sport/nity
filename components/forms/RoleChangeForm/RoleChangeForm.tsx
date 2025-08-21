@@ -17,7 +17,7 @@ const RoleChangeForm: React.FC<RoleChangeFormProps> = ({
   userName,
   onSubmit,
   onCancel,
-  isLoading = false
+  isLoading = false,
 }) => {
   const [selectedRole, setSelectedRole] = useState<UserRole>(currentRole);
 
@@ -28,26 +28,29 @@ const RoleChangeForm: React.FC<RoleChangeFormProps> = ({
       [UserRole.OWNER]: 'Proprietário',
       [UserRole.USER]: 'Usuário',
       [UserRole.ATHLETE]: 'Atleta',
-      [UserRole.SCOUT]: 'Scout'
+      [UserRole.SCOUT]: 'Scout',
     };
     return roleNames[role];
   };
 
   const getRoleDescription = (role: UserRole): string => {
     const descriptions = {
-      [UserRole.SUPERUSER]: 'Acesso total: pode deletar usuários, criar experiências, gerenciar sport centers e modificar perfis',
+      [UserRole.SUPERUSER]:
+        'Acesso total: pode deletar usuários, criar experiências, gerenciar sport centers e modificar perfis',
       [UserRole.MARKETING]: 'Pode criar e gerenciar experiências e anúncios',
       [UserRole.OWNER]: 'Pode criar e gerenciar sport centers',
-      [UserRole.USER]: 'Pode visualizar conteúdo e se inscrever em experiências',
-      [UserRole.ATHLETE]: 'Pode se inscrever em experiências e visualizar sport centers',
-      [UserRole.SCOUT]: 'Pode criar e gerenciar times'
+      [UserRole.USER]:
+        'Pode visualizar conteúdo e se inscrever em experiências',
+      [UserRole.ATHLETE]:
+        'Pode se inscrever em experiências e visualizar sport centers',
+      [UserRole.SCOUT]: 'Pode criar e gerenciar times',
     };
     return descriptions[role];
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (selectedRole === currentRole) {
       onCancel();
       return;
@@ -87,8 +90,8 @@ const RoleChangeForm: React.FC<RoleChangeFormProps> = ({
             {Object.values(UserRole).map(role => (
               <label key={role} className={styles.roleOption}>
                 <input
-                  type="radio"
-                  name="role"
+                  type='radio'
+                  name='role'
                   value={role}
                   checked={selectedRole === role}
                   onChange={handleRoleChange}
@@ -109,7 +112,7 @@ const RoleChangeForm: React.FC<RoleChangeFormProps> = ({
 
           <div className={styles.actions}>
             <button
-              type="button"
+              type='button'
               onClick={onCancel}
               className={styles.cancelButton}
               disabled={isLoading}
@@ -117,7 +120,7 @@ const RoleChangeForm: React.FC<RoleChangeFormProps> = ({
               Cancelar
             </button>
             <button
-              type="submit"
+              type='submit'
               className={styles.submitButton}
               disabled={isLoading || selectedRole === currentRole}
             >

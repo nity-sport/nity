@@ -4,11 +4,11 @@ import User from '../../../../src/models/User';
 import { UserRole } from '../../../../src/types/auth';
 import { generateUniqueAffiliateCode } from '../../../../src/lib/affiliateCode';
 import dbConnect from '../../../../src/lib/dbConnect';
-import { 
-  AuthenticatedRequest, 
-  authenticate, 
-  requireSuperuser, 
-  createApiHandler 
+import {
+  AuthenticatedRequest,
+  authenticate,
+  requireSuperuser,
+  createApiHandler,
 } from '../../../../src/lib/auth-middleware';
 
 const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
@@ -31,14 +31,19 @@ const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
     }
   } catch (error) {
     console.error('[API /users/[id]/promote-scout] Handler error:', error);
-    return res.status(500).json({ 
+    return res.status(500).json({
       message: 'Internal server error',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Server error'
+      error:
+        process.env.NODE_ENV === 'development' ? error.message : 'Server error',
     });
   }
 };
 
-const handlePromoteToScout = async (req: AuthenticatedRequest, res: NextApiResponse, userId: string) => {
+const handlePromoteToScout = async (
+  req: AuthenticatedRequest,
+  res: NextApiResponse,
+  userId: string
+) => {
   try {
     const user = await User.findById(userId);
     if (!user) {
@@ -73,13 +78,13 @@ const handlePromoteToScout = async (req: AuthenticatedRequest, res: NextApiRespo
       affiliateCode: user.affiliateCode,
       referredBy: user.referredBy,
       createdAt: user.createdAt,
-      updatedAt: user.updatedAt
+      updatedAt: user.updatedAt,
     };
 
     return res.status(200).json({
       message: 'User promoted to Scout successfully',
       user: userResponse,
-      affiliateCode: affiliateCode
+      affiliateCode: affiliateCode,
     });
   } catch (error) {
     console.error('Error promoting user to Scout:', error);
@@ -87,7 +92,11 @@ const handlePromoteToScout = async (req: AuthenticatedRequest, res: NextApiRespo
   }
 };
 
-const handleDemoteFromScout = async (req: AuthenticatedRequest, res: NextApiResponse, userId: string) => {
+const handleDemoteFromScout = async (
+  req: AuthenticatedRequest,
+  res: NextApiResponse,
+  userId: string
+) => {
   try {
     const user = await User.findById(userId);
     if (!user) {
@@ -99,12 +108,14 @@ const handleDemoteFromScout = async (req: AuthenticatedRequest, res: NextApiResp
     }
 
     // Check if Scout has active referrals
-    const referralCount = await User.countDocuments({ referredBy: user.affiliateCode });
-    
+    const referralCount = await User.countDocuments({
+      referredBy: user.affiliateCode,
+    });
+
     if (referralCount > 0) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         message: `Cannot demote Scout: has ${referralCount} active referrals. Consider transferring referrals first.`,
-        referralCount 
+        referralCount,
       });
     }
 
@@ -124,12 +135,12 @@ const handleDemoteFromScout = async (req: AuthenticatedRequest, res: NextApiResp
       affiliateCode: user.affiliateCode,
       referredBy: user.referredBy,
       createdAt: user.createdAt,
-      updatedAt: user.updatedAt
+      updatedAt: user.updatedAt,
     };
 
     return res.status(200).json({
       message: 'Scout demoted to regular user successfully',
-      user: userResponse
+      user: userResponse,
     });
   } catch (error) {
     console.error('Error demoting Scout:', error);
@@ -137,7 +148,4 @@ const handleDemoteFromScout = async (req: AuthenticatedRequest, res: NextApiResp
   }
 };
 
-export default createApiHandler(handler, [
-  authenticate,
-  requireSuperuser
-]);
+export default createApiHandler(handler, [authenticate, requireSuperuser]);

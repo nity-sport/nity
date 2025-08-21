@@ -3,7 +3,10 @@ import dbConnect from '../../../src/lib/dbConnect';
 import User from '../../../src/models/User';
 import { comparePassword, generateToken } from '../../../src/lib/auth';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
@@ -14,7 +17,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ message: 'Email and password are required' });
+      return res
+        .status(400)
+        .json({ message: 'Email and password are required' });
     }
 
     const user = await User.findOne({ email: email.toLowerCase() });
@@ -23,8 +28,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     if (user.provider !== 'email') {
-      return res.status(401).json({ 
-        message: `Please sign in with ${user.provider}` 
+      return res.status(401).json({
+        message: `Please sign in with ${user.provider}`,
       });
     }
 

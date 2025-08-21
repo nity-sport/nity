@@ -9,7 +9,7 @@ export function Step4_Host() {
   const [errors, setErrors] = useState({
     hosterName: '',
     hostBio: '',
-    hosterImage: ''
+    hosterImage: '',
   });
 
   const validateHostName = (name: string): string => {
@@ -53,7 +53,7 @@ export function Step4_Host() {
     const isValid = !nameError && !bioError && !imageError;
     dispatch({
       type: 'SET_STEP_VALID',
-      payload: { stepIndex: 3, isValid }
+      payload: { stepIndex: 3, isValid },
     });
 
     // Only show errors if we're supposed to show errors for this step
@@ -61,13 +61,13 @@ export function Step4_Host() {
       setErrors({
         hosterName: nameError,
         hostBio: bioError,
-        hosterImage: imageError
+        hosterImage: imageError,
       });
     } else {
       setErrors({
         hosterName: '',
         hostBio: '',
-        hosterImage: ''
+        hosterImage: '',
       });
     }
 
@@ -79,8 +79,8 @@ export function Step4_Host() {
     dispatch({
       type: 'UPDATE_FORM_DATA',
       payload: {
-        hosterName: value
-      }
+        hosterName: value,
+      },
     });
 
     // Validate immediately for navigation
@@ -91,7 +91,7 @@ export function Step4_Host() {
 
     dispatch({
       type: 'SET_STEP_VALID',
-      payload: { stepIndex: 3, isValid }
+      payload: { stepIndex: 3, isValid },
     });
 
     // Only show error if we're supposed to show errors for this step
@@ -105,8 +105,8 @@ export function Step4_Host() {
     dispatch({
       type: 'UPDATE_FORM_DATA',
       payload: {
-        hostBio: value
-      }
+        hostBio: value,
+      },
     });
 
     // Validate immediately for navigation
@@ -117,7 +117,7 @@ export function Step4_Host() {
 
     dispatch({
       type: 'SET_STEP_VALID',
-      payload: { stepIndex: 3, isValid }
+      payload: { stepIndex: 3, isValid },
     });
 
     // Only show error if we're supposed to show errors for this step
@@ -132,16 +132,27 @@ export function Step4_Host() {
       // Validate file size (5MB max)
       if (file.size > 5 * 1024 * 1024) {
         if (state.showErrors[3]) {
-          setErrors(prev => ({ ...prev, hosterImage: 'Arquivo muito grande. Limite de 5MB.' }));
+          setErrors(prev => ({
+            ...prev,
+            hosterImage: 'Arquivo muito grande. Limite de 5MB.',
+          }));
         }
         return;
       }
 
       // Validate file type
-      const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'];
+      const allowedTypes = [
+        'image/jpeg',
+        'image/png',
+        'image/webp',
+        'image/avif',
+      ];
       if (!allowedTypes.includes(file.type)) {
         if (state.showErrors[3]) {
-          setErrors(prev => ({ ...prev, hosterImage: 'Formato não suportado. Use JPEG, PNG, WEBP ou AVIF.' }));
+          setErrors(prev => ({
+            ...prev,
+            hosterImage: 'Formato não suportado. Use JPEG, PNG, WEBP ou AVIF.',
+          }));
         }
         return;
       }
@@ -149,13 +160,13 @@ export function Step4_Host() {
       dispatch({
         type: 'UPDATE_FORM_DATA',
         payload: {
-          hosterImage: file
-        }
+          hosterImage: file,
+        },
       });
-      
+
       // Create preview
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = e => {
         setPreviewImage(e.target?.result as string);
       };
       reader.readAsDataURL(file);
@@ -168,7 +179,7 @@ export function Step4_Host() {
 
       dispatch({
         type: 'SET_STEP_VALID',
-        payload: { stepIndex: 3, isValid }
+        payload: { stepIndex: 3, isValid },
       });
 
       // Clear image error
@@ -178,9 +189,12 @@ export function Step4_Host() {
 
   // Set preview image if file exists
   useEffect(() => {
-    if (state.formData.hosterImage && state.formData.hosterImage instanceof File) {
+    if (
+      state.formData.hosterImage &&
+      state.formData.hosterImage instanceof File
+    ) {
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = e => {
         setPreviewImage(e.target?.result as string);
       };
       reader.readAsDataURL(state.formData.hosterImage);
@@ -190,28 +204,38 @@ export function Step4_Host() {
   // Validate on mount and when showErrors changes
   useEffect(() => {
     validateForm();
-  }, [state.showErrors[3], state.formData.hosterName, state.formData.hostBio, state.formData.hosterImage]);
+  }, [
+    state.showErrors[3],
+    state.formData.hosterName,
+    state.formData.hostBio,
+    state.formData.hosterImage,
+  ]);
 
   return (
     <div className={baseStyles.stepContainer}>
       <div className={styles.hostContainer} style={{ marginTop: '4.31rem' }}>
         <div className={styles.hostPhotoSection}>
-          <label className={styles.hostPhotoLabel}>Choose a profile photo</label>
+          <label className={styles.hostPhotoLabel}>
+            Choose a profile photo
+          </label>
           <div className={styles.hostPhotoUpload}>
             <input
-              type="file"
-              id="hostPhoto"
-              accept="image/*"
+              type='file'
+              id='hostPhoto'
+              accept='image/*'
               onChange={handleHostPhotoUpload}
               className={styles.fileInput}
             />
-            <label htmlFor="hostPhoto" className={`${styles.hostPhotoArea} ${errors.hosterImage ? styles.inputError : ''}`}>
+            <label
+              htmlFor='hostPhoto'
+              className={`${styles.hostPhotoArea} ${errors.hosterImage ? styles.inputError : ''}`}
+            >
               <div className={styles.hostPhotoPlaceholder}>
                 {previewImage ? (
                   <div className={styles.hostPhotoContainer}>
-                    <img 
-                      src={previewImage} 
-                      alt="Host preview" 
+                    <img
+                      src={previewImage}
+                      alt='Host preview'
                       className={styles.hostPhotoPreview}
                     />
                     <div className={styles.hostPhotoAdd}>+</div>
@@ -224,11 +248,11 @@ export function Step4_Host() {
                 )}
                 <div className={styles.hostNameSection}>
                   <input
-                    type="text"
+                    type='text'
                     value={state.formData.hosterName || ''}
                     onChange={handleHostNameChange}
                     className={`${styles.hostNameInput} ${errors.hosterName ? styles.inputError : ''}`}
-                    placeholder="Hoster name"
+                    placeholder='Hoster name'
                   />
                 </div>
               </div>
@@ -244,10 +268,12 @@ export function Step4_Host() {
                 value={state.formData.hostBio || ''}
                 onChange={handleHostBioChange}
                 className={`${styles.hostBioInput} ${errors.hostBio ? styles.inputError : ''}`}
-                placeholder="Insert a hoster bio"
+                placeholder='Insert a hoster bio'
                 rows={4}
               />
-              {errors.hostBio && <div className={styles.errorMessage}>{errors.hostBio}</div>}
+              {errors.hostBio && (
+                <div className={styles.errorMessage}>{errors.hostBio}</div>
+              )}
               <div className={styles.characterCount}>
                 {(state.formData.hostBio || '').length}/500 caracteres
               </div>

@@ -3,11 +3,11 @@ import mongoose from 'mongoose';
 import Coupon from '../../../src/models/Coupon';
 import Team from '../../../src/models/Team';
 import dbConnect from '../../../src/lib/dbConnect';
-import { 
-  AuthenticatedRequest, 
-  authenticate, 
-  requireAuthenticated, 
-  createApiHandler 
+import {
+  AuthenticatedRequest,
+  authenticate,
+  requireAuthenticated,
+  createApiHandler,
 } from '../../../src/lib/auth-middleware';
 
 const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
@@ -32,20 +32,25 @@ const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
     }
   } catch (error) {
     console.error('[API /coupons/[id]] Handler error:', error);
-    return res.status(500).json({ 
+    return res.status(500).json({
       message: 'Internal server error',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Server error'
+      error:
+        process.env.NODE_ENV === 'development' ? error.message : 'Server error',
     });
   }
 };
 
-const handleGetCoupon = async (req: AuthenticatedRequest, res: NextApiResponse, couponId: string) => {
+const handleGetCoupon = async (
+  req: AuthenticatedRequest,
+  res: NextApiResponse,
+  couponId: string
+) => {
   try {
     const userId = req.user!.id;
 
-    const coupon = await Coupon.findById(couponId)
+    const coupon = (await Coupon.findById(couponId)
       .populate('createdBy', 'name email avatar')
-      .populate('usedBy', 'name email avatar') as any;
+      .populate('usedBy', 'name email avatar')) as any;
 
     if (!coupon) {
       return res.status(404).json({ message: 'Coupon not found' });
@@ -67,7 +72,7 @@ const handleGetCoupon = async (req: AuthenticatedRequest, res: NextApiResponse, 
         id: coupon.createdBy._id.toString(),
         name: coupon.createdBy.name,
         email: coupon.createdBy.email,
-        avatar: coupon.createdBy.avatar
+        avatar: coupon.createdBy.avatar,
       },
       uses: coupon.uses,
       usedBy: coupon.usedBy.map(user => user._id.toString()),
@@ -75,14 +80,14 @@ const handleGetCoupon = async (req: AuthenticatedRequest, res: NextApiResponse, 
         id: user._id.toString(),
         name: user.name,
         email: user.email,
-        avatar: user.avatar
+        avatar: user.avatar,
       })),
       maxUses: coupon.maxUses,
       expiresAt: coupon.expiresAt,
       isActive: coupon.isActive,
       isValid: coupon.isValid(),
       createdAt: coupon.createdAt,
-      updatedAt: coupon.updatedAt
+      updatedAt: coupon.updatedAt,
     };
 
     return res.status(200).json({ coupon: couponResponse });
@@ -92,7 +97,11 @@ const handleGetCoupon = async (req: AuthenticatedRequest, res: NextApiResponse, 
   }
 };
 
-const handleUpdateCoupon = async (req: AuthenticatedRequest, res: NextApiResponse, couponId: string) => {
+const handleUpdateCoupon = async (
+  req: AuthenticatedRequest,
+  res: NextApiResponse,
+  couponId: string
+) => {
   try {
     const userId = req.user!.id;
     const { isActive, maxUses, expiresAt } = req.body;
@@ -103,7 +112,9 @@ const handleUpdateCoupon = async (req: AuthenticatedRequest, res: NextApiRespons
     }
 
     if (coupon.createdBy.toString() !== userId) {
-      return res.status(403).json({ message: 'Only the creator can update the coupon' });
+      return res
+        .status(403)
+        .json({ message: 'Only the creator can update the coupon' });
     }
 
     if (isActive !== undefined) {
@@ -115,7 +126,9 @@ const handleUpdateCoupon = async (req: AuthenticatedRequest, res: NextApiRespons
 
     if (maxUses !== undefined) {
       if (maxUses !== null && (typeof maxUses !== 'number' || maxUses <= 0)) {
-        return res.status(400).json({ message: 'maxUses must be a positive number or null' });
+        return res
+          .status(400)
+          .json({ message: 'maxUses must be a positive number or null' });
       }
       coupon.maxUses = maxUses;
     }
@@ -124,7 +137,9 @@ const handleUpdateCoupon = async (req: AuthenticatedRequest, res: NextApiRespons
       if (expiresAt !== null) {
         const expireDate = new Date(expiresAt);
         if (expireDate <= new Date()) {
-          return res.status(400).json({ message: 'Expiration date must be in the future' });
+          return res
+            .status(400)
+            .json({ message: 'Expiration date must be in the future' });
         }
         coupon.expiresAt = expireDate;
       } else {
@@ -134,9 +149,9 @@ const handleUpdateCoupon = async (req: AuthenticatedRequest, res: NextApiRespons
 
     await coupon.save();
 
-    const updatedCoupon = await Coupon.findById(couponId)
+    const updatedCoupon = (await Coupon.findById(couponId)
       .populate('createdBy', 'name email avatar')
-      .populate('usedBy', 'name email avatar') as any;
+      .populate('usedBy', 'name email avatar')) as any;
 
     const couponResponse = {
       id: updatedCoupon._id.toString(),
@@ -148,7 +163,7 @@ const handleUpdateCoupon = async (req: AuthenticatedRequest, res: NextApiRespons
         id: updatedCoupon.createdBy._id.toString(),
         name: updatedCoupon.createdBy.name,
         email: updatedCoupon.createdBy.email,
-        avatar: updatedCoupon.createdBy.avatar
+        avatar: updatedCoupon.createdBy.avatar,
       },
       uses: updatedCoupon.uses,
       usedBy: updatedCoupon.usedBy.map(user => user._id.toString()),
@@ -156,19 +171,19 @@ const handleUpdateCoupon = async (req: AuthenticatedRequest, res: NextApiRespons
         id: user._id.toString(),
         name: user.name,
         email: user.email,
-        avatar: user.avatar
+        avatar: user.avatar,
       })),
       maxUses: updatedCoupon.maxUses,
       expiresAt: updatedCoupon.expiresAt,
       isActive: updatedCoupon.isActive,
       isValid: updatedCoupon.isValid(),
       createdAt: updatedCoupon.createdAt,
-      updatedAt: updatedCoupon.updatedAt
+      updatedAt: updatedCoupon.updatedAt,
     };
 
     return res.status(200).json({
       message: 'Coupon updated successfully',
-      coupon: couponResponse
+      coupon: couponResponse,
     });
   } catch (error) {
     console.error('Error updating coupon:', error);
@@ -176,7 +191,11 @@ const handleUpdateCoupon = async (req: AuthenticatedRequest, res: NextApiRespons
   }
 };
 
-const handleDeleteCoupon = async (req: AuthenticatedRequest, res: NextApiResponse, couponId: string) => {
+const handleDeleteCoupon = async (
+  req: AuthenticatedRequest,
+  res: NextApiResponse,
+  couponId: string
+) => {
   try {
     const userId = req.user!.id;
 
@@ -186,7 +205,9 @@ const handleDeleteCoupon = async (req: AuthenticatedRequest, res: NextApiRespons
     }
 
     if (coupon.createdBy.toString() !== userId) {
-      return res.status(403).json({ message: 'Only the creator can delete the coupon' });
+      return res
+        .status(403)
+        .json({ message: 'Only the creator can delete the coupon' });
     }
 
     await Coupon.findByIdAndDelete(couponId);
@@ -198,7 +219,4 @@ const handleDeleteCoupon = async (req: AuthenticatedRequest, res: NextApiRespons
   }
 };
 
-export default createApiHandler(handler, [
-  authenticate,
-  requireAuthenticated
-]);
+export default createApiHandler(handler, [authenticate, requireAuthenticated]);

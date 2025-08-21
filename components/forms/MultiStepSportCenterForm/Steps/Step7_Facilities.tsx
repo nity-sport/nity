@@ -11,7 +11,9 @@ interface Facility {
 
 export function Step7_Facilities() {
   const { state, dispatch } = useMultiStepForm();
-  const [availableFacilities, setAvailableFacilities] = useState<Facility[]>([]);
+  const [availableFacilities, setAvailableFacilities] = useState<Facility[]>(
+    []
+  );
   const [showSuggestModal, setShowSuggestModal] = useState(false);
   const [newFacilityName, setNewFacilityName] = useState('');
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -30,12 +32,12 @@ export function Step7_Facilities() {
 
   const updateValidation = (facilities: string[]) => {
     const validationError = validateFacilities(facilities);
-    
+
     dispatch({
       type: 'SET_STEP_VALID',
-      payload: { stepIndex: 6, isValid: validationError === '' }
+      payload: { stepIndex: 6, isValid: validationError === '' },
     });
-    
+
     // Only show error if we're supposed to show errors for this step
     if (state.showErrors[6]) {
       setError(validationError);
@@ -46,15 +48,15 @@ export function Step7_Facilities() {
 
   useEffect(() => {
     fetchFacilities();
-    
+
     // Check if mobile
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-    
+
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    
+
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
@@ -70,7 +72,7 @@ export function Step7_Facilities() {
         setShowSuggestModal(false);
       }
     };
-    
+
     if (showSuggestModal) {
       document.addEventListener('keydown', handleEsc);
       return () => document.removeEventListener('keydown', handleEsc);
@@ -81,14 +83,15 @@ export function Step7_Facilities() {
     try {
       const response = await fetch('/api/facilities');
       const result = await response.json();
-      
+
       if (result.facilities) {
         const dbFacilities = result.facilities;
-        const customFacilities = state.customFacilities?.map((facility, index) => ({
-          _id: `custom-${index}`,
-          name: facility
-        })) || [];
-        
+        const customFacilities =
+          state.customFacilities?.map((facility, index) => ({
+            _id: `custom-${index}`,
+            name: facility,
+          })) || [];
+
         setAvailableFacilities([...dbFacilities, ...customFacilities]);
       } else {
         // Fallback para facilities padrão se a API falhar
@@ -104,17 +107,20 @@ export function Step7_Facilities() {
           { _id: '9', name: 'Quadras cobertas' },
           { _id: '10', name: 'Salão de jogos' },
           { _id: '11', name: 'Academia' },
-          { _id: '12', name: 'Aula de dança' }
+          { _id: '12', name: 'Aula de dança' },
         ];
-        
-        setAvailableFacilities([...defaultFacilities, ...state.customFacilities?.map((facility, index) => ({
-          _id: `custom-${index}`,
-          name: facility
-        })) || []]);
+
+        setAvailableFacilities([
+          ...defaultFacilities,
+          ...(state.customFacilities?.map((facility, index) => ({
+            _id: `custom-${index}`,
+            name: facility,
+          })) || []),
+        ]);
       }
     } catch (error) {
       console.error('Error fetching facilities:', error);
-      
+
       // Fallback para facilities padrão se houver erro
       const defaultFacilities = [
         { _id: '1', name: 'Próximo a estação de metro' },
@@ -128,32 +134,35 @@ export function Step7_Facilities() {
         { _id: '9', name: 'Quadras cobertas' },
         { _id: '10', name: 'Salão de jogos' },
         { _id: '11', name: 'Academia' },
-        { _id: '12', name: 'Aula de dança' }
+        { _id: '12', name: 'Aula de dança' },
       ];
-      
-      setAvailableFacilities([...defaultFacilities, ...state.customFacilities?.map((facility, index) => ({
-        _id: `custom-${index}`,
-        name: facility
-      })) || []]);
+
+      setAvailableFacilities([
+        ...defaultFacilities,
+        ...(state.customFacilities?.map((facility, index) => ({
+          _id: `custom-${index}`,
+          name: facility,
+        })) || []),
+      ]);
     }
   };
 
   const handleFacilityToggle = (facilityId: string, facilityName: string) => {
     const currentFacilities = state.formData.facilities || [];
     const isSelected = currentFacilities.includes(facilityName);
-    
+
     let newFacilities: string[];
     if (isSelected) {
       newFacilities = currentFacilities.filter(f => f !== facilityName);
     } else {
       newFacilities = [...currentFacilities, facilityName];
     }
-    
+
     dispatch({
       type: 'UPDATE_FORM_DATA',
       payload: {
-        facilities: newFacilities
-      }
+        facilities: newFacilities,
+      },
     });
 
     // Update validation immediately
@@ -163,11 +172,17 @@ export function Step7_Facilities() {
   const handleSuggestFacility = () => {
     if (newFacilityName.trim()) {
       // Adicionar facility localmente
-      dispatch({ type: 'ADD_CUSTOM_FACILITY', payload: newFacilityName.trim() });
-      setAvailableFacilities(prev => [...prev, { 
-        _id: `custom-${Date.now()}`, 
-        name: newFacilityName.trim()
-      }]);
+      dispatch({
+        type: 'ADD_CUSTOM_FACILITY',
+        payload: newFacilityName.trim(),
+      });
+      setAvailableFacilities(prev => [
+        ...prev,
+        {
+          _id: `custom-${Date.now()}`,
+          name: newFacilityName.trim(),
+        },
+      ]);
       setNewFacilityName('');
       setShowSuggestModal(false);
       setShowSuccessMessage(true);
@@ -182,7 +197,7 @@ export function Step7_Facilities() {
     if (isMobile) {
       return availableFacilities;
     }
-    
+
     const startIndex = currentPage * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     return availableFacilities.slice(startIndex, endIndex);
@@ -208,7 +223,7 @@ export function Step7_Facilities() {
   return (
     <div className={styles.stepContainer}>
       {error && <div className={styles.errorMessage}>{error}</div>}
-      
+
       {!isMobile && getTotalPages() > 1 && (
         <div className={styles.paginationTop}>
           <span className={styles.pageInfo}>
@@ -216,7 +231,7 @@ export function Step7_Facilities() {
           </span>
         </div>
       )}
-      
+
       <div className={styles.facilitiesGrid}>
         {getPaginatedFacilities().map(facility => (
           <div
@@ -232,7 +247,7 @@ export function Step7_Facilities() {
             <span className={styles.sportName}>{facility.name}</span>
           </div>
         ))}
-        
+
         <div
           className={styles.addSportCard}
           onClick={() => setShowSuggestModal(true)}
@@ -244,14 +259,14 @@ export function Step7_Facilities() {
 
       {!isMobile && getTotalPages() > 1 && (
         <div className={styles.paginationControls}>
-          <button 
+          <button
             className={`${styles.paginationButton} ${currentPage === 0 ? styles.disabled : ''}`}
             onClick={handlePrevPage}
             disabled={currentPage === 0}
           >
             ← Anterior
           </button>
-          
+
           <div className={styles.pageIndicators}>
             {Array.from({ length: getTotalPages() }, (_, i) => (
               <button
@@ -263,8 +278,8 @@ export function Step7_Facilities() {
               </button>
             ))}
           </div>
-          
-          <button 
+
+          <button
             className={`${styles.paginationButton} ${currentPage === getTotalPages() - 1 ? styles.disabled : ''}`}
             onClick={handleNextPage}
             disabled={currentPage === getTotalPages() - 1}
@@ -282,9 +297,15 @@ export function Step7_Facilities() {
       )}
 
       {showSuggestModal && (
-        <div className={styles.modal} onClick={() => setShowSuggestModal(false)}>
-          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-            <button 
+        <div
+          className={styles.modal}
+          onClick={() => setShowSuggestModal(false)}
+        >
+          <div
+            className={styles.modalContent}
+            onClick={e => e.stopPropagation()}
+          >
+            <button
               className={styles.modalCloseButton}
               onClick={() => setShowSuggestModal(false)}
             >
@@ -293,17 +314,17 @@ export function Step7_Facilities() {
             <h1 className={styles.modalTitle}>Sugira uma nova facility</h1>
             <div className={styles.modalInputWrapper}>
               <input
-                type="text"
+                type='text'
                 value={newFacilityName}
-                onChange={(e) => setNewFacilityName(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleSuggestFacility()}
-                placeholder="Insira o Nome"
+                onChange={e => setNewFacilityName(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && handleSuggestFacility()}
+                placeholder='Insira o Nome'
                 className={styles.modalInput}
                 required
                 autoFocus
               />
             </div>
-            <button 
+            <button
               className={styles.addButton}
               onClick={handleSuggestFacility}
             >

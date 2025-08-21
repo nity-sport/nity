@@ -4,6 +4,7 @@ import User from '../models/User';
 import Team from '../models/Team';
 import { UserRole } from '../types/auth';
 import dbConnect from './dbConnect';
+import { logger } from '../utils/logger';
 
 export interface AuthenticatedRequest extends NextApiRequest {
   user?: {
@@ -20,41 +21,37 @@ export const authenticate = async (
   next: () => void
 ) => {
   try {
-    console.log('[Auth Middleware] Starting authentication...');
-    console.log('[Auth Middleware] Method:', req.method);
-    console.log('[Auth Middleware] URL:', req.url);
-    
+    logger.debug('Starting authentication for:', req.method, req.url);
+
     const token = req.headers.authorization?.replace('Bearer ', '');
-    
+
     if (!token) {
-      console.log('[Auth Middleware] No token provided');
+      logger.debug('No token provided');
       return res.status(401).json({ message: 'No token provided' });
     }
 
-    console.log('[Auth Middleware] Token found, verifying...');
-    
+    logger.debug('Token found, verifying...');
+
     if (!process.env.JWT_SECRET) {
-      console.error('[Auth Middleware] JWT_SECRET not found in environment');
+      logger.error('JWT_SECRET not found in environment');
       return res.status(500).json({ message: 'Server configuration error' });
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any;
-    console.log('[Auth Middleware] Token decoded successfully, userId:', decoded.userId);
-    
-    console.log('[Auth Middleware] Connecting to database for user lookup...');
+    logger.debug('Token decoded successfully, userId:', decoded.userId);
+
     await dbConnect();
-    console.log('[Auth Middleware] Looking up user...');
     const user = await User.findById(decoded.userId).select('-password');
-    
+
     if (!user) {
-      console.log('[Auth Middleware] User not found for userId:', decoded.userId);
+      logger.warn('User not found for userId:', decoded.userId);
       return res.status(401).json({ message: 'Invalid token' });
     }
 
-    console.log('[Auth Middleware] User found:', { 
+    logger.debug('User authenticated:', {
       id: user._id.toString(),
       email: user.email,
-      role: user.role 
+      role: user.role,
     });
 
     req.user = {
@@ -64,30 +61,32 @@ export const authenticate = async (
       role: user.role,
     };
 
-    console.log('[Auth Middleware] Authentication successful, calling next()');
+    logger.debug('Authentication successful');
     next();
   } catch (error) {
-    console.error('[Auth Middleware] Authentication failed:', error);
-    console.error('[Auth Middleware] Error details:', {
-      name: error instanceof Error ? error.name : 'Unknown',
-      message: error instanceof Error ? error.message : 'Unknown error',
-      stack: error instanceof Error ? error.stack : 'No stack'
+    logger.error('Authentication failed:', error);
+    return res.status(401).json({
+      message: 'Invalid token',
+      error: error instanceof Error ? error.message : 'Unknown error',
     });
-    return res.status(401).json({ message: 'Invalid token', error: error instanceof Error ? error.message : 'Unknown error' });
   }
 };
 
 export const authorize = (allowedRoles: UserRole[]) => {
-  return (req: AuthenticatedRequest, res: NextApiResponse, next: () => void) => {
+  return (
+    req: AuthenticatedRequest,
+    res: NextApiResponse,
+    next: () => void
+  ) => {
     if (!req.user) {
       return res.status(401).json({ message: 'Not authenticated' });
     }
 
     if (!allowedRoles.includes(req.user.role)) {
-      return res.status(403).json({ 
+      return res.status(403).json({
         message: 'Insufficient permissions',
         required: allowedRoles,
-        current: req.user.role
+        current: req.user.role,
       });
     }
 
@@ -99,12 +98,12 @@ export const requireSuperuser = authorize([UserRole.SUPERUSER]);
 
 export const requireMarketingOrHigher = authorize([
   UserRole.SUPERUSER,
-  UserRole.MARKETING
+  UserRole.MARKETING,
 ]);
 
 export const requireOwnerOrHigher = authorize([
   UserRole.SUPERUSER,
-  UserRole.OWNER
+  UserRole.OWNER,
 ]);
 
 export const requireAuthenticated = authorize([
@@ -113,17 +112,22 @@ export const requireAuthenticated = authorize([
   UserRole.OWNER,
   UserRole.SCOUT,
   UserRole.USER,
-  UserRole.ATHLETE
+  UserRole.ATHLETE,
 ]);
 
 // Helper function that returns authenticated user or null
 export const authenticateToken = async (
   req: NextApiRequest,
   res: NextApiResponse
-): Promise<{ id: string; email: string; name: string; role: UserRole } | null> => {
+): Promise<{
+  id: string;
+  email: string;
+  name: string;
+  role: UserRole;
+} | null> => {
   try {
     const token = req.headers.authorization?.replace('Bearer ', '');
-    
+
     if (!token) {
       res.status(401).json({ message: 'No token provided' });
       return null;
@@ -135,10 +139,10 @@ export const authenticateToken = async (
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any;
-    
+
     await dbConnect();
     const user = await User.findById(decoded.userId).select('-password');
-    
+
     if (!user) {
       res.status(401).json({ message: 'Invalid token' });
       return null;
@@ -158,7 +162,9 @@ export const authenticateToken = async (
 
 export const createApiHandler = (
   handler: (req: AuthenticatedRequest, res: NextApiResponse) => Promise<void>,
-  middlewares: Array<(req: AuthenticatedRequest, res: NextApiResponse, next: () => void) => void> = []
+  middlewares: Array<
+    (req: AuthenticatedRequest, res: NextApiResponse, next: () => void) => void
+  > = []
 ) => {
   return async (req: AuthenticatedRequest, res: NextApiResponse) => {
     let middlewareIndex = 0;
@@ -214,8 +220,8 @@ export const requireScout = async (
 
   const userIsScout = await isScout(req.user.id);
   if (!userIsScout) {
-    return res.status(403).json({ 
-      message: 'Access denied. Only Scout users can perform this action.' 
+    return res.status(403).json({
+      message: 'Access denied. Only Scout users can perform this action.',
     });
   }
 
@@ -223,7 +229,11 @@ export const requireScout = async (
 };
 
 export const requireTeamScout = (teamIdParam: string = 'id') => {
-  return async (req: AuthenticatedRequest, res: NextApiResponse, next: () => void) => {
+  return async (
+    req: AuthenticatedRequest,
+    res: NextApiResponse,
+    next: () => void
+  ) => {
     if (!req.user) {
       return res.status(401).json({ message: 'Not authenticated' });
     }
@@ -241,8 +251,9 @@ export const requireTeamScout = (teamIdParam: string = 'id') => {
       }
 
       if (team.scoutId.toString() !== req.user.id) {
-        return res.status(403).json({ 
-          message: 'Access denied. Only the team scout can perform this action.' 
+        return res.status(403).json({
+          message:
+            'Access denied. Only the team scout can perform this action.',
         });
       }
 
@@ -255,7 +266,11 @@ export const requireTeamScout = (teamIdParam: string = 'id') => {
 };
 
 export const requireCouponCreator = (couponIdParam: string = 'id') => {
-  return async (req: AuthenticatedRequest, res: NextApiResponse, next: () => void) => {
+  return async (
+    req: AuthenticatedRequest,
+    res: NextApiResponse,
+    next: () => void
+  ) => {
     if (!req.user) {
       return res.status(401).json({ message: 'Not authenticated' });
     }
@@ -274,8 +289,9 @@ export const requireCouponCreator = (couponIdParam: string = 'id') => {
       }
 
       if (coupon.createdBy.toString() !== req.user.id) {
-        return res.status(403).json({ 
-          message: 'Access denied. Only the coupon creator can perform this action.' 
+        return res.status(403).json({
+          message:
+            'Access denied. Only the coupon creator can perform this action.',
         });
       }
 

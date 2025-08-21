@@ -24,7 +24,9 @@ const TeamsAdminPage: React.FC = () => {
   const { isAuthenticated, isLoading: authLoading } = useAuth();
   const [teams, setTeams] = useState<Team[]>([]);
   const [loading, setLoading] = useState(true);
-  const [pagination, setPagination] = useState<TeamsResponse['pagination'] | null>(null);
+  const [pagination, setPagination] = useState<
+    TeamsResponse['pagination'] | null
+  >(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
@@ -50,13 +52,13 @@ const TeamsAdminPage: React.FC = () => {
       const token = localStorage.getItem('auth_token');
       const params = new URLSearchParams({
         page: currentPage.toString(),
-        limit: '10'
+        limit: '10',
       });
 
       const response = await fetch(`/api/teams?${params}`, {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (!response.ok) {
@@ -79,13 +81,13 @@ const TeamsAdminPage: React.FC = () => {
       const token = localStorage.getItem('auth_token');
       const params = new URLSearchParams({
         search: searchTerm,
-        limit: '20'
+        limit: '20',
       });
 
       const response = await fetch(`/api/users?${params}`, {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (!response.ok) {
@@ -106,9 +108,9 @@ const TeamsAdminPage: React.FC = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
@@ -130,15 +132,15 @@ const TeamsAdminPage: React.FC = () => {
       if (!team) return;
 
       const memberIds = [...team.memberIds, userId];
-      
+
       const token = localStorage.getItem('auth_token');
       const response = await fetch(`/api/teams/${teamId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ memberIds })
+        body: JSON.stringify({ memberIds }),
       });
 
       if (!response.ok) {
@@ -161,15 +163,15 @@ const TeamsAdminPage: React.FC = () => {
       if (!team) return;
 
       const memberIds = team.memberIds.filter(id => id !== userId);
-      
+
       const token = localStorage.getItem('auth_token');
       const response = await fetch(`/api/teams/${teamId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ memberIds })
+        body: JSON.stringify({ memberIds }),
       });
 
       if (!response.ok) {
@@ -194,8 +196,8 @@ const TeamsAdminPage: React.FC = () => {
       const response = await fetch(`/api/teams/${teamId}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (!response.ok) {
@@ -270,14 +272,17 @@ const TeamsAdminPage: React.FC = () => {
                     </button>
                   </div>
                 </div>
-                
+
                 <div className={styles.scoutInfo}>
-                  <strong>Scout:</strong> {team.scout?.name} ({team.scout?.email})
+                  <strong>Scout:</strong> {team.scout?.name} (
+                  {team.scout?.email})
                 </div>
-                
+
                 <div className={styles.membersSection}>
                   <div className={styles.membersHeader}>
-                    <span><strong>Membros ({team.members?.length || 0}):</strong></span>
+                    <span>
+                      <strong>Membros ({team.members?.length || 0}):</strong>
+                    </span>
                   </div>
                   {team.members && team.members.length > 0 ? (
                     <div className={styles.membersList}>
@@ -292,12 +297,18 @@ const TeamsAdminPage: React.FC = () => {
                               />
                             )}
                             <div>
-                              <div className={styles.memberName}>{member.name}</div>
-                              <div className={styles.memberEmail}>{member.email}</div>
+                              <div className={styles.memberName}>
+                                {member.name}
+                              </div>
+                              <div className={styles.memberEmail}>
+                                {member.email}
+                              </div>
                             </div>
                           </div>
                           <button
-                            onClick={() => handleRemoveMember(team.id, member.id)}
+                            onClick={() =>
+                              handleRemoveMember(team.id, member.id)
+                            }
                             className={styles.removeMemberButton}
                           >
                             Remover
@@ -306,12 +317,16 @@ const TeamsAdminPage: React.FC = () => {
                       ))}
                     </div>
                   ) : (
-                    <div className={styles.emptyMembers}>Nenhum membro no time</div>
+                    <div className={styles.emptyMembers}>
+                      Nenhum membro no time
+                    </div>
                   )}
                 </div>
-                
+
                 <div className={styles.teamDates}>
-                  <small>Criado em: {new Date(team.createdAt).toLocaleDateString()}</small>
+                  <small>
+                    Criado em: {new Date(team.createdAt).toLocaleDateString()}
+                  </small>
                 </div>
               </div>
             ))}
@@ -354,40 +369,37 @@ const TeamsAdminPage: React.FC = () => {
               </button>
             </div>
             <form
-              onSubmit={(e) => {
+              onSubmit={e => {
                 e.preventDefault();
                 const formData = new FormData(e.currentTarget);
                 handleCreateTeam({
-                  name: formData.get('name') as string
+                  name: formData.get('name') as string,
                 });
               }}
               className={styles.form}
             >
               <div className={styles.formGroup}>
-                <label htmlFor="name" className={styles.label}>
+                <label htmlFor='name' className={styles.label}>
                   Nome do Time
                 </label>
                 <input
-                  type="text"
-                  id="name"
-                  name="name"
+                  type='text'
+                  id='name'
+                  name='name'
                   required
                   className={styles.input}
-                  placeholder="Digite o nome do time"
+                  placeholder='Digite o nome do time'
                 />
               </div>
               <div className={styles.formActions}>
                 <button
-                  type="button"
+                  type='button'
                   onClick={() => setShowCreateForm(false)}
                   className={styles.cancelButton}
                 >
                   Cancelar
                 </button>
-                <button
-                  type="submit"
-                  className={styles.submitButton}
-                >
+                <button type='submit' className={styles.submitButton}>
                   Criar Time
                 </button>
               </div>
@@ -415,9 +427,9 @@ const TeamsAdminPage: React.FC = () => {
             </div>
             <div className={styles.userSearch}>
               <input
-                type="text"
+                type='text'
                 value={userSearchTerm}
-                onChange={(e) => {
+                onChange={e => {
                   setUserSearchTerm(e.target.value);
                   if (e.target.value.length >= 2) {
                     searchUsers(e.target.value);
@@ -425,7 +437,7 @@ const TeamsAdminPage: React.FC = () => {
                     setSearchResults([]);
                   }
                 }}
-                placeholder="Buscar usuário por nome ou email..."
+                placeholder='Buscar usuário por nome ou email...'
                 className={styles.searchInput}
               />
               {searchResults.length > 0 && (
@@ -446,11 +458,15 @@ const TeamsAdminPage: React.FC = () => {
                         </div>
                       </div>
                       <button
-                        onClick={() => handleAddMember(selectedTeam.id, user.id)}
+                        onClick={() =>
+                          handleAddMember(selectedTeam.id, user.id)
+                        }
                         className={styles.addButton}
                         disabled={selectedTeam.memberIds.includes(user.id)}
                       >
-                        {selectedTeam.memberIds.includes(user.id) ? 'Já é membro' : 'Adicionar'}
+                        {selectedTeam.memberIds.includes(user.id)
+                          ? 'Já é membro'
+                          : 'Adicionar'}
                       </button>
                     </div>
                   ))}

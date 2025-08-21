@@ -1,4 +1,4 @@
-"use client"; // Se estiver usando App Router, senão não é necessário para Pages Router
+'use client'; // Se estiver usando App Router, senão não é necessário para Pages Router
 import React, { useEffect, useState, useRef } from 'react';
 import { ExperienceType } from '../../../src/types/experience'; // Ajuste o caminho
 import ExperienceCard from '../../cards/ExperienceCard';
@@ -9,7 +9,10 @@ interface ExperiencesSectionProps {
   filter?: 'tour' | 'event'; // Opcional para filtrar por categoria
 }
 
-const ExperiencesSection: React.FC<ExperiencesSectionProps> = ({ title = "Experiences", filter }) => {
+const ExperiencesSection: React.FC<ExperiencesSectionProps> = ({
+  title = 'Experiences',
+  filter,
+}) => {
   const [experiences, setExperiences] = useState<ExperienceType[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -18,7 +21,6 @@ const ExperiencesSection: React.FC<ExperiencesSectionProps> = ({ title = "Experi
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-
 
   useEffect(() => {
     const fetchExperiences = async () => {
@@ -34,15 +36,19 @@ const ExperiencesSection: React.FC<ExperiencesSectionProps> = ({ title = "Experi
         if (data.experiences) {
           let fetchedExperiences = data.experiences as ExperienceType[];
           if (filter) {
-            fetchedExperiences = fetchedExperiences.filter(exp => exp.category === filter);
+            fetchedExperiences = fetchedExperiences.filter(
+              exp => exp.category === filter
+            );
           }
           setExperiences(fetchedExperiences);
         } else {
-          throw new Error(data.error || 'Erro ao processar dados das experiências');
+          throw new Error(
+            data.error || 'Erro ao processar dados das experiências'
+          );
         }
       } catch (err: any) {
         setError(err.message);
-        console.error("Erro ao buscar experiências:", err);
+        console.error('Erro ao buscar experiências:', err);
       } finally {
         setLoading(false);
       }
@@ -76,31 +82,42 @@ const ExperiencesSection: React.FC<ExperiencesSectionProps> = ({ title = "Experi
     carouselRef.current.scrollLeft = scrollLeft - walk;
   };
 
-
   if (loading) {
-    return <div className={styles.container}><p className={styles.message}>Carregando experiências...</p></div>;
+    return (
+      <div className={styles.container}>
+        <p className={styles.message}>Carregando experiências...</p>
+      </div>
+    );
   }
 
   if (error) {
-    return <div className={styles.container}><p className={styles.messageError}>Erro: {error}</p></div>;
+    return (
+      <div className={styles.container}>
+        <p className={styles.messageError}>Erro: {error}</p>
+      </div>
+    );
   }
 
   if (experiences.length === 0) {
-    return <div className={styles.container}><p className={styles.message}>Nenhuma experiência encontrada.</p></div>;
+    return (
+      <div className={styles.container}>
+        <p className={styles.message}>Nenhuma experiência encontrada.</p>
+      </div>
+    );
   }
 
   return (
     <section className={styles.experiencesSection}>
       <h2 className={styles.sectionTitle}>{title}</h2>
       <div
-        className={`${styles.carousel} ${isDragging ? styles.active : ""}`}
+        className={`${styles.carousel} ${isDragging ? styles.active : ''}`}
         ref={carouselRef}
         onMouseDown={handleMouseDown}
         onMouseLeave={handleMouseLeave}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
       >
-        {experiences.map((experience) => (
+        {experiences.map(experience => (
           <ExperienceCard key={experience._id} experience={experience} />
         ))}
       </div>

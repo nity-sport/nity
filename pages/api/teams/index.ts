@@ -2,11 +2,11 @@ import { NextApiResponse } from 'next';
 import Team from '../../../src/models/Team';
 import User from '../../../src/models/User';
 import dbConnect from '../../../src/lib/dbConnect';
-import { 
-  AuthenticatedRequest, 
-  authenticate, 
-  requireAuthenticated, 
-  createApiHandler 
+import {
+  AuthenticatedRequest,
+  authenticate,
+  requireAuthenticated,
+  createApiHandler,
 } from '../../../src/lib/auth-middleware';
 
 const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
@@ -23,33 +23,40 @@ const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
     }
   } catch (error) {
     console.error('[API /teams] Handler error:', error);
-    return res.status(500).json({ 
+    return res.status(500).json({
       message: 'Internal server error',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Server error'
+      error:
+        process.env.NODE_ENV === 'development' ? error.message : 'Server error',
     });
   }
 };
 
-const handleGetTeams = async (req: AuthenticatedRequest, res: NextApiResponse) => {
+const handleGetTeams = async (
+  req: AuthenticatedRequest,
+  res: NextApiResponse
+) => {
   try {
-    const { page = 1, limit = 10, asScout, asMember, includeMembers } = req.query;
+    const {
+      page = 1,
+      limit = 10,
+      asScout,
+      asMember,
+      includeMembers,
+    } = req.query;
     const userId = req.user!.id;
 
-    let filter: any = {};
+    const filter: any = {};
 
     if (asScout === 'true') {
       filter.scoutId = userId;
     } else if (asMember === 'true') {
       filter.memberIds = userId;
     } else {
-      filter.$or = [
-        { scoutId: userId },
-        { memberIds: userId }
-      ];
+      filter.$or = [{ scoutId: userId }, { memberIds: userId }];
     }
 
     const skip = (Number(page) - 1) * Number(limit);
-    
+
     let query = Team.find(filter)
       .populate('scoutId', 'name email avatar role')
       .sort({ createdAt: -1 })
@@ -60,7 +67,7 @@ const handleGetTeams = async (req: AuthenticatedRequest, res: NextApiResponse) =
       query = query.populate('memberIds', 'name email avatar role');
     }
 
-    const teams = await query as any[];
+    const teams = (await query) as any[];
     const total = await Team.countDocuments(filter);
     const totalPages = Math.ceil(total / Number(limit));
 
@@ -73,20 +80,23 @@ const handleGetTeams = async (req: AuthenticatedRequest, res: NextApiResponse) =
         name: team.scoutId.name,
         email: team.scoutId.email,
         avatar: team.scoutId.avatar,
-        role: team.scoutId.role
+        role: team.scoutId.role,
       },
-      memberIds: team.memberIds.map(member => typeof member === 'string' ? member : member._id.toString()),
-      members: includeMembers === 'true' && team.memberIds.length > 0 
-        ? team.memberIds.map(member => ({
-            id: member._id.toString(),
-            name: member.name,
-            email: member.email,
-            avatar: member.avatar,
-            role: member.role
-          }))
-        : [],
+      memberIds: team.memberIds.map(member =>
+        typeof member === 'string' ? member : member._id.toString()
+      ),
+      members:
+        includeMembers === 'true' && team.memberIds.length > 0
+          ? team.memberIds.map(member => ({
+              id: member._id.toString(),
+              name: member.name,
+              email: member.email,
+              avatar: member.avatar,
+              role: member.role,
+            }))
+          : [],
       createdAt: team.createdAt,
-      updatedAt: team.updatedAt
+      updatedAt: team.updatedAt,
     }));
 
     return res.status(200).json({
@@ -97,8 +107,8 @@ const handleGetTeams = async (req: AuthenticatedRequest, res: NextApiResponse) =
         total,
         totalPages,
         hasNextPage: Number(page) < totalPages,
-        hasPrevPage: Number(page) > 1
-      }
+        hasPrevPage: Number(page) > 1,
+      },
     });
   } catch (error) {
     console.error('Error fetching teams:', error);
@@ -106,7 +116,10 @@ const handleGetTeams = async (req: AuthenticatedRequest, res: NextApiResponse) =
   }
 };
 
-const handleCreateTeam = async (req: AuthenticatedRequest, res: NextApiResponse) => {
+const handleCreateTeam = async (
+  req: AuthenticatedRequest,
+  res: NextApiResponse
+) => {
   try {
     const { name } = req.body;
     const scoutId = req.user!.id;
@@ -115,26 +128,28 @@ const handleCreateTeam = async (req: AuthenticatedRequest, res: NextApiResponse)
       return res.status(400).json({ message: 'Team name is required' });
     }
 
-    const existingTeam = await Team.findOne({ 
-      name: name.trim(), 
-      scoutId 
+    const existingTeam = await Team.findOne({
+      name: name.trim(),
+      scoutId,
     });
 
     if (existingTeam) {
-      return res.status(400).json({ message: 'You already have a team with this name' });
+      return res
+        .status(400)
+        .json({ message: 'You already have a team with this name' });
     }
 
     const team = new Team({
       name: name.trim(),
       scoutId,
-      memberIds: []
+      memberIds: [],
     });
 
     await team.save();
 
-    const populatedTeam = await Team.findById(team._id)
+    const populatedTeam = (await Team.findById(team._id)
       .populate('scoutId', 'name email avatar')
-      .populate('memberIds', 'name email avatar') as any;
+      .populate('memberIds', 'name email avatar')) as any;
 
     const teamResponse = {
       id: populatedTeam._id.toString(),
@@ -144,17 +159,17 @@ const handleCreateTeam = async (req: AuthenticatedRequest, res: NextApiResponse)
         id: populatedTeam.scoutId._id.toString(),
         name: populatedTeam.scoutId.name,
         email: populatedTeam.scoutId.email,
-        avatar: populatedTeam.scoutId.avatar
+        avatar: populatedTeam.scoutId.avatar,
       },
       memberIds: [],
       members: [],
       createdAt: populatedTeam.createdAt,
-      updatedAt: populatedTeam.updatedAt
+      updatedAt: populatedTeam.updatedAt,
     };
 
     return res.status(201).json({
       message: 'Team created successfully',
-      team: teamResponse
+      team: teamResponse,
     });
   } catch (error) {
     console.error('Error creating team:', error);
@@ -162,7 +177,4 @@ const handleCreateTeam = async (req: AuthenticatedRequest, res: NextApiResponse)
   }
 };
 
-export default createApiHandler(handler, [
-  authenticate,
-  requireAuthenticated
-]);
+export default createApiHandler(handler, [authenticate, requireAuthenticated]);

@@ -3,11 +3,11 @@ import mongoose from 'mongoose';
 import Team from '../../../src/models/Team';
 import User from '../../../src/models/User';
 import dbConnect from '../../../src/lib/dbConnect';
-import { 
-  AuthenticatedRequest, 
-  authenticate, 
-  requireAuthenticated, 
-  createApiHandler 
+import {
+  AuthenticatedRequest,
+  authenticate,
+  requireAuthenticated,
+  createApiHandler,
 } from '../../../src/lib/auth-middleware';
 
 const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
@@ -32,27 +32,34 @@ const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
     }
   } catch (error) {
     console.error('[API /teams/[id]] Handler error:', error);
-    return res.status(500).json({ 
+    return res.status(500).json({
       message: 'Internal server error',
-      error: process.env.NODE_ENV === 'development' ? error.message : 'Server error'
+      error:
+        process.env.NODE_ENV === 'development' ? error.message : 'Server error',
     });
   }
 };
 
-const handleGetTeam = async (req: AuthenticatedRequest, res: NextApiResponse, teamId: string) => {
+const handleGetTeam = async (
+  req: AuthenticatedRequest,
+  res: NextApiResponse,
+  teamId: string
+) => {
   try {
     const userId = req.user!.id;
 
-    const team = await Team.findById(teamId)
+    const team = (await Team.findById(teamId)
       .populate('scoutId', 'name email avatar role')
-      .populate('memberIds', 'name email avatar role') as any;
+      .populate('memberIds', 'name email avatar role')) as any;
 
     if (!team) {
       return res.status(404).json({ message: 'Team not found' });
     }
 
     const isScout = team.scoutId._id.toString() === userId;
-    const isMember = team.memberIds.some(member => member._id.toString() === userId);
+    const isMember = team.memberIds.some(
+      member => member._id.toString() === userId
+    );
 
     if (!isScout && !isMember) {
       return res.status(403).json({ message: 'Access denied' });
@@ -67,7 +74,7 @@ const handleGetTeam = async (req: AuthenticatedRequest, res: NextApiResponse, te
         name: team.scoutId.name,
         email: team.scoutId.email,
         avatar: team.scoutId.avatar,
-        role: team.scoutId.role
+        role: team.scoutId.role,
       },
       memberIds: team.memberIds.map(member => member._id.toString()),
       members: team.memberIds.map(member => ({
@@ -75,12 +82,12 @@ const handleGetTeam = async (req: AuthenticatedRequest, res: NextApiResponse, te
         name: member.name,
         email: member.email,
         avatar: member.avatar,
-        role: member.role
+        role: member.role,
       })),
       createdAt: team.createdAt,
       updatedAt: team.updatedAt,
       isScout,
-      isMember
+      isMember,
     };
 
     return res.status(200).json({ team: teamResponse });
@@ -90,7 +97,11 @@ const handleGetTeam = async (req: AuthenticatedRequest, res: NextApiResponse, te
   }
 };
 
-const handleUpdateTeam = async (req: AuthenticatedRequest, res: NextApiResponse, teamId: string) => {
+const handleUpdateTeam = async (
+  req: AuthenticatedRequest,
+  res: NextApiResponse,
+  teamId: string
+) => {
   try {
     const userId = req.user!.id;
     const { name, memberIds } = req.body;
@@ -101,7 +112,9 @@ const handleUpdateTeam = async (req: AuthenticatedRequest, res: NextApiResponse,
     }
 
     if (team.scoutId.toString() !== userId) {
-      return res.status(403).json({ message: 'Only the scout can update the team' });
+      return res
+        .status(403)
+        .json({ message: 'Only the scout can update the team' });
     }
 
     if (name !== undefined) {
@@ -109,14 +122,16 @@ const handleUpdateTeam = async (req: AuthenticatedRequest, res: NextApiResponse,
         return res.status(400).json({ message: 'Team name is required' });
       }
 
-      const existingTeam = await Team.findOne({ 
-        name: name.trim(), 
+      const existingTeam = await Team.findOne({
+        name: name.trim(),
         scoutId: userId,
-        _id: { $ne: teamId }
+        _id: { $ne: teamId },
       });
 
       if (existingTeam) {
-        return res.status(400).json({ message: 'You already have a team with this name' });
+        return res
+          .status(400)
+          .json({ message: 'You already have a team with this name' });
       }
 
       team.name = name.trim();
@@ -127,7 +142,9 @@ const handleUpdateTeam = async (req: AuthenticatedRequest, res: NextApiResponse,
         return res.status(400).json({ message: 'memberIds must be an array' });
       }
 
-      const validMemberIds = memberIds.filter(id => mongoose.isValidObjectId(id));
+      const validMemberIds = memberIds.filter(id =>
+        mongoose.isValidObjectId(id)
+      );
       if (validMemberIds.length !== memberIds.length) {
         return res.status(400).json({ message: 'Invalid member IDs provided' });
       }
@@ -141,7 +158,8 @@ const handleUpdateTeam = async (req: AuthenticatedRequest, res: NextApiResponse,
         memberId => !validMemberIds.includes(memberId.toString())
       );
       const addedMembers = validMemberIds.filter(
-        memberId => !team.memberIds.some(existing => existing.toString() === memberId)
+        memberId =>
+          !team.memberIds.some(existing => existing.toString() === memberId)
       );
 
       team.memberIds = validMemberIds;
@@ -163,9 +181,9 @@ const handleUpdateTeam = async (req: AuthenticatedRequest, res: NextApiResponse,
 
     await team.save();
 
-    const updatedTeam = await Team.findById(teamId)
+    const updatedTeam = (await Team.findById(teamId)
       .populate('scoutId', 'name email avatar role')
-      .populate('memberIds', 'name email avatar role') as any;
+      .populate('memberIds', 'name email avatar role')) as any;
 
     const teamResponse = {
       id: updatedTeam._id.toString(),
@@ -176,7 +194,7 @@ const handleUpdateTeam = async (req: AuthenticatedRequest, res: NextApiResponse,
         name: updatedTeam.scoutId.name,
         email: updatedTeam.scoutId.email,
         avatar: updatedTeam.scoutId.avatar,
-        role: updatedTeam.scoutId.role
+        role: updatedTeam.scoutId.role,
       },
       memberIds: updatedTeam.memberIds.map(member => member._id.toString()),
       members: updatedTeam.memberIds.map(member => ({
@@ -184,15 +202,15 @@ const handleUpdateTeam = async (req: AuthenticatedRequest, res: NextApiResponse,
         name: member.name,
         email: member.email,
         avatar: member.avatar,
-        role: member.role
+        role: member.role,
       })),
       createdAt: updatedTeam.createdAt,
-      updatedAt: updatedTeam.updatedAt
+      updatedAt: updatedTeam.updatedAt,
     };
 
     return res.status(200).json({
       message: 'Team updated successfully',
-      team: teamResponse
+      team: teamResponse,
     });
   } catch (error) {
     console.error('Error updating team:', error);
@@ -200,7 +218,11 @@ const handleUpdateTeam = async (req: AuthenticatedRequest, res: NextApiResponse,
   }
 };
 
-const handleDeleteTeam = async (req: AuthenticatedRequest, res: NextApiResponse, teamId: string) => {
+const handleDeleteTeam = async (
+  req: AuthenticatedRequest,
+  res: NextApiResponse,
+  teamId: string
+) => {
   try {
     const userId = req.user!.id;
 
@@ -210,7 +232,9 @@ const handleDeleteTeam = async (req: AuthenticatedRequest, res: NextApiResponse,
     }
 
     if (team.scoutId.toString() !== userId) {
-      return res.status(403).json({ message: 'Only the scout can delete the team' });
+      return res
+        .status(403)
+        .json({ message: 'Only the scout can delete the team' });
     }
 
     await User.updateMany(
@@ -227,7 +251,4 @@ const handleDeleteTeam = async (req: AuthenticatedRequest, res: NextApiResponse,
   }
 };
 
-export default createApiHandler(handler, [
-  authenticate,
-  requireAuthenticated
-]);
+export default createApiHandler(handler, [authenticate, requireAuthenticated]);

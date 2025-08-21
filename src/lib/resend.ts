@@ -13,11 +13,11 @@ export const sendEmail = async (options: {
   from?: string;
 }) => {
   try {
-    console.log('📧 Sending email to:', options.to);
-    console.log('📝 Subject:', options.subject);
-
     const emailData = {
-      from: options.from || process.env.RESEND_FROM_EMAIL || 'Nity <noreply@nity.com.br>',
+      from:
+        options.from ||
+        process.env.RESEND_FROM_EMAIL ||
+        'Nity <noreply@nity.com.br>',
       to: options.to,
       subject: options.subject,
       html: options.html,
@@ -25,7 +25,6 @@ export const sendEmail = async (options: {
 
     const result = await resend.emails.send(emailData);
 
-    console.log('✅ Email sent successfully! ID:', result.data?.id);
     return { success: true, data: result };
   } catch (error) {
     console.error('❌ Failed to send email:', error);

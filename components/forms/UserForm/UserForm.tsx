@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { UserRole } from '../../../src/types/auth';
+import { getRoleDisplayName } from '../../../src/utils/userRole';
 import styles from './UserForm.module.css';
 
 interface UserFormData {
@@ -22,13 +23,13 @@ const UserForm: React.FC<UserFormProps> = ({
   initialData = {},
   isEditing = false,
   showRoleSelection = true,
-  isLoading = false
+  isLoading = false,
 }) => {
   const [formData, setFormData] = useState<UserFormData>({
     name: initialData.name || '',
     email: initialData.email || '',
     password: '',
-    role: initialData.role || UserRole.USER
+    role: initialData.role || UserRole.USER,
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -58,7 +59,7 @@ const UserForm: React.FC<UserFormProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -70,36 +71,27 @@ const UserForm: React.FC<UserFormProps> = ({
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    
+
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
   };
 
-  const getRoleDisplayName = (role: UserRole): string => {
-    const roleNames = {
-      [UserRole.SUPERUSER]: 'Super Usuário',
-      [UserRole.MARKETING]: 'Marketing',
-      [UserRole.OWNER]: 'Proprietário',
-      [UserRole.USER]: 'Usuário',
-      [UserRole.ATHLETE]: 'Atleta'
-    };
-    return roleNames[role];
-  };
-
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
       <div className={styles.formGroup}>
-        <label htmlFor="name" className={styles.label}>
+        <label htmlFor='name' className={styles.label}>
           Nome *
         </label>
         <input
-          id="name"
-          name="name"
-          type="text"
+          id='name'
+          name='name'
+          type='text'
           value={formData.name}
           onChange={handleInputChange}
           className={`${styles.input} ${errors.name ? styles.inputError : ''}`}
@@ -109,13 +101,13 @@ const UserForm: React.FC<UserFormProps> = ({
       </div>
 
       <div className={styles.formGroup}>
-        <label htmlFor="email" className={styles.label}>
+        <label htmlFor='email' className={styles.label}>
           Email *
         </label>
         <input
-          id="email"
-          name="email"
-          type="email"
+          id='email'
+          name='email'
+          type='email'
           value={formData.email}
           onChange={handleInputChange}
           className={`${styles.input} ${errors.email ? styles.inputError : ''}`}
@@ -125,29 +117,33 @@ const UserForm: React.FC<UserFormProps> = ({
       </div>
 
       <div className={styles.formGroup}>
-        <label htmlFor="password" className={styles.label}>
-          {isEditing ? 'Nova Senha (deixe vazio para manter a atual)' : 'Senha *'}
+        <label htmlFor='password' className={styles.label}>
+          {isEditing
+            ? 'Nova Senha (deixe vazio para manter a atual)'
+            : 'Senha *'}
         </label>
         <input
-          id="password"
-          name="password"
-          type="password"
+          id='password'
+          name='password'
+          type='password'
           value={formData.password}
           onChange={handleInputChange}
           className={`${styles.input} ${errors.password ? styles.inputError : ''}`}
           disabled={isLoading}
         />
-        {errors.password && <span className={styles.error}>{errors.password}</span>}
+        {errors.password && (
+          <span className={styles.error}>{errors.password}</span>
+        )}
       </div>
 
       {showRoleSelection && (
         <div className={styles.formGroup}>
-          <label htmlFor="role" className={styles.label}>
+          <label htmlFor='role' className={styles.label}>
             Perfil de Acesso *
           </label>
           <select
-            id="role"
-            name="role"
+            id='role'
+            name='role'
             value={formData.role}
             onChange={handleInputChange}
             className={styles.select}
@@ -164,11 +160,12 @@ const UserForm: React.FC<UserFormProps> = ({
 
       <div className={styles.formActions}>
         <button
-          type="submit"
+          type='submit'
           className={styles.submitButton}
           disabled={isLoading}
         >
-          {isLoading ? 'Salvando...' : (isEditing ? 'Atualizar' : 'Criar')} Usuário
+          {isLoading ? 'Salvando...' : isEditing ? 'Atualizar' : 'Criar'}{' '}
+          Usuário
         </button>
       </div>
     </form>

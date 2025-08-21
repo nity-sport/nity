@@ -28,7 +28,10 @@ interface ExperienceInput {
   availableDates: string[];
 }
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   await dbConnect();
 
   const token = getTokenFromHeader(req.headers.authorization);
@@ -55,15 +58,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             query = {
               $or: [
                 { 'owner.userId': decodedToken.userId, visibility: visibility },
-                { 'owner.userId': { $ne: decodedToken.userId }, visibility: 'public' }
-              ]
+                {
+                  'owner.userId': { $ne: decodedToken.userId },
+                  visibility: 'public',
+                },
+              ],
             };
           } else {
             query = {
               $or: [
                 { 'owner.userId': decodedToken.userId },
-                { 'owner.userId': { $ne: decodedToken.userId }, visibility: 'public' }
-              ]
+                {
+                  'owner.userId': { $ne: decodedToken.userId },
+                  visibility: 'public',
+                },
+              ],
             };
           }
         } else {
@@ -81,8 +90,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               { category: { $regex: search, $options: 'i' } },
               { 'location.name': { $regex: search, $options: 'i' } },
               { 'location.address': { $regex: search, $options: 'i' } },
-              { tags: { $in: [new RegExp(search as string, 'i')] } }
-            ]
+              { tags: { $in: [new RegExp(search as string, 'i')] } },
+            ],
           });
         }
 
@@ -103,32 +112,41 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           total,
           totalPages,
           hasNextPage: pageNum < totalPages,
-          hasPrevPage: pageNum > 1
+          hasPrevPage: pageNum > 1,
         };
 
-        res.status(200).json({ 
+        res.status(200).json({
           experiences,
-          pagination
+          pagination,
         });
       } catch (error: any) {
-        console.error("Erro ao buscar Experiences:", error);
-        res.status(400).json({ success: false, error: error.message || 'Erro no servidor ao buscar experiências' });
+        console.error('Erro ao buscar Experiences:', error);
+        res.status(400).json({
+          success: false,
+          error: error.message || 'Erro no servidor ao buscar experiências',
+        });
       }
       break;
 
     case 'POST':
       if (!decodedToken || !decodedToken.userId) {
-        return res.status(401).json({ message: 'Não autorizado: Token inválido ou não fornecido' });
+        return res
+          .status(401)
+          .json({ message: 'Não autorizado: Token inválido ou não fornecido' });
       }
 
-      const loggedInUser = await User.findById(decodedToken.userId).select('name avatar');
+      const loggedInUser = await User.findById(decodedToken.userId).select(
+        'name avatar'
+      );
       if (!loggedInUser) {
-        return res.status(404).json({ message: 'Usuário logado não encontrado.' });
+        return res
+          .status(404)
+          .json({ message: 'Usuário logado não encontrado.' });
       }
 
       try {
         const experienceData = req.body as ExperienceInput;
-        
+
         const fullExperienceData = {
           ...experienceData,
           owner: {
@@ -136,22 +154,38 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             name: loggedInUser.name,
             avatarUrl: loggedInUser.avatar || '',
           },
-          availableDates: experienceData.availableDates.map(dateStr => new Date(dateStr)),
+          availableDates: experienceData.availableDates.map(
+            dateStr => new Date(dateStr)
+          ),
         };
 
-        if (!fullExperienceData.title || !fullExperienceData.description || !fullExperienceData.coverImage || 
-            !fullExperienceData.category || fullExperienceData.price === undefined || 
-            !fullExperienceData.location?.name || !fullExperienceData.location?.address ||
-            fullExperienceData.location?.coordinates?.lat === undefined || fullExperienceData.location?.coordinates?.lng === undefined) {
-          return res.status(400).json({ success: false, error: 'Campos obrigatórios faltando: título, descrição, imagem de capa, categoria, preço e localização completa.' });
+        if (
+          !fullExperienceData.title ||
+          !fullExperienceData.description ||
+          !fullExperienceData.coverImage ||
+          !fullExperienceData.category ||
+          fullExperienceData.price === undefined ||
+          !fullExperienceData.location?.name ||
+          !fullExperienceData.location?.address ||
+          fullExperienceData.location?.coordinates?.lat === undefined ||
+          fullExperienceData.location?.coordinates?.lng === undefined
+        ) {
+          return res.status(400).json({
+            success: false,
+            error:
+              'Campos obrigatórios faltando: título, descrição, imagem de capa, categoria, preço e localização completa.',
+          });
         }
 
         const newExperience = new ExperienceModel(fullExperienceData);
         await newExperience.save();
         res.status(201).json({ success: true, data: newExperience });
       } catch (error: any) {
-        console.error("Erro ao criar Experience:", error);
-        res.status(400).json({ success: false, error: error.message || 'Erro no servidor ao criar experiência' });
+        console.error('Erro ao criar Experience:', error);
+        res.status(400).json({
+          success: false,
+          error: error.message || 'Erro no servidor ao criar experiência',
+        });
       }
       break;
 

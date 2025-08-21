@@ -4,12 +4,12 @@ import mongoose from 'mongoose';
 import User from '../../../src/models/User';
 import { UserRole } from '../../../src/types/auth';
 import dbConnect from '../../../src/lib/dbConnect';
-import { 
-  AuthenticatedRequest, 
-  authenticate, 
+import {
+  AuthenticatedRequest,
+  authenticate,
   requireAuthenticated,
   requireSuperuser,
-  createApiHandler 
+  createApiHandler,
 } from '../../../src/lib/auth-middleware';
 
 const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
@@ -33,18 +33,25 @@ const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
   }
 };
 
-const handleGetUser = async (req: AuthenticatedRequest, res: NextApiResponse) => {
+const handleGetUser = async (
+  req: AuthenticatedRequest,
+  res: NextApiResponse
+) => {
   try {
     const { id } = req.query;
-    
-    const user = await User.findById(id)
-      .select('-password -resetPasswordToken -resetPasswordExpires');
+
+    const user = await User.findById(id).select(
+      '-password -resetPasswordToken -resetPasswordExpires'
+    );
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    if (req.user?.role !== UserRole.SUPERUSER && req.user?.id !== user._id.toString()) {
+    if (
+      req.user?.role !== UserRole.SUPERUSER &&
+      req.user?.id !== user._id.toString()
+    ) {
       return res.status(403).json({ message: 'Access denied' });
     }
 
@@ -55,7 +62,10 @@ const handleGetUser = async (req: AuthenticatedRequest, res: NextApiResponse) =>
   }
 };
 
-const handleUpdateUser = async (req: AuthenticatedRequest, res: NextApiResponse) => {
+const handleUpdateUser = async (
+  req: AuthenticatedRequest,
+  res: NextApiResponse
+) => {
   try {
     const { id } = req.query;
     const { name, email, password, avatar } = req.body;
@@ -65,12 +75,15 @@ const handleUpdateUser = async (req: AuthenticatedRequest, res: NextApiResponse)
       return res.status(404).json({ message: 'User not found' });
     }
 
-    if (req.user?.role !== UserRole.SUPERUSER && req.user?.id !== user._id.toString()) {
+    if (
+      req.user?.role !== UserRole.SUPERUSER &&
+      req.user?.id !== user._id.toString()
+    ) {
       return res.status(403).json({ message: 'Access denied' });
     }
 
     const updateData: any = {};
-    
+
     if (name) updateData.name = name;
     if (email) {
       const existingUser = await User.findOne({ email, _id: { $ne: id } });
@@ -84,15 +97,14 @@ const handleUpdateUser = async (req: AuthenticatedRequest, res: NextApiResponse)
     }
     if (avatar !== undefined) updateData.avatar = avatar;
 
-    const updatedUser = await User.findByIdAndUpdate(
-      id,
-      updateData,
-      { new: true, runValidators: true }
-    ).select('-password -resetPasswordToken -resetPasswordExpires');
+    const updatedUser = await User.findByIdAndUpdate(id, updateData, {
+      new: true,
+      runValidators: true,
+    }).select('-password -resetPasswordToken -resetPasswordExpires');
 
     return res.status(200).json({
       message: 'User updated successfully',
-      user: updatedUser
+      user: updatedUser,
     });
   } catch (error) {
     console.error('Error updating user:', error);
@@ -100,7 +112,10 @@ const handleUpdateUser = async (req: AuthenticatedRequest, res: NextApiResponse)
   }
 };
 
-const handleDeleteUser = async (req: AuthenticatedRequest, res: NextApiResponse) => {
+const handleDeleteUser = async (
+  req: AuthenticatedRequest,
+  res: NextApiResponse
+) => {
   try {
     const { id } = req.query;
 
@@ -110,7 +125,9 @@ const handleDeleteUser = async (req: AuthenticatedRequest, res: NextApiResponse)
     }
 
     if (user._id.toString() === req.user?.id) {
-      return res.status(400).json({ message: 'Cannot delete your own account' });
+      return res
+        .status(400)
+        .json({ message: 'Cannot delete your own account' });
     }
 
     await User.findByIdAndDelete(id);
@@ -130,5 +147,5 @@ export default createApiHandler(handler, [
     } else {
       return requireAuthenticated(req, res, next);
     }
-  }
+  },
 ]);
