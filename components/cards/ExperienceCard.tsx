@@ -30,25 +30,25 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience }) => {
             objectFit='cover'
             className={styles.image}
           />
-          {experience.duration && (
-            <div className={styles.durationBadge}>
-              <Clock size={14} />
-              <span>{experience.duration}</span>
-            </div>
-          )}
+          <div className={styles.durationBadge}>
+            <Clock size={14} />
+            <span>{experience.duration || '3 horas'}</span>
+          </div>
         </div>
         <div className={styles.content}>
-          <h3 className={styles.title}>{experience.title}</h3>
-          <div className={styles.infoRow}>
-            <MapPin size={14} className={styles.icon} />
-            <p className={styles.location}>{displayLocation}</p>
+          <div className={styles.textSection}>
+            <div className={styles.textInfo}>
+              <h3 className={styles.title}>{experience.title}</h3>
+              <div className={styles.infoRow}>
+                <MapPin size={14} className={styles.icon} />
+                <p className={styles.location}>{displayLocation}</p>
+              </div>
+              <div className={styles.infoRow}>
+                <TagIcon size={14} className={styles.icon} />
+                <p className={styles.category}>{displayTag}</p>
+              </div>
+            </div>
           </div>
-          <div className={styles.infoRow}>
-            <TagIcon size={14} className={styles.icon} />
-            <p className={styles.category}>{displayTag}</p>
-          </div>
-          {/* A imagem de referência tem uma avaliação, mas não existe no seu ExperienceType */}
-          {/* <div className={styles.rating}>★ 5.0</div> */}
         </div>
       </a>
     </Link>

@@ -141,8 +141,8 @@ export default function SportsSection() {
               <Image
                 src={sport.icon}
                 alt={sport.title}
-                width={132}
-                height={132}
+                width={67}
+                height={67}
               />
             </div>
             <span className={styles.sportTitle}>{sport.title}</span>

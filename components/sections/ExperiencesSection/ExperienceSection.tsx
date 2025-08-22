@@ -114,7 +114,12 @@ const ExperiencesSection: React.FC<ExperiencesSectionProps> = ({
 
   return (
     <section className={styles.experiencesSection}>
-      <h2 className={styles.sectionTitle}>{title}</h2>
+      <div className={styles.headerRow}>
+        <h2 className={styles.sectionTitle}>{title}</h2>
+        <a href="/experiences" className={styles.sectionAction}>
+          Ver mais
+        </a>
+      </div>
       <div
         className={`${styles.carousel} ${isDragging ? styles.active : ''}`}
         ref={carouselRef}
