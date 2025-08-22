@@ -15,7 +15,7 @@ export default function TrainingCenterCard({
     ? center.categories.map(cat => typeof cat === 'string' ? cat : cat.name || cat.toString()).join(', ')
     : center.yearOfFoundation || 'N/A';
   const displaySports = center.sport?.length > 0
-    ? center.sport.map(sport => typeof sport === 'string' ? sport : sport.name || sport.toString()).join(', ')
+    ? center.sport.join(', ')
     : 'N/A';
 
   return (
