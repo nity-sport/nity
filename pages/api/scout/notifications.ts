@@ -1,5 +1,5 @@
 import { NextApiResponse } from 'next';
-import User from '../../../src/models/User';
+
 import Team from '../../../src/models/Team';
 import dbConnect from '../../../src/lib/dbConnect';
 import {

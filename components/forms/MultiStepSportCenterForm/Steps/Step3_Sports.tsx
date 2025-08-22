@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useMultiStepForm } from '../MultiStepFormProvider';
-import { FormInput } from '../FormComponents';
+
 import baseStyles from './styles/BaseStep.module.css';
 import styles from './Steps.module.css'; // TODO: Create Step3.module.css
 
@@ -51,6 +51,7 @@ export function Step3_Sports() {
       document.addEventListener('keydown', handleEsc);
       return () => document.removeEventListener('keydown', handleEsc);
     }
+    return undefined;
   }, [showSuggestModal]);
 
   const fetchSports = async () => {

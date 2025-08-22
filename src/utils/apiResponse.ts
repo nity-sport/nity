@@ -64,7 +64,7 @@ export class ResponseHandler {
     }
   ): void {
     const { message, statusCode = 200, pagination, requestId } = options || {};
-    
+
     const response: ApiSuccessResponse<T> = {
       success: true,
       data,
@@ -77,10 +77,10 @@ export class ResponseHandler {
             ...pagination,
             totalPages: Math.ceil(pagination.total / pagination.limit),
             hasNextPage: pagination.page * pagination.limit < pagination.total,
-            hasPrevPage: pagination.page > 1
-          }
-        })
-      }
+            hasPrevPage: pagination.page > 1,
+          },
+        }),
+      },
     };
 
     res.status(statusCode).json(response);
@@ -105,19 +105,20 @@ export class ResponseHandler {
       code = error.code;
       message = error.message;
       details = error.details;
-    } 
+    }
     // Handle known Node.js errors
     else if (error.name === 'ValidationError') {
       statusCode = 400;
       code = 'VALIDATION_ERROR';
       message = error.message;
-    }
-    else if (error.name === 'CastError') {
+    } else if (error.name === 'CastError') {
       statusCode = 400;
       code = 'INVALID_FORMAT';
       message = 'Invalid data format';
-    }
-    else if (error.name === 'MongoServerError' && (error as any).code === 11000) {
+    } else if (
+      error.name === 'MongoServerError' &&
+      (error as any).code === 11000
+    ) {
       statusCode = 409;
       code = 'DUPLICATE_ENTRY';
       message = 'Duplicate entry found';
@@ -128,9 +129,9 @@ export class ResponseHandler {
       logger.error('Unexpected error occurred', {
         error: error.message,
         stack: error.stack,
-        requestId
+        requestId,
       });
-      
+
       // Don't expose internal error details in production
       if (process.env.NODE_ENV === 'production') {
         message = 'An unexpected error occurred';
@@ -147,8 +148,8 @@ export class ResponseHandler {
         statusCode,
         timestamp: new Date().toISOString(),
         ...(details && { details }),
-        ...(requestId && { requestId })
-      }
+        ...(requestId && { requestId }),
+      },
     };
 
     res.status(statusCode).json(response);
@@ -168,7 +169,7 @@ export class ResponseHandler {
   ): void {
     this.success(res, data, {
       ...options,
-      pagination
+      pagination,
     });
   }
 
@@ -184,7 +185,7 @@ export class ResponseHandler {
     this.success(res, data, {
       statusCode: 201,
       message: message || 'Resource created successfully',
-      requestId
+      requestId,
     });
   }
 
@@ -210,8 +211,8 @@ export class ResponseHandler {
         message,
         statusCode: 404,
         timestamp: new Date().toISOString(),
-        ...(requestId && { requestId })
-      }
+        ...(requestId && { requestId }),
+      },
     };
 
     res.status(404).json(response);
@@ -232,8 +233,8 @@ export class ResponseHandler {
         message,
         statusCode: 401,
         timestamp: new Date().toISOString(),
-        ...(requestId && { requestId })
-      }
+        ...(requestId && { requestId }),
+      },
     };
 
     res.status(401).json(response);
@@ -254,8 +255,8 @@ export class ResponseHandler {
         message,
         statusCode: 403,
         timestamp: new Date().toISOString(),
-        ...(requestId && { requestId })
-      }
+        ...(requestId && { requestId }),
+      },
     };
 
     res.status(403).json(response);

@@ -64,7 +64,7 @@ const OwnerDashboard: React.FC = () => {
       }
 
       const data = await response.json();
-      
+
       // Handle new standardized API response format
       let sportCenters = [];
       if (data.success && data.data && Array.isArray(data.data)) {

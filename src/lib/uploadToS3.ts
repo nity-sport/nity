@@ -30,7 +30,7 @@ export async function uploadToS3({
   });
 
   try {
-    const response = await s3.send(command);
+    await s3.send(command);
     return `https://${bucket}.s3.${region}.amazonaws.com/${fileKey}`;
   } catch (err: any) {
     console.error('❌ Erro ao enviar para o S3:', {

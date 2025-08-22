@@ -18,7 +18,7 @@ export default async function handler(
           return res.status(404).json({ message: 'Coach não encontrado' });
         }
         return res.status(200).json(coach);
-      } catch (error) {
+      } catch (_) {
         return res.status(400).json({ error: 'ID inválido' });
       }
 

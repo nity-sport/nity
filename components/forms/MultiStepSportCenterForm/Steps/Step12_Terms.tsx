@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useMultiStepForm } from '../MultiStepFormProvider';
 import { Checkbox } from '../FormComponents';
 import { useAuth } from '../../../../src/contexts/AuthContext';
-import baseStyles from './styles/BaseStep.module.css';
+
 import styles from './Steps.module.css'; // TODO: Create Step12Terms.module.css
 
 export function Step12_Terms() {

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useMultiStepForm } from '../MultiStepFormProvider';
-import { FormInput, FormSelect } from '../FormComponents';
+import { FormInput } from '../FormComponents';
 import { CategoryType } from '../../../../src/types/sportcenter';
-import baseStyles from './styles/BaseStep.module.css';
+
 import styles from './styles/Step9.module.css';
 
 export function Step9_Categories() {
@@ -56,7 +56,7 @@ export function Step9_Categories() {
     },
   });
 
-  const validateCategories = (categoriesList: CategoryType[]): string => {
+  const validateCategories = (_: CategoryType[]): string => {
     // Categories are optional - always valid
     return '';
   };
@@ -419,7 +419,7 @@ export function Step9_Categories() {
               <FormInput
                 label='Nome da Categoria'
                 value={newCategory.name || ''}
-                onChange={value =>
+                onChange={(value: string) =>
                   setNewCategory(prev => ({ ...prev, name: value }))
                 }
                 placeholder='Ex: Sub14'
@@ -559,7 +559,7 @@ export function Step9_Categories() {
               <FormInput
                 label='Nome da Categoria'
                 value={newCategory.name || ''}
-                onChange={value =>
+                onChange={(value: string) =>
                   setNewCategory(prev => ({ ...prev, name: value }))
                 }
                 placeholder='Ex: Sub14'

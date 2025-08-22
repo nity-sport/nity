@@ -1,7 +1,7 @@
 import { NextApiResponse } from 'next';
 import mongoose from 'mongoose';
 import Team from '../../../../../src/models/Team';
-import User from '../../../../../src/models/User';
+
 import dbConnect from '../../../../../src/lib/dbConnect';
 import {
   AuthenticatedRequest,

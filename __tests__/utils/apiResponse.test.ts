@@ -1,7 +1,7 @@
 import { createMocks } from 'node-mocks-http';
 import { NextApiResponse } from 'next';
 import { ResponseHandler } from '../../src/utils/apiResponse';
-import { AppError, ErrorCode, ValidationError } from '../../src/utils/errors';
+import { ValidationError } from '../../src/utils/errors';
 
 describe('ResponseHandler', () => {
   let res: NextApiResponse;

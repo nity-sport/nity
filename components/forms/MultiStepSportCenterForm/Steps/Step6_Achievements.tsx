@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useMultiStepForm } from '../MultiStepFormProvider';
-import baseStyles from './styles/BaseStep.module.css';
+
 import styles from './styles/Step6.module.css';
 
 interface Achievement {

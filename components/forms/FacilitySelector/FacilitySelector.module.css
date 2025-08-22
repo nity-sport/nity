@@ -171,17 +171,17 @@
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 0.5rem;
   }
-  
+
   .facilityCard {
     padding: 0.75rem;
     min-height: 80px;
   }
-  
+
   .iconContainer {
     width: 2rem;
     height: 2rem;
   }
-  
+
   .facilityName {
     font-size: 0.65rem;
   }
@@ -191,12 +191,12 @@
   .facilitiesGrid {
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   }
-  
+
   .facilityCard {
     padding: 0.5rem;
     min-height: 70px;
   }
-  
+
   .iconContainer {
     width: 1.75rem;
     height: 1.75rem;

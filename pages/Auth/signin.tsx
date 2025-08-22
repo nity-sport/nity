@@ -13,12 +13,7 @@ export default function SignIn() {
   // const [loading, setLoading] = useState(false); // O useAuth já tem isLoading
   const [error, setError] = useState('');
   const router = useRouter();
-  const {
-    login,
-    isLoading: authLoading,
-    loginWithGoogle,
-    loginWithFacebook,
-  } = useAuth();
+  const { login, isLoading: authLoading, loginWithGoogle } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));

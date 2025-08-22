@@ -55,7 +55,7 @@ export default function ForgotPasswordModal({
       } else {
         setError(data.message || 'Failed to send reset code');
       }
-    } catch (err) {
+    } catch {
       setError('Failed to send reset code. Please try again.');
     } finally {
       setLoading(false);
@@ -107,7 +107,7 @@ export default function ForgotPasswordModal({
       } else {
         setError(data.message || 'Failed to reset password');
       }
-    } catch (err) {
+    } catch {
       setError('Failed to reset password. Please try again.');
     } finally {
       setLoading(false);

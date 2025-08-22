@@ -157,13 +157,13 @@
 }
 
 .firstSlot {
-  background: var(--Neutral-100, #F8F9FA);
-  border: 0.125rem dashed #E5E7EB;
+  background: var(--Neutral-100, #f8f9fa);
+  border: 0.125rem dashed #e5e7eb;
 }
 
 .firstSlot:hover {
-  border-color: #3B82F6;
-  background: #EFF6FF;
+  border-color: #3b82f6;
+  background: #eff6ff;
 }
 
 /* Photo upload slot error styling */
@@ -174,11 +174,11 @@
 
 .emptySlot {
   background: transparent;
-  border: 0.125rem dashed #E5E7EB;
+  border: 0.125rem dashed #e5e7eb;
 }
 
 .emptySlot:hover {
-  border-color: #3B82F6;
+  border-color: #3b82f6;
 }
 
 .photoImage {
@@ -241,11 +241,11 @@
     transform: scale(0.98);
     transition: transform 0.1s ease;
   }
-  
+
   .photoContainer {
     cursor: grab;
   }
-  
+
   .photoContainer:active {
     cursor: grabbing;
   }
@@ -277,7 +277,7 @@
 }
 
 .setMainButton {
-  background: #3B82F6;
+  background: #3b82f6;
   border: none;
   color: white;
   padding: 0.25rem 0.5rem;
@@ -301,7 +301,7 @@
 }
 
 .deleteButton {
-  background: #EF4444;
+  background: #ef4444;
   border: none;
   color: white;
   width: 1.5rem;
@@ -315,14 +315,14 @@
 }
 
 .deleteButton:hover {
-  background: #DC2626;
+  background: #dc2626;
 }
 
 .mainBadge {
   position: absolute;
   top: 0.5rem;
   left: 0.5rem;
-  background: #3B82F6;
+  background: #3b82f6;
   color: white;
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
@@ -372,7 +372,7 @@
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: #6B7280;
+  color: #6b7280;
   padding: 0.5rem;
   border-radius: 50%;
   width: 2rem;
@@ -383,7 +383,7 @@
 }
 
 .deleteModalCloseButton:hover {
-  background: #F3F4F6;
+  background: #f3f4f6;
 }
 
 .deleteModalIcon {
@@ -396,14 +396,14 @@
   width: 3.75rem;
   height: 3.75rem;
   border-radius: 50%;
-  background: #FEF2F2;
-  border: 0.125rem solid #FECACA;
+  background: #fef2f2;
+  border: 0.125rem solid #fecaca;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
   font-weight: bold;
-  color: #DC2626;
+  color: #dc2626;
 }
 
 .deleteModalTitle {
@@ -424,7 +424,7 @@
 
 .deleteModalCancelButton {
   background: white;
-  border: 0.0625rem solid #E5E7EB;
+  border: 0.0625rem solid #e5e7eb;
   color: #374151;
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
@@ -435,12 +435,12 @@
 }
 
 .deleteModalCancelButton:hover {
-  background: #F3F4F6;
-  border-color: #D1D5DB;
+  background: #f3f4f6;
+  border-color: #d1d5db;
 }
 
 .deleteModalConfirmButton {
-  background: #DC2626;
+  background: #dc2626;
   border: none;
   color: white;
   padding: 0.75rem 1.5rem;
@@ -452,5 +452,5 @@
 }
 
 .deleteModalConfirmButton:hover {
-  background: #B91C1C;
+  background: #b91c1c;
 }

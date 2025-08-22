@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useMultiStepForm } from '../MultiStepFormProvider';
-import baseStyles from './styles/BaseStep.module.css';
+
 import styles from './styles/Step7.module.css';
 
 interface Facility {
@@ -77,6 +77,7 @@ export function Step7_Facilities() {
       document.addEventListener('keydown', handleEsc);
       return () => document.removeEventListener('keydown', handleEsc);
     }
+    return undefined;
   }, [showSuggestModal]);
 
   const fetchFacilities = async () => {

@@ -2,7 +2,7 @@ import { createMocks } from 'node-mocks-http';
 import handler from '../../pages/api/users/[id]';
 import User, { UserRole } from '../../src/models/User';
 import jwt from 'jsonwebtoken';
-import mongoose from 'mongoose';
+
 
 jest.mock('../../src/models/User');
 jest.mock('../../src/lib/dbConnect');

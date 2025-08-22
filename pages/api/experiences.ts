@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import dbConnect from '../../src/lib/dbConnect';
-import ExperienceModel, { IExperience } from '../../src/models/Experience';
+import ExperienceModel from '../../src/models/Experience';
 import { getTokenFromHeader, verifyToken } from '../../src/lib/auth';
 import User from '../../src/models/User'; // Para buscar nome e avatar do owner no POST
 
@@ -38,7 +38,7 @@ export default async function handler(
   const decodedToken = token ? verifyToken(token) : null;
 
   switch (req.method) {
-    case 'GET':
+    case 'GET': {
       try {
         // Extract query parameters
         const { page = '1', limit = '12', search, visibility } = req.query;
@@ -127,6 +127,7 @@ export default async function handler(
         });
       }
       break;
+    }
 
     case 'POST':
       if (!decodedToken || !decodedToken.userId) {

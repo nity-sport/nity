@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useMultiStepForm } from '../MultiStepFormProvider';
-import baseStyles from './styles/BaseStep.module.css';
+
 import styles from './styles/Step12.module.css';
 
 export function Step12_CreateAccount() {
@@ -25,7 +25,7 @@ export function Step12_CreateAccount() {
           return 'Sobrenome deve ter pelo menos 2 caracteres';
         }
         return '';
-      case 'email':
+      case 'email': {
         if (!value || value.trim().length === 0) {
           return 'E-mail é obrigatório';
         }
@@ -34,6 +34,7 @@ export function Step12_CreateAccount() {
           return 'E-mail inválido';
         }
         return '';
+      }
       case 'password':
         if (!value || value.length === 0) {
           return 'Senha é obrigatória';

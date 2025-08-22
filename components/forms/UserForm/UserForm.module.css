@@ -26,7 +26,9 @@
   border: 1px solid var(--color-gray-300);
   border-radius: var(--border-radius-md);
   font-size: var(--font-size-base);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .input:focus,
@@ -74,7 +76,9 @@
   font-size: var(--font-size-base);
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
 }
 
 .submitButton:hover:not(:disabled) {
@@ -97,11 +101,11 @@
     padding: 1.5rem;
     margin: 1rem;
   }
-  
+
   .formActions {
     margin-top: 1.5rem;
   }
-  
+
   .submitButton {
     width: 100%;
   }

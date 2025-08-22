@@ -124,7 +124,8 @@
   margin-top: 10px;
 }
 
-.editButton, .deleteButton {
+.editButton,
+.deleteButton {
   padding: 4px 8px;
   border: none;
   border-radius: 4px;
@@ -256,13 +257,17 @@
   background: var(--danger-hover);
 }
 
-.emptyState, .emptyMembers, .noTeamSelected {
+.emptyState,
+.emptyMembers,
+.noTeamSelected {
   text-align: center;
   padding: 40px 20px;
   color: var(--text-muted);
 }
 
-.emptyState p, .emptyMembers p, .noTeamSelected p {
+.emptyState p,
+.emptyMembers p,
+.noTeamSelected p {
   margin-bottom: 20px;
   font-size: 1.1rem;
 }
@@ -339,21 +344,21 @@
   transition: background-color 0.2s;
 }
 
-.formButtons button[type="button"] {
+.formButtons button[type='button'] {
   background: #f5f5f5;
   color: var(--text-color);
 }
 
-.formButtons button[type="button"]:hover {
+.formButtons button[type='button']:hover {
   background: #e5e5e5;
 }
 
-.formButtons button[type="submit"] {
+.formButtons button[type='submit'] {
   background: var(--primary-color);
   color: white;
 }
 
-.formButtons button[type="submit"]:hover {
+.formButtons button[type='submit']:hover {
   background: var(--primary-hover);
 }
 

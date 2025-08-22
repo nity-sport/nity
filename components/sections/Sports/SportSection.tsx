@@ -5,6 +5,12 @@ import styles from './Sports.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 
+// Ensure DOM types are available
+declare var HTMLDivElement: {
+  prototype: HTMLDivElement;
+  new(): HTMLDivElement;
+};
+
 const sports = [
   {
     key: 'soccer',

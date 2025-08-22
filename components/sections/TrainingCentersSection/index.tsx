@@ -5,6 +5,12 @@ import styles from './TrainingCenterSection.module.css';
 import TrainingCenterCard from './TrainingCenterCard';
 import { SportCenterType } from '../../../src/types/sportcenter';
 
+// Ensure DOM types are available
+declare var HTMLDivElement: {
+  prototype: HTMLDivElement;
+  new(): HTMLDivElement;
+};
+
 export default function TrainingCentersSection() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -35,7 +41,7 @@ export default function TrainingCentersSection() {
         // Handle new standardized API response format
         if (data.success && data.data && Array.isArray(data.data)) {
           setCenters(data.data as (SportCenterType & { _id: string })[]);
-        } 
+        }
         // Fallback for old API format (backward compatibility)
         else if (data.sportCenters && Array.isArray(data.sportCenters)) {
           setCenters(
@@ -98,7 +104,6 @@ export default function TrainingCentersSection() {
     const gap = 22; // Gap entre os cards, conforme CSS
     const itemTotalWidth = cardWidth + gap;
 
-    const scrollAmount = (newPageTarget - 1) * itemTotalWidth * itemsPerPage;
     const firstItemIndexOfNewPage = (newPageTarget - 1) * itemsPerPage;
     if (
       firstItemIndexOfNewPage < centers.length &&

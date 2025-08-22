@@ -172,27 +172,27 @@
   border: 0.0625rem solid transparent;
 }
 
-.formActions button[type="submit"] {
+.formActions button[type='submit'] {
   background: var(--color-primary-light);
   color: var(--color-white);
 }
 
-.formActions button[type="submit"]:hover:not(:disabled) {
+.formActions button[type='submit']:hover:not(:disabled) {
   background: var(--color-primary-dark);
 }
 
-.formActions button[type="submit"]:disabled {
+.formActions button[type='submit']:disabled {
   background: var(--color-gray-400);
   cursor: not-allowed;
 }
 
-.formActions button[type="button"] {
+.formActions button[type='button'] {
   background: var(--color-gray-100);
   color: var(--color-gray-700);
   border-color: var(--color-gray-300);
 }
 
-.formActions button[type="button"]:hover {
+.formActions button[type='button']:hover {
   background: var(--color-gray-200);
 }
 

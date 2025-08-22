@@ -13,7 +13,7 @@
 .arrowsWrapper {
   position: absolute;
   top: 50%;
-  left: 0rem;   /* Faz as setas começarem bem fora do container azul */
+  left: 0rem; /* Faz as setas começarem bem fora do container azul */
   transform: translateY(-50%);
   z-index: 2;
   pointer-events: none;
@@ -52,7 +52,7 @@
   border-radius: 1rem;
   overflow: hidden;
   background: #eee;
-  box-shadow: 0 0.375rem 2.25rem rgba(10,24,36,0.13);
+  box-shadow: 0 0.375rem 2.25rem rgba(10, 24, 36, 0.13);
   border: 0.15625rem solid #d4e3fa;
   display: flex;
   align-items: center;
@@ -80,7 +80,7 @@
   font-size: 2.5rem;
   line-height: 3rem;
   letter-spacing: 0rem;
-  color: #4892E6;
+  color: #4892e6;
   margin-bottom: 1rem;
   margin-top: 0;
 }
@@ -94,7 +94,7 @@
 }
 
 .partnerBtn {
-  background: #2778C5;
+  background: #2778c5;
   color: #fff;
   font-size: 1.09rem;
   border: none;
@@ -111,25 +111,61 @@
 
 /* RESPONSIVO */
 @media (max-width: 1440px) {
-  .blueBox { width: 98vw; }
-  .partnerImgWrapper { left: 1.5rem; }
-  .arrowsWrapper { left: -10rem; }
+  .blueBox {
+    width: 98vw;
+  }
+  .partnerImgWrapper {
+    left: 1.5rem;
+  }
+  .arrowsWrapper {
+    left: -10rem;
+  }
 }
 @media (max-width: 1150px) {
-  .blueBox { width: 94vw; }
-  .partnerImgWrapper { width: 23.125rem; height: 31.25rem; }
-  .arrowsWrapper { width: 75rem; }
+  .blueBox {
+    width: 94vw;
+  }
+  .partnerImgWrapper {
+    width: 23.125rem;
+    height: 31.25rem;
+  }
+  .arrowsWrapper {
+    width: 75rem;
+  }
 }
 @media (max-width: 900px) {
-  .partnerSection { height: 35.625rem; }
-  .blueBox { width: 82vw; min-width: 23.75rem; height: 20rem; }
-  .partnerImgWrapper { width: 10rem; height: 13.75rem; left: 0.5rem;}
-  .partnerContent { margin-right: 0.75rem; font-size: 1rem; }
-  .partnerTitle { font-size: 1.25rem; line-height: 1.5; }
-  .arrowsWrapper { width: 53.125rem; left: -5.625rem; }
+  .partnerSection {
+    height: 35.625rem;
+  }
+  .blueBox {
+    width: 82vw;
+    min-width: 23.75rem;
+    height: 20rem;
+  }
+  .partnerImgWrapper {
+    width: 10rem;
+    height: 13.75rem;
+    left: 0.5rem;
+  }
+  .partnerContent {
+    margin-right: 0.75rem;
+    font-size: 1rem;
+  }
+  .partnerTitle {
+    font-size: 1.25rem;
+    line-height: 1.5;
+  }
+  .arrowsWrapper {
+    width: 53.125rem;
+    left: -5.625rem;
+  }
 }
 @media (max-width: 700px) {
-  .partnerSection { flex-direction: column; height: auto; margin-top: 6.25rem;}
+  .partnerSection {
+    flex-direction: column;
+    height: auto;
+    margin-top: 6.25rem;
+  }
   .blueBox {
     margin-left: 0;
     width: 98vw;
@@ -143,5 +179,9 @@
   .arrowsWrapper {
     display: none; /* ESCONDE as setas no mobile */
   }
-  .partnerContent { margin: 0 auto; width: 95%; max-width: 350px; }
+  .partnerContent {
+    margin: 0 auto;
+    width: 95%;
+    max-width: 350px;
+  }
 }

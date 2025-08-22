@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useMultiStepForm } from '../MultiStepFormProvider';
-import baseStyles from './styles/BaseStep.module.css';
+
 import styles from './styles/Step10D.module.css';
 
 interface DormitoryFacility {
@@ -55,6 +55,7 @@ export function Step10D_DormitoryFacilities() {
       document.addEventListener('keydown', handleEsc);
       return () => document.removeEventListener('keydown', handleEsc);
     }
+    return undefined;
   }, [showSuggestModal]);
 
   const fetchDormitoryFacilities = async () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from '../src/contexts/AuthContext';
-import { UserRole } from '../src/types/auth';
+
 import { getRoleDisplayName } from '../src/utils/userRole';
 import Link from 'next/link';
 import styles from './settings/Settings.module.css';

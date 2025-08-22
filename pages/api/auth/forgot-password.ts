@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
-import crypto from 'crypto';
+
 import dbConnect from '../../../src/lib/dbConnect';
 import User from '../../../src/models/User';
 import { sendEmail } from '../../../src/lib/resend';

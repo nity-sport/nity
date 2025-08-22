@@ -81,7 +81,7 @@
   cursor: pointer;
 }
 
-.checkboxLabel input[type="checkbox"] {
+.checkboxLabel input[type='checkbox'] {
   width: 1rem;
   height: 1rem;
 }
@@ -376,7 +376,7 @@
   cursor: pointer;
 }
 
-.radioLabel input[type="radio"] {
+.radioLabel input[type='radio'] {
   width: 1rem;
   height: 1rem;
 }
@@ -488,7 +488,7 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     font-size: var(--text-xs);
   }
-  
+
   .tableRow > div:nth-child(3),
   .tableRow > div:nth-child(6),
   .tableHeader > div:nth-child(3),
@@ -502,33 +502,33 @@
     padding: 1rem;
     margin-top: 5rem;
   }
-  
+
   .header {
     flex-direction: column;
     gap: 1rem;
     align-items: stretch;
   }
-  
+
   .statsGrid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
-  
+
   .tableHeader,
   .tableRow {
     grid-template-columns: 1fr 1fr;
   }
-  
-  .tableRow > div:nth-child(n+3),
-  .tableHeader > div:nth-child(n+3) {
+
+  .tableRow > div:nth-child(n + 3),
+  .tableHeader > div:nth-child(n + 3) {
     display: none;
   }
-  
+
   .modal {
     width: 95%;
     max-height: 90vh;
   }
-  
+
   .actions {
     flex-direction: column;
   }

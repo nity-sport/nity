@@ -2,7 +2,7 @@
 .sportsSection {
   width: 100%;
   height: 34.8125rem;
-  background: #0C3B66;
+  background: #0c3b66;
   padding: 3.25rem 0;
 }
 
@@ -41,22 +41,20 @@
   margin: 0 auto;
   display: flex;
   overflow-x: auto;
-  overflow-y: hidden;      /* <-- aqui bloqueia vertical! */
+  overflow-y: hidden; /* <-- aqui bloqueia vertical! */
   scroll-behavior: smooth;
   cursor: grab;
   user-select: none;
   -webkit-user-select: none;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  padding: 0 1.5rem 0 1.5rem;   /* tira o padding vertical extra */
+  padding: 0 1.5rem 0 1.5rem; /* tira o padding vertical extra */
   justify-content: flex-start;
   gap: 2rem;
-  align-items: center;     /* <-- centraliza verticalmente */
-  height: 100%;            /* pega toda a altura do container pai */
-  min-height: 12.4375rem;       /* garante que caiba o card */
+  align-items: center; /* <-- centraliza verticalmente */
+  height: 100%; /* pega toda a altura do container pai */
+  min-height: 12.4375rem; /* garante que caiba o card */
 }
-
-
 
 .carousel::-webkit-scrollbar {
   display: none;
@@ -67,7 +65,7 @@
 }
 
 .sportCard {
-  background: #0C3B66;
+  background: #0c3b66;
   border-radius: 1rem;
   width: 13.375rem;
   min-width: 13.375rem;
@@ -79,11 +77,14 @@
   justify-content: flex-start;
   gap: 1rem;
   box-shadow: none;
-  transition: box-shadow 0.13s, transform 0.13s;
+  transition:
+    box-shadow 0.13s,
+    transform 0.13s;
 }
 
-.sportCard:hover, .sportCard:focus-within {
-  box-shadow: 0 4px 24px rgba(100,180,255,0.09);
+.sportCard:hover,
+.sportCard:focus-within {
+  box-shadow: 0 4px 24px rgba(100, 180, 255, 0.09);
   transform: translateY(-0.5rem) scale(1.04);
   z-index: 2;
 }
@@ -110,7 +111,7 @@
 
 .centersLabel {
   font-size: 0.96rem;
-  color: #D0DEED;
+  color: #d0deed;
   font-weight: 400;
   font-family: var(--font-primary);
   text-align: center;
@@ -124,12 +125,15 @@
 .sportCard:focus-within .centersLabel,
 .centersLabel:hover,
 .centersLabel:focus {
-  color: #93E7FF;
+  color: #93e7ff;
   text-decoration: underline;
 }
 
-.sportCard:hover .centersLabel, .sportCard:focus-within .centersLabel, .centersLabel:hover, .centersLabel:focus {
-  color: #93E7FF;
+.sportCard:hover .centersLabel,
+.sportCard:focus-within .centersLabel,
+.centersLabel:hover,
+.centersLabel:focus {
+  color: #93e7ff;
 }
 @media (max-width: 950px) {
   .headerRow {

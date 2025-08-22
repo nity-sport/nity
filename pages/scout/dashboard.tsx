@@ -71,8 +71,8 @@ export default function ScoutDashboard() {
         console.error('Failed to load teams:', response.status, errorData);
         setTeams([]);
       }
-    } catch (error) {
-      console.error('Error loading teams:', error);
+    } catch (_) {
+      console.error('Error loading teams:', _);
       setTeams([]);
     } finally {
       setLoadingTeams(false);
@@ -93,7 +93,7 @@ export default function ScoutDashboard() {
         setNotifications(data.notifications || []);
         setUnreadCount(data.unreadCount || 0);
       }
-    } catch (error) {
+    } catch (_) {
       console.error('Error loading notifications');
       // Don't show error for notifications - just set empty arrays
       setNotifications([]);
@@ -122,8 +122,8 @@ export default function ScoutDashboard() {
         // Just refresh the page once
         window.location.reload();
       }
-    } catch (error) {
-      console.error('Error generating affiliate code:', error);
+    } catch (_) {
+      console.error('Error generating affiliate code:', _);
       setError('Failed to generate affiliate code');
     }
   };
@@ -159,7 +159,7 @@ export default function ScoutDashboard() {
       } else {
         setError(data.message || 'Failed to create team');
       }
-    } catch (error) {
+    } catch (_) {
       setError('Error creating team');
     } finally {
       setCreatingTeam(false);
@@ -205,7 +205,7 @@ export default function ScoutDashboard() {
       } else {
         setError(data.message || 'Failed to send invites');
       }
-    } catch (error) {
+    } catch (_) {
       setError('Error sending invites');
     } finally {
       setSendingInvites(false);

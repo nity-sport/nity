@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../src/contexts/AuthContext';
 import { UserRole } from '../../src/types/auth';
-import { Team, CreateTeamRequest } from '../../src/types/team';
+import { Team } from '../../src/types/team';
 import { User } from '../../src/types/auth';
 import styles from './teams.module.css';
 
@@ -55,10 +55,10 @@ export default function TeamsPage() {
         const data = await response.json();
         setTeams(data.teams || []);
       } else {
-        setError('Failed to load teams');
+        // setError('Failed to load teams');
       }
-    } catch (error) {
-      setError('Error loading teams');
+    } catch (_) {
+      // setError('Error loading teams');
     } finally {
       setLoadingTeams(false);
     }
@@ -95,8 +95,8 @@ export default function TeamsPage() {
       } else {
         setError(data.message || 'Failed to create team');
       }
-    } catch (error) {
-      setError('Error creating team');
+    } catch (_) {
+      // setError('Error creating team');
     } finally {
       setSubmitting(false);
     }
@@ -138,8 +138,8 @@ export default function TeamsPage() {
       } else {
         setError(data.message || 'Failed to update team');
       }
-    } catch (error) {
-      setError('Error updating team');
+    } catch (_) {
+      // setError('Error updating team');
     } finally {
       setSubmitting(false);
     }
@@ -165,8 +165,8 @@ export default function TeamsPage() {
       } else {
         setError('Failed to delete team');
       }
-    } catch (error) {
-      setError('Error deleting team');
+    } catch (_) {
+      // setError('Error deleting team');
     }
   };
 
@@ -192,10 +192,10 @@ export default function TeamsPage() {
         const data = await response.json();
         setSearchResults(data.users || []);
       } else {
-        setSearchResults([]);
+        // setSearchResults([]);
       }
-    } catch (error) {
-      setSearchResults([]);
+    } catch (_) {
+      // setSearchResults([]);
     } finally {
       setSearching(false);
     }
@@ -233,8 +233,8 @@ export default function TeamsPage() {
       } else {
         setError(data.message || 'Failed to add member');
       }
-    } catch (error) {
-      setError('Error adding member');
+    } catch (_) {
+      // setError('Error adding member');
     }
   };
 
@@ -275,8 +275,8 @@ export default function TeamsPage() {
       } else {
         setError('Failed to remove member');
       }
-    } catch (error) {
-      setError('Error removing member');
+    } catch (_) {
+      // setError('Error removing member');
     }
   };
 

@@ -27,14 +27,18 @@ class Logger {
   private isProd = process.env.NODE_ENV === 'production';
   private service = 'nity-api';
 
-  private formatLog(level: LogLevel, message: string, context?: LogContext): LogEntry {
+  private formatLog(
+    level: LogLevel,
+    message: string,
+    context?: LogContext
+  ): LogEntry {
     return {
       timestamp: new Date().toISOString(),
       level,
       message,
       context,
       environment: process.env.NODE_ENV || 'development',
-      service: this.service
+      service: this.service,
     };
   }
 
@@ -51,7 +55,7 @@ class Logger {
       const { timestamp, level, message, context } = logEntry;
       const contextStr = context ? ` ${JSON.stringify(context)}` : '';
       const logMessage = `[${timestamp}] [${level.toUpperCase()}] ${message}${contextStr}`;
-      
+
       switch (level) {
         case 'debug':
           console.debug(logMessage);
@@ -95,11 +99,17 @@ class Logger {
       type: 'api_request',
       method,
       url,
-      ...context
+      ...context,
     });
   }
 
-  apiResponse(method: string, url: string, statusCode: number, duration: number, context?: LogContext) {
+  apiResponse(
+    method: string,
+    url: string,
+    statusCode: number,
+    duration: number,
+    context?: LogContext
+  ) {
     const level = statusCode >= 400 ? 'error' : 'info';
     this[level](`${method} ${url} - ${statusCode}`, {
       type: 'api_response',
@@ -107,64 +117,89 @@ class Logger {
       url,
       statusCode,
       duration,
-      ...context
+      ...context,
     });
   }
 
   authError(message: string, context?: LogContext) {
     this.error(message, {
       type: 'auth_error',
-      ...context
+      ...context,
     });
   }
 
-  dbOperation(operation: string, collection: string, duration?: number, context?: LogContext) {
+  dbOperation(
+    operation: string,
+    collection: string,
+    duration?: number,
+    context?: LogContext
+  ) {
     this.debug(`DB ${operation} on ${collection}`, {
       type: 'db_operation',
       operation,
       collection,
       duration,
-      ...context
+      ...context,
     });
   }
 
-  dbError(operation: string, collection: string, error: string, context?: LogContext) {
+  dbError(
+    operation: string,
+    collection: string,
+    error: string,
+    context?: LogContext
+  ) {
     this.error(`DB ${operation} failed on ${collection}: ${error}`, {
       type: 'db_error',
       operation,
       collection,
       error,
-      ...context
+      ...context,
     });
   }
 
-  fileOperation(operation: string, filename: string, size?: number, context?: LogContext) {
+  fileOperation(
+    operation: string,
+    filename: string,
+    size?: number,
+    context?: LogContext
+  ) {
     this.info(`File ${operation}: ${filename}`, {
       type: 'file_operation',
       operation,
       filename,
       size,
-      ...context
+      ...context,
     });
   }
 
-  fileError(operation: string, filename: string, error: string, context?: LogContext) {
+  fileError(
+    operation: string,
+    filename: string,
+    error: string,
+    context?: LogContext
+  ) {
     this.error(`File ${operation} failed for ${filename}: ${error}`, {
       type: 'file_error',
       operation,
       filename,
       error,
-      ...context
+      ...context,
     });
   }
 
-  securityEvent(event: string, severity: 'low' | 'medium' | 'high' | 'critical', context?: LogContext) {
-    const level = severity === 'critical' ? 'error' : severity === 'high' ? 'warn' : 'info';
+  securityEvent(
+    event: string,
+    severity: 'low' | 'medium' | 'high' | 'critical',
+    context?: LogContext
+  ) {
+    const level =
+      severity === 'critical' ? 'error' : severity === 'high' ? 'warn' : 'info';
     this[level](`Security event: ${event}`, {
       type: 'security_event',
       event,
       severity,
-      ...context
+      ...context,
     });
   }
 
@@ -174,7 +209,7 @@ class Logger {
       type: 'performance',
       operation,
       duration,
-      ...context
+      ...context,
     });
   }
 }

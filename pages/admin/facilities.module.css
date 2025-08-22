@@ -93,7 +93,9 @@
   background: var(--color-white);
   border-radius: var(--border-radius-lg);
   padding: 2rem;
-  box-shadow: 0 0.0625rem 0.1875rem 0 rgba(0, 0, 0, 0.1), 0 0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 0.0625rem 0.1875rem 0 rgba(0, 0, 0, 0.1),
+    0 0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.06);
   border: 0.0625rem solid var(--color-gray-200);
   margin-bottom: 2rem;
 }
@@ -248,14 +250,18 @@
 .facilityCard {
   background: var(--color-white);
   border-radius: var(--border-radius-lg);
-  box-shadow: 0 0.0625rem 0.1875rem 0 rgba(0, 0, 0, 0.1), 0 0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 0.0625rem 0.1875rem 0 rgba(0, 0, 0, 0.1),
+    0 0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.06);
   border: 0.0625rem solid var(--color-gray-200);
   overflow: hidden;
   transition: all 0.2s ease;
 }
 
 .facilityCard:hover {
-  box-shadow: 0 0.25rem 0.375rem -0.0625rem rgba(0, 0, 0, 0.1), 0 0.125rem 0.25rem -0.0625rem rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 0.25rem 0.375rem -0.0625rem rgba(0, 0, 0, 0.1),
+    0 0.125rem 0.25rem -0.0625rem rgba(0, 0, 0, 0.06);
   transform: translateY(-0.0625rem);
 }
 
@@ -356,7 +362,9 @@
   padding: 4rem 2rem;
   background: var(--color-white);
   border-radius: var(--border-radius-lg);
-  box-shadow: 0 0.0625rem 0.1875rem 0 rgba(0, 0, 0, 0.1), 0 0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 0.0625rem 0.1875rem 0 rgba(0, 0, 0, 0.1),
+    0 0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.06);
   border: 0.0625rem solid var(--color-gray-200);
 }
 
@@ -384,21 +392,21 @@
   .container {
     padding: 1rem;
   }
-  
+
   .header {
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   .headerActions {
     align-self: stretch;
     justify-content: space-between;
   }
-  
+
   .facilitiesGrid {
     grid-template-columns: 1fr;
   }
-  
+
   .facilityActions {
     flex-direction: column;
   }

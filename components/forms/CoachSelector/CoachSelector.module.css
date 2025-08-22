@@ -211,25 +211,25 @@
     grid-template-columns: 1fr;
     gap: 0.75rem;
   }
-  
+
   .coachCard {
     padding: 0.75rem;
     min-height: 100px;
   }
-  
+
   .coachContent {
     gap: 0.75rem;
   }
-  
+
   .imageContainer {
     width: 50px;
     height: 50px;
   }
-  
+
   .coachName {
     font-size: var(--text-sm);
   }
-  
+
   .coachAge,
   .coachBio {
     font-size: 0.65rem;
@@ -241,33 +241,33 @@
     padding: 0.5rem;
     min-height: 80px;
   }
-  
+
   .imageContainer {
     width: 40px;
     height: 40px;
   }
-  
+
   .avatarIcon {
     width: 1.5rem;
     height: 1.5rem;
   }
-  
+
   .selectionIndicator {
     top: 0.25rem;
     right: 0.25rem;
   }
-  
+
   .checkbox,
   .radio {
     width: 1rem;
     height: 1rem;
   }
-  
+
   .checkIcon {
     width: 0.625rem;
     height: 0.625rem;
   }
-  
+
   .radioDot {
     width: 0.375rem;
     height: 0.375rem;

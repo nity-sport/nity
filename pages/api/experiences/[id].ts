@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import dbConnect from '../../../src/lib/dbConnect';
-import ExperienceModel, { IExperience } from '../../../src/models/Experience';
+import ExperienceModel from '../../../src/models/Experience';
 import { getTokenFromHeader, verifyToken } from '../../../src/lib/auth';
 
 interface ExperienceUpdateInput {

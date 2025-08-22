@@ -74,8 +74,8 @@ export default function SportCenterForm({
   const [photosFiles, setPhotosFiles] = useState<FileList | null>(null);
   const [dormitoryPhotosFiles, setDormitoryPhotosFiles] =
     useState<FileList | null>(null);
-  const [coachesJson, setCoachesJson] = useState<string>('[]');
-  const [facilitiesJson, setFacilitiesJson] = useState<string>('[]');
+  const [, setCoachesJson] = useState<string>('[]');
+  const [, setFacilitiesJson] = useState<string>('[]');
   const [selectedFacilityIds, setSelectedFacilityIds] = useState<string[]>([]);
   const [selectedCoachIds, setSelectedCoachIds] = useState<string[]>([]);
 
@@ -104,7 +104,7 @@ export default function SportCenterForm({
 
               setSelectedFacilityIds(facilityIds);
             }
-          } catch (error) {}
+          } catch {}
         };
 
         loadExistingFacilities();
@@ -132,7 +132,7 @@ export default function SportCenterForm({
 
               setSelectedCoachIds(coachIds);
             }
-          } catch (error) {}
+          } catch {}
         };
 
         loadExistingCoaches();
@@ -290,9 +290,7 @@ export default function SportCenterForm({
                 profileImage: coach.profileImage,
               }));
           }
-        } catch (coachesError: any) {
-          // Em caso de erro, continua sem coaches
-        }
+        } catch { /* Em caso de erro, continua sem coaches */ }
       }
 
       // Buscar facilities selecionadas pelos IDs
@@ -312,9 +310,7 @@ export default function SportCenterForm({
                 icon: facility.icon,
               }));
           }
-        } catch (facilitiesError: any) {
-          // Em caso de erro, continua sem facilities
-        }
+        } catch { /* Em caso de erro, continua sem facilities */ }
       }
 
       // --- MODIFICAÇÃO AQUI: Limpeza dos arrays de string antes de enviar ---

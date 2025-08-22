@@ -30,9 +30,9 @@ const TeamsAdminPage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
-  const [showEditForm, setShowEditForm] = useState(false);
+
   const [error, setError] = useState<string | null>(null);
-  const [users, setUsers] = useState<User[]>([]);
+
   const [showUserSearch, setShowUserSearch] = useState(false);
   const [userSearchTerm, setUserSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState<User[]>([]);

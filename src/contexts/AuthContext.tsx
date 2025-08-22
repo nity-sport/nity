@@ -1,10 +1,15 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import { AuthContextType, AuthState, AuthAction, User, UserRole } from '../types/auth';
+import {
+  AuthContextType,
+  AuthState,
+  AuthAction,
+  User,
+  UserRole,
+} from '../types/auth';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const authReducer = (state: AuthState, action: AuthAction): AuthState => {
-
   let newState: AuthState;
   switch (action.type) {
     case 'SET_LOADING':
@@ -48,7 +53,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
     checkInitialAuth();
   }, []); // Removido checkAuthStatus da dependência para evitar loop se ele próprio mudar estado
-  
+
   const checkAuthStatus = async () => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
@@ -57,13 +62,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         dispatch({ type: 'SET_USER', payload: null });
         return;
       }
-  
+
       const response = await fetch('/api/auth/me', {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
-  
+
       if (response.ok) {
         const user = await response.json();
         dispatch({ type: 'LOGIN_SUCCESS', payload: user });
@@ -71,8 +76,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         localStorage.removeItem('auth_token');
         dispatch({ type: 'SET_USER', payload: null });
       }
-    } catch (error) {
-      console.error('[Auth] checkAuthStatus - Erro:', error);
+    } catch (_) {
+      console.error('[Auth] checkAuthStatus - Erro:', _);
       dispatch({ type: 'SET_USER', payload: null });
     }
   };
@@ -80,7 +85,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const login = async (email: string, password: string) => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
-      
+
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
@@ -96,9 +101,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const { user, token } = await response.json();
       localStorage.setItem('auth_token', token);
       dispatch({ type: 'LOGIN_SUCCESS', payload: user });
-    } catch (error) {
+    } catch (_) {
       dispatch({ type: 'SET_LOADING', payload: false });
-      throw error;
+      throw _;
     }
   };
 
@@ -106,9 +111,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
       window.location.href = '/api/auth/google';
-    } catch (error) {
+    } catch (_) {
       dispatch({ type: 'SET_LOADING', payload: false });
-      throw error;
+      throw _;
     }
   };
 
@@ -116,16 +121,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
       window.location.href = '/api/auth/facebook';
-    } catch (error) {
+    } catch (_) {
       dispatch({ type: 'SET_LOADING', payload: false });
-      throw error;
+      throw _;
     }
   };
 
-  const register = async (email: string, password: string, name: string, referralCode?: string) => {
+  const register = async (
+    email: string,
+    password: string,
+    name: string,
+    referralCode?: string
+  ) => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
-      
+
       const response = await fetch('/api/auth/register', {
         method: 'POST',
         headers: {
@@ -141,9 +151,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const { user, token } = await response.json();
       localStorage.setItem('auth_token', token);
       dispatch({ type: 'LOGIN_SUCCESS', payload: user });
-    } catch (error) {
+    } catch (_) {
       dispatch({ type: 'SET_LOADING', payload: false });
-      throw error;
+      throw _;
     }
   };
 
@@ -151,12 +161,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       localStorage.removeItem('auth_token');
       dispatch({ type: 'LOGOUT' });
-      
+
       await fetch('/api/auth/logout', {
         method: 'POST',
       });
-    } catch (error) {
-      console.error('Logout error:', error);
+    } catch (_) {
+      console.error('Logout error:', _);
     }
   };
 
@@ -178,8 +188,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       const updatedUser = await response.json();
       dispatch({ type: 'UPDATE_PROFILE', payload: updatedUser });
-    } catch (error) {
-      throw error;
+    } catch (_) {
+      throw _;
     }
   };
 
@@ -197,8 +207,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const isScout = state.user?.role === UserRole.SCOUT;
 
   const canManageUsers = isSuperuser;
-  const canCreateExperiences = state.user ? [UserRole.SUPERUSER, UserRole.MARKETING].includes(state.user.role) : false;
-  const canManageSportCenters = state.user ? [UserRole.SUPERUSER, UserRole.OWNER].includes(state.user.role) : false;
+  const canCreateExperiences = state.user
+    ? [UserRole.SUPERUSER, UserRole.MARKETING].includes(state.user.role)
+    : false;
+  const canManageSportCenters = state.user
+    ? [UserRole.SUPERUSER, UserRole.OWNER].includes(state.user.role)
+    : false;
   const canManageFacilities = isSuperuser;
   const canManageCoaches = isSuperuser;
 

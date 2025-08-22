@@ -7,7 +7,6 @@ import {
   requireAuthenticated,
   createApiHandler,
 } from '../../../src/lib/auth-middleware';
-import { UserRole } from '../../../src/types/auth';
 
 const handler = async (req: AuthenticatedRequest, res: NextApiResponse) => {
   try {

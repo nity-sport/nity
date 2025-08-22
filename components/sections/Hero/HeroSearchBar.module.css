@@ -3,7 +3,7 @@
 .searchBar {
   position: absolute;
   left: 50%;
-  bottom: 0;            
+  bottom: 0;
   transform: translate(-50%, 50%);
   width: 56.25rem;
   max-width: 98vw;
@@ -112,7 +112,8 @@
     align-items: center;
     text-align: center;
   }
-  .label, .placeholder {
+  .label,
+  .placeholder {
     width: 100%;
     text-align: center;
   }

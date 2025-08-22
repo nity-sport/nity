@@ -62,7 +62,7 @@
   font-size: 2.5rem;
   line-height: 3rem;
   letter-spacing: 0;
-  color: #D1D5DB;
+  color: #d1d5db;
   margin-right: 0.5rem;
 }
 
@@ -91,7 +91,7 @@
   text-align: center;
   color: #000000;
   border: none;
-  border-bottom: 0.125rem solid #D1D5DB;
+  border-bottom: 0.125rem solid #d1d5db;
   outline: none;
   background: transparent;
   width: 100%;
@@ -118,12 +118,12 @@
 }
 
 .priceInputField::placeholder {
-  color: #ADB5BD;
+  color: #adb5bd;
   opacity: 1;
 }
 
 .priceInputField:focus {
-  border-bottom-color: #3B82F6;
+  border-bottom-color: #3b82f6;
 }
 
 .priceInputField::-webkit-outer-spin-button,
@@ -132,7 +132,7 @@
   margin: 0;
 }
 
-.priceInputField[type=number] {
+.priceInputField[type='number'] {
   -moz-appearance: textfield;
 }
 
@@ -142,7 +142,7 @@
   font-size: 2.5rem;
   line-height: 3rem;
   letter-spacing: 0;
-  color: #D1D5DB;
+  color: #d1d5db;
   margin-left: 0.5rem;
 }
 
@@ -168,7 +168,7 @@
   font-size: 1.125rem;
   line-height: 140%;
   letter-spacing: 0;
-  color: #ADB5BD;
+  color: #adb5bd;
   text-align: center;
   margin: 0;
   max-width: 31.25rem;

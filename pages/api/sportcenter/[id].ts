@@ -4,14 +4,18 @@ import SportCenter from '../../../src/models/SportCenter';
 import User from '../../../src/models/User';
 import { getTokenFromHeader, verifyToken } from '../../../src/lib/auth';
 import { ResponseHandler } from '../../../src/utils/apiResponse';
-import { 
-  AuthenticationError, 
-  AuthorizationError, 
+import {
+  AuthenticationError,
+  AuthorizationError,
   NotFoundError,
   ValidationError,
-  DatabaseError
+  DatabaseError,
 } from '../../../src/utils/errors';
-import { withErrorHandler, withMethods, ApiRequest } from '../../../src/middleware/errorHandler';
+import {
+  withErrorHandler,
+  withMethods,
+  ApiRequest,
+} from '../../../src/middleware/errorHandler';
 import { logger } from '../../../src/utils/logger';
 
 async function getSportCenter(req: ApiRequest, res: NextApiResponse) {
@@ -25,39 +29,47 @@ async function getSportCenter(req: ApiRequest, res: NextApiResponse) {
       throw new ValidationError('ID do SportCenter é obrigatório');
     }
 
-    logger.dbOperation('findById', 'sportcenters', undefined, { 
+    logger.dbOperation('findById', 'sportcenters', undefined, {
       requestId: req.requestId,
-      sportCenterId: id 
+      sportCenterId: id,
     });
 
     const sportCenter = await SportCenter.findById(id);
-    
+
     if (!sportCenter) {
       throw new NotFoundError('SportCenter');
     }
 
-    logger.dbOperation('findById', 'sportcenters', Date.now() - startTime, { 
+    logger.dbOperation('findById', 'sportcenters', Date.now() - startTime, {
       requestId: req.requestId,
       sportCenterId: id,
-      found: true
+      found: true,
     });
 
-    return ResponseHandler.success(res, {
-      ...sportCenter.toObject(),
-      _id: sportCenter._id.toString()
-    }, {
-      requestId: req.requestId
-    });
-
+    return ResponseHandler.success(
+      res,
+      {
+        ...sportCenter.toObject(),
+        _id: sportCenter._id.toString(),
+      },
+      {
+        requestId: req.requestId,
+      }
+    );
   } catch (error) {
     if (error instanceof Error && error.name === 'CastError') {
       throw new ValidationError('ID inválido');
     }
-    
-    logger.dbError('findById', 'sportcenters', error instanceof Error ? error.message : String(error), {
-      requestId: req.requestId,
-      sportCenterId: req.query.id as string
-    });
+
+    logger.dbError(
+      'findById',
+      'sportcenters',
+      error instanceof Error ? error.message : String(error),
+      {
+        requestId: req.requestId,
+        sportCenterId: req.query.id as string,
+      }
+    );
     throw error;
   }
 }
@@ -101,14 +113,16 @@ async function updateSportCenter(req: ApiRequest, res: NextApiResponse) {
         userRole: user.role,
         sportCenterId: id,
         isOwner,
-        requestId: req.requestId
+        requestId: req.requestId,
       });
-      throw new AuthorizationError('Apenas o proprietário ou administrador podem editar');
+      throw new AuthorizationError(
+        'Apenas o proprietário ou administrador podem editar'
+      );
     }
 
-    logger.dbOperation('findByIdAndUpdate', 'sportcenters', undefined, { 
+    logger.dbOperation('findByIdAndUpdate', 'sportcenters', undefined, {
       requestId: req.requestId,
-      sportCenterId: id 
+      sportCenterId: id,
     });
 
     const updatedSportCenter = await SportCenter.findByIdAndUpdate(
@@ -124,38 +138,51 @@ async function updateSportCenter(req: ApiRequest, res: NextApiResponse) {
     logger.info('SportCenter updated successfully', {
       sportCenterId: id,
       updatedBy: decodedUser.userId,
-      requestId: req.requestId
-    });
-
-    logger.dbOperation('findByIdAndUpdate', 'sportcenters', Date.now() - startTime, { 
       requestId: req.requestId,
-      sportCenterId: id,
-      success: true
     });
 
-    return ResponseHandler.success(res, {
-      ...updatedSportCenter.toObject(),
-      _id: updatedSportCenter._id.toString()
-    }, {
-      message: 'SportCenter atualizado com sucesso',
-      requestId: req.requestId
-    });
+    logger.dbOperation(
+      'findByIdAndUpdate',
+      'sportcenters',
+      Date.now() - startTime,
+      {
+        requestId: req.requestId,
+        sportCenterId: id,
+        success: true,
+      }
+    );
 
+    return ResponseHandler.success(
+      res,
+      {
+        ...updatedSportCenter.toObject(),
+        _id: updatedSportCenter._id.toString(),
+      },
+      {
+        message: 'SportCenter atualizado com sucesso',
+        requestId: req.requestId,
+      }
+    );
   } catch (error) {
     if (error instanceof Error && error.name === 'CastError') {
       throw new ValidationError('ID inválido');
     }
-    
+
     if (error instanceof Error && error.name === 'ValidationError') {
       throw new DatabaseError('Erro de validação dos dados', {
-        details: error.message
+        details: error.message,
       });
     }
 
-    logger.dbError('findByIdAndUpdate', 'sportcenters', error instanceof Error ? error.message : String(error), {
-      requestId: req.requestId,
-      sportCenterId: req.query.id as string
-    });
+    logger.dbError(
+      'findByIdAndUpdate',
+      'sportcenters',
+      error instanceof Error ? error.message : String(error),
+      {
+        requestId: req.requestId,
+        sportCenterId: req.query.id as string,
+      }
+    );
     throw error;
   }
 }
@@ -199,14 +226,16 @@ async function deleteSportCenter(req: ApiRequest, res: NextApiResponse) {
         userRole: user.role,
         sportCenterId: id,
         isOwner,
-        requestId: req.requestId
+        requestId: req.requestId,
       });
-      throw new AuthorizationError('Apenas o proprietário ou administrador podem excluir');
+      throw new AuthorizationError(
+        'Apenas o proprietário ou administrador podem excluir'
+      );
     }
 
-    logger.dbOperation('findByIdAndDelete', 'sportcenters', undefined, { 
+    logger.dbOperation('findByIdAndDelete', 'sportcenters', undefined, {
       requestId: req.requestId,
-      sportCenterId: id 
+      sportCenterId: id,
     });
 
     await SportCenter.findByIdAndDelete(id);
@@ -214,29 +243,38 @@ async function deleteSportCenter(req: ApiRequest, res: NextApiResponse) {
     logger.info('SportCenter deleted successfully', {
       sportCenterId: id,
       deletedBy: decodedUser.userId,
-      requestId: req.requestId
+      requestId: req.requestId,
     });
 
-    logger.dbOperation('findByIdAndDelete', 'sportcenters', Date.now() - startTime, { 
-      requestId: req.requestId,
-      sportCenterId: id,
-      success: true
-    });
+    logger.dbOperation(
+      'findByIdAndDelete',
+      'sportcenters',
+      Date.now() - startTime,
+      {
+        requestId: req.requestId,
+        sportCenterId: id,
+        success: true,
+      }
+    );
 
     return ResponseHandler.success(res, null, {
       message: 'SportCenter excluído com sucesso',
-      requestId: req.requestId
+      requestId: req.requestId,
     });
-
   } catch (error) {
     if (error instanceof Error && error.name === 'CastError') {
       throw new ValidationError('ID inválido');
     }
 
-    logger.dbError('findByIdAndDelete', 'sportcenters', error instanceof Error ? error.message : String(error), {
-      requestId: req.requestId,
-      sportCenterId: req.query.id as string
-    });
+    logger.dbError(
+      'findByIdAndDelete',
+      'sportcenters',
+      error instanceof Error ? error.message : String(error),
+      {
+        requestId: req.requestId,
+        sportCenterId: req.query.id as string,
+      }
+    );
     throw error;
   }
 }

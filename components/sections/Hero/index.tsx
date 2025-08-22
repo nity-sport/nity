@@ -1,6 +1,6 @@
 // components/sections/Hero.tsx
 import styles from './Hero.module.css';
-import Image from 'next/image';
+
 import HeroSearchBar from './HeroSearchBar';
 import { useEffect, useState } from 'react';
 

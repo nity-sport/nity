@@ -51,19 +51,26 @@ const ExperiencesAdminPage: React.FC = () => {
   const { user, canCreateExperiences, isLoading: authLoading } = useAuth();
   const [experiences, setExperiences] = useState<Experience[]>([]);
   const [loading, setLoading] = useState(true);
-  const [pagination, setPagination] = useState<ExperiencesResponse['pagination'] | null>(null);
+  const [pagination, setPagination] = useState<
+    ExperiencesResponse['pagination'] | null
+  >(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
-  const [visibilityFilter, setVisibilityFilter] = useState<'all' | 'public' | 'private' | 'draft'>('all');
+  const [visibilityFilter, setVisibilityFilter] = useState<
+    'all' | 'public' | 'private' | 'draft'
+  >('all');
   const [showCreateForm, setShowCreateForm] = useState(false);
-  const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
+  const [selectedExperience, setSelectedExperience] =
+    useState<Experience | null>(null);
   const [showEditForm, setShowEditForm] = useState(false);
   const [showDuplicateForm, setShowDuplicateForm] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!canCreateExperiences) {
-      setError('Acesso negado. Apenas usuários com permissão podem acessar esta página.');
+      setError(
+        'Acesso negado. Apenas usuários com permissão podem acessar esta página.'
+      );
       setLoading(false);
       return;
     }
@@ -74,18 +81,18 @@ const ExperiencesAdminPage: React.FC = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('auth_token');
-      
+
       const params = new URLSearchParams({
         page: currentPage.toString(),
         limit: '12',
         ...(searchTerm && { search: searchTerm }),
-        ...(visibilityFilter !== 'all' && { visibility: visibilityFilter })
+        ...(visibilityFilter !== 'all' && { visibility: visibilityFilter }),
       });
 
       const response = await fetch(`/api/experiences?${params}`, {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (!response.ok) {
@@ -95,7 +102,7 @@ const ExperiencesAdminPage: React.FC = () => {
       }
 
       const data: ExperiencesResponse = await response.json();
-      
+
       setExperiences(data.experiences || []);
       setPagination(data.pagination);
       setError(null);
@@ -114,16 +121,16 @@ const ExperiencesAdminPage: React.FC = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           ...experienceData,
           owner: {
             userId: user?.id,
             name: user?.name,
-            avatarUrl: user?.avatar
-          }
-        })
+            avatarUrl: user?.avatar,
+          },
+        }),
       });
 
       if (!response.ok) {
@@ -144,14 +151,17 @@ const ExperiencesAdminPage: React.FC = () => {
 
     try {
       const token = localStorage.getItem('auth_token');
-      const response = await fetch(`/api/experiences/${selectedExperience._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(experienceData)
-      });
+      const response = await fetch(
+        `/api/experiences/${selectedExperience._id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(experienceData),
+        }
+      );
 
       if (!response.ok) {
         const error = await response.json();
@@ -177,8 +187,8 @@ const ExperiencesAdminPage: React.FC = () => {
       const response = await fetch(`/api/experiences/${experienceId}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (!response.ok) {
@@ -194,7 +204,9 @@ const ExperiencesAdminPage: React.FC = () => {
   };
 
   const handleDuplicateExperience = (experienceId: string) => {
-    const experienceToDuplicate = experiences.find(exp => exp._id === experienceId);
+    const experienceToDuplicate = experiences.find(
+      exp => exp._id === experienceId
+    );
     if (experienceToDuplicate) {
       // Simplesmente passa a experiência original como initialData
       // O formulário se encarregará de duplicar os dados corretamente
@@ -205,21 +217,20 @@ const ExperiencesAdminPage: React.FC = () => {
     }
   };
 
-
   const getStatusDisplayName = (visibility: string): string => {
-    const statusNames = {
+    const statusNames: Record<string, string> = {
       public: 'Pública',
       private: 'Privada',
-      draft: 'Rascunho'
+      draft: 'Rascunho',
     };
     return statusNames[visibility] || visibility;
   };
 
   const getStatusClass = (visibility: string): string => {
-    const statusClasses = {
+    const statusClasses: Record<string, string> = {
       public: styles.statusPublic,
       private: styles.statusPrivate,
-      draft: styles.statusDraft
+      draft: styles.statusDraft,
     };
     return `${styles.experienceStatus} ${statusClasses[visibility]}`;
   };
@@ -227,7 +238,7 @@ const ExperiencesAdminPage: React.FC = () => {
   const formatPrice = (price: number): string => {
     return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
-      currency: 'BRL'
+      currency: 'BRL',
     }).format(price);
   };
 
@@ -264,10 +275,10 @@ const ExperiencesAdminPage: React.FC = () => {
 
       <div className={styles.filters}>
         <input
-          type="text"
-          placeholder="Buscar por título ou descrição..."
+          type='text'
+          placeholder='Buscar por título ou descrição...'
           value={searchTerm}
-          onChange={(e) => {
+          onChange={e => {
             setSearchTerm(e.target.value);
             setCurrentPage(1);
           }}
@@ -275,16 +286,18 @@ const ExperiencesAdminPage: React.FC = () => {
         />
         <select
           value={visibilityFilter}
-          onChange={(e) => {
-            setVisibilityFilter(e.target.value as 'all' | 'public' | 'private' | 'draft');
+          onChange={e => {
+            setVisibilityFilter(
+              e.target.value as 'all' | 'public' | 'private' | 'draft'
+            );
             setCurrentPage(1);
           }}
           className={styles.filterSelect}
         >
-          <option value="all">Todas as visibilidades</option>
-          <option value="public">Pública</option>
-          <option value="private">Privada</option>
-          <option value="draft">Rascunho</option>
+          <option value='all'>Todas as visibilidades</option>
+          <option value='public'>Pública</option>
+          <option value='private'>Privada</option>
+          <option value='draft'>Rascunho</option>
         </select>
       </div>
 
@@ -295,64 +308,75 @@ const ExperiencesAdminPage: React.FC = () => {
       ) : (
         <>
           <div className={styles.experiencesGrid}>
-            {experiences && Array.isArray(experiences) && experiences.map(experience => (
-              <div key={experience._id} className={styles.experienceCard}>
-                {experience.coverImage && (
-                  <img
-                    src={experience.coverImage}
-                    alt={experience.title}
-                    className={styles.experienceImage}
-                  />
-                )}
-                <div className={styles.experienceContent}>
-                  <h3 className={styles.experienceTitle}>{experience.title}</h3>
-                  <p className={styles.experienceDescription}>{experience.description}</p>
-                  
-                  <div className={styles.experienceDetails}>
-                    <span className={styles.experiencePrice}>
-                      {formatPrice(experience.price)}
-                    </span>
-                    <span className={styles.experienceQuantity}>
-                      {experience.availableQuantity} disponíveis
-                    </span>
-                  </div>
+            {experiences &&
+              Array.isArray(experiences) &&
+              experiences.map(experience => (
+                <div key={experience._id} className={styles.experienceCard}>
+                  {experience.coverImage && (
+                    <img
+                      src={experience.coverImage}
+                      alt={experience.title}
+                      className={styles.experienceImage}
+                    />
+                  )}
+                  <div className={styles.experienceContent}>
+                    <h3 className={styles.experienceTitle}>
+                      {experience.title}
+                    </h3>
+                    <p className={styles.experienceDescription}>
+                      {experience.description}
+                    </p>
 
-                  <span className={getStatusClass(experience.visibility)}>
-                    {getStatusDisplayName(experience.visibility)}
-                  </span>
+                    <div className={styles.experienceDetails}>
+                      <span className={styles.experiencePrice}>
+                        {formatPrice(experience.price)}
+                      </span>
+                      <span className={styles.experienceQuantity}>
+                        {experience.availableQuantity} disponíveis
+                      </span>
+                    </div>
 
-                  <div className={styles.experienceActions}>
-                    <button
-                      onClick={() => {
-                        setSelectedExperience(experience);
-                        setShowEditForm(true);
-                      }}
-                      className={styles.editButton}
-                    >
-                      Editar
-                    </button>
-                    <button
-                      onClick={() => handleDuplicateExperience(experience._id)}
-                      className={styles.duplicateButton}
-                    >
-                      Duplicar
-                    </button>
-                    <button
-                      onClick={() => handleDeleteExperience(experience._id)}
-                      className={styles.deleteButton}
-                    >
-                      Excluir
-                    </button>
+                    <span className={getStatusClass(experience.visibility)}>
+                      {getStatusDisplayName(experience.visibility)}
+                    </span>
+
+                    <div className={styles.experienceActions}>
+                      <button
+                        onClick={() => {
+                          setSelectedExperience(experience);
+                          setShowEditForm(true);
+                        }}
+                        className={styles.editButton}
+                      >
+                        Editar
+                      </button>
+                      <button
+                        onClick={() =>
+                          handleDuplicateExperience(experience._id)
+                        }
+                        className={styles.duplicateButton}
+                      >
+                        Duplicar
+                      </button>
+                      <button
+                        onClick={() => handleDeleteExperience(experience._id)}
+                        className={styles.deleteButton}
+                      >
+                        Excluir
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
 
           {(!experiences || experiences.length === 0) && !loading && (
             <div className={styles.errorMessage}>
               <h3>Nenhuma experiência encontrada</h3>
-              <p>Crie sua primeira experiência clicando no botão "Criar Experiência".</p>
+              <p>
+                Crie sua primeira experiência clicando no botão "Criar
+                Experiência".
+              </p>
             </div>
           )}
 
@@ -397,7 +421,7 @@ const ExperiencesAdminPage: React.FC = () => {
             </div>
             <ExperienceForm
               initialData={selectedExperience}
-              onSubmit={(data) => {
+              onSubmit={data => {
                 handleCreateExperience(data);
                 setShowDuplicateForm(false);
                 setSelectedExperience(null);

@@ -32,8 +32,8 @@
   width: 100%;
   max-width: 24rem;
   height: 3.75rem;
-  background: #F8F9FA;
-  border: 0.125rem dashed #E5E7EB;
+  background: #f8f9fa;
+  border: 0.125rem dashed #e5e7eb;
   border-radius: 0.5rem;
   display: flex;
   align-items: center;
@@ -45,14 +45,14 @@
 }
 
 .addAchievementButton:hover {
-  border-color: #3B82F6;
-  background: #EFF6FF;
+  border-color: #3b82f6;
+  background: #eff6ff;
 }
 
 .addAchievementIcon {
   font-size: 1.5rem;
   font-weight: 300;
-  color: #3B82F6;
+  color: #3b82f6;
 }
 
 .addAchievementText {
@@ -65,7 +65,7 @@
   width: 100%;
   max-width: 24rem;
   height: 3.75rem;
-  background: #CCE7FF;
+  background: #cce7ff;
   border-radius: 0.5rem;
   padding: 1rem;
   display: flex;
@@ -84,7 +84,7 @@
 .noAchievementsCheckbox {
   width: 1.25rem;
   height: 1.25rem;
-  border: 0.125rem solid #3B82F6;
+  border: 0.125rem solid #3b82f6;
   border-radius: 0.25rem;
   cursor: pointer;
 }
@@ -97,7 +97,7 @@
 
 .achievementsNote {
   font-size: 0.875rem;
-  color: #6B7280;
+  color: #6b7280;
   text-align: center;
   margin: 0;
   font-family: 'Montserrat', sans-serif;
@@ -117,9 +117,9 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
-  background: #F8F9FA;
+  background: #f8f9fa;
   border-radius: 0.5rem;
-  border: 0.0625rem solid #E5E7EB;
+  border: 0.0625rem solid #e5e7eb;
 }
 
 .achievementContent {
@@ -139,7 +139,7 @@
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   font-size: 0.875rem;
-  color: #6B7280;
+  color: #6b7280;
 }
 
 .achievementActions {
@@ -159,11 +159,11 @@
 }
 
 .editAchievementButton:hover {
-  background: #E5E7EB;
+  background: #e5e7eb;
 }
 
 .deleteAchievementButton:hover {
-  background: #FEE2E2;
+  background: #fee2e2;
 }
 
 /* Achievement Modals */
@@ -178,7 +178,6 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
-
 }
 
 .achievementModalContent {
@@ -205,7 +204,7 @@
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: #6B7280;
+  color: #6b7280;
   padding: 0.5rem;
   border-radius: 50%;
   width: 2rem;
@@ -216,7 +215,7 @@
 }
 
 .achievementModalCloseButton:hover {
-  background: #F3F4F6;
+  background: #f3f4f6;
 }
 
 .achievementModalIcon {
@@ -230,8 +229,8 @@
   width: 3.75rem;
   height: 3.75rem;
   border-radius: 50%;
-  background: #EFF6FF;
-  border: 0.125rem solid #BFDBFE;
+  background: #eff6ff;
+  border: 0.125rem solid #bfdbfe;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -268,7 +267,7 @@
 .achievementModalInput {
   width: 100%;
   padding: 0.75rem;
-  border: 0.0625rem solid #E5E7EB;
+  border: 0.0625rem solid #e5e7eb;
   border-radius: 0.5rem;
   font-size: 1rem;
   color: #374151;
@@ -279,15 +278,15 @@
 }
 
 .achievementModalInput:focus {
-  border-color: #3B82F6;
+  border-color: #3b82f6;
 }
 
 .achievementModalInput::placeholder {
-  color: #9CA3AF;
+  color: #9ca3af;
 }
 
 .achievementModalAddButton {
-  background: #3B82F6;
+  background: #3b82f6;
   border: none;
   color: white;
   padding: 0.75rem 1.5rem;
@@ -300,7 +299,7 @@
 }
 
 .achievementModalAddButton:hover {
-  background: #2563EB;
+  background: #2563eb;
 }
 
 .achievementModalTitle {
@@ -321,7 +320,7 @@
 
 .achievementModalCancelButton {
   background: white;
-  border: 0.0625rem solid #E5E7EB;
+  border: 0.0625rem solid #e5e7eb;
   color: #374151;
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
@@ -332,12 +331,12 @@
 }
 
 .achievementModalCancelButton:hover {
-  background: #F3F4F6;
-  border-color: #D1D5DB;
+  background: #f3f4f6;
+  border-color: #d1d5db;
 }
 
 .achievementModalConfirmButton {
-  background: #DC2626;
+  background: #dc2626;
   border: none;
   color: white;
   padding: 0.75rem 1.5rem;
@@ -349,11 +348,11 @@
 }
 
 .achievementModalConfirmButton:hover {
-  background: #B91C1C;
+  background: #b91c1c;
 }
 
 .errorMessage {
-  color: #DC2626;
+  color: #dc2626;
   font-size: 0.875rem;
   margin-top: 0.5rem;
   text-align: center;

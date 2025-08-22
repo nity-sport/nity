@@ -1,8 +1,8 @@
-import jwt, { JwtPayload, SignOptions } from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
+// const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
 
 export const hashPassword = async (password: string): Promise<string> => {
   const saltRounds = 12;
@@ -26,7 +26,7 @@ export const verifyToken = (token: string): { userId: string } | null => {
       userId: string;
     };
     return decoded;
-  } catch (error) {
+  } catch (_) {
     return null;
   }
 };

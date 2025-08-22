@@ -1,7 +1,7 @@
 import { NextApiResponse } from 'next';
 import mongoose from 'mongoose';
 import Coupon from '../../../src/models/Coupon';
-import Team from '../../../src/models/Team';
+
 import dbConnect from '../../../src/lib/dbConnect';
 import {
   AuthenticatedRequest,
@@ -75,8 +75,8 @@ const handleGetCoupon = async (
         avatar: coupon.createdBy.avatar,
       },
       uses: coupon.uses,
-      usedBy: coupon.usedBy.map(user => user._id.toString()),
-      users: coupon.usedBy.map(user => ({
+      usedBy: coupon.usedBy.map((user: any) => user._id.toString()),
+      users: coupon.usedBy.map((user: any) => ({
         id: user._id.toString(),
         name: user.name,
         email: user.email,

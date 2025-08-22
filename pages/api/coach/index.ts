@@ -2,7 +2,6 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import dbConnect from '../../../src/lib/dbConnect';
 import Coach from '../../../src/models/Coach';
 import { authenticateToken } from '../../../src/lib/auth-middleware';
-import User from '../../../src/models/User';
 
 export default async function handler(
   req: NextApiRequest,
@@ -14,12 +13,7 @@ export default async function handler(
     case 'GET':
       try {
         // GET requests can be public or authenticated
-        const {
-          page = '1',
-          limit = '10',
-          search = '',
-          public: isPublic,
-        } = req.query;
+        const { page = '1', limit = '10', search = '', public: _ } = req.query;
 
         const pageNum = parseInt(page as string, 10);
         const limitNum = parseInt(limit as string, 10);

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
+
 import { useAuth } from '../../src/contexts/AuthContext';
 import { CoachType } from '../../src/types/coach';
 import styles from './coaches.module.css';

@@ -21,7 +21,7 @@ export const authenticate = async (
   next: () => void
 ) => {
   try {
-    logger.debug('Starting authentication for:', req.method, req.url);
+    logger.debug('Starting authentication for:', { method: req.method, url: req.url });
 
     const token = req.headers.authorization?.replace('Bearer ', '');
 
@@ -154,7 +154,7 @@ export const authenticateToken = async (
       name: user.name,
       role: user.role,
     };
-  } catch (error) {
+  } catch (_) {
     res.status(401).json({ message: 'Invalid token' });
     return null;
   }
@@ -188,8 +188,8 @@ export const createApiHandler = (
 
     try {
       await runMiddleware();
-    } catch (error) {
-      console.error('Middleware or handler error:', error);
+    } catch (_) {
+      console.error('Middleware or handler error:', _);
       if (!res.headersSent) {
         res.status(500).json({ message: 'Internal server error' });
       }
@@ -203,8 +203,8 @@ export const isScout = async (userId: string): Promise<boolean> => {
     await dbConnect();
     const user = await User.findById(userId).select('role');
     return user && user.role === UserRole.SCOUT;
-  } catch (error) {
-    console.error('Error checking scout status:', error);
+  } catch (_) {
+    console.error('Error checking scout status:', _);
     return false;
   }
 };
@@ -258,8 +258,8 @@ export const requireTeamScout = (teamIdParam: string = 'id') => {
       }
 
       next();
-    } catch (error) {
-      console.error('Error checking team scout permission:', error);
+    } catch (_) {
+      console.error('Error checking team scout permission:', _);
       return res.status(500).json({ message: 'Internal server error' });
     }
   };
@@ -296,8 +296,8 @@ export const requireCouponCreator = (couponIdParam: string = 'id') => {
       }
 
       next();
-    } catch (error) {
-      console.error('Error checking coupon creator permission:', error);
+    } catch (_) {
+      console.error('Error checking coupon creator permission:', _);
       return res.status(500).json({ message: 'Internal server error' });
     }
   };

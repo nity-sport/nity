@@ -28,8 +28,8 @@ async function dbConnect(): Promise<typeof mongoose> {
 
   try {
     logger.debug('dbConnect called');
-    logger.debug('MONGODB_URI exists:', !!MONGODB_URI);
-    logger.debug('Cached connection exists:', !!cached.conn);
+    logger.debug('MONGODB_URI exists:', { exists: !!MONGODB_URI });
+    logger.debug('Cached connection exists:', { exists: !!cached.conn });
 
     if (cached.conn) {
       logger.debug('Using cached connection');
@@ -46,7 +46,7 @@ async function dbConnect(): Promise<typeof mongoose> {
     logger.debug('Waiting for connection...');
     cached.conn = await cached.promise;
     logger.info('Database connected successfully');
-    logger.debug('Connection state:', mongoose.connection.readyState);
+    logger.debug('Connection state:', { state: mongoose.connection.readyState });
 
     return cached.conn;
   } catch (error) {

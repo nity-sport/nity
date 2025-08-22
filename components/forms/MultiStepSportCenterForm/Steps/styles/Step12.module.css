@@ -45,7 +45,7 @@
   justify-content: center;
   gap: 0.5rem;
   padding: 0.75rem 1rem;
-  border: 0.0625rem solid #E5E7EB;
+  border: 0.0625rem solid #e5e7eb;
   border-radius: 0.5rem;
   background: white;
   color: #374151;
@@ -59,8 +59,8 @@
 }
 
 .socialButton:hover {
-  border-color: #D1D5DB;
-  background: #F9FAFB;
+  border-color: #d1d5db;
+  background: #f9fafb;
 }
 
 .socialIcon {
@@ -82,14 +82,14 @@
   left: 0;
   right: 0;
   height: 0.0625rem;
-  background: #E5E7EB;
+  background: #e5e7eb;
   z-index: 1;
 }
 
 .separator span {
   background: white;
   padding: 0 1rem;
-  color: #6B7280;
+  color: #6b7280;
   font-family: 'Montserrat', sans-serif;
   font-size: 0.875rem;
   position: relative;
@@ -97,9 +97,9 @@
 }
 
 .errorMessage {
-  background: #FEF2F2;
-  border: 0.0625rem solid #FECACA;
-  color: #B91C1C;
+  background: #fef2f2;
+  border: 0.0625rem solid #fecaca;
+  color: #b91c1c;
   padding: 0.75rem 1rem;
   border-radius: 0.5rem;
   width: 100%;
@@ -137,7 +137,7 @@
 
 .accountInput {
   padding: 0.75rem 1rem;
-  border: 0.0625rem solid #E5E7EB;
+  border: 0.0625rem solid #e5e7eb;
   border-radius: 0.5rem;
   font-family: 'Montserrat', sans-serif;
   font-size: 1rem;
@@ -148,10 +148,10 @@
 
 .accountInput:focus {
   outline: none;
-  border-color: #3B82F6;
+  border-color: #3b82f6;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .accountInput::placeholder {
-  color: #9CA3AF;
+  color: #9ca3af;
 }

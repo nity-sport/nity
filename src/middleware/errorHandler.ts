@@ -35,8 +35,8 @@ export function withErrorHandler(handler: ApiHandler) {
       method: req.method,
       url: req.url,
       userAgent: req.headers['user-agent'],
-      ip: req.ip || req.connection?.remoteAddress,
-      requestId
+      ip: (req as any).ip || req.connection?.remoteAddress,
+      requestId,
     });
 
     try {
@@ -47,7 +47,7 @@ export function withErrorHandler(handler: ApiHandler) {
         url: req.url,
         error: error instanceof Error ? error.message : String(error),
         stack: error instanceof Error ? error.stack : undefined,
-        requestId
+        requestId,
       });
 
       ResponseHandler.error(res, error as Error, requestId);
@@ -58,15 +58,15 @@ export function withErrorHandler(handler: ApiHandler) {
 /**
  * Validation middleware factory
  */
-export function withValidation<T = any>(
+export function withValidation<T>(
   schema: any,
   target: 'body' | 'query' | 'params' = 'body'
 ) {
   return function (handler: ApiHandler): ApiHandler {
     return withErrorHandler(async (req: ApiRequest, res: NextApiResponse) => {
       try {
-        const data = req[target];
-        
+        const data = (req as any)[target];
+
         // Validate using the provided schema (works with Joi, Zod, etc.)
         if (schema.validate) {
           // Joi validation
@@ -78,10 +78,10 @@ export function withValidation<T = any>(
               req.requestId
             );
           }
-          req[target] = value;
+          (req as any)[target] = value;
         } else if (schema.parse) {
           // Zod validation
-          req[target] = schema.parse(data);
+          (req as any)[target] = schema.parse(data);
         }
 
         await handler(req, res);
@@ -108,7 +108,7 @@ export function withRateLimit(options: RateLimitOptions) {
 
   return function (handler: ApiHandler): ApiHandler {
     return withErrorHandler(async (req: ApiRequest, res: NextApiResponse) => {
-      const identifier = req.ip || req.connection?.remoteAddress || 'unknown';
+      const identifier = (req as any).ip || req.connection?.remoteAddress || 'unknown';
       const now = Date.now();
       const windowStart = now - windowMs;
 
@@ -120,18 +120,17 @@ export function withRateLimit(options: RateLimitOptions) {
       }
 
       // Get current count for this identifier
-      const current = rateLimitStore.get(identifier) || { count: 0, resetTime: now + windowMs };
+      const current = rateLimitStore.get(identifier) || {
+        count: 0,
+        resetTime: now + windowMs,
+      };
 
       if (current.count >= max) {
         res.setHeader('X-RateLimit-Limit', max);
         res.setHeader('X-RateLimit-Remaining', 0);
-        res.setHeader('X-RateLimit-Reset', new Date(current.resetTime));
+        res.setHeader('X-RateLimit-Reset', current.resetTime.toString());
 
-        return ResponseHandler.error(
-          res,
-          new Error(message),
-          req.requestId
-        );
+        return ResponseHandler.error(res, new Error(message), req.requestId);
       }
 
       // Increment counter
@@ -141,7 +140,7 @@ export function withRateLimit(options: RateLimitOptions) {
       // Set rate limit headers
       res.setHeader('X-RateLimit-Limit', max);
       res.setHeader('X-RateLimit-Remaining', Math.max(0, max - current.count));
-      res.setHeader('X-RateLimit-Reset', new Date(current.resetTime));
+      res.setHeader('X-RateLimit-Reset', current.resetTime.toString());
 
       await handler(req, res);
     });
@@ -187,7 +186,7 @@ export function withCors(options: CorsOptions = {}) {
     allowedHeaders = ['Content-Type', 'Authorization'],
     exposedHeaders = ['X-Request-ID'],
     credentials = false,
-    maxAge = 86400
+    maxAge = 86400,
   } = options;
 
   return function (handler: ApiHandler): ApiHandler {
@@ -227,8 +226,13 @@ export function withCors(options: CorsOptions = {}) {
 /**
  * Compose multiple middleware functions
  */
-export function compose(...middlewares: Array<(handler: ApiHandler) => ApiHandler>) {
+export function compose(
+  ...middlewares: Array<(handler: ApiHandler) => ApiHandler>
+) {
   return function (handler: ApiHandler): ApiHandler {
-    return middlewares.reduceRight((acc, middleware) => middleware(acc), handler);
+    return middlewares.reduceRight(
+      (acc, middleware) => middleware(acc),
+      handler
+    );
   };
 }

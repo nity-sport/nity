@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useMultiStepForm } from '../MultiStepFormProvider';
-import baseStyles from './styles/BaseStep.module.css';
+
 import styles from './styles/Step10.module.css';
 
 function Step10A_DormitoryQuestion() {

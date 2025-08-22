@@ -1,120 +1,123 @@
 :root {
-    /* Color Palette */
-    --color-primary-dark: #023E8C;
-    --color-primary-light: #379AD8;
-    --color-background: #F8F9FA;
-    --color-surface: #FFFFFF;
-    --color-surface-dark: #212529;
-    --color-surface-mid: #495057;
-    --color-muted: #ADB5BD;
-    --color-border: #CED4DA;
-    --color-border-light: #DEE2E6;
-    --color-error: #BC271B;
-    --color-success: #0C6600;
-    --color-success-light: #EDFFEB80;
-    --color-warning: #6EB8FE;
-    --color-overlay: #FFFFFFB2;
-    --color-text-dark: #1C1B1F;
-    --color-text-muted: #E2E2E2;
-    --color-blue-deep: #010061;
-    --color-blue-mid: #0C3B66;
-    --color-blue: #3582cb;
-    --color-blue-accent: #55A2EB;
-    --color-blue-light: #B9DDFF;
-    --color-background-secondary: #EBF5FF;
-    --color-surface-alt: #343A40;
-  
-    /* Gradients */
-    --gradient-primary: linear-gradient(109.09deg, #023E8C 6.19%, #379AD8 117.18%);
-    --gradient-horizontal: linear-gradient(90deg, #023E8C 0%, #379AD8 100%);
-  
-    /* Fonts */
-    --font-primary: 'Montserrat', sans-serif;
-    --font-display: 'Ultra System', 'Inter', sans-serif;
-  
-    /* Typography Sizes */
-    --text-base: 1rem;
-    --text-sm: 0.875rem;
-    --text-lg: 1.125rem;
-    --text-xl: 1.75rem;
-    --text-display-lg: 3.75rem;
-    --text-display-md: 2.5rem;
-  
-    /* Line Heights */
-    --line-base: 140%;
-    --line-display-lg: 4.5rem;
-    --line-display-md: 3rem;
-  
-    /* Font Weights */
-    --font-weight-regular: 400;
-    --font-weight-medium: 500;
-    --font-weight-bold: 700;
-    
-    /* Breakpoints */
-    --breakpoint-sm: 36rem;
-    --breakpoint-md: 48rem;
-    --breakpoint-lg: 62rem;
-    --breakpoint-xl: 75rem;
-    
-    /* Spacing */
-    --spacing-xs: 0.25rem;
-    --spacing-sm: 0.5rem;
-    --spacing-md: 1rem;
-    --spacing-lg: 1.5rem;
-    --spacing-xl: 2rem;
-    --spacing-xxl: 3rem;
-    
-    /* Container widths */
-    --container-sm: 33.75rem;
-    --container-md: 45rem;
-    --container-lg: 60rem;
-    --container-xl: 71.25rem;
+  /* Color Palette */
+  --color-primary-dark: #023e8c;
+  --color-primary-light: #379ad8;
+  --color-background: #f8f9fa;
+  --color-surface: #ffffff;
+  --color-surface-dark: #212529;
+  --color-surface-mid: #495057;
+  --color-muted: #adb5bd;
+  --color-border: #ced4da;
+  --color-border-light: #dee2e6;
+  --color-error: #bc271b;
+  --color-success: #0c6600;
+  --color-success-light: #edffeb80;
+  --color-warning: #6eb8fe;
+  --color-overlay: #ffffffb2;
+  --color-text-dark: #1c1b1f;
+  --color-text-muted: #e2e2e2;
+  --color-blue-deep: #010061;
+  --color-blue-mid: #0c3b66;
+  --color-blue: #3582cb;
+  --color-blue-accent: #55a2eb;
+  --color-blue-light: #b9ddff;
+  --color-background-secondary: #ebf5ff;
+  --color-surface-alt: #343a40;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(
+    109.09deg,
+    #023e8c 6.19%,
+    #379ad8 117.18%
+  );
+  --gradient-horizontal: linear-gradient(90deg, #023e8c 0%, #379ad8 100%);
+
+  /* Fonts */
+  --font-primary: 'Montserrat', sans-serif;
+  --font-display: 'Ultra System', 'Inter', sans-serif;
+
+  /* Typography Sizes */
+  --text-base: 1rem;
+  --text-sm: 0.875rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.75rem;
+  --text-display-lg: 3.75rem;
+  --text-display-md: 2.5rem;
+
+  /* Line Heights */
+  --line-base: 140%;
+  --line-display-lg: 4.5rem;
+  --line-display-md: 3rem;
+
+  /* Font Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /* Breakpoints */
+  --breakpoint-sm: 36rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 62rem;
+  --breakpoint-xl: 75rem;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-xxl: 3rem;
+
+  /* Container widths */
+  --container-sm: 33.75rem;
+  --container-md: 45rem;
+  --container-lg: 60rem;
+  --container-xl: 71.25rem;
+}
+
+/* Responsive Typography */
+@media (max-width: 48rem) {
+  :root {
+    --text-display-lg: 2.625rem;
+    --text-display-md: 2rem;
+    --text-xl: 1.375rem;
+    --line-display-lg: 3.125rem;
+    --line-display-md: 2.375rem;
   }
-  
-  /* Responsive Typography */
-  @media (max-width: 48rem) {
-    :root {
-      --text-display-lg: 2.625rem;
-      --text-display-md: 2rem;
-      --text-xl: 1.375rem;
-      --line-display-lg: 3.125rem;
-      --line-display-md: 2.375rem;
-    }
+}
+
+@media (max-width: 36rem) {
+  :root {
+    --text-display-lg: 2rem;
+    --text-display-md: 1.5rem;
+    --text-xl: 1.25rem;
+    --text-lg: 1rem;
+    --line-display-lg: 2.5rem;
+    --line-display-md: 2rem;
   }
-  
-  @media (max-width: 36rem) {
-    :root {
-      --text-display-lg: 2rem;
-      --text-display-md: 1.5rem;
-      --text-xl: 1.25rem;
-      --text-lg: 1rem;
-      --line-display-lg: 2.5rem;
-      --line-display-md: 2rem;
-    }
-  }
-  
-  body {
-    margin: 0;
-    font-family: var(--font-primary);
-    font-size: var(--text-base);
-    background-color: var(--color-background);
-    color: var(--color-text-dark);
-    line-height: var(--line-base);
-  }
-  
-  /* Utility example */
-  .button-primary {
-    background: var(--gradient-primary);
-    color: #fff;
-    font-weight: var(--font-weight-bold);
-    border: none;
-    border-radius: 0.25rem;
-    padding: 0.75rem 1.5rem;
-    cursor: pointer;
-    transition: background 0.3s ease-in-out;
-  }
-  
-  .button-primary:hover {
-    background: var(--gradient-horizontal);
-  }
-  
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
+  background-color: var(--color-background);
+  color: var(--color-text-dark);
+  line-height: var(--line-base);
+}
+
+/* Utility example */
+.button-primary {
+  background: var(--gradient-primary);
+  color: #fff;
+  font-weight: var(--font-weight-bold);
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.button-primary:hover {
+  background: var(--gradient-horizontal);
+}

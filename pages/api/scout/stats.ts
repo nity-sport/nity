@@ -1,6 +1,6 @@
 import { NextApiResponse } from 'next';
 import User from '../../../src/models/User';
-import { UserRole } from '../../../src/types/auth';
+
 import dbConnect from '../../../src/lib/dbConnect';
 import {
   AuthenticatedRequest,

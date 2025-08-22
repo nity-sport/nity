@@ -4,6 +4,12 @@ import { ExperienceType } from '../../../src/types/experience'; // Ajuste o cami
 import ExperienceCard from '../../cards/ExperienceCard';
 import styles from './ExperiencesSection.module.css';
 
+// Ensure DOM types are available
+declare var HTMLDivElement: {
+  prototype: HTMLDivElement;
+  new(): HTMLDivElement;
+};
+
 interface ExperiencesSectionProps {
   title?: string;
   filter?: 'tour' | 'event'; // Opcional para filtrar por categoria
@@ -16,7 +22,7 @@ const ExperiencesSection: React.FC<ExperiencesSectionProps> = ({
   const [experiences, setExperiences] = useState<ExperienceType[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const carouselRef = useRef<HTMLDivElement | null>(null);
   // Drag & Touch Handlers (copiado da sua SportsSection)
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);

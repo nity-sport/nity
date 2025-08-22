@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useMultiStepForm } from '../MultiStepFormProvider';
-import baseStyles from './styles/BaseStep.module.css';
+
 import styles from './styles/Step10C.module.css';
 
 interface PhotoItem {
@@ -11,19 +11,25 @@ interface PhotoItem {
 }
 
 export function Step10C_DormitoryPhotos() {
-  const { state, dispatch } = useMultiStepForm();
+  const { dispatch } = useMultiStepForm();
   const [photos, setPhotos] = useState<PhotoItem[]>([]);
   const [draggedItem, setDraggedItem] = useState<string | null>(null);
   const [showDeleteModal, setShowDeleteModal] = useState<string | null>(null);
-  const [touchStartPos, setTouchStartPos] = useState<{ x: number; y: number } | null>(null);
+  const [touchStartPos, setTouchStartPos] = useState<{
+    x: number;
+    y: number;
+  } | null>(null);
   const [touchDragItem, setTouchDragItem] = useState<string | null>(null);
-  const [touchOffset, setTouchOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [touchOffset, setTouchOffset] = useState<{ x: number; y: number }>({
+    x: 0,
+    y: 0,
+  });
 
   const updateValidation = () => {
     // Dormitory photos are optional - always valid
     dispatch({
       type: 'SET_STEP_VALID',
-      payload: { stepIndex: 11, isValid: true }
+      payload: { stepIndex: 11, isValid: true },
     });
   };
 
@@ -36,10 +42,10 @@ export function Step10C_DormitoryPhotos() {
     const files = e.target.files;
     if (files) {
       const newPhotos: PhotoItem[] = [];
-      
+
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        
+
         // Validate file size (5MB max)
         if (file.size > 5 * 1024 * 1024) {
           alert('Arquivo muito grande. Limite de 5MB por foto.');
@@ -47,33 +53,38 @@ export function Step10C_DormitoryPhotos() {
         }
 
         // Validate file type
-        const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'];
+        const allowedTypes = [
+          'image/jpeg',
+          'image/png',
+          'image/webp',
+          'image/avif',
+        ];
         if (!allowedTypes.includes(file.type)) {
           alert('Formato não suportado. Use JPEG, PNG, WEBP ou AVIF.');
           continue;
         }
-        
+
         const id = `dormitory-photo-${Date.now()}-${i}`;
         const url = URL.createObjectURL(file);
-        
+
         newPhotos.push({
           id,
           file,
           url,
-          isMain: photos.length === 0 && i === 0
+          isMain: photos.length === 0 && i === 0,
         });
       }
-      
+
       const updatedPhotos = [...photos, ...newPhotos];
       setPhotos(updatedPhotos);
       dispatch({
         type: 'UPDATE_FORM_DATA',
         payload: {
-          dormitoryPhotos: updatedPhotos.map(p => p.file)
-        }
+          dormitoryPhotos: updatedPhotos.map(p => p.file),
+        },
       });
     }
-    
+
     // Reset input
     e.target.value = '';
   };
@@ -90,28 +101,29 @@ export function Step10C_DormitoryPhotos() {
 
   const handleDrop = (e: React.DragEvent, targetIndex: number) => {
     e.preventDefault();
-    
-    if (draggedItem && targetIndex > 0) { // Can't drop on position 0 (upload slot)
+
+    if (draggedItem && targetIndex > 0) {
+      // Can't drop on position 0 (upload slot)
       const draggedIndex = photos.findIndex(p => p.id === draggedItem);
       const actualTargetIndex = targetIndex - 1; // Adjust for upload slot
-      
+
       if (draggedIndex !== -1 && draggedIndex !== actualTargetIndex) {
         const newPhotos = [...photos];
         const draggedPhoto = newPhotos[draggedIndex];
-        
+
         newPhotos.splice(draggedIndex, 1);
         newPhotos.splice(actualTargetIndex, 0, draggedPhoto);
-        
+
         setPhotos(newPhotos);
         dispatch({
           type: 'UPDATE_FORM_DATA',
           payload: {
-            dormitoryPhotos: newPhotos.map(p => p.file)
-          }
+            dormitoryPhotos: newPhotos.map(p => p.file),
+          },
         });
       }
     }
-    
+
     setDraggedItem(null);
   };
 
@@ -121,76 +133,82 @@ export function Step10C_DormitoryPhotos() {
     setTouchStartPos({ x: touch.clientX, y: touch.clientY });
     setTouchDragItem(photoId);
     setDraggedItem(photoId);
-    
+
     // Add visual feedback immediately
     const element = e.currentTarget as HTMLElement;
     element.style.zIndex = '1000';
     element.style.transition = 'none';
-    
-    };
+  };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!touchDragItem || !touchStartPos) return;
-    
+
     const touch = e.touches[0];
     const newOffset = {
       x: touch.clientX - touchStartPos.x,
-      y: touch.clientY - touchStartPos.y
+      y: touch.clientY - touchStartPos.y,
     };
-    
+
     setTouchOffset(newOffset);
-    
-    };
+  };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (!touchDragItem) return;
-    
+
     // Find the element under the touch point
     const touch = e.changedTouches[0];
-    
+
     // Temporarily hide the dragged element to get element below
     const draggedElement = e.currentTarget as HTMLElement;
     const originalDisplay = draggedElement.style.display;
     draggedElement.style.display = 'none';
-    
-    const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
-    
+
+    const elementBelow = document.elementFromPoint(
+      touch.clientX,
+      touch.clientY
+    );
+
     // Restore the dragged element
     draggedElement.style.display = originalDisplay;
-    
+
     if (elementBelow) {
       // Find the photo slot that was touched
-      const photoSlot = elementBelow.closest('[data-slot-index]') as HTMLElement;
+      const photoSlot = elementBelow.closest(
+        '[data-slot-index]'
+      ) as HTMLElement;
       if (photoSlot) {
-        const targetIndex = parseInt(photoSlot.getAttribute('data-slot-index') || '0');
-        if (targetIndex > 0) { // Can't drop on position 0 (upload slot)
+        const targetIndex = parseInt(
+          photoSlot.getAttribute('data-slot-index') || '0'
+        );
+        if (targetIndex > 0) {
+          // Can't drop on position 0 (upload slot)
           const draggedIndex = photos.findIndex(p => p.id === touchDragItem);
           const actualTargetIndex = targetIndex - 1; // Adjust for upload slot
-          
+
           if (draggedIndex !== -1 && draggedIndex !== actualTargetIndex) {
             const newPhotos = [...photos];
             const draggedPhoto = newPhotos[draggedIndex];
-            
+
             newPhotos.splice(draggedIndex, 1);
             newPhotos.splice(actualTargetIndex, 0, draggedPhoto);
-            
+
             setPhotos(newPhotos);
             dispatch({
               type: 'UPDATE_FORM_DATA',
               payload: {
-                dormitoryPhotos: newPhotos.map(p => p.file)
-              }
+                dormitoryPhotos: newPhotos.map(p => p.file),
+              },
             });
           }
         }
       }
     }
-    
+
     // Reset visual state
     const element = e.currentTarget as HTMLElement;
     element.style.zIndex = '';
     element.style.transition = '';
-    
+
     // Reset touch state
     setTouchDragItem(null);
     setDraggedItem(null);
@@ -204,8 +222,8 @@ export function Step10C_DormitoryPhotos() {
     dispatch({
       type: 'UPDATE_FORM_DATA',
       payload: {
-        dormitoryPhotos: updatedPhotos.map(p => p.file)
-      }
+        dormitoryPhotos: updatedPhotos.map(p => p.file),
+      },
     });
     setShowDeleteModal(null);
   };
@@ -213,7 +231,7 @@ export function Step10C_DormitoryPhotos() {
   const handleSetMainPhoto = (photoId: string) => {
     const updatedPhotos = photos.map(photo => ({
       ...photo,
-      isMain: photo.id === photoId
+      isMain: photo.id === photoId,
     }));
     setPhotos(updatedPhotos);
   };
@@ -221,35 +239,45 @@ export function Step10C_DormitoryPhotos() {
   // Render 6 slots (first slot always upload, next 5 for photos)
   const renderPhotoSlots = () => {
     const slots = [];
-    
+
     // First slot: always upload
     slots.push(
-      <div key="upload" className={`${styles.photoSlot} ${styles.firstSlot}`}>
+      <div key='upload' className={`${styles.photoSlot} ${styles.firstSlot}`}>
         <input
-          type="file"
-          id="dormitory-photo-upload"
-          accept="image/*"
+          type='file'
+          id='dormitory-photo-upload'
+          accept='image/*'
           multiple
           onChange={handlePhotoUpload}
           className={styles.fileInput}
         />
-        <label htmlFor="dormitory-photo-upload" className={styles.photoUploadButton}>
-          <img src="/assets/add_2.png" alt="Adicionar foto" className={`${styles.uploadIcon} ${styles.firstSlotIcon}`} />
+        <label
+          htmlFor='dormitory-photo-upload'
+          className={styles.photoUploadButton}
+        >
+          <img
+            src='/assets/add_2.png'
+            alt='Adicionar foto'
+            className={`${styles.uploadIcon} ${styles.firstSlotIcon}`}
+          />
         </label>
       </div>
     );
-    
+
     // Next 5 slots: for photos
     for (let i = 1; i < 6; i++) {
       const photo = photos[i - 1]; // Adjust index for photos array
-      
+
       if (photo) {
         const isDragging = draggedItem === photo.id;
-        const dragStyle = isDragging && touchDragItem === photo.id ? {
-          transform: `translate(${touchOffset.x}px, ${touchOffset.y}px)`,
-          zIndex: 1000
-        } : {};
-        
+        const dragStyle =
+          isDragging && touchDragItem === photo.id
+            ? {
+                transform: `translate(${touchOffset.x}px, ${touchOffset.y}px)`,
+                zIndex: 1000,
+              }
+            : {};
+
         slots.push(
           <div
             key={photo.id}
@@ -257,32 +285,37 @@ export function Step10C_DormitoryPhotos() {
             style={dragStyle}
             data-slot-index={i}
             draggable
-            onDragStart={(e) => handleDragStart(e, photo.id)}
+            onDragStart={e => handleDragStart(e, photo.id)}
             onDragOver={handleDragOver}
-            onDrop={(e) => handleDrop(e, i)}
-            onTouchStart={(e) => {
+            onDrop={e => handleDrop(e, i)}
+            onTouchStart={e => {
               // Only handle touch if not touching action buttons
               const target = e.target as HTMLElement;
-              if (!target.closest(`.${styles.photoActions}`) && !target.closest('button')) {
+              if (
+                !target.closest(`.${styles.photoActions}`) &&
+                !target.closest('button')
+              ) {
                 e.preventDefault();
                 handleTouchStart(e, photo.id);
               }
             }}
-            onTouchMove={(e) => {
+            onTouchMove={e => {
               if (touchDragItem === photo.id) {
                 handleTouchMove(e);
               }
             }}
-            onTouchEnd={(e) => {
+            onTouchEnd={e => {
               if (touchDragItem === photo.id) {
                 handleTouchEnd(e);
               }
             }}
           >
-            <img src={photo.url} alt="Dormitório" className={styles.photoImage} />
-            {photo.isMain && (
-              <div className={styles.mainBadge}>Main</div>
-            )}
+            <img
+              src={photo.url}
+              alt='Dormitório'
+              className={styles.photoImage}
+            />
+            {photo.isMain && <div className={styles.mainBadge}>Main</div>}
             <div className={styles.photoActions}>
               {!photo.isMain && (
                 <button
@@ -308,14 +341,18 @@ export function Step10C_DormitoryPhotos() {
             className={`${styles.photoSlot} ${styles.emptySlot}`}
             data-slot-index={i}
             onDragOver={handleDragOver}
-            onDrop={(e) => handleDrop(e, i)}
+            onDrop={e => handleDrop(e, i)}
           >
-            <img src="/assets/add_2_gray.png" alt="Slot vazio" className={`${styles.uploadIcon} ${styles.secondSlotIcon}`} />
+            <img
+              src='/assets/add_2_gray.png'
+              alt='Slot vazio'
+              className={`${styles.uploadIcon} ${styles.secondSlotIcon}`}
+            />
           </div>
         );
       }
     }
-    
+
     return slots;
   };
 
@@ -323,15 +360,19 @@ export function Step10C_DormitoryPhotos() {
     <div className={styles.stepContainer}>
       <div className={styles.photosSection}>
         <label className={styles.photosLabel}>Confira a ordem das fotos</label>
-        <div className={styles.photosGrid}>
-          {renderPhotoSlots()}
-        </div>
+        <div className={styles.photosGrid}>{renderPhotoSlots()}</div>
       </div>
 
       {showDeleteModal && (
-        <div className={styles.deleteModal} onClick={() => setShowDeleteModal(null)}>
-          <div className={styles.deleteModalContent} onClick={(e) => e.stopPropagation()}>
-            <button 
+        <div
+          className={styles.deleteModal}
+          onClick={() => setShowDeleteModal(null)}
+        >
+          <div
+            className={styles.deleteModalContent}
+            onClick={e => e.stopPropagation()}
+          >
+            <button
               className={styles.deleteModalCloseButton}
               onClick={() => setShowDeleteModal(null)}
             >
@@ -340,15 +381,17 @@ export function Step10C_DormitoryPhotos() {
             <div className={styles.deleteModalIcon}>
               <div className={styles.deleteModalIconCircle}>!</div>
             </div>
-            <h3 className={styles.deleteModalTitle}>Tem certeza que deseja excluir a imagem?</h3>
+            <h3 className={styles.deleteModalTitle}>
+              Tem certeza que deseja excluir a imagem?
+            </h3>
             <div className={styles.deleteModalActions}>
-              <button 
+              <button
                 className={styles.deleteModalCancelButton}
                 onClick={() => setShowDeleteModal(null)}
               >
                 Não, cancelar
               </button>
-              <button 
+              <button
                 className={styles.deleteModalConfirmButton}
                 onClick={() => handleDeletePhoto(showDeleteModal)}
               >

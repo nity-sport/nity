@@ -1,4 +1,3 @@
-
 .header {
   position: fixed;
   top: 0;
@@ -40,7 +39,7 @@
 
 .nav a,
 .navLink {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   font-size: 1rem;
   line-height: 140%;
@@ -115,14 +114,13 @@
     align-items: center;
     justify-content: space-between;
   }
-  
+
   .signup {
     font-size: 0.875rem;
     padding: 0.5rem 0.75rem;
     min-width: 5rem;
   }
 }
-
 
 .menuToggle {
   display: none;
@@ -158,7 +156,6 @@
     transform: translateY(0);
   }
 }
-
 
 /* Mostra o menu hamburguer e esconde nav/actions em mobile */
 @media (max-width: 768px) {
@@ -245,7 +242,7 @@
   transition: transform 0.2s ease;
 }
 
-.userButton[aria-expanded="true"] .chevronIcon {
+.userButton[aria-expanded='true'] .chevronIcon {
   transform: rotate(180deg);
 }
 
@@ -286,11 +283,10 @@
   .userName {
     max-width: 6.25rem;
   }
-  
+
   .userDropdown {
     right: auto;
     left: 0;
     min-width: 10rem;
   }
 }
-

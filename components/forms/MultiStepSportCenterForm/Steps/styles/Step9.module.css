@@ -41,7 +41,7 @@
 
 .categoryCard {
   background: var(--color-background);
-  border: 0.0625rem solid #E5E7EB;
+  border: 0.0625rem solid #e5e7eb;
   border-radius: 0.625rem;
   padding: 1.5rem;
   position: relative;
@@ -78,7 +78,7 @@
 
 .categoryCardSelected {
   border-color: var(--color-blue-accent);
-  background: #EFF6FF;
+  background: #eff6ff;
 }
 
 .categoryCardHeader {
@@ -97,7 +97,7 @@
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   font-size: 0.875rem;
-  color: #6B7280;
+  color: #6b7280;
 }
 
 .categoryDeleteButton {
@@ -107,7 +107,7 @@
   background: none;
   border: none;
   font-size: 1.25rem;
-  color: #9CA3AF;
+  color: #9ca3af;
   cursor: pointer;
   width: 1.5rem;
   height: 1.5rem;
@@ -119,8 +119,8 @@
 }
 
 .categoryDeleteButton:hover {
-  background: #FEE2E2;
-  color: #DC2626;
+  background: #fee2e2;
+  color: #dc2626;
 }
 
 .categoryEditButton {
@@ -142,7 +142,7 @@
 }
 
 .categoryEditButton:hover {
-  background: #EFF6FF;
+  background: #eff6ff;
   color: var(--color-blue-mid);
 }
 
@@ -161,7 +161,7 @@
 
 .genderIcon {
   font-size: 1.25rem;
-  color: #D1D5DB;
+  color: #d1d5db;
   transition: color 0.2s ease;
 }
 
@@ -184,18 +184,18 @@
 
 .categoryScheduleIcon {
   font-size: 0.875rem;
-  color: #6B7280;
+  color: #6b7280;
 }
 
 .categoryScheduleText {
   font-family: 'Montserrat', sans-serif;
   font-size: 0.75rem;
-  color: #6B7280;
+  color: #6b7280;
   font-weight: 500;
 }
 
 .addCategoryCard {
-  border: 0.125rem dashed #E5E7EB;
+  border: 0.125rem dashed #e5e7eb;
   border-radius: 0.625rem;
   padding: 1.5rem;
   min-height: 12.5rem;
@@ -206,7 +206,7 @@
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  background: #F9FAFB;
+  background: #f9fafb;
   flex-shrink: 0;
 }
 
@@ -228,8 +228,8 @@
 }
 
 .addCategoryCard:hover {
-  border-color: #3B82F6;
-  background: #EFF6FF;
+  border-color: #3b82f6;
+  background: #eff6ff;
 }
 
 .addCategoryContent {
@@ -242,7 +242,7 @@
 
 .addCategoryIcon {
   font-size: 2rem;
-  color: #3B82F6;
+  color: #3b82f6;
   font-weight: 300;
 }
 
@@ -282,7 +282,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.2);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.2);
 }
 
 .modalCloseButton {
@@ -293,7 +293,7 @@
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: #6B7280;
+  color: #6b7280;
   width: 2rem;
   height: 2rem;
   display: flex;
@@ -305,7 +305,7 @@
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   font-size: 1.25rem;
-  color: #1F2937;
+  color: #1f2937;
   text-align: center;
   margin-bottom: 1.5rem;
 }
@@ -328,11 +328,14 @@
   display: block;
 }
 
-.genderSelector, .ageSelector, .scheduleSelector {
+.genderSelector,
+.ageSelector,
+.scheduleSelector {
   width: 100%;
 }
 
-.genderGrid, .dayGrid {
+.genderGrid,
+.dayGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.75rem;
@@ -342,9 +345,11 @@
   grid-template-columns: repeat(auto-fit, minmax(4rem, 1fr));
 }
 
-.genderOption, .dayOption, .ageOption {
+.genderOption,
+.dayOption,
+.ageOption {
   padding: 0.75rem;
-  border: 1px solid #E5E7EB;
+  border: 1px solid #e5e7eb;
   border-radius: 0.5rem;
   text-align: center;
   cursor: pointer;
@@ -355,12 +360,16 @@
   transition: all 0.2s ease;
 }
 
-.genderOption:hover, .dayOption:hover, .ageOption:hover {
+.genderOption:hover,
+.dayOption:hover,
+.ageOption:hover {
   border-color: var(--color-blue-accent);
-  background: #EFF6FF;
+  background: #eff6ff;
 }
 
-.genderOption.selected, .dayOption.selected, .ageOption.selected {
+.genderOption.selected,
+.dayOption.selected,
+.ageOption.selected {
   border-color: var(--color-blue-accent);
   background: var(--color-blue-accent);
   color: white;
@@ -404,7 +413,7 @@
 .timeChip {
   padding: 0.5rem 0.75rem;
   border-radius: 0.5rem;
-  border: 1px solid #E5E7EB;
+  border: 1px solid #e5e7eb;
   background: white;
   display: flex;
   align-items: center;
@@ -415,7 +424,7 @@
 .removeTimeButton {
   background: none;
   border: none;
-  color: #9CA3AF;
+  color: #9ca3af;
   cursor: pointer;
   font-size: 1rem;
 }
@@ -427,24 +436,24 @@
   gap: 1rem;
   margin-top: 1.5rem;
   padding-top: 1.5rem;
-  border-top: 1px solid #E5E7EB;
+  border-top: 1px solid #e5e7eb;
 }
 
 .modalClearButton {
-  background: #F3F4F6;
-  border: 1px solid #E5E7EB;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
   border-radius: 0.5rem;
   cursor: pointer;
   transition: all 0.2s ease;
   padding: 0.75rem;
   font-size: 1.25rem;
-  color: #6B7280;
+  color: #6b7280;
 }
 
 .modalClearButton:hover {
-  background: #FEE2E2;
-  border-color: #FCA5A5;
-  color: #DC2626;
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #dc2626;
 }
 
 .modalAddButton {
@@ -490,7 +499,7 @@
   gap: 1.5rem;
   position: relative;
   text-align: center;
-  box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.2);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.2);
 }
 
 .deleteModalCloseButton {
@@ -501,7 +510,7 @@
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: #6B7280;
+  color: #6b7280;
 }
 
 .deleteModalIcon {
@@ -512,13 +521,13 @@
   width: 3.75rem;
   height: 3.75rem;
   border-radius: 50%;
-  background: #FEE2E2; /* Red-100 */
-  border: 0.125rem solid #FECACA; /* Red-200 */
+  background: #fee2e2; /* Red-100 */
+  border: 0.125rem solid #fecaca; /* Red-200 */
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
-  color: #DC2626; /* Red-600 */
+  color: #dc2626; /* Red-600 */
   font-weight: bold;
 }
 
@@ -540,7 +549,7 @@
 
 .deleteModalCancelButton {
   background: white;
-  border: 0.0625rem solid #E5E7EB;
+  border: 0.0625rem solid #e5e7eb;
   color: #374151;
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
@@ -551,12 +560,12 @@
 }
 
 .deleteModalCancelButton:hover {
-  background: #F3F4F6;
-  border-color: #D1D5DB;
+  background: #f3f4f6;
+  border-color: #d1d5db;
 }
 
 .deleteModalConfirmButton {
-  background: #DC2626; /* Red-600 */
+  background: #dc2626; /* Red-600 */
   border: none;
   color: white;
   padding: 0.75rem 1.5rem;
@@ -568,5 +577,5 @@
 }
 
 .deleteModalConfirmButton:hover {
-  background: #B91C1C; /* Red-700 */
+  background: #b91c1c; /* Red-700 */
 }

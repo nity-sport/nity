@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useMultiStepForm } from '../MultiStepFormProvider';
-import { FormInput, FormSelect, FileUpload } from '../FormComponents';
-import baseStyles from './styles/BaseStep.module.css';
+
 import styles from './styles/Step2.module.css';
 
 export function Step2_BasicData() {
@@ -178,12 +177,6 @@ export function Step2_BasicData() {
     }
     return null;
   };
-
-  const currentYear = new Date().getFullYear();
-  const yearOptions = Array.from({ length: 50 }, (_, i) => {
-    const year = currentYear - i;
-    return { value: year.toString(), label: year.toString() };
-  });
 
   return (
     <div className={styles.stepContainer}>

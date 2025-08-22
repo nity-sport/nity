@@ -1,5 +1,3 @@
-import crypto from 'crypto';
-
 export const generateAffiliateCode = (length: number = 8): string => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let result = '';

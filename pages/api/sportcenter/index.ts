@@ -5,34 +5,30 @@ import User from '../../../src/models/User';
 import { SportCenterType } from '../../../src/types/sportcenter';
 import { getTokenFromHeader, verifyToken } from '../../../src/lib/auth';
 import { ResponseHandler } from '../../../src/utils/apiResponse';
-import { 
-  AuthenticationError, 
-  AuthorizationError, 
+import {
+  AuthenticationError,
+  AuthorizationError,
   ValidationError,
   DatabaseError,
-  NotFoundError
+  NotFoundError,
 } from '../../../src/utils/errors';
-import { withErrorHandler, withMethods, ApiRequest } from '../../../src/middleware/errorHandler';
+import {
+  withErrorHandler,
+  withMethods,
+  ApiRequest,
+} from '../../../src/middleware/errorHandler';
 import { logger } from '../../../src/utils/logger';
 
-interface SportCentersResponse {
-  sportCenters: SportCenterType[];
-  pagination: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-    hasNextPage: boolean;
-    hasPrevPage: boolean;
-  };
-}
+
 
 async function getSportCenters(req: ApiRequest, res: NextApiResponse) {
   const startTime = Date.now();
-  
+
   try {
     await dbConnect();
-    logger.dbOperation('connect', 'sportcenters', undefined, { requestId: req.requestId });
+    logger.dbOperation('connect', 'sportcenters', undefined, {
+      requestId: req.requestId,
+    });
 
     const token = getTokenFromHeader(req.headers.authorization);
     const decodedToken = token ? verifyToken(token) : null;
@@ -50,7 +46,10 @@ async function getSportCenters(req: ApiRequest, res: NextApiResponse) {
     const limitNum = parseInt(limit as string);
 
     if (pageNum < 1 || limitNum < 1 || limitNum > 100) {
-      throw new ValidationError('Invalid pagination parameters', { page: pageNum, limit: limitNum });
+      throw new ValidationError('Invalid pagination parameters', {
+        page: pageNum,
+        limit: limitNum,
+      });
     }
 
     const skip = (pageNum - 1) * limitNum;
@@ -68,7 +67,7 @@ async function getSportCenters(req: ApiRequest, res: NextApiResponse) {
       if (!user) {
         throw new NotFoundError('User');
       }
-      
+
       if (user.role === 'OWNER') {
         query.owner = decodedToken.userId;
       }
@@ -95,13 +94,13 @@ async function getSportCenters(req: ApiRequest, res: NextApiResponse) {
         .skip(skip)
         .limit(limitNum)
         .lean()
-        .exec()
+        .exec(),
     ]);
 
-    logger.dbOperation('find', 'sportcenters', Date.now() - startTime, { 
-      requestId: req.requestId, 
+    logger.dbOperation('find', 'sportcenters', Date.now() - startTime, {
+      requestId: req.requestId,
       query: JSON.stringify(query),
-      count: sportCenters.length
+      count: sportCenters.length,
     });
 
     const formattedSportCenters = sportCenters.map(center => ({
@@ -119,22 +118,26 @@ async function getSportCenters(req: ApiRequest, res: NextApiResponse) {
     };
 
     logger.apiResponse(
-      req.method || 'GET', 
-      req.url || '/api/sportcenter', 
-      200, 
+      req.method || 'GET',
+      req.url || '/api/sportcenter',
+      200,
       Date.now() - startTime,
       { requestId: req.requestId }
     );
 
     return ResponseHandler.paginated(res, formattedSportCenters, pagination, {
-      requestId: req.requestId
-    });
-
-  } catch (error) {
-    logger.dbError('find', 'sportcenters', error instanceof Error ? error.message : String(error), {
       requestId: req.requestId,
-      duration: Date.now() - startTime
     });
+  } catch (error) {
+    logger.dbError(
+      'find',
+      'sportcenters',
+      error instanceof Error ? error.message : String(error),
+      {
+        requestId: req.requestId,
+        duration: Date.now() - startTime,
+      }
+    );
     throw error;
   }
 }
@@ -162,7 +165,7 @@ async function createSportCenter(req: ApiRequest, res: NextApiResponse) {
       logger.authError('Unauthorized sport center creation attempt', {
         userId: decodedToken.userId,
         userRole: user.role,
-        requestId: req.requestId
+        requestId: req.requestId,
       });
       throw new AuthorizationError('Apenas owners podem criar sportcenters');
     }
@@ -174,8 +177,8 @@ async function createSportCenter(req: ApiRequest, res: NextApiResponse) {
         missing: {
           name: !name,
           sport: !sport,
-          location: !location
-        }
+          location: !location,
+        },
       });
     }
 
@@ -184,49 +187,55 @@ async function createSportCenter(req: ApiRequest, res: NextApiResponse) {
       owner: decodedToken.userId,
     };
 
-    logger.dbOperation('create', 'sportcenters', undefined, { requestId: req.requestId });
+    logger.dbOperation('create', 'sportcenters', undefined, {
+      requestId: req.requestId,
+    });
 
     const sportCenter = await SportCenter.create(sportCenterData);
-    
+
     const createdCenter = {
       ...sportCenter.toObject(),
       _id: sportCenter._id.toString(),
     } as SportCenterType;
 
     logger.info('SportCenter created successfully', {
-      sportCenterId: createdCenter._id,
+      sportCenterId: (createdCenter as any)._id,
       ownerId: decodedToken.userId,
       name: createdCenter.name,
-      requestId: req.requestId
+      requestId: req.requestId,
     });
 
     logger.apiResponse(
-      req.method || 'POST', 
-      req.url || '/api/sportcenter', 
-      201, 
+      req.method || 'POST',
+      req.url || '/api/sportcenter',
+      201,
       Date.now() - startTime,
       { requestId: req.requestId }
     );
 
     return ResponseHandler.created(
-      res, 
-      createdCenter, 
+      res,
+      createdCenter,
       'SportCenter criado com sucesso',
       req.requestId
     );
-
   } catch (error) {
     if (error instanceof Error && error.name === 'ValidationError') {
       throw new DatabaseError('Erro de validação dos dados', {
         details: error.message,
-        duration: Date.now() - startTime
+        duration: Date.now() - startTime,
       });
     }
-    
-    logger.dbError('create', 'sportcenters', error instanceof Error ? error.message : String(error), {
-      requestId: req.requestId,
-      duration: Date.now() - startTime
-    });
+
+    logger.dbError(
+      'create',
+      'sportcenters',
+      error instanceof Error ? error.message : String(error),
+      {
+        requestId: req.requestId,
+        duration: Date.now() - startTime,
+      }
+    );
     throw error;
   }
 }

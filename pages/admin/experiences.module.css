@@ -100,13 +100,17 @@
   background: var(--color-white);
   border-radius: var(--border-radius-lg);
   overflow: hidden;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
   border: 1px solid var(--color-gray-200);
   transition: all 0.2s ease;
 }
 
 .experienceCard:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
   transform: translateY(-1px);
 }
 
@@ -366,21 +370,21 @@
   .container {
     padding: 1rem;
   }
-  
+
   .header {
     flex-direction: column;
     gap: 1rem;
     align-items: stretch;
   }
-  
+
   .filters {
     flex-direction: column;
   }
-  
+
   .experiencesGrid {
     grid-template-columns: 1fr;
   }
-  
+
   .modal {
     margin: 1rem;
     max-height: calc(100vh - 2rem);

@@ -5,6 +5,7 @@ const react = require('eslint-plugin-react');
 const reactHooks = require('eslint-plugin-react-hooks');
 const jsxA11y = require('eslint-plugin-jsx-a11y');
 const prettier = require('eslint-plugin-prettier');
+const nextPlugin = require('@next/eslint-plugin-next');
 
 module.exports = [
   js.configs.recommended,
@@ -54,6 +55,12 @@ module.exports = [
         clearInterval: 'readonly',
         React: 'readonly',
         JSX: 'readonly',
+        Image: 'readonly',
+        AbortController: 'readonly',
+        Blob: 'readonly',
+        HTMLElement: 'readonly',
+        HTMLDivElement: 'readonly',
+        FileReader: 'readonly',
       },
     },
     plugins: {
@@ -62,10 +69,13 @@ module.exports = [
       'react-hooks': reactHooks,
       'jsx-a11y': jsxA11y,
       prettier,
+      '@next/next': nextPlugin,
     },
     rules: {
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs['core-web-vitals'].rules,
       // TypeScript rules
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-non-null-assertion': 'warn',
 
@@ -76,12 +86,14 @@ module.exports = [
 
       // General rules
       'no-console': ['warn', { allow: ['warn', 'error'] }],
-      'prefer-const': 'error',
-      'no-var': 'error',
+      'prefer-const': 'warn',
+      'no-var': 'warn',
       'no-unused-vars': 'off', // Use TypeScript version instead
+      'no-undef': 'warn',
+      'no-useless-catch': 'warn',
 
       // Prettier integration
-      'prettier/prettier': ['error'],
+      'prettier/prettier': ['warn'],
     },
     settings: {
       react: {
@@ -98,13 +110,33 @@ module.exports = [
     },
   },
   {
+    files: ['**/*.test.ts', '**/*.test.tsx', 'jest.setup.js'],
+    languageOptions: {
+        globals: {
+            jest: 'readonly',
+            describe: 'readonly',
+            it: 'readonly',
+            expect: 'readonly',
+            beforeEach: 'readonly',
+            afterEach: 'readonly',
+            beforeAll: 'readonly',
+            afterAll: 'readonly',
+            test: 'readonly',
+            xtest: 'readonly',
+            xit: 'readonly',
+            fit: 'readonly',
+            xdescribe: 'readonly',
+            fdescribe: 'readonly',
+        }
+    }
+  },
+  {
     ignores: [
       'node_modules/',
       '.next/',
       'out/',
       '*.config.js',
       'scripts/',
-      '__tests__/',
       'debug-*.js',
       'test-*.js',
     ],

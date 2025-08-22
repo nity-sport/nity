@@ -1,217 +1,216 @@
 /* components/forms/ExperienceForm/ExperienceForm.module.css */
 /* Copie o conteúdo de SportCenterForm.module.css aqui inicialmente */
 .form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    background-color: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    margin-top: 1rem;
-  }
-  
-  .fieldset {
-    border: 1px solid var(--color-border-light);
-    padding: 1.5rem;
-    border-radius: 6px;
-    margin-bottom: 1rem;
-  }
-  
-  .fieldset legend {
-    font-size: 1.1rem;
-    font-weight: var(--font-weight-medium);
-    color: var(--color-primary-dark);
-    padding: 0 0.5rem;
-  }
-  
-  .formGroup {
-    margin-bottom: 1rem;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .formGroup label {
-    font-weight: var(--font-weight-medium);
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    color: var(--color-surface-dark);
-  }
-  
-  .formGroup input[type="text"],
-  .formGroup input[type="number"],
-  .formGroup input[type="file"],
-  .formGroup input[type="email"],
-  .formGroup input[type="password"],
-  .formGroup textarea,
-  .formGroup select {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid var(--color-border);
-    border-radius: 4px;
-    font-size: 1rem;
-    font-family: var(--font-primary);
-    box-sizing: border-box;
-  }
-  
-  .formGroup input[type="file"] {
-    padding: 0.5rem; /* Ajuste específico para file inputs */
-  }
-  
-  
-  .formGroup textarea {
-    min-height: 100px;
-    resize: vertical;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
+}
 
-  .formGroup small {
-    display: block;
-    margin-top: 0.25rem;
-    font-size: 0.875rem;
-    color: var(--color-surface-mid);
-    font-style: italic;
-  }
-  
-  .formGroup input[type="checkbox"] {
-    margin-right: 0.5rem;
-    width: auto;
-    vertical-align: middle;
-  }
-  .formGroup label input[type="checkbox"] + span { /* Se você usar um span ao lado do checkbox */
-    vertical-align: middle;
-  }
-  
-  
-  .previewImage {
-    max-width: 150px;
-    max-height: 150px;
-    margin-top: 0.5rem;
-    border-radius: 4px;
-    border: 1px solid var(--color-border-light);
-    object-fit: cover;
-  }
-  
-  .error {
-    color: var(--color-error);
-    background-color: #ffebee;
-    padding: 0.75rem;
-    border-radius: 4px;
-    margin-bottom: 1rem;
-    border: 1px solid var(--color-error);
-  }
-  
-  .success {
-    color: var(--color-success);
-    background-color: #e8f5e9;
-    padding: 0.75rem;
-    border-radius: 4px;
-    margin-bottom: 1rem;
-    border: 1px solid var(--color-success);
-  }
-  
-  .formActions {
-    display: flex;
-    gap: 1rem;
-    justify-content: flex-end;
-    margin-top: 2rem;
-  }
-  
-  .submitButton {
-    padding: 0.75rem 1.5rem;
-    background: var(--gradient-primary);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    font-weight: var(--font-weight-bold);
-    cursor: pointer;
-    transition: opacity 0.2s ease;
-  }
-  
-  .cancelButton {
-    padding: 0.75rem 1.5rem;
-    background: var(--color-surface);
-    color: var(--color-text-dark);
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    font-size: 1rem;
-    font-weight: var(--font-weight-medium);
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  
-  .cancelButton:hover {
-    background: var(--color-background);
-    border-color: var(--color-primary-light);
-  }
-  
-  .submitButton:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-  
-  .submitButton:hover:not(:disabled) {
-    opacity: 0.9;
-  }
-  
-  /* DatePicker styles */
-  .datePicker {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid var(--color-border);
-    border-radius: 4px;
-    font-size: 1rem;
-    font-family: var(--font-primary);
-    box-sizing: border-box;
-  }
-  
-  .selectedDates {
-    margin-top: 1rem;
-    padding: 1rem;
-    border: 1px solid var(--color-border-light);
-    border-radius: 4px;
-    background: var(--color-background);
-  }
-  
-  .selectedDates h4 {
-    margin: 0 0 0.75rem 0;
-    font-size: 0.9rem;
-    color: var(--color-surface-dark);
-  }
-  
-  .datesList {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-  
-  .dateItem {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.375rem 0.75rem;
-    background: var(--color-primary-light);
-    color: white;
-    border-radius: 16px;
-    font-size: 0.875rem;
-  }
-  
-  .removeDateButton {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.2rem;
-    cursor: pointer;
-    padding: 0;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s ease;
-  }
-  
-  .removeDateButton:hover {
-    background: rgba(255, 255, 255, 0.2);
-  }
+.fieldset {
+  border: 1px solid var(--color-border-light);
+  padding: 1.5rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.fieldset legend {
+  font-size: 1.1rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary-dark);
+  padding: 0 0.5rem;
+}
+
+.formGroup {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup label {
+  font-weight: var(--font-weight-medium);
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--color-surface-dark);
+}
+
+.formGroup input[type='text'],
+.formGroup input[type='number'],
+.formGroup input[type='file'],
+.formGroup input[type='email'],
+.formGroup input[type='password'],
+.formGroup textarea,
+.formGroup select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: var(--font-primary);
+  box-sizing: border-box;
+}
+
+.formGroup input[type='file'] {
+  padding: 0.5rem; /* Ajuste específico para file inputs */
+}
+
+.formGroup textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.formGroup small {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: var(--color-surface-mid);
+  font-style: italic;
+}
+
+.formGroup input[type='checkbox'] {
+  margin-right: 0.5rem;
+  width: auto;
+  vertical-align: middle;
+}
+.formGroup label input[type='checkbox'] + span {
+  /* Se você usar um span ao lado do checkbox */
+  vertical-align: middle;
+}
+
+.previewImage {
+  max-width: 150px;
+  max-height: 150px;
+  margin-top: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid var(--color-border-light);
+  object-fit: cover;
+}
+
+.error {
+  color: var(--color-error);
+  background-color: #ffebee;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  border: 1px solid var(--color-error);
+}
+
+.success {
+  color: var(--color-success);
+  background-color: #e8f5e9;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  border: 1px solid var(--color-success);
+}
+
+.formActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+.submitButton {
+  padding: 0.75rem 1.5rem;
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.cancelButton {
+  padding: 0.75rem 1.5rem;
+  background: var(--color-surface);
+  color: var(--color-text-dark);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancelButton:hover {
+  background: var(--color-background);
+  border-color: var(--color-primary-light);
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.submitButton:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+/* DatePicker styles */
+.datePicker {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: var(--font-primary);
+  box-sizing: border-box;
+}
+
+.selectedDates {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--color-border-light);
+  border-radius: 4px;
+  background: var(--color-background);
+}
+
+.selectedDates h4 {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.9rem;
+  color: var(--color-surface-dark);
+}
+
+.datesList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.dateItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  background: var(--color-primary-light);
+  color: white;
+  border-radius: 16px;
+  font-size: 0.875rem;
+}
+
+.removeDateButton {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.removeDateButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

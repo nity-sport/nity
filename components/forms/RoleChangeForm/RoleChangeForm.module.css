@@ -170,19 +170,19 @@
     margin: 1rem;
     max-height: calc(100vh - 2rem);
   }
-  
+
   .header {
     padding: 1rem;
   }
-  
+
   .form {
     padding: 1rem;
   }
-  
+
   .actions {
     flex-direction: column;
   }
-  
+
   .cancelButton,
   .submitButton {
     width: 100%;

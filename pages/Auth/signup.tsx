@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { FcGoogle } from 'react-icons/fc';
-import { FaApple } from 'react-icons/fa';
+
 import styles from './Auth.module.css';
 
 export default function SignUp() {
