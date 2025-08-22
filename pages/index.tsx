@@ -9,7 +9,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <div className="section-spacing">
+      <div className="section-spacing" style={{ position: 'relative', zIndex: 1 }}>
         <TrainingCentersSection />
       </div>
       <div className="section-spacing">
