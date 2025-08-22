@@ -9,11 +9,21 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <TrainingCentersSection />
-      <Sports />
-      <ExperiencesSection />
-      <AboutSection />
-      <PartnerSection />
+      <div className="section-spacing">
+        <TrainingCentersSection />
+      </div>
+      <div className="section-spacing">
+        <Sports />
+      </div>
+      <div className="section-spacing">
+        <ExperiencesSection />
+      </div>
+      <div className="section-spacing">
+        <AboutSection />
+      </div>
+      <div className="section-spacing-bottom">
+        <PartnerSection />
+      </div>
     </>
   );
 }

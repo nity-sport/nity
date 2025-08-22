@@ -15,8 +15,8 @@
   position: relative;
   z-index: 2;
   text-align: center;
-  margin-top: 3.75rem;
-  margin-bottom: 2.25rem;
+  padding-top: var(--spacing-xxl);
+  padding-bottom: var(--spacing-xl);
 }
 
 .subtitle {

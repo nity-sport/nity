@@ -15,11 +15,14 @@
   padding: 0;
 }
 
-html,
+html {
+  font-size: 16px; /* 1rem = 16px base */
+}
+
 body {
   height: 100%;
   font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
+  font-size: var(--text-base); /* Uses 1rem (16px) */
   line-height: 1.4;
   background-color: var(--color-background);
   color: var(--color-text-dark);
