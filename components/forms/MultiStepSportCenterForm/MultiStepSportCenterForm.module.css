@@ -1,6 +1,6 @@
 .container {
   min-height: 100vh;
-  background: var(--color-surface-dark);
+  background: var(--gray-900);
   padding: 0;
   margin: 0;
 }

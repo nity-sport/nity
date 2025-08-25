@@ -107,8 +107,14 @@ export default function Footer() {
         <Image
           src='/assets/nity-logo-big.png'
           alt='NITY'
-          fill
-          style={{ objectFit: 'contain' }}
+          width={1512}
+          height={220}
+          style={{ 
+            width: '100%', 
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'bottom'
+          }}
         />
       </div>
     </footer>

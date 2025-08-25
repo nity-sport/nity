@@ -7,19 +7,22 @@
   align-items: center;
   background: #fff;
   overflow: hidden;
+  margin-bottom: 4rem;
 }
 
 /* Wrapper das setas fora do blueBox */
 .arrowsWrapper {
   position: absolute;
   top: 50%;
-  left: 0rem; /* Faz as setas começarem bem fora do container azul */
+  left: 0rem;
+  /* Faz as setas começarem bem fora do container azul */
   transform: translateY(-50%);
   z-index: 2;
   pointer-events: none;
   width: 112.5rem;
   height: 36.25rem;
 }
+
 .arrows {
   width: 112.5rem;
   height: 36.25rem;
@@ -33,7 +36,8 @@
   height: 35.375rem;
   background: #071c36;
   border-radius: 1.125rem;
-  margin-left: 0rem; /* espaço p/ imagem */
+  margin-left: 0rem;
+  /* espaço p/ imagem */
   z-index: 1;
   display: flex;
   align-items: center;
@@ -43,7 +47,7 @@
 
 .partnerImgWrapper {
   position: absolute;
-  left: 16.25rem;
+  left: 24rem;
   top: 50%;
   transform: translateY(-50%);
   width: 32.25rem;
@@ -61,50 +65,73 @@
 
 /* Texto e botão */
 .partnerContent {
-  position: relative;
-  z-index: 4;
-  color: #fff;
-  max-width: 26.75rem;
-  margin-right: 4.625rem;
-  margin-left: 0;
-  text-align: left;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 1.5rem;
+  position: absolute;
+  width: 26.75rem;
   height: 14.75rem;
+  left: 58.4375rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  color: #fff;
+  text-align: left;
 }
 
 .partnerTitle {
-  font-family: 'Ultra System', var(--font-display, Arial, sans-serif);
+  font-family: 'Ultra System';
+  font-style: normal;
   font-weight: 400;
-  font-size: 2.5rem;
-  line-height: 3rem;
-  letter-spacing: 0rem;
-  color: #4892e6;
-  margin-bottom: 1rem;
-  margin-top: 0;
+  font-size: var(--text-section-title);
+  line-height: var(--line-section-title);
+  color: #6EB8FE;
+  flex: none;
+  align-self: stretch;
+  flex-grow: 0;
+  width: 26.75rem;
+  height: 4.75rem;
+  margin: 0;
 }
 
 .partnerDesc {
-  font-size: 1.06rem;
-  line-height: 1.4;
-  margin-bottom: 1.5rem;
-  color: #d4e3fa;
-  font-weight: 400;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--text-paragraph-b4);
+  line-height: var(--line-paragraph-b4);
+  color: #FFFFFF;
+  flex: none;
+  align-self: stretch;
+  flex-grow: 0;
+  width: 26.75rem;
+  height: 3.4375rem;
+  margin: 0;
 }
 
 .partnerBtn {
-  background: #2778c5;
-  color: #fff;
-  font-size: 1.09rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0.875rem 1.375rem;
+  gap: 0.625rem;
+  width: 11.375rem;
+  height: 2.4375rem;
+  background: #55A2EB;
+  border-radius: 0.375rem;
   border: none;
-  border-radius: 0.4375rem;
-  padding: 0.75rem 1.75rem;
+  color: #fff;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.16s;
-  margin-top: 0.25rem;
+  flex: none;
+  flex-grow: 0;
+  margin: 0;
 }
+
 .partnerBtn:hover {
   background: #3d8de8;
 }
@@ -114,58 +141,71 @@
   .blueBox {
     width: 98vw;
   }
+
   .partnerImgWrapper {
     left: 1.5rem;
   }
+
   .arrowsWrapper {
     left: -10rem;
   }
 }
+
 @media (max-width: 1150px) {
   .blueBox {
     width: 94vw;
   }
+
   .partnerImgWrapper {
     width: 23.125rem;
     height: 31.25rem;
   }
+
   .arrowsWrapper {
     width: 75rem;
   }
 }
+
 @media (max-width: 900px) {
   .partnerSection {
     height: 35.625rem;
   }
+
   .blueBox {
     width: 82vw;
     min-width: 23.75rem;
     height: 20rem;
   }
+
   .partnerImgWrapper {
     width: 10rem;
     height: 13.75rem;
     left: 0.5rem;
   }
+
   .partnerContent {
     margin-right: 0.75rem;
     font-size: 1rem;
   }
+
   .partnerTitle {
     font-size: 1.25rem;
     line-height: 1.5;
   }
+
   .arrowsWrapper {
     width: 53.125rem;
     left: -5.625rem;
   }
 }
+
 @media (max-width: 700px) {
   .partnerSection {
     flex-direction: column;
     height: auto;
     margin-top: 6.25rem;
   }
+
   .blueBox {
     margin-left: 0;
     width: 98vw;
@@ -173,12 +213,17 @@
     border-radius: 0.875rem;
     min-width: unset;
   }
+
   .partnerImgWrapper {
-    display: none; /* ESCONDE a imagem no mobile */
+    display: none;
+    /* ESCONDE a imagem no mobile */
   }
+
   .arrowsWrapper {
-    display: none; /* ESCONDE as setas no mobile */
+    display: none;
+    /* ESCONDE as setas no mobile */
   }
+
   .partnerContent {
     margin: 0 auto;
     width: 95%;

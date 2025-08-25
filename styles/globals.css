@@ -24,7 +24,7 @@ body {
   font-family: 'Montserrat', sans-serif;
   font-size: var(--text-base); /* Uses 1rem (16px) */
   line-height: 1.4;
-  background-color: var(--color-background);
+  background-color: var(--gray-100);
   color: var(--color-text-dark);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;

@@ -40,7 +40,7 @@
 }
 
 .categoryCard {
-  background: var(--color-background);
+  background: var(--gray-100);
   border: 0.0625rem solid #e5e7eb;
   border-radius: 0.625rem;
   padding: 1.5rem;

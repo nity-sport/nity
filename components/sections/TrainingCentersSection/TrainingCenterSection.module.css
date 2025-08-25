@@ -16,10 +16,14 @@
 }
 
 .title {
-  font-family: var(--font-display);
-  font-size: var(--text-xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-primary-dark);
+  font-family: 'Ultra System';
+  font-style: normal;
+  font-weight: 400;
+  font-size: var(--text-section-title);
+  line-height: var(--line-section-title);
+  display: flex;
+  align-items: center;
+  color: #0C3B66;
   text-transform: uppercase;
 }
 
@@ -31,8 +35,8 @@
 
 .navButton {
   background: transparent;
-  border: 1px solid var(--color-border);
-  color: var(--color-surface-mid);
+  border: 1px solid var(--gray-400);
+  color: var(--gray-700);
   width: 2.25rem;
   height: 2.25rem;
   border-radius: 50%;
@@ -45,9 +49,9 @@
 }
 
 .navButton:hover:not(:disabled) {
-  background-color: var(--color-primary-light);
-  color: var(--color-surface);
-  border-color: var(--color-primary-light);
+  background-color: var(--blue-4);
+  color: var(--white);
+  border-color: var(--blue-4);
 }
 
 .navButton:disabled {
@@ -58,7 +62,7 @@
 .pagination {
   font-family: var(--font-primary);
   font-size: var(--text-sm);
-  color: var(--color-surface-mid);
+  color: var(--gray-700);
   min-width: 3.125rem;
   text-align: center;
 }

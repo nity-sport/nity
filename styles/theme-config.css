@@ -1,18 +1,47 @@
 :root {
-  /* Color Palette */
-  --color-primary-dark: #023e8c;
-  --color-primary-light: #379ad8;
-  --color-background: #f8f9fa;
-  --color-surface: #ffffff;
-  --color-surface-dark: #212529;
-  --color-surface-mid: #495057;
-  --color-muted: #adb5bd;
-  --color-border: #ced4da;
-  --color-border-light: #dee2e6;
-  --color-error: #bc271b;
-  --color-success: #0c6600;
+  --error-900: #410005;
+  --error-800: #650911;
+  --error-700: #852129;
+  --error-600: #A5363F;
+  --error-500: #C54C56;
+  --error-400: #E6636E;
+  --error-300: #FF818B;
+  --error-200: #FFADB4;
+  --error-100: #FFEBED;
+  --blue-1: #1F4042;
+  --blue-2: #023E8C;
+  --blue-3: #0659A7;
+  --blue-4: #379AD8;
+  --green-1: #0F4905;
+  --green-2: #59A64E;
+  --green-3: #C0D908;
+  --yellow-1: #493805;
+  --yellow-2: #A77F06;
+  --yellow-3: #F2B705;
+  --black: #000000;
+  --gray-900: #212529;
+  --gray-800: #343A40;
+  --gray-700: #495057;
+  --gray-600: #6C757D;
+  --gray-500: #ADB5BD;
+  --gray-400: #CED4DA;
+  --gray-300: #DEE2E6;
+  --gray-200: #E9ECEF;
+  --gray-100: #F8F9FA;
+  --white: #FFFFFF;
+  --color-primary-dark: var(--blue-2);
+  --color-primary-light: var(--blue-4);
+  --color-background: var(--gray-100);
+  --color-surface: var(--white);
+  --color-surface-dark: var(--gray-900);
+  --color-surface-mid: var(--gray-700);
+  --color-muted: var(--gray-500);
+  --color-border: var(--gray-400);
+  --color-border-light: var(--gray-300);
+  --color-error: var(--error-600);
+  --color-success: var(--green-1);
   --color-success-light: #edffeb80;
-  --color-warning: #6eb8fe;
+  --color-warning: var(--yellow-3);
   --color-overlay: #ffffffb2;
   --color-text-dark: #1c1b1f;
   --color-text-muted: #e2e2e2;
@@ -22,17 +51,11 @@
   --color-blue-accent: #55a2eb;
   --color-blue-light: #b9ddff;
   --color-background-secondary: #ebf5ff;
-  --color-surface-alt: #343a40;
-
-  /* Gradients */
-  --gradient-primary: linear-gradient(
-    109.09deg,
-    #023e8c 6.19%,
-    #379ad8 117.18%
-  );
+  --color-surface-alt: var(--gray-800);
+  --gradient-primary: linear-gradient(109.09deg,
+      #023e8c 6.19%,
+      #379ad8 117.18%);
   --gradient-horizontal: linear-gradient(90deg, #023e8c 0%, #379ad8 100%);
-
-  /* Fonts */
   --font-primary: 'Montserrat', sans-serif;
   --font-display: 'Ultra System', 'Inter', sans-serif;
 
@@ -45,24 +68,26 @@
   --text-xl: 1.5rem;
   --text-display-lg: 3.25rem;
   --text-display-md: 2.25rem;
-
-  /* Line Heights */
+  --text-section-title: 2.5rem;
+  --text-paragraph-b4: 1rem;
+  --text-h1: 3.75rem;
+  --text-sub-s2: 1.125rem;
+  --text-overlay: 6.468125rem;
   --line-base: 140%;
   --line-display-lg: 3.75rem;
   --line-display-md: 2.75rem;
-
-  /* Font Weights */
+  --line-section-title: 3rem;
+  --line-paragraph-b4: 140%;
+  --line-h1: 4.5rem;
+  --line-sub-s2: 120%;
+  --line-overlay: 7.75rem;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-bold: 700;
-
-  /* Breakpoints */
   --breakpoint-sm: 36rem;
   --breakpoint-md: 48rem;
   --breakpoint-lg: 62rem;
   --breakpoint-xl: 75rem;
-
-  /* Spacing */
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
   --spacing-md: 1rem;
@@ -71,15 +96,12 @@
   --spacing-xxl: 3rem;
   --spacing-section: 4rem;
   --spacing-section-lg: 5rem;
-
-  /* Container widths */
   --container-sm: 33.75rem;
   --container-md: 45rem;
   --container-lg: 60rem;
   --container-xl: 71.25rem;
 }
 
-/* Responsive Typography */
 @media (max-width: 48rem) {
   :root {
     --text-display-lg: 2.375rem;
@@ -111,39 +133,75 @@ body {
   margin: 0;
   font-family: var(--font-primary);
   font-size: var(--text-base);
-  background-color: var(--color-background);
+  background-color: var(--gray-100);
   color: var(--color-text-dark);
   line-height: var(--line-base);
 }
 
-/* Typography Utilities */
-.text-xs { font-size: var(--text-xs); }
-.text-sm { font-size: var(--text-sm); }
-.text-base { font-size: var(--text-base); }
-.text-md { font-size: var(--text-md); }
-.text-lg { font-size: var(--text-lg); }
-.text-xl { font-size: var(--text-xl); }
+.text-xs {
+  font-size: var(--text-xs);
+}
 
-/* Spacing Utilities */
-.section-spacing { 
+.text-sm {
+  font-size: var(--text-sm);
+}
+
+.text-base {
+  font-size: var(--text-base);
+}
+
+.text-md {
+  font-size: var(--text-md);
+}
+
+.text-lg {
+  font-size: var(--text-lg);
+}
+
+.text-xl {
+  font-size: var(--text-xl);
+}
+
+.text-section-title {
+  font-size: var(--text-section-title);
+  line-height: var(--line-section-title);
+}
+
+.text-paragraph-b4 {
+  font-size: var(--text-paragraph-b4);
+  line-height: var(--line-paragraph-b4);
+}
+
+.text-h1 {
+  font-size: var(--text-h1);
+  line-height: var(--line-h1);
+}
+
+.text-sub-s2 {
+  font-size: var(--text-sub-s2);
+  line-height: var(--line-sub-s2);
+}
+
+
+.section-spacing {
   margin-top: var(--spacing-section);
   margin-bottom: var(--spacing-section);
 }
 
-.section-spacing-lg { 
+.section-spacing-lg {
   margin-top: var(--spacing-section-lg);
   margin-bottom: var(--spacing-section-lg);
 }
 
-.section-spacing-top { 
+.section-spacing-top {
   margin-top: var(--spacing-section);
 }
 
-.section-spacing-bottom { 
+.section-spacing-bottom {
   margin-bottom: var(--spacing-section);
 }
 
-/* Utility example */
+
 .button-primary {
   background: var(--gradient-primary);
   color: #fff;
@@ -153,7 +211,7 @@ body {
   padding: 0.75rem 1.5rem;
   cursor: pointer;
   transition: background 0.3s ease-in-out;
-  font-size: var(--text-sm); /* Reduced button text size */
+  font-size: var(--text-sm);
 }
 
 .button-primary:hover {

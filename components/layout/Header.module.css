@@ -8,7 +8,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem 3.125rem;
-  background: var(--color-surface);
+  background: var(--white);
   border-bottom: none;
   transition: padding 0.3s ease;
 }
@@ -16,7 +16,7 @@
 .logo {
   font-family: var(--font-display);
   font-size: var(--text-display-md);
-  color: var(--color-primary-dark);
+  color: var(--blue-2);
 }
 
 .nav {
@@ -31,7 +31,7 @@
   justify-content: center;
   width: 2.5rem;
   height: 2.5rem;
-  background: var(--color-surface);
+  background: var(--white);
   border-radius: 50%;
   border: none;
   cursor: pointer;
@@ -46,7 +46,7 @@
   letter-spacing: 0;
   text-align: center;
   vertical-align: middle;
-  color: var(--color-surface-mid);
+  color: var(--gray-700);
   text-decoration: none;
   padding: 0.5rem 0.75rem;
   transition: color 0.2s ease;
@@ -54,7 +54,7 @@
 
 .navLink:hover,
 .nav a:hover {
-  color: var(--color-surface-dark);
+  color: var(--gray-900);
 }
 
 .actions {
@@ -140,8 +140,8 @@
   top: 100%;
   left: 0;
   right: 0;
-  background: var(--color-surface);
-  border-top: 1px solid var(--color-border-light);
+  background: var(--white);
+  border-top: 1px solid var(--gray-300);
   padding: 1.5rem 3.125rem;
   display: flex;
   flex-direction: column;
@@ -209,7 +209,7 @@
 }
 
 .userButton:hover {
-  background: var(--color-border-light);
+  background: var(--gray-300);
 }
 
 .avatar {
@@ -220,7 +220,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-primary-light);
+  background: var(--blue-4);
 }
 
 .avatarImage {
@@ -254,7 +254,7 @@
 .chevronIcon {
   width: 1rem;
   height: 1rem;
-  color: var(--color-surface-mid);
+  color: var(--gray-700);
   transition: transform 0.2s ease;
 }
 
@@ -266,8 +266,8 @@
   position: absolute;
   top: 100%;
   right: 0;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border-light);
+  background: var(--white);
+  border: 1px solid var(--gray-300);
   border-radius: 0.5rem;
   padding: 0.5rem 0;
   min-width: 11.25rem;
@@ -292,7 +292,7 @@
 }
 
 .dropdownItem:hover {
-  background: var(--color-border-light);
+  background: var(--gray-300);
 }
 
 @media (max-width: 768px) {

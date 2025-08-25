@@ -23,8 +23,8 @@
 
 .createButton {
   padding: 0.75rem 1.5rem;
-  background: var(--color-primary-light);
-  color: var(--color-surface);
+  background: var(--blue-4);
+  color: var(--white);
   border: none;
   border-radius: 0.5rem;
   font-size: var(--text-base);
@@ -35,7 +35,7 @@
 }
 
 .createButton:hover {
-  background: var(--color-primary-dark);
+  background: var(--blue-2);
   transform: translateY(-0.0625rem);
 }
 
@@ -214,8 +214,8 @@
 
 .roleButton {
   padding: 0.5rem 0.875rem;
-  background: var(--color-primary-light);
-  color: var(--color-surface);
+  background: var(--blue-4);
+  color: var(--white);
   border: none;
   border-radius: 0.5rem;
   font-size: var(--text-sm);
@@ -229,14 +229,14 @@
 }
 
 .roleButton:hover:not(:disabled) {
-  background: var(--color-primary-dark);
+  background: var(--blue-2);
   transform: translateY(-0.0625rem);
 }
 
 .deleteButton {
   padding: 0.5rem 0.875rem;
-  background: var(--color-error);
-  color: var(--color-surface);
+  background: var(--error-600);
+  color: var(--white);
   border: none;
   border-radius: 0.5rem;
   font-size: var(--text-sm);
@@ -256,7 +256,7 @@
 
 .roleButton:disabled,
 .deleteButton:disabled {
-  background: var(--color-muted);
+  background: var(--gray-500);
   cursor: not-allowed;
   transform: none;
   opacity: 0.6;
@@ -274,7 +274,7 @@
   padding: 0.5rem 1rem;
   background: var(--color-surface);
   color: var(--color-text-dark);
-  border: 0.0625rem solid var(--color-border);
+  border: 0.0625rem solid var(--gray-400);
   border-radius: 0.5rem;
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
@@ -284,9 +284,9 @@
 }
 
 .paginationButton:hover:not(:disabled) {
-  background: var(--color-background);
-  border-color: var(--color-primary-light);
-  color: var(--color-primary-dark);
+  background: var(--gray-100);
+  border-color: var(--blue-4);
+  color: var(--blue-2);
 }
 
 .paginationButton:disabled {
@@ -295,7 +295,7 @@
 }
 
 .paginationInfo {
-  color: var(--color-surface-mid);
+  color: var(--gray-700);
   font-size: var(--text-sm);
   font-family: var(--font-primary);
 }
@@ -449,8 +449,8 @@
 
 /* Scout-specific styles */
 .badgeScout {
-  background: var(--color-primary-light);
-  color: var(--color-surface);
+  background: var(--blue-4);
+  color: var(--white);
   display: flex;
   flex-direction: column;
   align-items: center;

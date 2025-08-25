@@ -1,6 +1,6 @@
 /* Full page container */
 .fullContainer {
-  background: var(--color-surface-dark);
+  background: var(--gray-900);
   padding: 0;
   margin: 0;
   position: relative;

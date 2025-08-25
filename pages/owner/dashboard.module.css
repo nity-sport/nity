@@ -29,8 +29,8 @@
 
 .manageButton {
   padding: 0.75rem 1.5rem;
-  background: var(--color-primary-light);
-  color: var(--color-surface);
+  background: var(--blue-4);
+  color: var(--white);
   text-decoration: none;
   border-radius: 8px;
   font-size: var(--text-base);
@@ -40,7 +40,7 @@
 }
 
 .manageButton:hover {
-  background: var(--color-primary-dark);
+  background: var(--blue-2);
   transform: translateY(-1px);
 }
 
@@ -198,7 +198,7 @@
 }
 
 .viewAllLink {
-  color: var(--color-primary-dark);
+  color: var(--blue-2);
   text-decoration: none;
   font-weight: var(--font-weight-medium);
   font-size: var(--font-size-sm);
@@ -206,7 +206,7 @@
 }
 
 .viewAllLink:hover {
-  color: var(--color-primary-light);
+  color: var(--blue-4);
 }
 
 .sportCentersList {
@@ -313,8 +313,8 @@
 
 .createFirstButton {
   padding: 0.875rem 2rem;
-  background: var(--color-primary-light);
-  color: var(--color-surface);
+  background: var(--blue-4);
+  color: var(--white);
   text-decoration: none;
   border-radius: 8px;
   font-size: var(--text-base);
@@ -325,7 +325,7 @@
 }
 
 .createFirstButton:hover {
-  background: var(--color-primary-dark);
+  background: var(--blue-2);
   transform: translateY(-1px);
 }
 

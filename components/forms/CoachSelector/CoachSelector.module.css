@@ -47,15 +47,15 @@
 }
 
 .coachCard:hover {
-  border-color: var(--color-primary-light);
+  border-color: var(--blue-4);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
 }
 
 .coachCard.selected {
-  border-color: var(--color-primary-light);
+  border-color: var(--blue-4);
   background: var(--color-primary-50, #f0f9ff);
-  box-shadow: 0 0 0 1px var(--color-primary-light);
+  box-shadow: 0 0 0 1px var(--blue-4);
 }
 
 .coachContent {
@@ -117,7 +117,7 @@
 }
 
 .selected .coachName {
-  color: var(--color-primary-dark);
+  color: var(--blue-2);
 }
 
 .coachAge {
@@ -168,8 +168,8 @@
 
 .checkbox.checked,
 .radio.checked {
-  background: var(--color-primary-light);
-  border-color: var(--color-primary-light);
+  background: var(--blue-4);
+  border-color: var(--blue-4);
 }
 
 .checkIcon {

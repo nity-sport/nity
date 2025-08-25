@@ -23,8 +23,8 @@
 
 .createButton {
   padding: 0.75rem 1.5rem;
-  background: var(--color-primary-light);
-  color: var(--color-surface);
+  background: var(--blue-4);
+  color: var(--white);
   border: none;
   border-radius: 0.5rem;
   font-size: var(--text-base);
@@ -35,7 +35,7 @@
 }
 
 .createButton:hover {
-  background: var(--color-primary-dark);
+  background: var(--blue-2);
   transform: translateY(-1px);
 }
 
@@ -154,7 +154,7 @@
 .experiencePrice {
   font-size: var(--font-size-lg);
   font-weight: 600;
-  color: var(--color-primary-dark);
+  color: var(--blue-2);
 }
 
 .experienceQuantity {
@@ -200,8 +200,8 @@
 .editButton {
   flex: 1;
   padding: 0.5rem 0.875rem;
-  background: var(--color-primary-light);
-  color: var(--color-surface);
+  background: var(--blue-4);
+  color: var(--white);
   border: none;
   border-radius: 0.5rem;
   font-size: var(--text-sm);
@@ -214,15 +214,15 @@
 }
 
 .editButton:hover {
-  background: var(--color-primary-dark);
+  background: var(--blue-2);
   transform: translateY(-1px);
 }
 
 .deleteButton {
   flex: 1;
   padding: 0.5rem 0.875rem;
-  background: var(--color-error);
-  color: var(--color-surface);
+  background: var(--error-600);
+  color: var(--white);
   border: none;
   border-radius: 0.5rem;
   font-size: var(--text-sm);
@@ -242,7 +242,7 @@
   flex: 1;
   padding: 0.5rem 0.875rem;
   background: var(--color-blue-500, #3b82f6);
-  color: var(--color-surface);
+  color: var(--white);
   border: none;
   border-radius: 0.5rem;
   font-size: var(--text-sm);
@@ -269,7 +269,7 @@
 
 .paginationButton {
   padding: 0.5rem 1rem;
-  background: var(--color-surface);
+  background: var(--white);
   color: var(--color-text-dark);
   border: 1px solid var(--color-border);
   border-radius: 0.5rem;
@@ -282,8 +282,8 @@
 
 .paginationButton:hover:not(:disabled) {
   background: var(--color-background);
-  border-color: var(--color-primary-light);
-  color: var(--color-primary-dark);
+  border-color: var(--blue-4);
+  color: var(--blue-2);
 }
 
 .paginationButton:disabled {

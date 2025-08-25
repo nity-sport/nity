@@ -16,10 +16,14 @@
 }
 
 .headerTitle {
-  font-family: var(--font-display, 'Ultra System');
-  font-size: 2.2rem;
+  font-family: 'Ultra System';
+  font-style: normal;
   font-weight: 400;
-  color: #fff;
+  font-size: var(--text-section-title);
+  line-height: var(--line-section-title);
+  display: flex;
+  align-items: center;
+  color: #FFFFFF;
   letter-spacing: 0.1875rem;
   flex: 1.2;
   text-align: left;
